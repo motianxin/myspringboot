@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="fums:war">
+    <output-path>$PROJECT_DIR$/fums/target</output-path>
+    <root id="archive" name="fums.war">
+      <element id="artifact" artifact-name="fums:war exploded" />
+    </root>
+  </artifact>
+</component>
