@@ -10,9 +10,9 @@ import org.springframework.context.annotation.ComponentScan;
 @EntityScan(basePackages = {"com.zhigang.myspringboot"})
 public class MyspringbootApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MyspringbootApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MyspringbootApplication.class, args);
+    }
 
 }
 

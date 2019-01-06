@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>anonymous complex type的 Java 类。
- * 
+ *
  * <p>以下模式片段指定包含在此类中的预期内容。
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -27,15 +27,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "alarmSyncOoperation",
-    "businessType",
-    "provinceSX",
-    "alarmSyncSN"
+        "alarmSyncOoperation",
+        "businessType",
+        "provinceSX",
+        "alarmSyncSN"
 })
 @XmlRootElement(name = "notifyAlarmSyncReq", namespace = "http://www.ctsi.com.cn/webservices/service")
 public class NotifyAlarmSyncReq {
@@ -47,19 +45,18 @@ public class NotifyAlarmSyncReq {
     @XmlElement(required = true)
     protected String alarmSyncSN;
 
-	public NotifyAlarmSyncReq() {
-	}
+    public NotifyAlarmSyncReq() {
+    }
 
-	public NotifyAlarmSyncReq(int alarmSyncOoperation, int businessType, String provinceSX, String alarmSyncSN) {
-		this.alarmSyncOoperation = alarmSyncOoperation;
-		this.businessType = businessType;
-		this.provinceSX = provinceSX;
-		this.alarmSyncSN = alarmSyncSN;
-	}
+    public NotifyAlarmSyncReq(int alarmSyncOoperation, int businessType, String provinceSX, String alarmSyncSN) {
+        this.alarmSyncOoperation = alarmSyncOoperation;
+        this.businessType = businessType;
+        this.provinceSX = provinceSX;
+        this.alarmSyncSN = alarmSyncSN;
+    }
 
-	/**
+    /**
      * 获取alarmSyncOoperation属性的值。
-     * 
      */
     public int getAlarmSyncOoperation() {
         return alarmSyncOoperation;
@@ -67,7 +64,6 @@ public class NotifyAlarmSyncReq {
 
     /**
      * 设置alarmSyncOoperation属性的值。
-     * 
      */
     public void setAlarmSyncOoperation(int value) {
         this.alarmSyncOoperation = value;
@@ -75,7 +71,6 @@ public class NotifyAlarmSyncReq {
 
     /**
      * 获取businessType属性的值。
-     * 
      */
     public int getBusinessType() {
         return businessType;
@@ -83,7 +78,6 @@ public class NotifyAlarmSyncReq {
 
     /**
      * 设置businessType属性的值。
-     * 
      */
     public void setBusinessType(int value) {
         this.businessType = value;
@@ -91,11 +85,9 @@ public class NotifyAlarmSyncReq {
 
     /**
      * 获取provinceSX属性的值。
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getProvinceSX() {
         return provinceSX;
@@ -103,11 +95,9 @@ public class NotifyAlarmSyncReq {
 
     /**
      * 设置provinceSX属性的值。
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setProvinceSX(String value) {
         this.provinceSX = value;
@@ -115,11 +105,9 @@ public class NotifyAlarmSyncReq {
 
     /**
      * 获取alarmSyncSN属性的值。
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getAlarmSyncSN() {
         return alarmSyncSN;
@@ -127,23 +115,21 @@ public class NotifyAlarmSyncReq {
 
     /**
      * 设置alarmSyncSN属性的值。
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setAlarmSyncSN(String value) {
         this.alarmSyncSN = value;
     }
 
-	@Override
-	public String toString() {
-		return "NotifyAlarmSyncReq{" +
-				"alarmSyncOoperation=" + alarmSyncOoperation +
-				", businessType=" + businessType +
-				", provinceSX='" + provinceSX + '\'' +
-				", alarmSyncSN='" + alarmSyncSN + '\'' +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "NotifyAlarmSyncReq{" +
+                "alarmSyncOoperation=" + alarmSyncOoperation +
+                ", businessType=" + businessType +
+                ", provinceSX='" + provinceSX + '\'' +
+                ", alarmSyncSN='" + alarmSyncSN + '\'' +
+                '}';
+    }
 }
