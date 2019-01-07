@@ -5,19 +5,4 @@ server:
 
 spring:
   profiles:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/myspringboot?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
-    username: root
-    password: Root123!
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-logging:
-  config: classpath:logging-config.xml
-  level: info
-  file: E:\logs\myboot\myboot.log
-  pattern:
-    file: %d{yyyy/MM/dd-HH:mm} [%thread] %-5level %logger- %msg%n
+    active: prod

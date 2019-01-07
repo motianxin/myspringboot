@@ -29,13 +29,19 @@ public class ReposImpl implements AlarmSyncRepos{
 	@PersistenceContext
 	protected EntityManager em;
 
-
-
 	@Override
 	public void saveAlarmSync(AlarmSync sync) {
 		if (sync != null) {
 			em.persist(sync);
 		}
 	}
+
+
+
+
+
+
+
+
 
 }
