@@ -20,12 +20,12 @@ import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
 import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈〉
  *
  * @author zghuang
- * @create 2018/12/19 16:45
  * @version 3.2.2
+ * @create 2018/12/19 16:45
  */
 @EnableWs
 @Configuration
@@ -43,7 +43,6 @@ public class AlarmWebService extends WsConfigurerAdapter {
 	public Wsdl11Definition defaultWsdl11Definition() {
 		SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
 		wsdl11Definition.setWsdl(new ClassPathResource("/wsdl/alarmSync.wsdl"));
-
 		return wsdl11Definition;
 	}
 
