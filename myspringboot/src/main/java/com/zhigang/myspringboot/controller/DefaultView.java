@@ -14,12 +14,12 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈默认首页〉
  *
  * @author zghuang
- * @create 2018/12/21 17:02
  * @version 3.2.2
+ * @create 2018/12/21 17:02
  */
 @Configuration
 public class DefaultView extends WebMvcConfigurerAdapter {

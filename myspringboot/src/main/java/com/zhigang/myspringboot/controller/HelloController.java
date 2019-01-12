@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈hello〉
  *
  * @author zghuang
- * @create 2018/12/19 13:42
  * @version 3.2.2
+ * @create 2018/12/19 13:42
  */
 @RestController
 public class HelloController {
@@ -27,7 +27,7 @@ public class HelloController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HelloController.class);
 
 	@GetMapping("/hello")
-	public String saySomething (){
+	public String saySomething() {
 
 		LOGGER.info("saySomething get in.");
 

@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈〉
  *
  * @author zghuang
- * @create 2019/1/9 14:46
  * @version 3.2.2
+ * @create 2019/1/9 14:46
  */
 @RestController
 public class SnmpReceiverStart {
@@ -32,7 +32,7 @@ public class SnmpReceiverStart {
 	private SnmpReceiverService snmpReceiverService;
 
 	@GetMapping("/startReceiverSnmpTrap")
-	public String startReceiverSnmpTrap(){
+	public String startReceiverSnmpTrap() {
 
 		String result;
 		try {
@@ -48,7 +48,7 @@ public class SnmpReceiverStart {
 
 
 	@GetMapping("/closeReceiverSnmpTrap")
-	public String closeReceiverSnmpTrap(){
+	public String closeReceiverSnmpTrap() {
 
 		String result;
 		try {
