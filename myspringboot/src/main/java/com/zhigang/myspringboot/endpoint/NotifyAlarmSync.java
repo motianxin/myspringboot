@@ -11,13 +11,16 @@ package com.zhigang.myspringboot.endpoint;
 import com.zhigang.myspringboot.domain.alarmws.NotifyAlarmSyncReq;
 import com.zhigang.myspringboot.domain.alarmws.NotifyAlarmSyncRsp;
 import com.zhigang.myspringboot.service.SyncService;
+import com.zhigang.myspringboot.utils.common.Constans;
+import com.zhigang.myspringboot.utils.strutils.StringTools;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -31,6 +34,9 @@ import java.util.Date;
 @Endpoint
 public class NotifyAlarmSync {
 
+	/** logger */
+	private static final Logger LOGGER = LoggerFactory.getLogger(NotifyAlarmSync.class);
+
 	@Autowired
 	private SyncService syncService;
 
@@ -41,11 +47,10 @@ public class NotifyAlarmSync {
 		try {
 			syncService.saveAlarmSync(req);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("alarmSync error", e.getMessage(), e);
 		}
 
-
-		return new NotifyAlarmSyncRsp(4343,"retert",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()));
+		return new NotifyAlarmSyncRsp(4343,"retert",StringTools.dateFormat(Constans.DATE_PATTERN, new Date()));
 	}
 
 

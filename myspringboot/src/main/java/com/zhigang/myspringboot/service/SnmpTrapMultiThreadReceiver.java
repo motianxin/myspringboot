@@ -99,7 +99,7 @@ public class SnmpTrapMultiThreadReceiver implements CommandResponder {
 
 		String value = "null";
 		for (VariableBinding vb : vbVect) {
-			value = StringTools.HexToChinese(vb.getVariable().toString());
+			value = StringTools.hexToChinese(vb.getVariable().toString());
 			LOGGER.info(vb.getOid() + " = " + value);
 		}
 
