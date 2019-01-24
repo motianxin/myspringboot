@@ -32,10 +32,12 @@ public class SnmpReceiverServiceImpl implements SnmpReceiverService {
 	private SnmpModel snmpModel;
 
 	@Override
-	public String snmpReceiverstatus() throws Exception {
+	public String snmpReceiverstatus(String ip, String port) throws Exception {
 		String result = "snmp listener is already started!";
+		String snmpip = ip == null ? snmpModel.getIp() : ip;
+		String snmpport = port == null ? snmpModel.getPort() : port;
 		if (!start) {
-			receiver = new SnmpTrapMultiThreadReceiver(snmpModel.getIp(), snmpModel.getPort());
+			receiver = new SnmpTrapMultiThreadReceiver(snmpip, snmpport);
 			receiver.run();
 			start = true;
 			result = "snmp listener start succeed!";

@@ -22,4 +22,8 @@ public class Constans {
 
 	public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
 
+	public static final int SUCCESS = 0;
+
+	public static final int FAIL = 1;
+
 }

@@ -9,6 +9,10 @@
 <body>
 <script src="/myboot/webjars/jquery/jquery.min.js"></script>
 <script src="/myboot/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="/myboot/webjars/angularjs/angular.min.js"></script>
+<script src="/myboot/webjars/angularjs/angular-route.js"></script>
+
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
@@ -16,7 +20,8 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown
+                    <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#">Action</a></li>
                     <li><a href="#">Another action</a></li>
@@ -26,7 +31,7 @@
                 </ul>
             </li>
         </ul>
-    </div><!--/.nav-collapse -->
+    </div>
     </div>
 </nav>
 <table class="table table-striped">
@@ -56,5 +61,46 @@
     </tr>
     </tbody>
 </table>
+<div ng-app="myApp" ng-controller="myCtrl" name="snmp">
+    IP: <input type="text" ng-model="ip" required><span style="color: red" ng-show="snmp.ip.$dirty && name.ip.$invalid">IP必须填</span><br>
+    PORT: <input type="text" ng-model="listenerPort"><span style="color: red"
+                                                           ng-show="snmp.listenerPort.$dirty && name.listenerPort.$invalid">端口必须填</span><br>
+    <button type="button" class="btn btn-success" ng-click="startSnmp()">startSnmp</button>
+    <button type="button" class="btn btn-danger" ng-click="stopSnmp()">stopSnmp</button>
+    <span>{{snmpResult}}<span>
+</div>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function ($scope, $http) {
+        var strPath = window.document.location.pathname;
+        var appName = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
+        var serverUrl = "http://" + window.location.host + appName;
+        console.log("serverUrl:", serverUrl);
+        $scope.ip = "";
+        $scope.listenerPort = "";
+        $scope.snmpResult = "";
+        $scope.startSnmp = function () {
+            var url = serverUrl + "/startReceiverSnmpTrap?ip=" + $scope.ip + "&port=" + $scope.listenerPort;
+            $http.get(url).then(function (response) {
+                console.log(response.data);
+                $scope.snmpResult = response.data.msg;
+            }, function (response) {
+                console.log(response.data);
+                $scope.snmpResult = response.data.msg;
+            });
+        }
+
+        $scope.stopSnmp = function () {
+            var url = serverUrl + "/closeReceiverSnmpTrap";
+            $http.get(url).then(function (response) {
+                console.log(response.data);
+                $scope.snmpResult = response.data.msg;
+            }, function (response) {
+                console.log(response.data);
+                $scope.snmpResult = response.data.msg;
+            });
+        }
+    });
+</script>
 </body>
 </html>
