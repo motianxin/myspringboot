@@ -4,26 +4,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1.0">
     <link href="/myboot/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
     <title>welcome to my page</title>
+    <script src="/myboot/webjars/jquery/jquery.min.js"></script>
+    <script src="/myboot/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/myboot/webjars/angularjs/angular.min.js"></script>
+    <script src="/myboot/webjars/angularjs/angular-route.js"></script>
+    <script src="/myboot/js/app.js"></script>
+    <script src="/myboot/view/snmpCtrl.js"></script>
 </head>
-<body>
-<script src="/myboot/webjars/jquery/jquery.min.js"></script>
-<script src="/myboot/webjars/bootstrap/js/bootstrap.min.js"></script>
-<script src="/myboot/webjars/angularjs/angular.min.js"></script>
-<script src="/myboot/webjars/angularjs/angular-route.js"></script>
-
-
+<body ng-app="bossApp" class="ng-scope">
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="active"><a href="#!/">Home</a></li>
+            <li><a href="#!/table">Table</a></li>
+            <li><a href="#!/snmp">Snmp</a></li>
+            <li><a href="#!/flash">flash</a></li>
+            <li><a href="#!/gobang">gobang</a></li>
+            <li><a href="#!/mypage">mapage</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown
                     <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
+                    <li><a href="#!/game">game</a></li>
                     <li><a href="#">Another action</a></li>
                     <li class="divider"></li>
                     <li class="dropdown-header">Nav header</li>
@@ -32,75 +36,9 @@
             </li>
         </ul>
     </div>
-    </div>
 </nav>
-<table class="table table-striped">
-    <caption>条纹表格布局</caption>
-    <thead>
-    <tr>
-        <th>名称</th>
-        <th>城市</th>
-        <th>邮编</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>Tanmay</td>
-        <td>Bangalore</td>
-        <td>560001</td>
-    </tr>
-    <tr>
-        <td>Sachin</td>
-        <td>Mumbai</td>
-        <td>400003</td>
-    </tr>
-    <tr>
-        <td>Uma</td>
-        <td>Pune</td>
-        <td>411027</td>
-    </tr>
-    </tbody>
-</table>
-<div ng-app="myApp" ng-controller="myCtrl" name="snmp">
-    IP: <input type="text" ng-model="ip" required><span style="color: red" ng-show="snmp.ip.$dirty && name.ip.$invalid">IP必须填</span><br>
-    PORT: <input type="text" ng-model="listenerPort"><span style="color: red"
-                                                           ng-show="snmp.listenerPort.$dirty && name.listenerPort.$invalid">端口必须填</span><br>
-    <button type="button" class="btn btn-success" ng-click="startSnmp()">startSnmp</button>
-    <button type="button" class="btn btn-danger" ng-click="stopSnmp()">stopSnmp</button>
-    <span>{{snmpResult}}<span>
+<div style="margin-top: 45px">
+    <ng-view></ng-view>
 </div>
-<script>
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function ($scope, $http) {
-        var strPath = window.document.location.pathname;
-        var appName = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
-        var serverUrl = "http://" + window.location.host + appName;
-        console.log("serverUrl:", serverUrl);
-        $scope.ip = "";
-        $scope.listenerPort = "";
-        $scope.snmpResult = "";
-        $scope.startSnmp = function () {
-            var url = serverUrl + "/startReceiverSnmpTrap?ip=" + $scope.ip + "&port=" + $scope.listenerPort;
-            $http.get(url).then(function (response) {
-                console.log(response.data);
-                $scope.snmpResult = response.data.msg;
-            }, function (response) {
-                console.log(response.data);
-                $scope.snmpResult = response.data.msg;
-            });
-        }
-
-        $scope.stopSnmp = function () {
-            var url = serverUrl + "/closeReceiverSnmpTrap";
-            $http.get(url).then(function (response) {
-                console.log(response.data);
-                $scope.snmpResult = response.data.msg;
-            }, function (response) {
-                console.log(response.data);
-                $scope.snmpResult = response.data.msg;
-            });
-        }
-    });
-</script>
 </body>
 </html>

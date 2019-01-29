@@ -1,0 +1,31 @@
+<form class="form-horizontal" role="form" name="snmp" style="margin-top: 55px">
+    <div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">SNMP IP</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" ng-model="ip" required>
+                <span style="color: red" ng-show="snmp.ip.$dirty && snmp.ip.$invalid">IP必须填</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">SNMP PORT</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" ng-model="listenerPort" required="">
+                <span style="color: red" ng-show="snmp.listenerPort.$dirty && snmp.listenerPort.$invalid">端口必须填</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                <button type="button" class="btn btn-success" ng-click="startSnmp()" style="float: right">startSnmp
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button type="button" class="btn btn-danger" ng-click="stopSnmp()" style="float: right">stopSnmp
+                </button>
+                <span>{{snmpResult}}</span>
+            </div>
+        </div>
+
+    </div>
+</form>
