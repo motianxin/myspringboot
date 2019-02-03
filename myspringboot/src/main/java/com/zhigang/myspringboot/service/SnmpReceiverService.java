@@ -13,6 +13,13 @@ import org.springframework.stereotype.Service;
 @Service
 public interface SnmpReceiverService {
 
+	/**
+	 * 开启snmp监听
+	 * @param ip
+	 * @param port
+	 * @return
+	 * @throws Exception
+	 */
 	String snmpReceiverstatus(String ip, String port) throws Exception;
 
 	String closeReceiver() throws Exception;

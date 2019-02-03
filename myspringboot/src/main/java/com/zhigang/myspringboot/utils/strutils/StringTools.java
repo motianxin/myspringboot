@@ -26,7 +26,7 @@ public class StringTools {
 
 	public static String hexToChinese(String str) {
 		String value = str;
-		if (str.indexOf(Constans.ARRAY_SEPARATOR) != -1) {
+		if (str.contains(Constans.ARRAY_SEPARATOR)) {
 			try {
 				String[] temps = str.split(Constans.ARRAY_SEPARATOR);
 				byte[] bs = new byte[temps.length];
