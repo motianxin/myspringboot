@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
  * @since 3.2.2
  */
 @Repository
-public interface AlarmSyncRepos{
-		void saveAlarmSync(AlarmSync sync);
+public interface AlarmSyncRepos {
+    void saveAlarmSync(AlarmSync sync);
 }

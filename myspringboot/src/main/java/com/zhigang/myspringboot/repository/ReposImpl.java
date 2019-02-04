@@ -15,33 +15,26 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈〉
  *
  * @author zghuang
- * @create 2018/12/20 17:19
  * @version 3.2.2
+ * @create 2018/12/20 17:19
  */
 @Repository
-public class ReposImpl implements AlarmSyncRepos{
+public class ReposImpl implements AlarmSyncRepos {
 
 
-	@PersistenceContext
-	protected EntityManager em;
+    @PersistenceContext
+    protected EntityManager em;
 
-	@Override
-	public void saveAlarmSync(AlarmSync sync) {
-		if (sync != null) {
-			em.persist(sync);
-		}
-	}
-
-
-
-
-
-
-
+    @Override
+    public void saveAlarmSync(AlarmSync sync) {
+        if (sync != null) {
+            em.persist(sync);
+        }
+    }
 
 
 }
