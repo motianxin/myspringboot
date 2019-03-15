@@ -26,13 +26,13 @@ public class AlarmSyncServiceTest extends MyspringbootApplicationTests {
 
 	@Test
 	public void getOneById() {
-		AlarmSync alarmSync = syncService.getOneById(1l);
+		AlarmSync alarmSync = syncService.getOneById(syncService.getAllAlarmSync().get(0).getId());
 		System.out.println(alarmSync);
 	}
 
 	@Test
 	public void deleteAlarmSync() {
-		syncService.deleteAlarmSync(1l);
+		syncService.deleteAlarmSync(syncService.getAllAlarmSync().get(0).getId());
 		syncService.getAllAlarmSync().forEach(System.out :: println);
 	}
 
