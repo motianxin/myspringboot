@@ -9,7 +9,13 @@
 package com.zhigang.myspringboot.util;
 
 import com.zhigang.myspringboot.mapandxml.Node;
+import org.dom4j.Document;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,7 +94,32 @@ public class XmlTools {
 
         System.out.println(nodeToStr(node));
 
+        try {
+            System.out.println(formatXML(nodeToStr(node)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
+    public static String formatXML(String inputXML) throws Exception {
+        SAXReader reader = new SAXReader();
+        Document document = reader.read(new StringReader(inputXML));
+        String requestXML = null;
+        XMLWriter writer = null;
+        if (document != null) {
+            StringWriter stringWriter = new StringWriter();
+            OutputFormat format = new OutputFormat("\t", true, "UTF-8");
+            format.setNewLineAfterDeclaration(false);
+            format.setNewlines(true);
+            format.setTrimText(true);
+            writer = new XMLWriter(stringWriter, format);
+            writer.write(document);
+            writer.flush();
+            requestXML = stringWriter.getBuffer().toString();
+            writer.close();
+        }
+        return requestXML;
+    }
 
 }
