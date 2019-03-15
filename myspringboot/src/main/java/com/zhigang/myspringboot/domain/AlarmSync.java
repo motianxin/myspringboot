@@ -72,4 +72,15 @@ public class AlarmSync implements java.io.Serializable{
 	public void setAlarmSyncSN(String alarmSyncSN) {
 		this.alarmSyncSN = alarmSyncSN;
 	}
+
+	@Override
+	public String toString() {
+		return "AlarmSync{" +
+				"id=" + id +
+				", opration=" + opration +
+				", businessType=" + businessType +
+				", provinceSX='" + provinceSX + '\'' +
+				", alarmSyncSN='" + alarmSyncSN + '\'' +
+				'}';
+	}
 }

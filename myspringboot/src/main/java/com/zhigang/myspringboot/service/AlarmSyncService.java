@@ -32,6 +32,7 @@ public class AlarmSyncService implements SyncService{
 	@Autowired
 	private AlarmSyncRepos alarmSyncRepos;
 
+	@Autowired
 	private SyncInfoDao infoDao;
 
 	public void saveAlarmSync(NotifyAlarmSyncReq req) throws Exception{
