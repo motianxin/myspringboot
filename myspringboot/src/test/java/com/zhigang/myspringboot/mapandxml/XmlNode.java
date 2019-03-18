@@ -1,5 +1,5 @@
 /**
- * FileName: Node
+ * FileName: XmlNode
  * Author:   zghuang
  * Date:     2019/3/14 19:21
  * Description: xml数据类型封装对象
@@ -17,44 +17,44 @@ import java.util.List;
  * @create 2019/3/14 19:21
  * @version 3.2.2
  */
-public class Node {
+public class XmlNode {
 
 
-	private List<Node> subNodes;
+	private List<XmlNode> subXmlNodes;
 
 	private String key;
 
 	private String value;
 
-	public Node() {
+	public XmlNode() {
 	}
 
-	public Node(String key) {
+	public XmlNode(String key) {
 		this.key = key;
 	}
 
-	public Node(String key, String value) {
-		this.key = key;
-		this.value = value;
-	}
-
-	public Node(List<Node> subNodes, String key, String value) {
-		this.subNodes = subNodes;
+	public XmlNode(String key, String value) {
 		this.key = key;
 		this.value = value;
 	}
 
-	public Node(List<Node> subNodes, String key) {
-		this.subNodes = subNodes;
+	public XmlNode(List<XmlNode> subXmlNodes, String key, String value) {
+		this.subXmlNodes = subXmlNodes;
+		this.key = key;
+		this.value = value;
+	}
+
+	public XmlNode(List<XmlNode> subXmlNodes, String key) {
+		this.subXmlNodes = subXmlNodes;
 		this.key = key;
 	}
 
-	public List<Node> getSubNodes() {
-		return subNodes;
+	public List<XmlNode> getSubXmlNodes() {
+		return subXmlNodes;
 	}
 
-	public void setSubNodes(List<Node> subNodes) {
-		this.subNodes = subNodes;
+	public void setSubXmlNodes(List<XmlNode> subXmlNodes) {
+		this.subXmlNodes = subXmlNodes;
 	}
 
 	public String getKey() {

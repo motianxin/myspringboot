@@ -8,7 +8,7 @@
  */
 package com.zhigang.myspringboot.util;
 
-import com.zhigang.myspringboot.mapandxml.Node;
+import com.zhigang.myspringboot.mapandxml.XmlNode;
 import org.dom4j.Document;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
@@ -35,67 +35,68 @@ public class XmlTools {
 
     private static final String NEW_LINE = "\n";
 
-    public static String nodeToStr(Node node) throws NullPointerException {
-        if (node == null || node.getKey() == null) {
-            throw new NullPointerException("Node or Node's key is null");
+    public static String nodeToStr(XmlNode xmlNode) throws NullPointerException {
+        if (xmlNode == null || xmlNode.getKey() == null) {
+            throw new NullPointerException("XmlNode or XmlNode's key is null");
         }
         StringBuffer sb = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-        sb.append(LT).append(node.getKey()).append(GT).append(NEW_LINE);
-        if (node.getValue() == null) {
-            addSubNodes(sb, node);
+        sb.append(LT).append(xmlNode.getKey()).append(GT).append(NEW_LINE);
+        if (xmlNode.getValue() == null) {
+            addSubNodes(sb, xmlNode);
         } else {
-            sb.append(node.getValue());
+            sb.append(xmlNode.getValue());
         }
-        sb.append(LT_SPRIT).append(node.getKey()).append(GT).append(NEW_LINE);
+        sb.append(LT_SPRIT).append(xmlNode.getKey()).append(GT).append(NEW_LINE);
         return sb.toString();
     }
 
-    private static void addSubNodes(StringBuffer sb, Node node) throws NullPointerException {
-        List<Node> nodes = node.getSubNodes();
-        if (nodes == null || nodes.isEmpty()) {
+    private static void addSubNodes(StringBuffer sb, XmlNode xmlNode) throws NullPointerException {
+        List<XmlNode> xmlNodes = xmlNode.getSubXmlNodes();
+        if (xmlNodes == null || xmlNodes.isEmpty()) {
             return;
         }
 
-        for (Node subNode : nodes) {
-            if (subNode.getKey() == null) {
-                throw new NullPointerException("subNode's key is null");
+        for (XmlNode subXmlNode : xmlNodes) {
+            if (subXmlNode.getKey() == null) {
+                throw new NullPointerException("subXmlNode's key is null");
             }
-            sb.append(LT).append(subNode.getKey()).append(GT);
+            sb.append(LT).append(subXmlNode.getKey()).append(GT);
 
-            if (subNode.getValue() == null && subNode.getSubNodes() != null) {
+            if (subXmlNode.getValue() == null) {
                 sb.append(NEW_LINE);
-                addSubNodes(sb, subNode);
+                addSubNodes(sb, subXmlNode);
             } else {
-                sb.append(subNode.getValue());
+                sb.append(subXmlNode.getValue());
             }
-            sb.append(LT_SPRIT).append(subNode.getKey()).append(GT).append(NEW_LINE);
+            sb.append(LT_SPRIT).append(subXmlNode.getKey()).append(GT).append(NEW_LINE);
         }
     }
 
     public static void main(String[] args) {
-        Node node = new Node("root");
-        List<Node> subNodes = new ArrayList<Node>() {{
-            Node node1 = new Node("gdfga", "dsfgsdfg");
-            add(node1);
-            Node node2 = new Node("subroot");
-            List<Node> subNode2 = new ArrayList<Node>() {{
-                Node node2sub1 = new Node("subnode1", "tttttt");
-                Node node2sub2 = new Node("subnode2", "33333");
-                add(node2sub1);
-                add(node2sub2);
+        XmlNode xmlNode = new XmlNode("root");
+        List<XmlNode> subXmlNodes = new ArrayList<XmlNode>() {{
+            XmlNode xmlNode1 = new XmlNode("gdfga", "dsfgsdfg");
+            add(xmlNode1);
+            XmlNode xmlNode2 = new XmlNode("subroot");
+            List<XmlNode> subXmlNode2 = new ArrayList<XmlNode>() {{
+                XmlNode xmlNode2Sub1 = new XmlNode("subnode1", "tttttt");
+                XmlNode xmlNode2Sub2 = new XmlNode("subnode2", "33333");
+                add(xmlNode2Sub1);
+                add(xmlNode2Sub2);
             }};
-            node2.setSubNodes(subNode2);
-            add(node2);
-            Node node3 = new Node("NODE3", "DFGADFG");
+            xmlNode2.setSubXmlNodes(subXmlNode2);
+            add(xmlNode2);
+            XmlNode xmlNode3 = new XmlNode("NODE3", "DFGADFG");
 
-            add(node3);
+            add(xmlNode3);
+            add(new XmlNode("key"));
         }};
-        node.setSubNodes(subNodes);
+        xmlNode.setSubXmlNodes(subXmlNodes);
 
-        System.out.println(nodeToStr(node));
+        System.out.println(nodeToStr(xmlNode));
 
         try {
-            System.out.println(formatXML(nodeToStr(node)));
+            System.out.println(formatXML(nodeToStr(xmlNode)));
         } catch (Exception e) {
             e.printStackTrace();
         }
