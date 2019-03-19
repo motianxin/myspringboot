@@ -12,6 +12,7 @@ import com.zhigang.myspringboot.domain.AlarmSync;
 import com.zhigang.myspringboot.domain.alarmws.NotifyAlarmSyncReq;
 import com.zhigang.myspringboot.repository.AlarmSyncRepos;
 import com.zhigang.myspringboot.repository.SyncInfoDao;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ import java.util.List;
  */
 @Service
 @Transactional
+@Slf4j
 public class AlarmSyncService implements SyncService{
 	@Autowired
 	private AlarmSyncRepos alarmSyncRepos;
@@ -35,17 +37,16 @@ public class AlarmSyncService implements SyncService{
 	@Autowired
 	private SyncInfoDao infoDao;
 
-	public void saveAlarmSync(NotifyAlarmSyncReq req) throws Exception{
+	public void saveAlarmSync(NotifyAlarmSyncReq req) {
 
-		System.out.println("begin save model, model is :");
-		System.out.println(req);
+		log.info("begin save model, model is [{}]:", req);
 		AlarmSync sync  = new AlarmSync();
 		sync.setAlarmSyncSN(req.getAlarmSyncSN());
 		sync.setBusinessType(req.getBusinessType());
 		sync.setOpration(req.getAlarmSyncOoperation());
 		sync.setProvinceSX(req.getProvinceSX());
 		alarmSyncRepos.saveAlarmSync(sync);
-		System.out.println("save end.");
+		log.info("save end.");
 
 	}
 

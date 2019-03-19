@@ -9,8 +9,7 @@
 package com.zhigang.myspringboot.service;
 
 import com.zhigang.myspringboot.utils.strutils.StringTools;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.snmp4j.*;
 import org.snmp4j.mp.MPv1;
 import org.snmp4j.mp.MPv2c;
@@ -35,6 +34,7 @@ import java.util.Vector;
  * @version 3.2.2
  * @create 2018/12/11 9:25
  */
+@Slf4j
 public class SnmpTrapMultiThreadReceiver implements CommandResponder {
 
 
@@ -42,8 +42,6 @@ public class SnmpTrapMultiThreadReceiver implements CommandResponder {
 	private String ip;
 
 	private String port;
-	/** logger */
-	private static final Logger LOGGER = LoggerFactory.getLogger(SnmpTrapMultiThreadReceiver.class);
 
 	private MultiThreadedMessageDispatcher dispatcher;
 	private Snmp snmp = null;
@@ -56,9 +54,9 @@ public class SnmpTrapMultiThreadReceiver implements CommandResponder {
 	}
 
 	private void init() throws UnknownHostException, IOException {
-		LOGGER.info("begin init snmp listener.");
+		log.info("begin init snmp listener.");
 		String address = "udp:" + ip + "/" + port;
-		LOGGER.info("address is [{}]", address);
+		log.info("address is [{}]", address);
 		threadPool = ThreadPool.create("TrapPool", 2);
 		dispatcher = new MultiThreadedMessageDispatcher(threadPool,
 				new MessageDispatcherImpl());
@@ -82,17 +80,17 @@ public class SnmpTrapMultiThreadReceiver implements CommandResponder {
 	}
 
 	public void run() throws Exception {
-		LOGGER.info("----&gt; Trap Receiver run ... &lt;----");
+		log.info("----&gt; Trap Receiver run ... &lt;----");
 		init();
 		snmp.addCommandResponder(this);
-		LOGGER.info("----&gt; 开始监听端口 [{}]，等待Trap message  &lt;----", port);
+		log.info("----&gt; 开始监听端口 [{}]，等待Trap message  &lt;----", port);
 	}
 
 	@Override
 	public void processPdu(CommandResponderEvent event) {
-		LOGGER.info("----&gt; 开始解析ResponderEvent: &lt;----");
+		log.info("----&gt; 开始解析ResponderEvent: &lt;----");
 		if (event == null || event.getPDU() == null) {
-			LOGGER.info("[Warn] ResponderEvent or PDU is null");
+			log.info("[Warn] ResponderEvent or PDU is null");
 			return;
 		}
 		Vector<VariableBinding> vbVect = event.getPDU().getVariableBindings();
@@ -100,14 +98,14 @@ public class SnmpTrapMultiThreadReceiver implements CommandResponder {
 		String value = "null";
 		for (VariableBinding vb : vbVect) {
 			value = StringTools.hexToChinese(vb.getVariable().toString());
-			LOGGER.info(vb.getOid() + " = " + value);
+			log.info(vb.getOid() + " = " + value);
 		}
 
-		LOGGER.info("----&gt;  本次ResponderEvent 解析结束 &lt;----");
+		log.info("----&gt;  本次ResponderEvent 解析结束 &lt;----");
 	}
 
 	public void closeSnmp() throws Exception {
-		LOGGER.info("close snmp listener.");
+		log.info("close snmp listener.");
 		if (snmp != null) {
 			snmp.close();
 		}

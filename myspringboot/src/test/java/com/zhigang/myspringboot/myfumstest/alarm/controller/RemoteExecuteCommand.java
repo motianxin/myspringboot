@@ -13,6 +13,7 @@ import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 import com.zhigang.myspringboot.myfumstest.alarm.model.AlarmMsgXml;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -31,6 +32,7 @@ import java.util.List;
  * @version 3.2.2
  * @create 2019/3/11 10:29
  */
+@Slf4j
 public class RemoteExecuteCommand {
 
     private static final String DEFAULTCHART = "UTF-8";
@@ -67,7 +69,7 @@ public class RemoteExecuteCommand {
             //认证
             flg = conn.authenticateWithPassword(userName, userPwd);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("exception:", e);
         }
         return flg;
     }
@@ -101,9 +103,9 @@ public class RemoteExecuteCommand {
                 buffer.append(line + "\n");
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            log.info("exception:", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("exception:", e);
         }
         return buffer.toString();
     }
@@ -125,7 +127,7 @@ public class RemoteExecuteCommand {
         try {
             alarmMsgXmls = remoteExecuteCommand.getAlarmMsgXmlsFromXsl(code);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("exception:", e);
         }
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(CONMANDPATH),true))){
@@ -134,7 +136,7 @@ public class RemoteExecuteCommand {
                 writer.write(remoteExecuteCommand.getCmd(alarmMsgXml) + "\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("exception:", e);
         }
     }
 
@@ -155,14 +157,14 @@ public class RemoteExecuteCommand {
         try {
             alarmMsgXmls = getAlarmMsgXmlsFromXsl(code);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("exception:", e);
         }
 
         for (AlarmMsgXml alarmMsgXml : alarmMsgXmls) {
             try {
                 System.out.println(execute(getCmd(alarmMsgXml)));
             } catch (IOException e) {
-                e.printStackTrace();
+                log.info("exception:", e);
             }
         }
 

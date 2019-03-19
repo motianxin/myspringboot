@@ -9,6 +9,7 @@
 package com.zhigang.myspringboot.util;
 
 import com.zhigang.myspringboot.mapandxml.XmlNode;
+import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
@@ -26,6 +27,7 @@ import java.util.List;
  * @version 3.2.2
  * @create 2019/3/14 19:40
  */
+@Slf4j
 public class XmlTools {
     private static final String LT = "<";
 
@@ -98,7 +100,7 @@ public class XmlTools {
         try {
             System.out.println(formatXML(nodeToStr(xmlNode)));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info("exception:", e);
         }
 
     }

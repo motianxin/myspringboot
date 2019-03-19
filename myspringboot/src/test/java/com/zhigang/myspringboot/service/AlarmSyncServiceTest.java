@@ -3,11 +3,13 @@ package com.zhigang.myspringboot.service;
 import com.zhigang.myspringboot.MyspringbootApplicationTests;
 import com.zhigang.myspringboot.domain.AlarmSync;
 import com.zhigang.myspringboot.domain.alarmws.NotifyAlarmSyncReq;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+@Slf4j
 public class AlarmSyncServiceTest extends MyspringbootApplicationTests {
 
 	@Autowired
@@ -16,18 +18,18 @@ public class AlarmSyncServiceTest extends MyspringbootApplicationTests {
 	@Test
 	public void saveAlarmSync() {
 		NotifyAlarmSyncReq req = new NotifyAlarmSyncReq(47, 88, "hb", "yueme");
-
+		log.info("NotifyAlarmSyncReq is {}", req);
 		try {
 			syncService.saveAlarmSync(req);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.info("exception:", e);
 		}
 	}
 
 	@Test
 	public void getOneById() {
 		AlarmSync alarmSync = syncService.getOneById(syncService.getAllAlarmSync().get(0).getId());
-		System.out.println(alarmSync);
+		log.info("alarmsync is {}", alarmSync);
 	}
 
 	@Test
@@ -39,6 +41,5 @@ public class AlarmSyncServiceTest extends MyspringbootApplicationTests {
 	@Test
 	public void getAllAlarmSync() {
 		List<AlarmSync> alarmSyncList = syncService.getAllAlarmSync();
-		alarmSyncList.forEach(System.out :: println);
 	}
 }

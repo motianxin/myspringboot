@@ -9,6 +9,8 @@
 package com.zhigang.myspringboot.domain;
 
 import com.zhigang.myspringboot.domain.entity.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 /**
@@ -21,6 +23,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "alarmsync")
+@Getter
+@Setter
 public class AlarmSync extends BaseEntity {
 
 	private int opration;
@@ -30,38 +34,6 @@ public class AlarmSync extends BaseEntity {
 	private String provinceSX;
 
 	private String alarmSyncSN;
-
-	public int getOpration() {
-		return opration;
-	}
-
-	public void setOpration(int opration) {
-		this.opration = opration;
-	}
-
-	public int getBusinessType() {
-		return businessType;
-	}
-
-	public void setBusinessType(int businessType) {
-		this.businessType = businessType;
-	}
-
-	public String getProvinceSX() {
-		return provinceSX;
-	}
-
-	public void setProvinceSX(String provinceSX) {
-		this.provinceSX = provinceSX;
-	}
-
-	public String getAlarmSyncSN() {
-		return alarmSyncSN;
-	}
-
-	public void setAlarmSyncSN(String alarmSyncSN) {
-		this.alarmSyncSN = alarmSyncSN;
-	}
 
 	@Override
 	public String toString() {

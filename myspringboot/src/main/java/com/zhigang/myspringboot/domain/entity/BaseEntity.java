@@ -27,11 +27,11 @@ public class BaseEntity extends IdEntity{
     @GeneratedValue
     @Column(length=20)
     public Long getId() {
-        return null;
+        return super.id;
     }
 
     @Override
     public void setId(Long id) {
-
+        super.id = id;
     }
 }

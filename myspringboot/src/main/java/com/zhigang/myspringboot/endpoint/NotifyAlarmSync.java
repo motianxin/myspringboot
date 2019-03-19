@@ -13,8 +13,7 @@ import com.zhigang.myspringboot.domain.alarmws.NotifyAlarmSyncRsp;
 import com.zhigang.myspringboot.service.SyncService;
 import com.zhigang.myspringboot.utils.common.Constans;
 import com.zhigang.myspringboot.utils.strutils.StringTools;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -32,10 +31,8 @@ import java.util.Date;
  * @version 3.2.2
  */
 @Endpoint
+@Slf4j
 public class NotifyAlarmSync {
-
-	/** logger */
-	private static final Logger LOGGER = LoggerFactory.getLogger(NotifyAlarmSync.class);
 
 	@Autowired
 	private SyncService syncService;
@@ -47,7 +44,7 @@ public class NotifyAlarmSync {
 		try {
 			syncService.saveAlarmSync(req);
 		} catch (Exception e) {
-			LOGGER.error("alarmSync error", e.getMessage(), e);
+			log.error("alarmSync error", e.getMessage(), e);
 		}
 
 		return new NotifyAlarmSyncRsp(4343,"retert",StringTools.dateFormat(Constans.DATE_PATTERN, new Date()));

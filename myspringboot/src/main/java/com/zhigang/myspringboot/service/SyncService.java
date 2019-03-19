@@ -2,8 +2,6 @@ package com.zhigang.myspringboot.service;
 
 import com.zhigang.myspringboot.domain.AlarmSync;
 import com.zhigang.myspringboot.domain.alarmws.NotifyAlarmSyncReq;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,10 +13,8 @@ import java.util.List;
  * @create 2018/12/20 16:51
  * @since 3.2.2
  */
-@Service
-@Transactional
 public interface SyncService {
-    void saveAlarmSync(NotifyAlarmSyncReq req) throws Exception;
+    void saveAlarmSync(NotifyAlarmSyncReq req);
 
 
     AlarmSync getOneById(Long id);
