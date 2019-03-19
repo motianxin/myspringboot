@@ -8,6 +8,8 @@
  */
 package com.zhigang.myspringboot.domain;
 
+import com.zhigang.myspringboot.domain.entity.BaseEntity;
+
 import javax.persistence.*;
 /**
  * 〈一句话功能简述〉<br> 
@@ -19,9 +21,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "alarmsync")
-public class AlarmSync implements java.io.Serializable{
-
-	private Long id;
+public class AlarmSync extends BaseEntity {
 
 	private int opration;
 
@@ -30,16 +30,6 @@ public class AlarmSync implements java.io.Serializable{
 	private String provinceSX;
 
 	private String alarmSyncSN;
-
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public int getOpration() {
 		return opration;

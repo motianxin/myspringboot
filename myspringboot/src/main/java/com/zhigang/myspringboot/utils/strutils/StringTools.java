@@ -47,4 +47,7 @@ public class StringTools {
 	}
 
 
+	public static String formatNullStr(String str) {
+		return str == null ? "" : str;
+	}
 }
