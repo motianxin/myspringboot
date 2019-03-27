@@ -24,10 +24,10 @@ public class QuickSort {
 		quickSort(arr, pivotIndex + 1, endIndex);
 	}
 
-	/** 
+	/**
 	 * @Description: 挖坑法
-	 * @Param: [arr, startIndex, endIndex] 
-	 * @return: int 
+	 * @Param: [arr, startIndex, endIndex]
+	 * @return: int
 	 * @Author: zghuang
 	 * @Date: 2019/3/27 22:37
 	 */
@@ -65,10 +65,10 @@ public class QuickSort {
 		return index;
 	}
 
-	/** 
-	 * @Description: 指针交换法 
-	 * @Param: [arr, startIndex, endIndex] 
-	 * @return: int 
+	/**
+	 * @Description: 指针交换法
+	 * @Param: [arr, startIndex, endIndex]
+	 * @return: int
 	 * @Author: zghuang
 	 * @Date: 2019/3/27 22:37
 	 */
@@ -77,20 +77,20 @@ public class QuickSort {
 		int pivot = arr[startIndex];
 		int left = startIndex;
 		int right = endIndex;
-		while( left != right) {
+		while (left != right) {
 			//控制right指针比较并左移
 
-			while(left<right && arr[right] > pivot){
+			while (left < right && arr[right] > pivot) {
 				right--;
 			}
 			//控制right指针比较并右移
 
-			while( left<right && arr[left] <= pivot) {
+			while (left < right && arr[left] <= pivot) {
 				left++;
 			}
 			//交换left和right指向的元素
 
-			if(left<right) {
+			if (left < right) {
 				int p = arr[left];
 				arr[left] = arr[right];
 				arr[right] = p;
@@ -103,10 +103,10 @@ public class QuickSort {
 		return left;
 	}
 
-	/** 
+	/**
 	 * @Description: 用栈实现，非递归
-	 * @Param: [arr, startIndex, endIndex] 
-	 * @return: void 
+	 * @Param: [arr, startIndex, endIndex]
+	 * @return: void
 	 * @Author: zghuang
 	 * @Date: 2019/3/27 22:45
 	 */
@@ -125,13 +125,13 @@ public class QuickSort {
 			// 得到基准元素位置
 			int pivotIndex = partition(arr, param.get("startIndex"), param.get("endIndex"));
 			// 根据基准元素分成两部分, 把每一部分的起止下标入栈
-			if(param.get("startIndex") <  pivotIndex -1){
+			if (param.get("startIndex") < pivotIndex - 1) {
 				Map<String, Integer> leftParam = new HashMap<>();
-				leftParam.put("startIndex",  param.get("startIndex"));
-				leftParam.put("endIndex", pivotIndex -1);
+				leftParam.put("startIndex", param.get("startIndex"));
+				leftParam.put("endIndex", pivotIndex - 1);
 				quickSortStack.push(leftParam);
 			}
-			if(pivotIndex + 1 < param.get("endIndex")){
+			if (pivotIndex + 1 < param.get("endIndex")) {
 				Map<String, Integer> rightParam = new HashMap<>();
 				rightParam.put("startIndex", pivotIndex + 1);
 				rightParam.put("endIndex", param.get("endIndex"));
