@@ -18,7 +18,9 @@ import org.dom4j.io.XMLWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * 〈xml数据工具类〉
@@ -75,7 +77,7 @@ public class XmlTools {
     }
 
 
-    private static void nodeToStr_dsf(XmlNode xmlNode){
+    private static String nodeToStr_dsf(XmlNode xmlNode){
 		if (xmlNode == null || xmlNode.getKey() == null) {
 			throw new NullPointerException("XmlNode or XmlNode's key is null");
 		}
@@ -84,7 +86,29 @@ public class XmlTools {
 		System.out.println(sb.toString());
 
 
+		Stack<XmlNode> nodeStack = new Stack<>();
+		sb.append(LT).append(xmlNode.getKey()).append(GT).append(NEW_LINE);
+		nodeStack.push(xmlNode);
+		while (!nodeStack.empty()) {
+			XmlNode node = nodeStack.pop();
 
+			if (node.getValue() == null) {
+				List<XmlNode> xmlNodes = node.getSubXmlNodes();
+				if (xmlNodes != null && !xmlNodes.isEmpty()) {
+					Iterator<XmlNode> nodeIterable = xmlNodes.iterator();
+					while (nodeIterable.hasNext()) {
+						XmlNode subNode = nodeIterable.next();
+						sb.append(LT).append(subNode.getKey()).append(GT).append(NEW_LINE);
+						nodeStack.push(subNode);
+					}
+				}
+
+			} else {
+				sb.append(node.getValue());
+			}
+			sb.append(LT_SPRIT).append(node.getKey()).append(GT).append(NEW_LINE);
+		}
+		return sb.toString();
 	}
 
 
@@ -110,7 +134,7 @@ public class XmlTools {
         xmlNode.setSubXmlNodes(subXmlNodes);
 
         System.out.println(nodeToStr(xmlNode));
-
+		System.out.println(nodeToStr_dsf(xmlNode));
         try {
             System.out.println(formatXML(nodeToStr(xmlNode)));
         } catch (Exception e) {
