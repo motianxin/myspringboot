@@ -74,6 +74,20 @@ public class XmlTools {
         }
     }
 
+
+    private static void nodeToStr_dsf(XmlNode xmlNode){
+		if (xmlNode == null || xmlNode.getKey() == null) {
+			throw new NullPointerException("XmlNode or XmlNode's key is null");
+		}
+		StringBuffer sb = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+
+		System.out.println(sb.toString());
+
+
+
+	}
+
+
     public static void main(String[] args) {
         XmlNode xmlNode = new XmlNode("root");
         List<XmlNode> subXmlNodes = new ArrayList<XmlNode>() {{
