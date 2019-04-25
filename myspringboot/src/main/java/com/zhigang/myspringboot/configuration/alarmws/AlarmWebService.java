@@ -6,7 +6,7 @@
  * History:
  * <author>          <time>          <version>          <desc>
  */
-package com.zhigang.myspringboot.controller;
+package com.zhigang.myspringboot.configuration.alarmws;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;

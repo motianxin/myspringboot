@@ -33,7 +33,7 @@
         </root>
     </springProfile>
 
-    <springProfile name="prod">
+    <springProfile name="pro">
         <appender name="PROD_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <file>${PRO_FILE}/myboot.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
