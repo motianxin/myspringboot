@@ -8,7 +8,6 @@
  */
 package com.zhigang.myspringboot.configuration.quartz;
 
-import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,11 +33,6 @@ public class QuartzScheduler {
         schedulerFactoryBean.setJobFactory(quartzJobFactory);
         System.out.println("myJobFactory:" + quartzJobFactory);
         return schedulerFactoryBean;
-    }
-
-    @Bean
-    public Scheduler scheduler() {
-        return schedulerFactoryBean().getScheduler();
     }
 
 }
