@@ -62,11 +62,12 @@ public class QuartzManager {
      * @param scheduler
      */
     private void startJobTask(Scheduler scheduler) throws SchedulerException {
-        JobDetail jobDetail = JobBuilder.newJob(Myjob.class).withIdentity(JOB_NAME, GROUP_NAME).build();
+        JobDetail jobDetail = JobBuilder.newJob(Myjob.class).withIdentity(JOB_NAME, GROUP_NAME).storeDurably().build();
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(DEFAULT_CRON);
-        CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(JOB_NAME, GROUP_NAME)
+        CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(JOB_NAME, GROUP_NAME).forJob(jobDetail)
                 .withSchedule(cronScheduleBuilder).build();
-        scheduler.scheduleJob(jobDetail, cronTrigger);
+        scheduler.addJob(jobDetail, true);
+        scheduler.scheduleJob(cronTrigger);
 
     }
 
