@@ -1,12 +1,21 @@
 spring:
   freemarker:
     charset: UTF-8
+    check-template-location: false
   profiles:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/myspringboot?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
     username: root
     password: Root123!
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat, wall, log4j
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    dbcp2:
+      access-to-underlying-connection-allowed: true
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -21,8 +30,8 @@ spring:
           jobStore:
             class: org.quartz.impl.jdbcjobstore.JobStoreTX
             driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-            tablePrefix: QRTZ_
-            isClustered: false
+            tablePrefix: qrtz_
+            isClustered: true
             clusterCheckinInterval: 10000
             useProperties: false
           threadPool:
@@ -30,7 +39,12 @@ spring:
             threadCount: 10
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
-    #数据库方式
+          datasource:
+            default:
+              driver: com.mysql.cj.jdbc.Driver
+              url: jdbc:mysql://localhost:3306/myspringboot?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+              username: root
+              password: Root123!
     job-store-type: jdbc
 
 logging:
