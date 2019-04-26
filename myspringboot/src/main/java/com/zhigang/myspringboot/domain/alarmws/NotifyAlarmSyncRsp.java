@@ -117,12 +117,13 @@ public class NotifyAlarmSyncRsp {
         this.timeStamp = value;
     }
 
-	@Override
-	public String toString() {
-		return "NotifyAlarmSyncRsp{" +
-				"resultCode=" + resultCode +
-				", resultMsg='" + resultMsg + '\'' +
-				", timeStamp='" + timeStamp + '\'' +
-				'}';
-	}
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("NotifyAlarmSyncRsp{");
+        sb.append("resultCode=").append(resultCode);
+        sb.append(", resultMsg='").append(resultMsg).append('\'');
+        sb.append(", timeStamp='").append(timeStamp).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

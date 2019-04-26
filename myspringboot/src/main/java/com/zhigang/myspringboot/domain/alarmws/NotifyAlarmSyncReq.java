@@ -125,11 +125,12 @@ public class NotifyAlarmSyncReq {
 
     @Override
     public String toString() {
-        return "NotifyAlarmSyncReq{" +
-                "alarmSyncOoperation=" + alarmSyncOoperation +
-                ", businessType=" + businessType +
-                ", provinceSX='" + provinceSX + '\'' +
-                ", alarmSyncSN='" + alarmSyncSN + '\'' +
-                '}';
+        final StringBuffer sb = new StringBuffer("NotifyAlarmSyncReq{");
+        sb.append("alarmSyncOoperation=").append(alarmSyncOoperation);
+        sb.append(", businessType=").append(businessType);
+        sb.append(", provinceSX='").append(provinceSX).append('\'');
+        sb.append(", alarmSyncSN='").append(alarmSyncSN).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

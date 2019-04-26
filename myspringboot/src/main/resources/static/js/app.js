@@ -26,6 +26,9 @@ angular.module('bossApp', [
             .when('/mypage', {
                 templateUrl: 'view/mypage.html'
             })
+            .when('/upload', {
+                templateUrl: 'view/upload.html'
+            })
             .otherwise({
                 redirectTo: '/'
             });
