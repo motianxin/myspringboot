@@ -11,6 +11,7 @@ package com.zhigang.myspringboot.exception;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +24,7 @@ import java.util.Map;
  * @create 2018/12/27 21:40
  * @version 3.2.2
  */
-@ControllerAdvice
+@ControllerAdvice(annotations = RestController.class)
 public class GlobalDefaultExceptionHandler {
 	/**
 	 *
