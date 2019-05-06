@@ -1,7 +1,6 @@
 server:
   servlet:
     context-path: /myboot
-  port: 9000
 
 spring:
   profiles:

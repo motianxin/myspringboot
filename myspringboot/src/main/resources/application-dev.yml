@@ -1,3 +1,4 @@
+
 spring:
   freemarker:
     charset: UTF-8
@@ -39,3 +40,11 @@ logging:
 snmp:
   ip: 127.0.0.1
   port: 162
+server:
+  port: 443
+  ssl:
+    key-store: /2153654_www.zghuang.top_tomcat/2153654_www.zghuang.top.pfx
+    key-alias: tomcat
+    enabled: true
+    key-store-password: nG1c2pAq
+    key-store-type: pfx
