@@ -88,6 +88,19 @@ public class AStarSearch {
         public void setValue(int value) {
             this.value = value;
         }
+
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer("Node{");
+            sb.append("row=").append(row);
+            sb.append(", column=").append(column);
+            sb.append(", h=").append(h);
+            sb.append(", g=").append(g);
+            sb.append(", f=").append(f);
+            sb.append(", value=").append(value);
+            sb.append('}');
+            return sb.toString();
+        }
     }
 
     /**
@@ -129,13 +142,14 @@ public class AStarSearch {
             // 在OpenList中查找 F值最小的节点作为当前方格节点
             Node current = findMinNode();
             // 当前方格节点从open list中移除
+            System.out.println(current);
             openList.remove(current);
             // 当前方格节点进入 close list
             closeList.add(current);
             // 找到所有邻近节点
             List<Node> neighbors = findNeighbors(current);
             for (Node node : neighbors) {
-                if (!openList.contains(node)) {
+                if (!openList.contains(node) && !closeList.contains(node)) {
                     //邻近节点不在OpenList中，标记父亲、G、H、F，并放入OpenList
                     markAndInvolve(current, end, node);
                     openList.add(node);
@@ -152,7 +166,7 @@ public class AStarSearch {
 
     private Node find(List<Node> openList, Node end) {
         for (Node node : openList) {
-            if (node == end) {
+            if (node.value == end.value) {
                 return node;
             }
         }
@@ -175,16 +189,16 @@ public class AStarSearch {
         int row = current.getRow();
         int column = current.getColumn();
         if (column + 1 <= table[0].length && table[row][column + 1].getValue() != -1) {
-            nearNodes.add(table[row][column]);
+            nearNodes.add(table[row][column + 1]);
         }
         if (row + 1 <= table.length && table[row + 1][column].getValue() != -1) {
-            nearNodes.add(table[row][column]);
+            nearNodes.add(table[row + 1][column]);
         }
         if (row - 1 >= 0 && table[row - 1][column].getValue() != -1) {
-            nearNodes.add(table[row][column]);
+            nearNodes.add(table[row - 1][column]);
         }
         if (column - 1 >= 0 && table[row][column - 1].getValue() != -1) {
-            nearNodes.add(table[row][column]);
+            nearNodes.add(table[row][column - 1]);
         }
         return nearNodes;
     }
@@ -198,6 +212,35 @@ public class AStarSearch {
             }
         }
         return temp;
+    }
+
+    public static void main(String[] args) {
+        AStarSearch aStarSearch = new AStarSearch();
+        aStarSearch.initNodes(5, 7);
+        aStarSearch.setNodeValue(2, 1, 1);
+        aStarSearch.setNodeValue(2, 5, 2);
+        aStarSearch.setNodeValue(1, 3, -1);
+        aStarSearch.setNodeValue(2, 3, -1);
+        aStarSearch.setNodeValue(3, 3, -1);
+        printTbale();
+        Node node = aStarSearch.aSearch(table[2][1], table[2][5]);
+        System.out.println("star search over.");
+        while (node != null) {
+            System.out.println(node.toString());
+            node = node.getParentNode();
+        }
+    }
+
+    private static void printTbale() {
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[0].length; j++) {
+                System.out.print(table[i][j].getValue() + ", ");
+            }
+            System.out.println();
+        }
+
+
+
     }
 
 }
