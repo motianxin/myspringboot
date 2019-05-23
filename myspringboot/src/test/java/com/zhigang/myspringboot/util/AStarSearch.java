@@ -238,9 +238,6 @@ public class AStarSearch {
             }
             System.out.println();
         }
-
-
-
     }
 
 }
