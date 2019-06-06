@@ -1,6 +1,5 @@
 package com.zhigang.myspringboot.algorithms;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -19,7 +18,7 @@ public class QuickSort {
             return;
         }
         // 得到基准元素位置
-        int pivotIndex = partition(arr, startIndex, endIndex);
+        int pivotIndex = partition4(arr, startIndex, endIndex);
         // 用分治法递归数列的两部分
         quickSort(arr, startIndex, pivotIndex - 1);
         quickSort(arr, pivotIndex + 1, endIndex);
@@ -113,7 +112,7 @@ public class QuickSort {
      * @date 2019/5/23 20:39
      **/
     private static int partition3(int[] arr, int startIndex, int endIndex) {
-        int mark = 0;
+        int mark = startIndex;
         int pivot = arr[startIndex];
         for (int i = startIndex; i <= endIndex; i++) {
             if (arr[i] < pivot) {
@@ -146,7 +145,7 @@ public class QuickSort {
                 arr[left] = temp;
                 changeTimes++;
             }
-            if (changeTimes % 2 == 1) {
+            if ((changeTimes & 1) == 1) {
                 left++;
             } else {
                 right--;
@@ -192,11 +191,51 @@ public class QuickSort {
         }
     }
 
+    /**
+     * 冒泡排序
+     *
+     * @param array
+     */
+    private static void bubbleSort(int[] array) {
+        if (array.length <= 1) {
+            return;
+        }
+        // 标记无序边界
+        int lastExchange = 0;
+        int sortBorder = array.length - 1;
+        for (int i = 0; i < array.length -1; i++) {
+            // 标记一轮排序后是否有序
+            boolean isSorted = true;
+            for (int j = 0; j < sortBorder; j++) {
+                int tmp = 0;
+                if (array[j] > array[j + 1]) {
+                    tmp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = tmp;
+                    // 有交换说明无序，没有交换说明有序
+                    isSorted = false;
+                    // 更新无序边界
+                    lastExchange = j;
+                }
+            }
+            sortBorder = lastExchange;
+            if (isSorted) {
+                break;
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
-        int[] arr = new int[]{4, 5, 3, 6, 9, 2, 7, 8, 1};
-        int mark = partition4(arr, 0, arr.length - 1);
-        System.out.println(mark);
-        Arrays.stream(arr).forEach(System.out::println);
+        int[] arr = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1};
+        /*// quickSort(arr, 0, arr.length - 1);
+        bubbleSort(arr);
+        Arrays.stream(arr).forEach(num -> System.out.print(num + ", "));*/
+        int i = -9;
+
+        i = i >>> 2;
+        System.out.println(i);
+
     }
 
 }
