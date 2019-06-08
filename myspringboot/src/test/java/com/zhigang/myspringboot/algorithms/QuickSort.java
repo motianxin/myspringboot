@@ -1,8 +1,6 @@
 package com.zhigang.myspringboot.algorithms;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @program: Code
@@ -91,9 +89,7 @@ public class QuickSort {
             //交换left和right指向的元素
 
             if (left < right) {
-                int p = arr[left];
-                arr[left] = arr[right];
-                arr[right] = p;
+                swap(arr, right, left);
             }
         }
         //pivot和指针重合点交换
@@ -115,11 +111,9 @@ public class QuickSort {
         int mark = startIndex;
         int pivot = arr[startIndex];
         for (int i = startIndex; i <= endIndex; i++) {
-            if (arr[i] < pivot) {
+            if (less(arr[i], pivot)) {
                 mark++;
-                int temp = arr[i];
-                arr[i] = arr[mark];
-                arr[mark] = temp;
+                swap(arr, i, mark);
             }
         }
         arr[0] = arr[mark];
@@ -139,10 +133,8 @@ public class QuickSort {
         int right = endIndex;
         int changeTimes = 0;
         while (right > left) {
-            if (arr[right] < arr[left]) {
-                int temp = arr[right];
-                arr[right] = arr[left];
-                arr[left] = temp;
+            if (less(arr[right], arr[left])) {
+                swap(arr, right, left);
                 changeTimes++;
             }
             if ((changeTimes & 1) == 1) {
@@ -192,9 +184,11 @@ public class QuickSort {
     }
 
     /**
-     * 冒泡排序
-     *
-     * @param array
+     * @Description: bubble Sort
+     * @Param: [array]
+     * @return: void
+     * @Author: zghuang
+     * @Date: 2019/6/8 17:26
      */
     private static void bubbleSort(int[] array) {
         if (array.length <= 1) {
@@ -203,15 +197,13 @@ public class QuickSort {
         // 标记无序边界
         int lastExchange = 0;
         int sortBorder = array.length - 1;
-        for (int i = 0; i < array.length -1; i++) {
+        for (int i = 0; i < array.length - 1; i++) {
             // 标记一轮排序后是否有序
             boolean isSorted = true;
             for (int j = 0; j < sortBorder; j++) {
                 int tmp = 0;
-                if (array[j] > array[j + 1]) {
-                    tmp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = tmp;
+                if (less(array[j], array[j + 1])) {
+                    swap(array, j, j + 1);
                     // 有交换说明无序，没有交换说明有序
                     isSorted = false;
                     // 更新无序边界
@@ -226,15 +218,114 @@ public class QuickSort {
 
     }
 
-    public static void main(String[] args) {
-        int[] arr = new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1};
-        /*// quickSort(arr, 0, arr.length - 1);
-        bubbleSort(arr);
-        Arrays.stream(arr).forEach(num -> System.out.print(num + ", "));*/
-        int i = -9;
 
-        i = i >>> 2;
-        System.out.println(i);
+    /**
+     * @Description: Comparison of size
+     * @Param: [a, b]
+     * @return: boolean
+     * @Author: zghuang
+     * @Date: 2019/6/8 17:21
+     */
+    private static boolean less(int a, int b) {
+        return a < b;
+    }
+
+    /**
+     * @Description: Exchange element
+     * @Param: [arr, i, j]
+     * @return: void
+     * @Author: zghuang
+     * @Date: 2019/6/8 17:21
+     */
+    private static void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+
+    /**
+     * @Description: Insert sort
+     * @Param: [arr]
+     * @return: void
+     * @Author: zghuang
+     * @Date: 2019/6/8 17:35
+     */
+    private static void insertSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 1; i < n; i++) {
+            for (int j = i; j >= 0 && less(arr[j], arr[j - 1]); j--) {
+                swap(arr, j, j - 1);
+            }
+        }
+    }
+
+    /**
+     * @Description: 希尔排序
+     * @Param: [arr]
+     * @return: void
+     * @Author: zghuang
+     * @Date: 2019/6/8 17:36
+     */
+    private static void shellSort(int[] arr) {
+        int n = arr.length;
+        int h = 1;
+        // h = 1,4,13,40 ....;
+        while (h < n / 3) {
+            h = 3 * h + 1;
+        }
+        while (h >= 1) {
+            for (int i = h; i < n; i++) {
+                for (int j = i; j >= h && less(arr[j], arr[j - h]); j -= h) {
+                    swap(arr, j, j - h);
+                }
+            }
+            h = h / 3;
+        }
+
+
+    }
+
+    /**
+     * @Description: 初始化数组
+     * @Param: [n]
+     * @return: int[]
+     * @Author: zghuang
+     * @Date: 2019/6/8 18:25
+     */
+    private static int[] initArray(int n){
+        if (n <= 0) {
+            return null;
+        }
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = i;
+        }
+        return arr;
+    }
+
+
+    private static void shuffle(int[] a){
+        int length = a.length;
+        Random random = new Random();
+        for (int i = length; i > 1; i--) {
+            swap(a, i-1, random.nextInt(i));
+        }
+
+    }
+
+    public static void main(String[] args) {
+
+        int[] arr = initArray(1 << 8);
+        System.out.println("init array");
+        System.out.println(Arrays.toString(arr));
+        System.out.println("shuffle array");
+        shuffle(arr);
+        System.out.println(Arrays.toString(arr));
+        // quickSort(arr, 0, arr.length - 1);
+        // bubbleSort(arr);
+        shellSort(arr);
+        System.out.println("sort array");
+        System.out.println(Arrays.toString(arr));
 
     }
 
