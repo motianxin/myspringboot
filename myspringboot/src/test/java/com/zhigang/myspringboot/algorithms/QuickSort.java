@@ -273,17 +273,78 @@ public class QuickSort {
         while (h < n / 3) {
             h = 3 * h + 1;
         }
+
         while (h >= 1) {
+            int compareTimes = 0;
             for (int i = h; i < n; i++) {
-                for (int j = i; j >= h && less(arr[j], arr[j - h]); j -= h) {
-                    swap(arr, j, j - h);
+                for (int j = i; j >= h; j -= h) {
+                    compareTimes++;
+                    if (less(arr[j], arr[j - h])) {
+                        swap(arr, j, j - h);
+                    }
                 }
             }
+            System.out.println("h = " + h);
+            System.out.println("compareTimes / length = " + (1.0 * compareTimes / n));
             h = h / 3;
         }
-
-
     }
+
+
+    private static void merge(int[] arr, int lo, int mid, int hi) {
+        int[] copyArray = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            copyArray[i] = arr[i];
+        }
+        int i = lo;
+        int j = mid + 1;
+        for (int k = lo; k < arr.length; k++) {
+            if (i > mid) {
+                arr[k] = copyArray[j++];
+            } else if (j > hi) {
+                arr[k] = copyArray[i++];
+            } else if (less(copyArray[j], copyArray[i])) {
+                arr[k] = copyArray[j++];
+            } else {
+                arr[k] = copyArray[i++];
+            }
+        }
+    }
+
+    /**
+     * @Description: 归并排序，自顶向下
+     * @Param: [arr, lo, hi]
+     * @return: void
+     * @Author: zghuang
+     * @Date: 2019/6/8 23:12
+     */
+    private static void mergeSort(int[] arr, int lo, int hi) {
+        if (hi <= lo) {
+            return;
+        }
+        int mid = lo + (hi - lo) / 2;
+        mergeSort(arr, lo, mid);
+        mergeSort(arr, mid + 1, hi);
+        merge(arr, lo, mid, hi);
+    }
+
+    /**
+     * @Description: 归并排序，自下而上
+     * @Param: [arr]
+     * @return: void
+     * @Author: zghuang
+     * @Date: 2019/6/8 23:19
+     */
+    private static void mergeBUsort(int[] arr) {
+        int lo = 0, hi = arr.length;
+        for (int i = 1; i < hi; i *= 2) {
+            System.out.println("mergeBUsort size = " + i);
+            for (int j = 0; j < hi - i; j += 2 * i) {
+                merge(arr, j, j + i - 1, Math.min(hi - 1, j + 2 * i - 1));
+            }
+        }
+    }
+
 
     /**
      * @Description: 初始化数组
@@ -292,7 +353,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/8 18:25
      */
-    private static int[] initArray(int n){
+    private static int[] initArray(int n) {
         if (n <= 0) {
             return null;
         }
@@ -303,19 +364,25 @@ public class QuickSort {
         return arr;
     }
 
-
-    private static void shuffle(int[] a){
+    /**
+     * @Description: 数组随机重排
+     * @Param: [a]
+     * @return: void
+     * @Author: zghuang
+     * @Date: 2019/6/8 22:44
+     */
+    private static void shuffle(int[] a) {
         int length = a.length;
         Random random = new Random();
         for (int i = length; i > 1; i--) {
-            swap(a, i-1, random.nextInt(i));
+            swap(a, i - 1, random.nextInt(i));
         }
 
     }
 
-    public static void main(String[] args) {
+    private static void testShellSort(int n) {
 
-        int[] arr = initArray(1 << 8);
+        int[] arr = initArray(n);
         System.out.println("init array");
         System.out.println(Arrays.toString(arr));
         System.out.println("shuffle array");
@@ -324,6 +391,28 @@ public class QuickSort {
         // quickSort(arr, 0, arr.length - 1);
         // bubbleSort(arr);
         shellSort(arr);
+        System.out.println("sort array");
+        System.out.println(Arrays.toString(arr));
+    }
+
+    public static void main(String[] args) {
+        /*int[] num = new int[]{100, 100, 100, 100};
+        for (int i = 0; i < num.length; i++) {
+            System.out.println("begin testShellSort: number = " + num[i]);
+            testShellSort(num[i]);
+            System.out.println("end testShellSort: number = " + num[i]);
+        }*/
+        int[] arr = initArray(100);
+        System.out.println("init array");
+        System.out.println(Arrays.toString(arr));
+        System.out.println("shuffle array");
+        shuffle(arr);
+        System.out.println(Arrays.toString(arr));
+        // quickSort(arr, 0, arr.length - 1);
+        // bubbleSort(arr);
+        // shellSort(arr);
+        // mergeSort(arr, 0, arr.length -1);
+        mergeBUsort(arr);
         System.out.println("sort array");
         System.out.println(Arrays.toString(arr));
 
