@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,7 +29,7 @@ import java.util.stream.Stream;
 public class LambdaTest {
 
     public static void main(String[] args) {
-        int n = 20;
+        int n = 30;
         System.out.println("begin init list");
         List<Student> students = initStuList(n);
         students.stream().forEach(System.out::println);
@@ -59,6 +61,43 @@ public class LambdaTest {
         Map<String, Student> gradeMaxScoreStuMap = students.stream().collect(Collectors.groupingBy(Student::getGrade, Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparing(Student::getScore)), Optional::get)));
         System.out.println(gradeMaxScoreStuMap);
 
+
+        System.out.println("按年级分组并对学生排序：");
+        /*Map<String, List<Student>> grade_sortStuMap = students.stream().collect(Collectors.groupingBy(Student::getGrade, collectingAndSort(Collectors.toList(), Comparator.comparing(Student::getScore).reversed())));
+        System.out.println(grade_sortStuMap);*/
+
+
+        Map<String, List<Student>> grade_sortStuMap = students.stream().collect(Collectors.groupingBy(Student::getGrade, Collectors.collectingAndThen(Collectors.toList(), (r) -> {
+            r.sort(Comparator.comparing(Student::getScore).reversed());
+            return r;
+        })));
+
+        System.out.println(grade_sortStuMap);
+
+        System.out.println("按年级分组并过滤掉低于50分的学生");
+        /*Map<String, List<Student>> grade_lowStuMap = students.stream().collect(Collectors.groupingBy(Student::getGrade, collectingAndFilter(Collectors.toList(), student -> student.getScore() > 50)));*/
+
+        Map<String, List<Student>> grade_lowStuMap = students.stream().collect(Collectors.groupingBy(Student::getGrade, Collectors.collectingAndThen((Collectors.toList()), (r) ->
+                r.stream().filter(student -> student.getScore() > 50).collect(Collectors.toList()))));
+
+        System.out.println(grade_lowStuMap);
+    }
+
+    public static <T> Collector<T, ?, List<T>> collectingAndFilter(
+            Collector<T, ?, List<T>> downstream,
+            Predicate<T> predicate) {
+        return Collectors.collectingAndThen(downstream, (r) ->
+             r.stream().filter(predicate).collect(Collectors.toList())
+        );
+    }
+
+    private static <T> Collector<T, ?, List<T>> collectingAndSort(
+            Collector<T, ?, List<T>> downstream,
+            Comparator<? super T> comparator) {
+        return Collectors.collectingAndThen(downstream, (r) -> {
+            r.sort(comparator);
+            return r;
+        });
     }
 
     private static List<Student> initStuList(int n) {
