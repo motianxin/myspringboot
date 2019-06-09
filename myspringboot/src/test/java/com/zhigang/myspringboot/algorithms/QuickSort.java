@@ -292,6 +292,9 @@ public class QuickSort {
 
 
     private static void merge(int[] arr, int lo, int mid, int hi) {
+        if (arr[mid] <= arr[mid + 1]) {
+            return;
+        }
         int[] copyArray = new int[arr.length];
         for (int i = 0; i < arr.length; i++) {
             copyArray[i] = arr[i];
@@ -402,11 +405,12 @@ public class QuickSort {
             testShellSort(num[i]);
             System.out.println("end testShellSort: number = " + num[i]);
         }*/
-        int[] arr = initArray(100);
+        // int[] arr = initArray(100);
+        int[] arr = new Random().ints(0, 256).distinct().limit(256).toArray();
         System.out.println("init array");
-        System.out.println(Arrays.toString(arr));
+        /*System.out.println(Arrays.toString(arr));
         System.out.println("shuffle array");
-        shuffle(arr);
+        shuffle(arr);*/
         System.out.println(Arrays.toString(arr));
         // quickSort(arr, 0, arr.length - 1);
         // bubbleSort(arr);
