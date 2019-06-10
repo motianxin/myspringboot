@@ -21,7 +21,17 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.xml.bind.JAXB;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,9 +113,9 @@ public class RemoteExecuteCommand {
                 buffer.append(line + "\n");
             }
         } catch (UnsupportedEncodingException e) {
-            log.info("exception:", e);
+            log.error("exception:", e);
         } catch (IOException e) {
-            log.info("exception:", e);
+            log.error("exception:", e);
         }
         return buffer.toString();
     }
@@ -117,6 +127,16 @@ public class RemoteExecuteCommand {
 
         //writeConmandToLog(CLEAR_ALARMCODE);
 
+        RemoteExecuteCommand remoteExecuteCommand = new RemoteExecuteCommand("10.96.156.241", "root", "hello123");
+        try {
+            String path = remoteExecuteCommand.execute("ps -ef | grep [i]notify.sh");
+            System.out.println( "result :" + path);
+            /*String[] pathar = path.split("/");
+            System.out.println(Arrays.toString(pathar));
+            System.out.println(pathar[4]);*/
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
