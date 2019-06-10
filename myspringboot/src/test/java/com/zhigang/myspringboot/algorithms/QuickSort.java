@@ -398,6 +398,41 @@ public class QuickSort {
         System.out.println(Arrays.toString(arr));
     }
 
+    /**
+     * @Description: 判断一个整数的二进制位有多少个一
+     * @Param: [number]
+     * @return: int
+     * @Author: zghuang
+     * @Date: 2019/6/10 23:58
+     */
+    private static int hasOneNumbers(long number) {
+        int i = 0;
+        System.out.println(Long.toBinaryString(number));
+        long tmp = number;
+        while ((tmp & 1) == 1) {
+            tmp = tmp << 1 | tmp >>> -1;
+        }
+        System.out.println(Long.toBinaryString(tmp));
+        i = (int) Math.log(tmp + 1.0);
+        System.out.println(i);
+        return i;
+    }
+
+    private static long josephus(long number) {
+        System.out.println("josephus : " + number);
+        System.out.println(Long.toBinaryString(number));
+        if (number<=1 || (number+1 & number) == 0) {
+
+            return number;
+        }
+        long i = 0L;
+        long twopower = Math.round((Math.log(number) / Math.log(2)) - 0.5);
+        System.out.println(Math.pow(2.0, twopower));
+        long l = number - Math.round(Math.pow(2.0, twopower));
+        i = (l << 1) + 1;
+        return josephus(i);
+    }
+
     public static void main(String[] args) {
         /*int[] num = new int[]{100, 100, 100, 100};
         for (int i = 0; i < num.length; i++) {
@@ -406,11 +441,11 @@ public class QuickSort {
             System.out.println("end testShellSort: number = " + num[i]);
         }*/
         // int[] arr = initArray(100);
-        int[] arr = new Random().ints(0, 256).distinct().limit(256).toArray();
+        /*int[] arr = new Random().ints(0, 256).distinct().limit(256).toArray();
         System.out.println("init array");
-        /*System.out.println(Arrays.toString(arr));
+        *//*System.out.println(Arrays.toString(arr));
         System.out.println("shuffle array");
-        shuffle(arr);*/
+        shuffle(arr);*//*
         System.out.println(Arrays.toString(arr));
         // quickSort(arr, 0, arr.length - 1);
         // bubbleSort(arr);
@@ -418,7 +453,17 @@ public class QuickSort {
         // mergeSort(arr, 0, arr.length -1);
         mergeBUsort(arr);
         System.out.println("sort array");
-        System.out.println(Arrays.toString(arr));
+        System.out.println(Arrays.toString(arr));*/
+
+        // hasOneNumbers(3L);
+        long a = 1l;
+        a = a << 62;
+        System.out.println(a);
+
+        long b = josephus(146456L);
+        System.out.println(b);
+        System.out.println(Math.round((Math.log(b+1) / Math.log(2)) - 0.5));
+        System.out.println(Long.toBinaryString(b));
 
     }
 
