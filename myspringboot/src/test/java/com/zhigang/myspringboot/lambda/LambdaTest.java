@@ -62,14 +62,14 @@ public class LambdaTest {
         System.out.println(gradeMaxScoreStuMap);
 
 
-        System.out.println("按年级分组并对学生排序：");
+        System.out.println("取每个年级学生前三名：");
         /*Map<String, List<Student>> grade_sortStuMap = students.stream().collect(Collectors.groupingBy(Student::getGrade, collectingAndSort(Collectors.toList(), Comparator.comparing(Student::getScore).reversed())));
         System.out.println(grade_sortStuMap);*/
 
 
         Map<String, List<Student>> grade_sortStuMap = students.stream().collect(Collectors.groupingBy(Student::getGrade, Collectors.collectingAndThen(Collectors.toList(), (r) -> {
             r.sort(Comparator.comparing(Student::getScore).reversed());
-            return r;
+            return r.stream().limit(3).collect(Collectors.toList());
         })));
 
         System.out.println(grade_sortStuMap);
@@ -81,6 +81,13 @@ public class LambdaTest {
                 r.stream().filter(student -> student.getScore() > 50).collect(Collectors.toList()))));
 
         System.out.println(grade_lowStuMap);
+
+        System.out.println("查询每个年级的及格人数：");
+        Map<String, Long> grade_above60NumMap = students.stream().collect(Collectors.groupingBy(Student::getGrade, Collectors.collectingAndThen(Collectors.toList(), (r) -> r.stream().filter(student -> student.getScore() >= 60).count())));
+        System.out.println(grade_above60NumMap);
+
+
+
     }
 
     public static <T> Collector<T, ?, List<T>> collectingAndFilter(
