@@ -1,6 +1,10 @@
 package com.zhigang.myspringboot.algorithms;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.Stack;
 
 /**
  * @program: Code
@@ -406,31 +410,34 @@ public class QuickSort {
      * @Date: 2019/6/10 23:58
      */
     private static int hasOneNumbers(long number) {
-        int i = 0;
-        System.out.println(Long.toBinaryString(number));
-        long tmp = number;
-        while ((tmp & 1) == 1) {
-            tmp = tmp << 1 | tmp >>> -1;
+        long i = number;
+        int count = 0;
+        while (i != 0) {
+            System.out.println(Long.toBinaryString(i));
+            i =  i & (i -1);
+            System.out.println(Long.toBinaryString(i));
+            count++;
         }
-        System.out.println(Long.toBinaryString(tmp));
-        i = (int) Math.log(tmp + 1.0);
-        System.out.println(i);
-        return i;
+        return count;
     }
 
+    /**
+     * @Author Administrator
+     * @Description 约瑟夫问题，揭示二进制循环移位的本质
+     * @Param [number]
+     * @Return long
+     * @date 2019/6/11 19:56
+     **/
     private static long josephus(long number) {
-        System.out.println("josephus : " + number);
+        long i = number;
         System.out.println(Long.toBinaryString(number));
-        if (number<=1 || (number+1 & number) == 0) {
-
-            return number;
+        while (i > 1 && (i + 1 & i) != 0) {
+            System.out.println(Long.toBinaryString(i));
+            long twopower = Math.round((Math.log(i) / Math.log(2)) - 0.5);
+            long l = i - Math.round(Math.pow(2.0, twopower));
+            i = (l << 1) + 1;
         }
-        long i = 0L;
-        long twopower = Math.round((Math.log(number) / Math.log(2)) - 0.5);
-        System.out.println(Math.pow(2.0, twopower));
-        long l = number - Math.round(Math.pow(2.0, twopower));
-        i = (l << 1) + 1;
-        return josephus(i);
+        return i;
     }
 
     public static void main(String[] args) {
@@ -455,14 +462,11 @@ public class QuickSort {
         System.out.println("sort array");
         System.out.println(Arrays.toString(arr));*/
 
-        // hasOneNumbers(3L);
-        long a = 1l;
-        a = a << 62;
-        System.out.println(a);
+        System.out.println(hasOneNumbers(14645456L));
 
-        long b = josephus(146456L);
+        long b = josephus(14645456L);
         System.out.println(b);
-        System.out.println(Math.round((Math.log(b+1) / Math.log(2)) - 0.5));
+        System.out.println(Math.round((Math.log(b + 1) / Math.log(2)) - 0.5));
         System.out.println(Long.toBinaryString(b));
 
     }
