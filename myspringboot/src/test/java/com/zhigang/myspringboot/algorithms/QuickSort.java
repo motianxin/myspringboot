@@ -33,7 +33,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/3/27 22:37
      */
-    private static int partition(int[] arr, int startIndex, int endIndex) {
+    public static int partition(int[] arr, int startIndex, int endIndex) {
         // 取第一个位置的元素作为基准元素
         int pivot = arr[startIndex];
         int left = startIndex;
@@ -74,7 +74,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/3/27 22:37
      */
-    private static int partition2(int[] arr, int startIndex, int endIndex) {
+    public static int partition2(int[] arr, int startIndex, int endIndex) {
         // 取第一个位置的元素作为基准元素
         int pivot = arr[startIndex];
         int left = startIndex;
@@ -111,7 +111,7 @@ public class QuickSort {
      * @Return int
      * @date 2019/5/23 20:39
      **/
-    private static int partition3(int[] arr, int startIndex, int endIndex) {
+    public static int partition3(int[] arr, int startIndex, int endIndex) {
         int mark = startIndex;
         int pivot = arr[startIndex];
         for (int i = startIndex; i <= endIndex; i++) {
@@ -132,7 +132,7 @@ public class QuickSort {
      * @Return int
      * @date 2019/5/23 20:40
      **/
-    private static int partition4(int[] arr, int startIndex, int endIndex) {
+    public static int partition4(int[] arr, int startIndex, int endIndex) {
         int left = startIndex;
         int right = endIndex;
         int changeTimes = 0;
@@ -194,7 +194,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/8 17:26
      */
-    private static void bubbleSort(int[] array) {
+    public static void bubbleSort(int[] array) {
         if (array.length <= 1) {
             return;
         }
@@ -230,7 +230,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/8 17:21
      */
-    private static boolean less(int a, int b) {
+    public static boolean less(int a, int b) {
         return a < b;
     }
 
@@ -241,7 +241,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/8 17:21
      */
-    private static void swap(int[] arr, int i, int j) {
+    public static void swap(int[] arr, int i, int j) {
         int tmp = arr[i];
         arr[i] = arr[j];
         arr[j] = tmp;
@@ -254,7 +254,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/8 17:35
      */
-    private static void insertSort(int[] arr) {
+    public static void insertSort(int[] arr) {
         int n = arr.length;
         for (int i = 1; i < n; i++) {
             for (int j = i; j >= 0 && less(arr[j], arr[j - 1]); j--) {
@@ -270,7 +270,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/8 17:36
      */
-    private static void shellSort(int[] arr) {
+    public static void shellSort(int[] arr) {
         int n = arr.length;
         int h = 1;
         // h = 1,4,13,40 ....;
@@ -295,7 +295,7 @@ public class QuickSort {
     }
 
 
-    private static void merge(int[] arr, int lo, int mid, int hi) {
+    public static void merge(int[] arr, int lo, int mid, int hi) {
         if (arr[mid] <= arr[mid + 1]) {
             return;
         }
@@ -325,7 +325,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/8 23:12
      */
-    private static void mergeSort(int[] arr, int lo, int hi) {
+    public static void mergeSort(int[] arr, int lo, int hi) {
         if (hi <= lo) {
             return;
         }
@@ -342,7 +342,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/8 23:19
      */
-    private static void mergeBUsort(int[] arr) {
+    public static void mergeBUsort(int[] arr) {
         int lo = 0, hi = arr.length;
         for (int i = 1; i < hi; i *= 2) {
             System.out.println("mergeBUsort size = " + i);
@@ -360,7 +360,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/8 18:25
      */
-    private static int[] initArray(int n) {
+    public static int[] initArray(int n) {
         if (n <= 0) {
             return null;
         }
@@ -378,7 +378,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/8 22:44
      */
-    private static void shuffle(int[] a) {
+    public static void shuffle(int[] a) {
         int length = a.length;
         Random random = new Random();
         for (int i = length; i > 1; i--) {
@@ -387,7 +387,7 @@ public class QuickSort {
 
     }
 
-    private static void testShellSort(int n) {
+    public static void testShellSort(int n) {
 
         int[] arr = initArray(n);
         System.out.println("init array");
@@ -409,7 +409,7 @@ public class QuickSort {
      * @Author: zghuang
      * @Date: 2019/6/10 23:58
      */
-    private static int hasOneNumbers(long number) {
+    public static int hasOneNumbers(long number) {
         long i = number;
         int count = 0;
         while (i != 0) {
@@ -428,7 +428,7 @@ public class QuickSort {
      * @Return long
      * @date 2019/6/11 19:56
      **/
-    private static long josephus(long number) {
+    public static long josephus(long number) {
         long i = number;
         System.out.println(Long.toBinaryString(number));
         while (i > 1 && (i + 1 & i) != 0) {
