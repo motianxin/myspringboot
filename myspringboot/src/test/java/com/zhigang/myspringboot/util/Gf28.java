@@ -18,7 +18,7 @@ import java.util.Arrays;
  * @create 2019/5/15 17:13
  */
 public class Gf28 {
-    public static void main(String[] args) {
+    public static void test() {
 /*        int[] table = new int[256];
         table[0] = 1;
         for (int i = 1; i < 255; ++i) {
@@ -143,5 +143,61 @@ public class Gf28 {
         return max;
     }
 
+    /**
+     * @Description: 两个8位数在GF(2^8)域中相乘 0<=a,b<=255
+     * @Param: [a, b]
+     * @return: int
+     * @Author: zghuang
+     * @Date: 2019/6/12 22:31
+     */
+    private static int aMultiplyB(int a, int b){
+        if (a > 255 || b > 255) {
+            return 0;
+        }
+        int result = 0;
+        int[] array = getGfByint(a);
+        for (int i = 0; i < array.length; i++) {
+            // System.out.println("array[" + i + "] = "+ Integer.toBinaryString(array[i]));
+            // System.out.println("b = " + Integer.toBinaryString(b >> i));
+            result ^= (((b >> i) & 1) * array[i]);
+            // System.out.println("result = " + Integer.toBinaryString(result));
+        }
+        return result;
+    }
+
+    /** 
+     * @Description: 得到一个数右移八位的数组
+     * @Param: [a] 
+     * @return: int[] 
+     * @Author: zghuang
+     * @Date: 2019/6/12 23:06
+     */
+    private static int[] getGfByint(int a) {
+        int[] array = new int[8];
+        for (int i = 0; i < 8; i++) {
+            array[i] = a << i;
+            if (array[i] > 255) {
+                array[i] = array[i] & 0xFF ^ 0x1B;
+            }
+        }
+        return array;
+    }
+
+    public static void main(String[] args) {
+        // System.out.println(aMultiplyB(34, 98));
+
+        int a = 0x11b, b = 0x7;
+        System.out.println(Integer.toBinaryString(a / b));
+        System.out.println(Integer.toBinaryString(a % b));
+        int i = 0;
+        int m = aMultiplyB(0x3, 0x3);
+        System.out.println(Integer.toBinaryString(m) + " = " +m);
+        while (i <= 255) {
+            m = aMultiplyB(0x3, m);
+            System.out.println(Integer.toBinaryString(m) + " = " +m);
+            i++;
+        }
+
+    }
 
 }
