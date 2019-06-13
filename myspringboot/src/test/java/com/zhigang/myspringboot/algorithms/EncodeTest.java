@@ -15,6 +15,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.util.Arrays;
 
 /**
  * 〈AES-GCM加密〉
@@ -55,5 +56,8 @@ public class EncodeTest {
             System.out.println("adfgadfgad");
             e.printStackTrace();
         }
+        String content = "adfgjakhdfjgklha中文";
+        System.out.println(Arrays.toString(content.getBytes()) + " length = " + content.getBytes().length);
+
     }
 }
