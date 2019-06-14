@@ -75,7 +75,7 @@ public class Gf28 {
         System.out.println(as + " = " + Integer.toBinaryString(as) + " = " + ((as & 0xf0) >> 4) + " + " + (as & 0xf));
     }
 
-    private static int[][] one2TwoArray(int[] table) {
+    public static int[][] one2TwoArray(int[] table) {
         int length = table.length;
         int sqirt = (int) Math.round(Math.sqrt(length));
         int[][] tmp = new int[sqirt][sqirt];
@@ -85,7 +85,7 @@ public class Gf28 {
         return tmp;
     }
 
-    private static int getGf251(int x) {
+    public static int getGf251(int x) {
         int gf251 = 251;
         int a1 = 1, a2 = 0, a3 = 251;
         int b1 = 0, b2 = 1, b3 = x;
@@ -115,7 +115,7 @@ public class Gf28 {
      * @Return long
      * @date 2019/6/12 17:19
      **/
-    private static long getMaxp(long a, long b) {
+    public static long getMaxp(long a, long b) {
         long max = 1;
         long x, y, p = 1;
         if (a < b) {
@@ -144,7 +144,7 @@ public class Gf28 {
      * @Author: zghuang
      * @Date: 2019/6/12 22:31
      */
-    private static int aMultiplyB(int a, int b) {
+    public static int aMultiplyB(int a, int b) {
         if (a > 255 || b > 255) {
             return 0;
         }
@@ -163,7 +163,7 @@ public class Gf28 {
      * @Author: zghuang
      * @Date: 2019/6/12 23:06
      */
-    private static int[] getGfByint(int a) {
+    public static int[] getGfByint(int a) {
         int[] array = new int[8];
         for (int i = 0; i < 8; i++) {
             array[i] = a << i;
@@ -174,7 +174,7 @@ public class Gf28 {
         return array;
     }
 
-    private static void creatGf28() {
+    public static void creatGf28() {
         // 利用生成元g = x + 1 , table[n] = g^n (g^0 = 1) 生成正表
         // 知道n 得到g^n 的值
         int[] table = new int[256];
@@ -260,7 +260,7 @@ public class Gf28 {
      * @Return int
      * @date 2019/6/13 20:49
      **/
-    private static int byteTransformation(int a, int x) {
+    public static int byteTransformation(int a, int x) {
         int[] tmp = new int[8];
 
         for (int i = 0; i < 8; i++) {

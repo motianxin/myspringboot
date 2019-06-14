@@ -23,6 +23,12 @@ public class AEStools {
 
     private static final int[] RC = {0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x36};
 
+    private static final int[][] MIX_COLUMNS_ARRAY = {
+            {0x02, 0x03, 0x01, 0x01},
+            {0x01, 0x02, 0x03, 0x01},
+            {0x01, 0x01, 0x02, 0x03},
+            {0x03, 0x01, 0x01, 0x02}};
+
     /**
      * @Author Administrator
      * @Description 初始化密钥数组
@@ -48,7 +54,13 @@ public class AEStools {
     }
 
 
-    // extend secret key
+    /**
+     * @Author Administrator
+     * @Description 扩展密钥
+     * @Param [key]
+     * @Return int[][]
+     * @date 2019/6/14 17:32
+     **/
     private static int[][] extendKey(int[][] key) {
         int[][] extendKey = new int[BLOCK_ARRAY_LENGTH][EXTENF_KEY_ARRAY_LENGTH];
         int[] tmp = new int[BLOCK_ARRAY_LENGTH];
@@ -101,10 +113,95 @@ public class AEStools {
         tmp[BLOCK_ARRAY_LENGTH - 1] = value;
     }
 
+    /**
+     * @Author Administrator
+     * @Description 用密钥初始化扩展密钥
+     * @Param [key, extendKey]
+     * @Return void
+     * @date 2019/6/14 17:31
+     **/
     private static void initKeyW(int[][] key, int[][] extendKey) {
         for (int i = 0; i < BLOCK_ARRAY_LENGTH; i++) {
             for (int j = 0; j < BLOCK_ARRAY_LENGTH; j++) {
                 extendKey[i][j] = key[i][j];
+            }
+        }
+    }
+
+
+    /**
+     * @Author Administrator
+     * @Description 列混淆
+     * @Param [content, matrix]
+     * @Return void
+     * @date 2019/6/14 17:30
+     **/
+    private static void mixColumns(int[][] content, int[][] matrix) {
+        int[][] tmp = new int[BLOCK_ARRAY_LENGTH][BLOCK_ARRAY_LENGTH];
+        for (int i = 0; i < BLOCK_ARRAY_LENGTH; i++) {
+            for (int j = 0; j < BLOCK_ARRAY_LENGTH; j++) {
+                tmp[i][j] = Gf28.aMultiplyB(matrix[i][0], content[0][j]) ^
+                        Gf28.aMultiplyB(matrix[i][1], content[1][j]) ^
+                        Gf28.aMultiplyB(matrix[i][2], content[2][j]) ^
+                        Gf28.aMultiplyB(matrix[i][3], content[3][j]);
+            }
+        }
+        for (int i = 0; i < BLOCK_ARRAY_LENGTH; i++) {
+            for (int j = 0; j < BLOCK_ARRAY_LENGTH; j++) {
+                content[i][j] = tmp[i][j];
+            }
+        }
+    }
+
+    /**
+     * @Author Administrator
+     * @Description 行移位
+     * @Param [content]
+     * @Return void
+     * @date 2019/6/14 16:17
+     **/
+    private static void shiftRows(int[][] content) {
+        int[][] temp = new int[BLOCK_ARRAY_LENGTH][BLOCK_ARRAY_LENGTH];
+        for (int i = 1; i < BLOCK_ARRAY_LENGTH; i++) {
+            for (int j = 0; j < BLOCK_ARRAY_LENGTH; j++) {
+                temp[i][j] = content[i][(j + i) % BLOCK_ARRAY_LENGTH];
+            }
+        }
+
+        for (int i = 1; i < BLOCK_ARRAY_LENGTH; i++) {
+            for (int j = 0; j < BLOCK_ARRAY_LENGTH; j++) {
+                content[i][j] = temp[i][j];
+            }
+        }
+    }
+
+    /**
+     * @Author Administrator
+     * @Description 字节替换
+     * @Param [content]
+     * @Return void
+     * @date 2019/6/14 17:30
+     **/
+    private static void subBytes(int[][] content){
+        for (int i = 1; i < BLOCK_ARRAY_LENGTH; i++) {
+            for (int j = 0; j < BLOCK_ARRAY_LENGTH; j++) {
+                content[i][j] = Gf28.sBox[content[i][j] >> 4][content[i][j] & 0x0f];
+            }
+        }
+    }
+
+
+    /**
+     * @Author Administrator
+     * @Description 轮密钥加
+     * @Param [content, key]
+     * @Return void
+     * @date 2019/6/14 17:30
+     **/
+    private static void dddRoundKey(int[][] content, int[][] key){
+        for (int i = 0; i < BLOCK_ARRAY_LENGTH; i++) {
+            for (int j = 0; j < BLOCK_ARRAY_LENGTH; j++) {
+                content[i][j] = content[i][j] ^ key[i][j];
             }
         }
     }
