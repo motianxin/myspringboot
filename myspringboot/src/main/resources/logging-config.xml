@@ -2,7 +2,7 @@
 <configuration>
 
     <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
-    <property name="TEST_FILE" value="D:/opt/test/log" />
+    <property name="TEST_FILE" value="C:/opt/test/log" />
     <property name="PRO_FILE" value="/var/myboot/log" />
 
     <springProfile name="dev">

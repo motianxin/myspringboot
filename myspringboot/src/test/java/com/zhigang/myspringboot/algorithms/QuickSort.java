@@ -462,13 +462,28 @@ public class QuickSort {
         System.out.println("sort array");
         System.out.println(Arrays.toString(arr));*/
 
-        System.out.println(hasOneNumbers(14645456L));
+        /*System.out.println(hasOneNumbers(14645456L));
 
         long b = josephus(14645456L);
         System.out.println(b);
         System.out.println(Math.round((Math.log(b + 1) / Math.log(2)) - 0.5));
-        System.out.println(Long.toBinaryString(b));
+        System.out.println(Long.toBinaryString(b));*/
+
+        int a =34, b =67;
+        exchange(a, b);
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
 
     }
+
+    private static void exchange(int a, int b){
+        a = a^b;
+        b = b^a;
+        a = a^b;
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
+    }
+
+
 
 }

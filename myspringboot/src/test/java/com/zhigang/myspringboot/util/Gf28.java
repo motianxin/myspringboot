@@ -258,7 +258,7 @@ public class Gf28 {
      * 仿射变换公式：b[i] = b[i] ^ b[((i+4)%8)] ^ b[((i+5)%8)] ^ b[((i+6)%8)] ^ b[((i+7)%8)] ^ (((0x63 >> i) & 1)
      * @Param [a, x]
      * @Return int
-     * @date 2019/6/13 20:49
+     * @date 2019/6/15 01:49
      **/
     public static int byteTransformation(int a, int x) {
         int[] tmp = new int[8];
