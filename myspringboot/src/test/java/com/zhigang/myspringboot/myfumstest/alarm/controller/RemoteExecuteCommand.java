@@ -91,6 +91,7 @@ public class RemoteExecuteCommand {
             Session session = conn.openSession();
             session.execCommand(cmd);
             result = processStdout(session.getStdout(), DEFAULTCHART);
+            System.out.println("gegeger = " + result);
             //如果为得到标准输出为空，说明脚本执行出错了
             if (StringUtils.isBlank(result)) {
                 result = processStdout(session.getStderr(), DEFAULTCHART);
@@ -129,11 +130,9 @@ public class RemoteExecuteCommand {
 
         RemoteExecuteCommand remoteExecuteCommand = new RemoteExecuteCommand("10.96.156.241", "root", "hello123");
         try {
-            String path = remoteExecuteCommand.execute("ps -ef | grep [i]notify.sh");
+            String path = remoteExecuteCommand.execute("sh /opt/fonsview/NE/fums/bin/rsync.sh");
             System.out.println( "result :" + path);
-            /*String[] pathar = path.split("/");
-            System.out.println(Arrays.toString(pathar));
-            System.out.println(pathar[4]);*/
+            System.out.println(StringUtils.isEmpty(path));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -15,7 +15,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.util.Arrays;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 /**
  * 〈AES-GCM加密〉
@@ -25,39 +26,61 @@ import java.util.Arrays;
  * @create 2019/6/12 10:02
  */
 public class EncodeTest {
-    public static void main(String[] args) {
-        try {
-            KeyGenerator kg = KeyGenerator.getInstance("AES");
-            //初始化密钥生成器，AES要求密钥长度为128位、192位、256位
-            kg.init(128);
-            SecretKey secretKey = kg.generateKey();
-            System.out.println("密钥：" + Base64.encodeBase64String(secretKey.getEncoded()));
 
-            SecretKey key = new SecretKeySpec(secretKey.getEncoded(), "AES");
+    public static final String KEYGEN = "hellofums123";
+    public static final String AES_GCM_PKCS5_PADDING = "AES/GCM/PKCS5Padding";
+    public static final String AES = "AES";
 
-            String txt = "testtxt";
+    private static String aesEncode(String content) throws Exception {
 
-            Cipher cipher = Cipher.getInstance("AES/GCM/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            byte[] iv = cipher.getIV();
-            assert iv.length == 12;
-            byte[] encryptData = cipher.doFinal(txt.getBytes());
-            assert encryptData.length == txt.getBytes().length + 16;
-            byte[] message = new byte[12 + txt.getBytes().length + 16];
-            System.arraycopy(iv, 0, message, 0, 12);
-            System.arraycopy(encryptData, 0, message, 12, encryptData.length);
-            System.out.println("加密后：" + Base64.encodeBase64String(message));
-            if (message.length < 12 + 16) throw new IllegalArgumentException();
-            GCMParameterSpec params = new GCMParameterSpec(128, message, 0, 12);
-            cipher.init(Cipher.DECRYPT_MODE, key, params);
-            byte[] decryptData = cipher.doFinal(message, 12, message.length - 12);
-            System.out.println("解密后：" + new String(decryptData));
-        } catch (Exception e) {
-            System.out.println("adfgadfgad");
-            e.printStackTrace();
-        }
-        String content = "adfgjakhdfjgklha中文";
-        System.out.println(Arrays.toString(content.getBytes()) + " length = " + content.getBytes().length);
+        SecretKey key = createKey(KEYGEN);
+        Cipher cipher = Cipher.getInstance(AES_GCM_PKCS5_PADDING);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        byte[] iv = cipher.getIV();
+        assert iv.length == 12;
+        byte[] encryptData = cipher.doFinal(content.getBytes());
+        assert encryptData.length == content.getBytes().length + 16;
+        byte[] message = new byte[12 + content.getBytes().length + 16];
+        System.arraycopy(iv, 0, message, 0, 12);
+        System.arraycopy(encryptData, 0, message, 12, encryptData.length);
 
+        return Base64.encodeBase64String(message);
     }
+
+
+    private static String aesDecode(String enMsg) throws Exception{
+        byte[] message = Base64.decodeBase64(enMsg);
+        SecretKey key = createKey(KEYGEN);
+        Cipher cipher = Cipher.getInstance(AES_GCM_PKCS5_PADDING);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        GCMParameterSpec params = new GCMParameterSpec(128, message, 0, 12);
+        cipher.init(Cipher.DECRYPT_MODE, key, params);
+        byte[] decryptData = cipher.doFinal(message, 12, message.length - 12);
+        return new String(decryptData);
+    }
+
+
+    private static SecretKey createKey(String keygen) throws NoSuchAlgorithmException {
+        KeyGenerator kg = KeyGenerator.getInstance(AES);
+        kg.init(128, new SecureRandom(keygen.getBytes()));
+        SecretKey secretKey = kg.generateKey();
+        SecretKey key = new SecretKeySpec(secretKey.getEncoded(), AES);
+
+        return key;
+    }
+
+    public static void main(String[] args) {
+        String name = "adfgdfag";
+        String result = "1,inotify.sh";
+
+        String aa = "1,inotify.sh";
+        if (!"0".equals(result)) {
+            String[] strs = result.split(",");
+            if (strs.length >= 2 && "1".equals(strs[0])) {
+                name = result.substring(2);
+            }
+        }
+        System.out.println(name);
+    }
+
 }
