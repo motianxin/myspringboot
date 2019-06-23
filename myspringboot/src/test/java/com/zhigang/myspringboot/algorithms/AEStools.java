@@ -6,7 +6,7 @@
  * History:
  * <author>          <time>          <version>          <desc>
  */
-package com.zhigang.myspringboot.util;
+package com.zhigang.myspringboot.algorithms;
 
 /**
  * 〈AES加解密工具〉

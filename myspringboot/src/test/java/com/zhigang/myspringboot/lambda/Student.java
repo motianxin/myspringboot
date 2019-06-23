@@ -19,6 +19,9 @@ public class Student {
     private String grade;
     private int score;
 
+    public Student() {
+    }
+
     public Student(String name, String grade, int score) {
         this.name = name;
         this.grade = grade;

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -41,5 +42,6 @@ public class AlarmSyncServiceTest extends MyspringbootApplicationTests {
 	@Test
 	public void getAllAlarmSync() {
 		List<AlarmSync> alarmSyncList = syncService.getAllAlarmSync();
+        System.out.println(Arrays.toString(alarmSyncList.toArray(new AlarmSync[]{})));
 	}
 }

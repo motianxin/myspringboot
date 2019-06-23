@@ -6,7 +6,7 @@
  * History:
  * <author>          <time>          <version>          <desc>
  */
-package com.zhigang.myspringboot.util;
+package com.zhigang.myspringboot.algorithms;
 
 /**
  * 〈二维矩阵计算实现及定理证明〉
