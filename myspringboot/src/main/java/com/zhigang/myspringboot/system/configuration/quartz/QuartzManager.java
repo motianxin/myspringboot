@@ -38,9 +38,9 @@ public class QuartzManager {
 
 
     /**
-     * 默认5秒执行一次
+     * 默认15秒执行一次
      */
-    public static final String DEFAULT_CRON = "*/5 * * * * ?";
+    public static final String DEFAULT_CRON = "*/15 * * * * ?";
 
     /**
      * 任务调度
@@ -52,7 +52,7 @@ public class QuartzManager {
      * 开始执行定时任务
      */
     public void startJob() throws SchedulerException {
-        startJobTask(scheduler);
+        // startJobTask(scheduler);
         scheduler.start();
     }
 
