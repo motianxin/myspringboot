@@ -1,3 +1,6 @@
+server:
+  servlet:
+  port: 8080
 spring:
   freemarker:
     charset: UTF-8

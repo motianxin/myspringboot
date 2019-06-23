@@ -6,7 +6,7 @@
  * History:
  * <author>          <time>          <version>          <desc>
  */
-package com.zhigang.myspringboot.configuration.quartz;
+package com.zhigang.myspringboot.system.configuration.quartz;
 
 import com.zhigang.myspringboot.quartz.Myjob;
 import org.quartz.CronScheduleBuilder;

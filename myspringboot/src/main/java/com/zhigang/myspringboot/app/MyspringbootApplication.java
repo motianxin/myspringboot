@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = {"com.zhigang.myspringboot"})
 @EnableJpaRepositories(basePackages = {"com.zhigang.myspringboot.repository"})
 @EntityScan(basePackages = {"com.zhigang.myspringboot.domain"})
-@ServletComponentScan(basePackages = {"com.zhigang.myspringboot.fliter"})
+@ServletComponentScan(basePackages = {"com.zhigang.myspringboot.system"})
 @Slf4j
 public class MyspringbootApplication {
 

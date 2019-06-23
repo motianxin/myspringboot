@@ -6,7 +6,7 @@
  * History:
  * <author>          <time>          <version>          <desc>
  */
-package com.zhigang.myspringboot.fliter;
+package com.zhigang.myspringboot.system.fliter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

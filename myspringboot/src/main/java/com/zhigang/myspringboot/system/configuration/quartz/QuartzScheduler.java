@@ -6,8 +6,9 @@
  * History:
  * <author>          <time>          <version>          <desc>
  */
-package com.zhigang.myspringboot.configuration.quartz;
+package com.zhigang.myspringboot.system.configuration.quartz;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
  */
 
 @Configuration
+@Slf4j
 public class QuartzScheduler {
 
     @Autowired
@@ -31,7 +33,7 @@ public class QuartzScheduler {
     public SchedulerFactoryBean schedulerFactoryBean() {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
         schedulerFactoryBean.setJobFactory(quartzJobFactory);
-        System.out.println("myJobFactory:" + quartzJobFactory);
+        log.info("myJobFactory: [{}]", quartzJobFactory);
         return schedulerFactoryBean;
     }
 

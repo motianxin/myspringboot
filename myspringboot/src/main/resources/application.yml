@@ -1,16 +1,3 @@
-server:
-  servlet:
-  port: 443
-  ssl:
-    key-store: classpath:pfx/www.zghuang.top.pfx
-    key-alias: alias
-    enabled: true
-    key-store-password: 2z0tihGH
-    key-store-type: PKCS12
-http:
-  port: 80
-condition:
-  http2https: true
 spring:
   profiles:
     active: dev
