@@ -35,5 +35,6 @@ public class DynamicProxy implements InvocationHandler {
         IService realService = new RealService();
         IService proxyService = getProxy(IService.class, realService);
         proxyService.doSomething();
+        proxyService.saySomething();
     }
 }

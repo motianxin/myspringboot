@@ -8,4 +8,6 @@ package com.zhigang.myspringboot.proxy;
  **/
 public interface IService {
     void doSomething();
+
+    void saySomething();
 }

@@ -22,10 +22,18 @@ public class TraceProxy implements IService {
         System.out.println("after realservice dosomething");
     }
 
+    @Override
+    public void saySomething() {
+        System.out.println("before realService saySomething.");
+        realService.saySomething();
+        System.out.println("after realservice saySomething");
+    }
+
     public static void main(String[] args) {
         IService realService = new RealService();
         IService traceProxy = new TraceProxy(realService);
         traceProxy.doSomething();
+        traceProxy.saySomething();
     }
 
 }

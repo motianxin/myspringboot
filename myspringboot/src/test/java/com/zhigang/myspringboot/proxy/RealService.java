@@ -12,4 +12,9 @@ public class RealService implements IService {
     public void doSomething() {
         System.out.println("i'm realService.");
     }
+
+    @Override
+    public void saySomething() {
+        System.out.println("i'm realService, say hello!");
+    }
 }
