@@ -7,12 +7,18 @@
 var app = require('../app');
 var debug = require('debug')('mynodejs:server');
 var http = require('http');
-
+let https = require("https");
+let fs = require("fs");
+// Configuare https
+const httpsOption = {
+    key : fs.readFileSync("./https/www.zghuang.top.key"),
+    cert: fs.readFileSync("./https/www.zghuang.top.pem")
+}
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '80');
 app.set('port', port);
 
 /**
@@ -20,7 +26,10 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
+var httpserver = https.createServer(httpsOption, app);
+httpserver.listen(443);
+httpserver.on('error', onError);
+httpserver.on('listening', onListening);
 /**
  * Listen on provided port, on all network interfaces.
  */
