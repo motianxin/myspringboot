@@ -11,7 +11,7 @@
                 <pattern>${PATTERN}</pattern>
             </encoder>
         </appender>
-        <logger name="com.zhigang.myspringboot" level="debug" />
+        <logger name="com.zhigang.myspringboot" level="info" />
         <root level="info">
             <appender-ref ref="CONSOLE" />
         </root>

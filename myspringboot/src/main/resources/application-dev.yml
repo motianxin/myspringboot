@@ -5,9 +5,9 @@ spring:
   profiles:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/myspringboot?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3307/myspringboot?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
     username: root
-    password: Root123!
+    password: Mysql123!
   jpa:
     hibernate:
       ddl-auto: update
@@ -40,11 +40,3 @@ logging:
 snmp:
   ip: 127.0.0.1
   port: 162
-server:
-  port: 443
-  ssl:
-    key-store: classpath: 2153654_www.zghuang.top_tomcat/2153654_www.zghuang.top.pfx
-    key-alias: tomcat
-    enabled: true
-    key-store-password: nG1c2pAq
-    key-store-type: pfx

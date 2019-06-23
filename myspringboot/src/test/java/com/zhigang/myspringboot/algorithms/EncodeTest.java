@@ -27,7 +27,7 @@ import java.security.SecureRandom;
  */
 public class EncodeTest {
 
-    public static final String KEYGEN = "hellofums123";
+    public static final String KEYGEN = "1234567890123456";
     public static final String AES_GCM_PKCS5_PADDING = "AES/GCM/PKCS5Padding";
     public static final String AES = "AES";
 
@@ -70,17 +70,17 @@ public class EncodeTest {
     }
 
     public static void main(String[] args) {
-        String name = "adfgdfag";
-        String result = "1,inotify.sh";
+        String data = "123456789012";
 
-        String aa = "1,inotify.sh";
-        if (!"0".equals(result)) {
-            String[] strs = result.split(",");
-            if (strs.length >= 2 && "1".equals(strs[0])) {
-                name = result.substring(2);
-            }
+        try {
+            String encode = aesEncode(data);
+            System.out.println("加密后：" + encode);
+            String decode = aesDecode(encode);
+            System.out.println("解密后：" + decode);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        System.out.println(name);
+
     }
 
 }

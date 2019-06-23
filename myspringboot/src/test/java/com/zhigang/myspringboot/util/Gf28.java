@@ -188,12 +188,7 @@ public class Gf28 {
             }
         }
         System.out.println("初始化数组值，得到正表：");
-        for (int i = 0; i < 256; i++) {
-            System.out.print(Integer.toHexString(table[i]) + ", ");
-            if ((i + 1) % 16 == 0) {
-                System.out.println();
-            }
-        }
+        printArray(table);
         // 其中周期性质：g^(i+j) = 1, i+j=255
         // 得到反表：知道g^n 求 n：
         int[] arc_table = new int[256];
@@ -201,12 +196,7 @@ public class Gf28 {
             arc_table[table[i]] = i;
         }
         System.out.println("由正表得到反表：");
-        for (int i = 0; i < 256; i++) {
-            System.out.print(Integer.toHexString(arc_table[i]) + ", ");
-            if ((i + 1) % 16 == 0) {
-                System.out.println();
-            }
-        }
+        printArray(arc_table);
         // 利用周期性得到g^a的逆元g^b, b = 255 - a; s[g^i] = g^(255-i)
         int[] s = new int[256];
         for (int i = 1; i < 256; i++) {
@@ -217,17 +207,12 @@ public class Gf28 {
             s[i] = table[k];
         }
         System.out.println("根据正反表得到S盒中间盒：");
-        for (int i = 0; i < 256; i++) {
-            System.out.print(Integer.toHexString(s[i]) + ", ");
-            if ((i + 1) % 16 == 0) {
-                System.out.println();
-            }
-        }
+        printArray(s);
         System.out.println("S中间盒做仿射变换得到S盒：");
 
         int[][] sbox = new int[16][16];
 
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < s.length; i++) {
             sbox[i / 16][i % 16] = byteTransformation(s[i], 0x63);
             System.out.print(Integer.toHexString(byteTransformation(s[i], 0x63)) + ", ");
             if ((i + 1) % 16 == 0) {
@@ -250,6 +235,15 @@ public class Gf28 {
             System.out.println();
         }
 
+    }
+
+    private static void printArray(int[] array){
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(Integer.toHexString(array[i]) + ", ");
+            if ((i + 1) % 16 == 0) {
+                System.out.println();
+            }
+        }
     }
 
     /**
