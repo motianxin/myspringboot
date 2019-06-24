@@ -15,7 +15,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
@@ -27,10 +26,14 @@ import java.security.SecureRandom;
  */
 public class EncodeTest {
 
-    public static final String KEYGEN = "1234567890123456";
-    public static final String AES_GCM_PKCS5_PADDING = "AES/GCM/PKCS5Padding";
-    public static final String AES = "AES";
+    private static final String KEYGEN = "1234567890123456";
+    private static final String AES_GCM_PKCS5_PADDING = "AES/GCM/PKCS5Padding";
+    private static final String AES = "AES";
 
+    /**
+     * 签名算法
+     */
+    private static final String SIGN_ALGORITHMS = "SHA1PRNG";
     private static String aesEncode(String content) throws Exception {
 
         SecretKey key = createKey(KEYGEN);
@@ -60,9 +63,11 @@ public class EncodeTest {
     }
 
 
-    private static SecretKey createKey(String keygen) throws NoSuchAlgorithmException {
+    private static SecretKey createKey(String keygen) throws Exception {
         KeyGenerator kg = KeyGenerator.getInstance(AES);
-        kg.init(128, new SecureRandom(keygen.getBytes()));
+        SecureRandom random = SecureRandom.getInstance(SIGN_ALGORITHMS);
+        random.setSeed(keygen.getBytes("UTF-8"));
+        kg.init(128, random);
         SecretKey secretKey = kg.generateKey();
         SecretKey key = new SecretKeySpec(secretKey.getEncoded(), AES);
 
