@@ -120,7 +120,7 @@ public class QuickSort {
                 swap(arr, i, mark);
             }
         }
-        arr[0] = arr[mark];
+        arr[startIndex] = arr[mark];
         arr[mark] = pivot;
         return mark;
     }

@@ -634,6 +634,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     private static void init() {
         if (frame != null) frame.setVisible(false);
         frame = new JFrame();
+
         offscreenImage = new BufferedImage(2 * width, 2 * height, BufferedImage.TYPE_INT_ARGB);
         onscreenImage = new BufferedImage(2 * width, 2 * height, BufferedImage.TYPE_INT_ARGB);
         offscreen = offscreenImage.createGraphics();
@@ -671,6 +672,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         frame.setTitle("Standard Draw");
         frame.setJMenuBar(createMenuBar());
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.requestFocusInWindow();
         frame.setVisible(true);
     }

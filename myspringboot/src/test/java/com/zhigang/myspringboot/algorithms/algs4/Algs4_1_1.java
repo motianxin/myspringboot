@@ -102,6 +102,9 @@ public class Algs4_1_1 {
         double p = arr[left];
         arr[left] = arr[startIndex];
         arr[startIndex] = p;
+        filledChange(arr.length, arr[left], left);
+        filledChange(arr.length, arr[startIndex], startIndex);
+
         return left;
     }
 
@@ -122,8 +125,12 @@ public class Algs4_1_1 {
                 swap(arr, i, mark);
             }
         }
-        arr[0] = arr[mark];
+        arr[startIndex] = arr[mark];
         arr[mark] = pivot;
+
+        filledChange(arr.length, arr[startIndex], startIndex);
+        filledChange(arr.length, arr[mark], mark);
+
         return mark;
     }
 
@@ -312,6 +319,48 @@ public class Algs4_1_1 {
 
     }
 
+    /** 
+     * @Description: 堆排序
+     * @Param: [arr] 
+     * @return: void 
+     * @Author: admin
+     * @Date: 2019/7/1 22:02
+     */
+    public static void heapSort(double[] arr) {
+
+        int n = arr.length -1;
+        for (int i = n / 2; i >= 1; i--) {
+            sink(arr, i, n);
+        }
+        while (n > 1) {
+            swap(arr, 1, n--);
+            sink(arr, 1, n);
+        }
+
+        for (int i = 0; i < arr.length -1; i++) {
+            if (less(arr[i], arr[i + 1])) {
+                break;
+            } else {
+                swap(arr, i, i +1);
+            }
+        }
+    }
+
+    private static void sink(double[] arr, int i, int n) {
+        int k = i;
+        while (k<<1 <= n) {
+            int j = k <<1;
+            if (j < n && less(arr[j], arr[j +1])) {
+                j++;
+            }
+            if (!less(arr[k], arr[j])) {
+                break;
+            }
+            swap(arr, k, j);
+            k = j;
+        }
+    }
+
     /**
      * @Description: 测试函数值画图
      * @Param: [n]
@@ -332,10 +381,10 @@ public class Algs4_1_1 {
     }
 
 
-    /** 
+    /**
      * @Description: 各种排序轨迹动态演示
-     * @Param: [n] 
-     * @return: void 
+     * @Param: [n]
+     * @return: void
      * @Author: admin
      * @Date: 2019/7/1 18:23
      */
@@ -350,15 +399,15 @@ public class Algs4_1_1 {
         }
         // bubbleSort(dArray);
         // insertSort(dArray);
-        // quickSort(dArray, 0, dArray.length -1);
+        // quickSort(dArray, 0, dArray.length - 1);
         // mergeSort(dArray, 0, n-1);
         // mergeBUsort(dArray);
         // shellSort(dArray);
-
+        heapSort(dArray);
 
     }
 
-    private static void filledChange(int n, double v, int i){
+    private static void filledChange(int n, double v, int i) {
         StdDraw.setPenColor(StdDraw.WHITE);
         filledRec(n, 1.0, i);
         StdDraw.setPenColor(StdDraw.BLACK);
@@ -441,7 +490,7 @@ public class Algs4_1_1 {
 
     public static void main(String[] args) {
         // drawFunctionValue(50);
-        drawRandomArray(100);
+        drawRandomArray(200);
         // drawFG();
         // System.out.println(intToBinary(100));
     }
