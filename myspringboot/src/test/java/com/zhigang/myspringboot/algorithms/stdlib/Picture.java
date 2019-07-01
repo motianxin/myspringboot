@@ -186,7 +186,8 @@ public final class Picture implements ActionListener {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        Picture picture = new Picture(args[0]);
+        String picName = "C:\\Users\\墨天心\\Documents\\pic.png";
+        Picture picture = new Picture(picName);
         System.out.printf("%d-by-%d\n", picture.width(), picture.height());
         picture.show();
     }

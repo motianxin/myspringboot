@@ -257,7 +257,7 @@ public class QuickSort {
     public static void insertSort(int[] arr) {
         int n = arr.length;
         for (int i = 1; i < n; i++) {
-            for (int j = i; j >= 0 && less(arr[j], arr[j - 1]); j--) {
+            for (int j = i; j > 0 && less(arr[j], arr[j - 1]); j--) {
                 swap(arr, j, j - 1);
             }
         }

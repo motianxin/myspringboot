@@ -1918,7 +1918,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void actionPerformed(ActionEvent e) {
         FileDialog chooser = new FileDialog(StdDraw.frame, "Use a .png or .jpg extension", FileDialog.SAVE);
         chooser.setVisible(true);
@@ -1931,7 +1931,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void mouseClicked(MouseEvent e) {
         // this body is intentionally left empty
     }
@@ -1939,7 +1939,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void mouseEntered(MouseEvent e) {
         // this body is intentionally left empty
     }
@@ -1947,7 +1947,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void mouseExited(MouseEvent e) {
         // this body is intentionally left empty
     }
@@ -1960,7 +1960,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void mousePressed(MouseEvent e) {
         synchronized (mouseLock) {
             mouseX = StdDraw.userX(e.getX());
@@ -1972,7 +1972,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void mouseReleased(MouseEvent e) {
         synchronized (mouseLock) {
             isMousePressed = false;
@@ -1982,7 +1982,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void mouseDragged(MouseEvent e) {
         synchronized (mouseLock) {
             mouseX = StdDraw.userX(e.getX());
@@ -1993,7 +1993,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void mouseMoved(MouseEvent e) {
         synchronized (mouseLock) {
             mouseX = StdDraw.userX(e.getX());
@@ -2004,7 +2004,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void keyTyped(KeyEvent e) {
         synchronized (keyLock) {
             keysTyped.addFirst(e.getKeyChar());
@@ -2014,7 +2014,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void keyPressed(KeyEvent e) {
         synchronized (keyLock) {
             keysDown.add(e.getKeyCode());
@@ -2024,7 +2024,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    @Override
+    
     public void keyReleased(KeyEvent e) {
         synchronized (keyLock) {
             keysDown.remove(e.getKeyCode());
