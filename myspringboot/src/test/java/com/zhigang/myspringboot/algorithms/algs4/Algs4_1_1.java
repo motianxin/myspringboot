@@ -361,52 +361,6 @@ public class Algs4_1_1 {
         }
     }
 
-    /**
-     * @Description: 测试函数值画图
-     * @Param: [n]
-     * @return: void
-     * @Author: admin
-     * @Date: 2019/6/30 16:55
-     */
-    private static void drawFunctionValue(int n) {
-        StdDraw.setXscale(0, n);
-        StdDraw.setYscale(0, n * n);
-        StdDraw.setPenColor(StdDraw.RED);
-        StdDraw.setPenRadius(.01);
-        for (int i = 1; i <= n; i++) {
-            StdDraw.point(i, i);
-            StdDraw.point(i, i * i);
-            StdDraw.point(i, i * Math.log(i));
-        }
-    }
-
-
-    /**
-     * @Description: 各种排序轨迹动态演示
-     * @Param: [n]
-     * @return: void
-     * @Author: admin
-     * @Date: 2019/7/1 18:23
-     */
-    private static void drawRandomArray(int n) {
-        double[] dArray = new double[n];
-        for (int i = 0; i < n; i++) {
-            dArray[i] = StdRandom.uniform();
-        }
-
-        for (int i = 0; i < n; i++) {
-            filledRec(n, dArray[i], i);
-        }
-        // bubbleSort(dArray);
-        // insertSort(dArray);
-        // quickSort(dArray, 0, dArray.length - 1);
-        // mergeSort(dArray, 0, n-1);
-        // mergeBUsort(dArray);
-        // shellSort(dArray);
-        heapSort(dArray);
-
-    }
-
     private static void filledChange(int n, double v, int i) {
         StdDraw.setPenColor(StdDraw.WHITE);
         filledRec(n, 1.0, i);
@@ -466,13 +420,57 @@ public class Algs4_1_1 {
         filledChange(n, arr[j], j);
     }
 
+    /**
+     * @Description: 测试函数值画图
+     * @Param: [n]
+     * @return: void
+     * @Author: admin
+     * @Date: 2019/6/30 16:55
+     */
+    private static void drawFunctionValue(int n) {
+        StdDraw.setXscale(0, n);
+        StdDraw.setYscale(0, n * n);
+        StdDraw.setPenColor(StdDraw.RED);
+        StdDraw.setPenRadius(.01);
+        for (int i = 1; i <= n; i++) {
+            StdDraw.point(i, i);
+            StdDraw.point(i, i * i);
+            StdDraw.point(i, i * Math.log(i));
+        }
+    }
+
+
+    /**
+     * @Description: 各种排序轨迹动态演示
+     * @Param: [n]
+     * @return: void
+     * @Author: admin
+     * @Date: 2019/7/1 18:23
+     */
+    private static void drawRandomArray(int n) {
+        double[] dArray = new double[n];
+        for (int i = 0; i < n; i++) {
+            dArray[i] = StdRandom.uniform();
+        }
+
+        for (int i = 0; i < n; i++) {
+            filledRec(n, dArray[i], i);
+        }
+        // bubbleSort(dArray);
+        // insertSort(dArray);
+        // quickSort(dArray, 0, dArray.length - 1);
+        // mergeSort(dArray, 0, n-1);
+        // mergeBUsort(dArray);
+        // shellSort(dArray);
+        heapSort(dArray);
+
+    }
+
+
+
     private static void drawFG() {
-        // StdDraw.setXscale(0, 16);
-        // StdDraw.setYscale(0, 16 * 16);
-        // StdDraw.setPenRadius(.01);
         int f = 0, g = 1;
         for (int i = 1; i < 16; i++) {
-            // StdDraw.point(i, f);
             System.out.println(f);
             f = f + g;
             g = f - g;
@@ -489,8 +487,8 @@ public class Algs4_1_1 {
 
 
     public static void main(String[] args) {
-        // drawFunctionValue(50);
-        drawRandomArray(200);
+        drawFunctionValue(150);
+        // drawRandomArray(200);
         // drawFG();
         // System.out.println(intToBinary(100));
     }
