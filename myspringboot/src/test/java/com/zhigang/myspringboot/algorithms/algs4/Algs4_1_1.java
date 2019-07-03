@@ -15,6 +15,8 @@ import java.util.Stack;
  * @Version 3.2.2
  **/
 public class Algs4_1_1 {
+    private static final int N = 400;
+    private static double[] copyArray = new double[N];
 
     public static void quickSort(double[] arr, int startIndex, int endIndex) {
         // 递归结束条件：startIndex大等于endIndex的时候
@@ -230,13 +232,12 @@ public class Algs4_1_1 {
         if (arr[mid] <= arr[mid + 1]) {
             return;
         }
-        double[] copyArray = new double[arr.length];
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = lo; i <= hi; i++) {
             copyArray[i] = arr[i];
         }
         int i = lo;
         int j = mid + 1;
-        for (int k = lo; k < arr.length; k++) {
+        for (int k = lo; k <= hi; k++) {
             if (i > mid) {
                 arr[k] = copyArray[j++];
             } else if (j > hi) {
@@ -277,7 +278,6 @@ public class Algs4_1_1 {
     public static void mergeBUsort(double[] arr) {
         int lo = 0, hi = arr.length;
         for (int i = 1; i < hi; i *= 2) {
-            System.out.println("mergeBUsort size = " + i);
             for (int j = 0; j < hi - i; j += 2 * i) {
                 merge(arr, j, j + i - 1, Math.min(hi - 1, j + 2 * i - 1));
             }
@@ -456,13 +456,14 @@ public class Algs4_1_1 {
         for (int i = 0; i < n; i++) {
             filledRec(n, dArray[i], i);
         }
+        copyArray = new double[n];
         // bubbleSort(dArray);
         // insertSort(dArray);
         // quickSort(dArray, 0, dArray.length - 1);
-        // mergeSort(dArray, 0, n-1);
+        mergeSort(dArray, 0, n-1);
         // mergeBUsort(dArray);
         // shellSort(dArray);
-        heapSort(dArray);
+        // heapSort(dArray);
 
     }
 
@@ -487,8 +488,8 @@ public class Algs4_1_1 {
 
 
     public static void main(String[] args) {
-        drawFunctionValue(150);
-        // drawRandomArray(200);
+        // drawFunctionValue(100);
+        drawRandomArray(N);
         // drawFG();
         // System.out.println(intToBinary(100));
     }

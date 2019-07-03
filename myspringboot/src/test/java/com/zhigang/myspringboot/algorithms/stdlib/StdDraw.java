@@ -555,7 +555,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     private static final Font DEFAULT_FONT = new Font("SansSerif", Font.PLAIN, 16);
     // current pen color
     private static Color penColor;
-    private static int width = DEFAULT_SIZE;
+    private static int width = DEFAULT_SIZE << 1;
     private static int height = DEFAULT_SIZE;
     // current pen radius
     private static double penRadius;

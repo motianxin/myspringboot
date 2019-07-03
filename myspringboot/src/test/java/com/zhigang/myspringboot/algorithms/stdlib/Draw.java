@@ -185,8 +185,8 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
     // current pen color
     private Color penColor;
     // canvas size
-    private int width = DEFAULT_SIZE;
-    private int height = DEFAULT_SIZE;
+    private int width = 900;//DEFAULT_SIZE;
+    private int height = 300;//DEFAULT_SIZE;
     // current pen radius
     private double penRadius;
     // show we draw immediately or wait until next show?
@@ -208,6 +208,9 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
     private double mouseX = 0;
     private double mouseY = 0;
 
+    private int x;
+    private int y;
+
 
     /**
      * Initializes an empty drawing object with the given name.
@@ -223,6 +226,13 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * Initializes an empty drawing object.
      */
     public Draw() {
+        init();
+    }
+
+    public Draw(String sortName, int x, int y) {
+        this.name = sortName;
+        this.x = x;
+        this.y = y;
         init();
     }
 
@@ -358,6 +368,7 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
         frame.setTitle(name);
         frame.setJMenuBar(createMenuBar());
         frame.pack();
+        frame.setLocation(x, y);
         frame.requestFocusInWindow();
         frame.setVisible(true);
     }
