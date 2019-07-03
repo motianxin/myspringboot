@@ -43,7 +43,7 @@ public class AllSortCompare {
         SortClass sortClass = null;
         double temp;
         List<double[]> doubles = new ArrayList<>(SORT_NAMES.length);
-        double[] dArray = new double[N];
+        double[] dArray0 = new double[N];
         double[] dArray1 = new double[N];
         double[] dArray2 = new double[N];
         double[] dArray3 = new double[N];
@@ -52,14 +52,14 @@ public class AllSortCompare {
 
         for (int i = 0; i < N; i++) {
             temp = StdRandom.uniform();
-            dArray[i] = temp;
+            dArray0[i] = temp;
             dArray1[i] = temp;
             dArray2[i] = temp;
             dArray3[i] = temp;
             dArray4[i] = temp;
             dArray5[i] = temp;
         }
-        doubles.add(dArray);
+        doubles.add(dArray0);
         doubles.add(dArray2);
         doubles.add(dArray3);
         doubles.add(dArray1);

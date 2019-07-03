@@ -124,7 +124,9 @@ public class Algs4_1_1 {
         for (int i = startIndex; i <= endIndex; i++) {
             if (less(arr[i], pivot)) {
                 mark++;
-                swap(arr, i, mark);
+                if (mark != i) {
+                    swap(arr, i, mark);
+                }
             }
         }
         arr[startIndex] = arr[mark];

@@ -27,6 +27,7 @@ public class ShellSort extends SortClass {
             h = 3 * h + 1;
         }
         while (h >= 1) {
+            // 插入排序变种。间隔有序
             for (int i = h; i < arr.length; i++) {
                 for (int j = i; j >= h; j -= h) {
                     if (less(arr[j], arr[j - h])) {

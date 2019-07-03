@@ -29,13 +29,18 @@ public class QuickSort extends SortClass {
         if (hi <= lo) {
             return;
         }
-
         int pivot = partition(arr, lo, hi);
         quickSort(arr, lo, pivot - 1);
         quickSort(arr, pivot + 1, hi);
-
     }
 
+    /** 
+     * @Description: 快速排序核心方法，得到一个基准下标 
+     * @Param: [arr, lo, hi] 
+     * @return: int 
+     * @Author: admin
+     * @Date: 2019/7/3 22:14
+     */
     private int partition(double[] arr, int lo, int hi) {
         int left = lo, right = hi;
         int changeTimes = 0;

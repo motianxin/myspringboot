@@ -24,6 +24,8 @@ public class InsertSort extends SortClass {
         int n = arr.length;
         for (int i = 1; i < n; i++) {
             for (int j = i; j >= 1; j--) {
+                // 插入排序，如果后面的值比前面的小则插入到前面，
+                // 直到遇到一个更小的值或者到首元素
                 if (less(arr[j], arr[j - 1])) {
                     swap(arr, j, j - 1);
                 }
