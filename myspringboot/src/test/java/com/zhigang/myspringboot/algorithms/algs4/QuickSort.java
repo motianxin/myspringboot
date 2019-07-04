@@ -32,7 +32,7 @@ public class QuickSort extends SortClass {
         if (hi <= lo) {
             return;
         }
-        int pivot = partition3(arr, lo, hi);
+        int pivot = partition(arr, lo, hi);
         quickSort(arr, lo, pivot - 1);
         quickSort(arr, pivot + 1, hi);
     }
@@ -130,11 +130,11 @@ public class QuickSort extends SortClass {
 
     public static void main(String[] args) {
         SortClass sortClass = new QuickSort();
-        double[] dArray = new double[400];
+        double[] dArray = new double[1000];
         for (int i = 0; i < dArray.length; i++) {
             dArray[i] = StdRandom.uniform();
         }
-        sortClass.setDraw(new Draw("QuickSort", 300, 300));
+        sortClass.setDraw(new Draw("QuickSort", 300, 300, 1800, 512));
         sortClass.sort(dArray);
     }
 }

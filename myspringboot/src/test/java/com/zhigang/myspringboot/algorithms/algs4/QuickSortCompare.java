@@ -25,20 +25,20 @@ import java.util.Map;
  */
 public class QuickSortCompare {
 
-    private static final String[] QUICK_SORT_NAMES = new String[]{"quickSort", "QuickSortLast"};
+    private static final String[] QUICK_SORT_NAMES = new String[]{"QuickSort", "QuickSortLast"};
 
     private static final Map<String, SortClass> QUICK_CLASS_MAP = new HashMap<String, SortClass>(){{
         put(QUICK_SORT_NAMES[0], new QuickSort());
         put(QUICK_SORT_NAMES[1], new QuickSortLast());
     }};
 
-    private static final int N = 800;
+    private static final int N = 1000;
 
     public static void main(String[] args) {
         Draw draw = null;
         SortClass sortClass = null;
-        int w = 1800;
-        int h = 500;
+        int w = 1900;
+        int h = 480;
         double temp;
         List<double[]> doubles = new ArrayList<>(QUICK_SORT_NAMES.length);
         double[] dArray0 = new double[N];

@@ -25,6 +25,7 @@ public class MegerSort extends SortClass{
     @Override
     public void sort(double[] arr) {
         super.sort(arr);
+        System.out.println("MegerSort.sort");
         copyArray = new double[arr.length];
         // mergeSort(arr, 0, arr.length -1);
         mergeBUsort(arr);
@@ -109,7 +110,7 @@ public class MegerSort extends SortClass{
         for (int i = 0; i < dArray.length; i++) {
             dArray[i] = StdRandom.uniform();
         }
-        sortClass.setDraw(new Draw("heapSort", 300, 300));
+        sortClass.setDraw(new Draw("MegerSort", 300, 300));
         sortClass.sort(dArray);
     }
 

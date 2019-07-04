@@ -1,8 +1,8 @@
 /**
- * FileName: AllSortCompare
+ * FileName: SortTimesCalculate
  * Author:   Administrator
- * Date:     2019/7/2 19:20
- * Description: 所有排序算法演示
+ * Date:     2019/7/4 20:16
+ * Description: 排序时间对比
  * History:
  * <author>          <time>          <version>          <desc>
  */
@@ -15,19 +15,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
- * 〈所有排序算法演示〉
+ * 〈排序时间对比〉
  *
  * @author Administrator
  * @version 3.2.2
- * @create 2019/7/2 19:20
+ * @create 2019/7/4 20:16
  */
-public class AllSortCompare {
+public class SortTimesCalculate {
 
     public static final String[] SORT_NAMES = new String[]{"quickSort", "shellSort", "insertSort", "mergeSort", "bubbleSort", "heapSort"};
 
-    public static final Map<String, SortClass> CLASS_MAP = new HashMap<String, SortClass>(){{
+    public static final Map<String, SortClass> CLASS_MAP = new HashMap<String, SortClass>() {{
         put(SORT_NAMES[0], new QuickSort());
         put(SORT_NAMES[1], new ShellSort());
         put(SORT_NAMES[2], new InsertSort());
@@ -65,15 +69,29 @@ public class AllSortCompare {
         doubles.add(dArray1);
         doubles.add(dArray4);
         doubles.add(dArray5);
-        for (int i = 0; i < SORT_NAMES.length; i++) {
-            draw = new Draw(SORT_NAMES[i], 960 *( i/3), 350 * (i % 3));
+        int length = SORT_NAMES.length;
+        ExecutorService threadPoor = Executors.newFixedThreadPool(length);
+        Map<String, Future<Double>> futures = new HashMap<>(length);
+        for (int i = 0; i < length; i++) {
+            draw = new Draw(SORT_NAMES[i], 960 * (i / 3), 350 * (i % 3));
             sortClass = CLASS_MAP.get(SORT_NAMES[i]);
             sortClass.setDraw(draw);
-            SortThread sortThread = new SortThread(sortClass, doubles.get(i));
-            sortThread.start();
+            futures.put(SORT_NAMES[i], threadPoor.submit(new SortCallAble(sortClass, doubles.get(i))));
         }
 
-    }
+        Map<String, Double> result = new HashMap<>(length);
+        for (int i = 0; i < length; i++) {
+            try {
+                result.put(SORT_NAMES[i], futures.get(SORT_NAMES[i]).get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
 
+        System.out.println(result);
+
+    }
 
 }

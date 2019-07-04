@@ -8,8 +8,6 @@
  */
 package com.zhigang.myspringboot.algorithms.algs4;
 
-import com.zhigang.myspringboot.algorithms.stdlib.StdRandom;
-
 /**
  * 〈sortTread〉
  *
@@ -30,11 +28,6 @@ public class SortThread extends Thread{
 
     @Override
     public void run() {
-        int n = arr.length;
-
-        for (int i = 0; i < n; i++) {
-            sortClass.filledRec(n, arr[i], i);
-        }
         sortClass.sort(arr);
     }
 }
