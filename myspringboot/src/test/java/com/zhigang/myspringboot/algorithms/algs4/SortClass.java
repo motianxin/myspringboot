@@ -17,18 +17,18 @@ public abstract class SortClass {
         this.draw = draw;
     }
 
-    public void sort(double[] arr){
+    protected void sort(double[] arr){
         int n = arr.length;
         for (int i = 0; i < n; i++) {
             filledRec(n, arr[i], i);
         }
     };
 
-    public boolean less(double a, double b) {
+    protected boolean less(double a, double b) {
         return a < b;
     }
 
-    public void swap(double[] arr, int i, int j) {
+    protected void swap(double[] arr, int i, int j) {
         int n = arr.length;
         double tmp = arr[i];
         arr[i] = arr[j];
@@ -37,14 +37,14 @@ public abstract class SortClass {
         filledChange(n, arr[j], j);
     }
 
-    public void filledChange(int n, double v, int i) {
+    protected void filledChange(int n, double v, int i) {
         draw.setPenColor(draw.WHITE);
         filledRec(n, 1.0, i);
         draw.setPenColor(draw.BLACK);
         filledRec(n, v, i);
     }
 
-    public void filledRec(int n, double v, int i) {
+    protected void filledRec(int n, double v, int i) {
         double x = 1.0 * i / n;
         double y = v / 2.0;
         double rw = 0.5 / n;

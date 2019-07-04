@@ -236,6 +236,15 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
         init();
     }
 
+    public Draw(String sortName, int x, int y, int w, int h) {
+        this.name = sortName;
+        this.x = x;
+        this.y = y;
+        this.width = w;
+        this.height = h;
+        init();
+    }
+
     /***************************************************************************
      *  User and screen coordinate systems.
      ***************************************************************************/

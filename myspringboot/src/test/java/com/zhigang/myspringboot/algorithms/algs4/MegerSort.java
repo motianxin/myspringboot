@@ -26,8 +26,8 @@ public class MegerSort extends SortClass{
     public void sort(double[] arr) {
         super.sort(arr);
         copyArray = new double[arr.length];
-        mergeSort(arr, 0, arr.length -1);
-        // mergeBUsort(arr);
+        // mergeSort(arr, 0, arr.length -1);
+        mergeBUsort(arr);
     }
 
     /** 

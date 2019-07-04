@@ -36,7 +36,7 @@ public class AllSortCompare {
         put(SORT_NAMES[5], new HeapSort());
     }};
 
-    private static final int N = 300;
+    private static final int N = 800;
 
     public static void main(String[] args) {
         Draw draw = null;
@@ -72,6 +72,7 @@ public class AllSortCompare {
             SortThread sortThread = new SortThread(sortClass, doubles.get(i));
             sortThread.start();
         }
+
     }
 
 
