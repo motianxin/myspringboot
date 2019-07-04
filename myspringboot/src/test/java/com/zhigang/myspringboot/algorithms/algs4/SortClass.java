@@ -18,7 +18,6 @@ public abstract class SortClass {
     }
 
     protected void sort(double[] arr){
-        System.out.println("SortClass.sort");
         int n = arr.length;
         for (int i = 0; i < n; i++) {
             filledRec(n, arr[i], i);

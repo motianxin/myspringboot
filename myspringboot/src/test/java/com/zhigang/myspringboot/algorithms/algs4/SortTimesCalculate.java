@@ -40,7 +40,7 @@ public class SortTimesCalculate {
         put(SORT_NAMES[5], new HeapSort());
     }};
 
-    private static final int N = 400;
+    private static final int N = 200;
 
     public static void main(String[] args) {
         Draw draw = null;
