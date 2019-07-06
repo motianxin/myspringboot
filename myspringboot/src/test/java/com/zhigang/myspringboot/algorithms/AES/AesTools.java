@@ -42,10 +42,6 @@ public class AesTools {
             byte[] contentByte = content.getBytes("utf-8");
             Cipher cipher = getCipher(Cipher.ENCRYPT_MODE);
             byte[] bytes = cipher.doFinal(contentByte);
-            for (byte aByte : bytes) {
-                System.out.print(aByte + ", ");
-            }
-            System.out.println("加密成功");
             return Base64.encodeBase64String(bytes);
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,10 +53,6 @@ public class AesTools {
     public static String aesDecode(String enMsg) {
         try {
             byte[] message = Base64.decodeBase64(enMsg);
-            for (byte b : message) {
-                System.out.print(b + ", ");
-            }
-            System.out.println("开始解密");
             Cipher cipher = getCipher(Cipher.DECRYPT_MODE);
             return new String(cipher.doFinal(message));
         } catch (Exception e) {
@@ -94,31 +86,5 @@ public class AesTools {
         }
     }
 
-    public static byte[] toByteArray(String hexString) {
 
-        hexString = hexString.toLowerCase();
-        final byte[] byteArray = new byte[hexString.length() / 2];
-        int k = 0;
-        for (int i = 0; i < byteArray.length; i++) {
-            //因为是16进制，最多只会占用4位，转换成字节需要两个16进制的字符，高位在先
-            byte high = (byte) (Character.digit(hexString.charAt(k), 16) & 0xff);
-            byte low = (byte) (Character.digit(hexString.charAt(k + 1), 16) & 0xff);
-            byteArray[i] = (byte) (high << 4 | low);
-            k += 2;
-        }
-        return byteArray;
-    }
-
-    public static String toHexString(byte[] byteArray) {
-        if (byteArray == null || byteArray.length < 1)
-            throw new IllegalArgumentException("this byteArray must not be null or empty");
-
-        final StringBuilder hexString = new StringBuilder();
-        for (int i = 0; i < byteArray.length; i++) {
-            if ((byteArray[i] & 0xff) < 0x10)//0~F前面不零
-                hexString.append("0");
-            hexString.append(Integer.toHexString(0xFF & byteArray[i]));
-        }
-        return hexString.toString().toLowerCase();
-    }
 }

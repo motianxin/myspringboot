@@ -555,8 +555,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     private static final Font DEFAULT_FONT = new Font("SansSerif", Font.PLAIN, 16);
     // current pen color
     private static Color penColor;
-    private static int width = DEFAULT_SIZE << 1;
-    private static int height = DEFAULT_SIZE;
+    private static int width = 900;//DEFAULT_SIZE << 1;
+    private static int height = 900;//DEFAULT_SIZE << 1;
     // current pen radius
     private static double penRadius;
     // show we draw immediately or wait until next show?
@@ -1897,7 +1897,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         StdDraw.filledSquare(0.8, 0.8, 0.2);
         StdDraw.circle(0.8, 0.2, 0.2);
 
+
+
         StdDraw.setPenColor(StdDraw.BOOK_RED);
+        StdDraw.filledCircle(.5,.5,.2);
         StdDraw.setPenRadius(0.02);
         StdDraw.arc(0.8, 0.2, 0.1, 200, 45);
 
@@ -1913,6 +1916,12 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         StdDraw.text(0.2, 0.5, "black text");
         StdDraw.setPenColor(StdDraw.WHITE);
         StdDraw.text(0.8, 0.8, "white text");
+
+        StdDraw.text(0.8, 0.8, "test text");
+
+        StdDraw.filledSquare(0.8, 0.8, 0.2);
+        StdDraw.setPenColor(StdDraw.BLACK);
+        StdDraw.filledSquare(0.8, 0.8, 0.2);
     }
 
     /**
