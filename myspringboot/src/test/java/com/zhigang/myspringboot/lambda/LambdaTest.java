@@ -1,6 +1,6 @@
 /**
  * FileName: LambdaTest
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/1/22 19:23
  * Description: lambda test
  * History:
@@ -22,7 +22,7 @@ import java.util.stream.Stream;
  * 〈一句话功能简述〉<br>
  * 〈lambda test〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/1/22 19:23
  */

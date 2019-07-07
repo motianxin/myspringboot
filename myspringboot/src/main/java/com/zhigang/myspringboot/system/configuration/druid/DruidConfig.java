@@ -1,6 +1,6 @@
 /**
  * FileName: DruidConfig
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/26 11:17
  * Description: DruidConfig
  * History:
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 〈DruidConfig〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/4/26 11:17
  * @version 3.2.2
  */

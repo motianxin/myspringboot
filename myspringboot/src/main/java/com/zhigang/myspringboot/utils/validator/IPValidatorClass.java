@@ -1,6 +1,6 @@
 /**
  * FileName: IPValidatorClass
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/28 17:08
  * Description: IP字符串校验器
  * History:
@@ -14,7 +14,7 @@ import javax.validation.ConstraintValidatorContext;
 /**
  * 〈IP字符串校验器〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/4/28 17:08
  * @version 3.2.2
  */

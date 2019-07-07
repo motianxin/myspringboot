@@ -1,6 +1,6 @@
 /**
  * FileName: NotifyAlarmSync
- * Author:   zghuang
+ * Author:   admin
  * Date:     2018/12/19 16:39
  * Description: 告警同步模拟
  * History:
@@ -26,7 +26,7 @@ import java.util.Date;
  * 〈一句话功能简述〉<br> 
  * 〈告警同步模拟〉
  *
- * @author zghuang
+ * @author admin
  * @create 2018/12/19 16:39
  * @version 3.2.2
  */

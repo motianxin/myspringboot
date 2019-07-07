@@ -65,7 +65,7 @@ public class QuickSort extends SortClass {
      * @Description: 指针交换法
      * @Param: [arr, startIndex, endIndex]
      * @return: int
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/3/27 22:37
      */
     public int partition2(double[] arr, int startIndex, int endIndex) {

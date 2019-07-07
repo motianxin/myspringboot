@@ -1,6 +1,6 @@
 /**
  * FileName: ReposImpl
- * Author:   zghuang
+ * Author:   admin
  * Date:     2018/12/20 17:19
  * Description:
  * History:
@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
  * 〈一句话功能简述〉<br>
  * 〈〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2018/12/20 17:19
  */

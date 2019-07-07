@@ -10,7 +10,7 @@ import java.util.Stack;
 /**
  * @program: Code
  * @Description 一句话描述
- * @Author zghuang
+ * @Author admin
  * @Date 2019/6/30 16:30
  * @Version 3.2.2
  **/
@@ -34,7 +34,7 @@ public class Algs4_1_1 {
      * @Description: 挖坑法
      * @Param: [arr, startIndex, endIndex]
      * @return: int
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/3/27 22:37
      */
     public static int partition(double[] arr, int startIndex, int endIndex) {
@@ -75,7 +75,7 @@ public class Algs4_1_1 {
      * @Description: 指针交换法
      * @Param: [arr, startIndex, endIndex]
      * @return: int
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/3/27 22:37
      */
     public static int partition2(double[] arr, int startIndex, int endIndex) {
@@ -167,7 +167,7 @@ public class Algs4_1_1 {
      * @Description: 用栈实现，非递归
      * @Param: [arr, startIndex, endIndex]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/3/27 22:45
      */
     public static void quickSortWithStack(double[] arr, int startIndex, int endIndex) {
@@ -204,7 +204,7 @@ public class Algs4_1_1 {
      * @Description: 希尔排序
      * @Param: [arr]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 17:36
      */
     public static void shellSort(double[] arr) {
@@ -257,7 +257,7 @@ public class Algs4_1_1 {
      * @Description: 归并排序，自顶向下
      * @Param: [arr, lo, hi]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 23:12
      */
     public static void mergeSort(double[] arr, int lo, int hi) {
@@ -274,7 +274,7 @@ public class Algs4_1_1 {
      * @Description: 归并排序，自下而上
      * @Param: [arr]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 23:19
      */
     public static void mergeBUsort(double[] arr) {
@@ -290,7 +290,7 @@ public class Algs4_1_1 {
      * @Description: bubble Sort
      * @Param: [array]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 17:26
      */
     public static void bubbleSort(double[] array) {
@@ -382,7 +382,7 @@ public class Algs4_1_1 {
      * @Description: Insert sort
      * @Param: [arr]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 17:35
      */
     public static void insertSort(double[] arr) {
@@ -399,7 +399,7 @@ public class Algs4_1_1 {
      * @Description: Comparison of size
      * @Param: [a, b]
      * @return: boolean
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 17:21
      */
     public static boolean less(double a, double b) {
@@ -410,7 +410,7 @@ public class Algs4_1_1 {
      * @Description: Exchange element
      * @Param: [arr, i, j]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 17:21
      */
     public static void swap(double[] arr, int i, int j) {

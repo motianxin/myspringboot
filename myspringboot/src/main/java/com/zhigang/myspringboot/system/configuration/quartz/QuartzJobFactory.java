@@ -1,6 +1,6 @@
 /**
  * FileName: QuartzJobFactory
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/25 16:02
  * Description: 定义工厂类创建任务实例
  * History:
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 /**
  * 〈定义工厂类创建任务实例〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/4/25 16:02
  */

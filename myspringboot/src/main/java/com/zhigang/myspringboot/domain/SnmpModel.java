@@ -1,6 +1,6 @@
 /**
  * FileName: SnmpModel
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/1/10 20:01
  * Description: SNMPmodel
  * History:
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * 〈一句话功能简述〉<br> 
  * 〈SNMPmodel〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/1/10 20:01
  * @version 3.2.2
  */

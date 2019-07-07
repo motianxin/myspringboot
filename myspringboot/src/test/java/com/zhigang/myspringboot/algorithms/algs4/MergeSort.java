@@ -1,5 +1,5 @@
 /**
- * FileName: MegerSort
+ * FileName: MergeSort
  * Author:   Administrator
  * Date:     2019/7/2 19:46
  * Description: 归并排序
@@ -18,14 +18,13 @@ import com.zhigang.myspringboot.algorithms.stdlib.StdRandom;
  * @create 2019/7/2 19:46
  * @version 3.2.2
  */
-public class MegerSort extends SortClass{
+public class MergeSort extends SortClass{
 
 
     private double[] copyArray;
     @Override
     public void sort(double[] arr) {
         super.sort(arr);
-        System.out.println("MegerSort.sort");
         copyArray = new double[arr.length];
         // mergeSort(arr, 0, arr.length -1);
         mergeBUsort(arr);
@@ -71,7 +70,7 @@ public class MegerSort extends SortClass{
      * @Description: 归并排序，自顶向下.递归方式
      * @Param: [arr, lo, hi]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 23:12
      */
     public void mergeSort(double[] arr, int lo, int hi) {
@@ -88,7 +87,7 @@ public class MegerSort extends SortClass{
      * @Description: 归并排序，自下而上，循环方式
      * @Param: [arr]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 23:19
      */
     public void mergeBUsort(double[] arr) {
@@ -105,12 +104,12 @@ public class MegerSort extends SortClass{
     }
 
     public static void main(String[] args) {
-        SortClass sortClass = new MegerSort();
+        SortClass sortClass = new MergeSort();
         double[] dArray = new double[400];
         for (int i = 0; i < dArray.length; i++) {
             dArray[i] = StdRandom.uniform();
         }
-        sortClass.setDraw(new Draw("MegerSort", 300, 300));
+        sortClass.setDraw(new Draw("MergeSort", 300, 300));
         sortClass.sort(dArray);
     }
 

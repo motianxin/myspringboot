@@ -141,7 +141,7 @@ public class Gf28 {
      * @Description: 两个8位数在GF(2 ^ 8)域中相乘 0<=a,b<=255
      * @Param: [a, b]
      * @return: int
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/12 22:31
      */
     public static int aMultiplyB(int a, int b) {
@@ -160,7 +160,7 @@ public class Gf28 {
      * @Description: 得到一个数右移八位的数组
      * @Param: [a]
      * @return: int[]
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/12 23:06
      */
     public static int[] getGfByint(int a) {

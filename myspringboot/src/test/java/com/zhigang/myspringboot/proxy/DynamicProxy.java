@@ -7,7 +7,7 @@ import java.lang.reflect.Proxy;
 /**
  * @program: Code
  * @Description 动态代理
- * @Author zghuang
+ * @Author admin
  * @Date 2019/6/23 23:10
  * @Version 3.2.2
  **/

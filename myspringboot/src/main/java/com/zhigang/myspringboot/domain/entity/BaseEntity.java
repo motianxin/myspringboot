@@ -1,6 +1,6 @@
 /**
  * FileName: BaseEntity
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/3/19 10:24
  * Description: entity基类
  * History:
@@ -16,7 +16,7 @@ import javax.persistence.MappedSuperclass;
 /**
  * 〈entity基类〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/3/19 10:24
  * @version 3.2.2
  */

@@ -1,6 +1,6 @@
 /**
  * FileName: XmlTools
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/3/14 19:40
  * Description: xml数据工具类
  * History:
@@ -25,7 +25,7 @@ import java.util.Stack;
 /**
  * 〈xml数据工具类〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/3/14 19:40
  */

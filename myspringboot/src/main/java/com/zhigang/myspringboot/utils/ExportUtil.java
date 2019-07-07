@@ -1,6 +1,6 @@
 /**
  * FileName: ExportUtil
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/3/19 9:37
  * Description: 导出工具类
  * History:
@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * 〈导出工具类〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/3/19 9:37
  */
@@ -65,7 +65,7 @@ public class ExportUtil {
 
 
     /**
-     * @Author zghuang
+     * @Author admin
      * @Description 表格导出公共方法
      * @Param [vos, tableHeader, sheetName]
      * @Return org.apache.poi.ss.usermodel.Workbook

@@ -1,6 +1,6 @@
 /**
  * FileName: AlarmMsgXml
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/3/11 11:40
  * Description: agent接收udp告警消息模型
  * History:
@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 /**
  * 〈agent接收udp告警消息模型〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/3/11 11:40
  */

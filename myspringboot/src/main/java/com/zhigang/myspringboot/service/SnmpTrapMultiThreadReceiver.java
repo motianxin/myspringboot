@@ -1,6 +1,6 @@
 /**
  * FileName: SnmpTrapMultiThreadReceiver
- * Author:   zghuang
+ * Author:   admin
  * Date:     2018/12/11 9:25
  * Description: SnmpTrapMultiThreadReceiver
  * History:
@@ -30,7 +30,7 @@ import java.util.Vector;
  * 〈一句话功能简述〉<br>
  * 〈SnmpTrapMultiThreadReceiver〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2018/12/11 9:25
  */

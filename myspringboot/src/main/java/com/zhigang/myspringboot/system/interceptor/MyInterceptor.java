@@ -1,6 +1,6 @@
 /**
  * FileName: MyInterceptor
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/3/19 11:41
  * Description: 自定义拦截器
  * History:
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 〈自定义拦截器〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/3/19 11:41
  * @version 3.2.2
  */

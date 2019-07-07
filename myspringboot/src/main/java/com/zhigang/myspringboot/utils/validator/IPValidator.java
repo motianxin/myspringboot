@@ -1,6 +1,6 @@
 /**
  * FileName: IPValidator
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/28 17:05
  * Description: 自定义数据校验器
  * History:
@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 /**
  * 〈自定义数据校验器〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/4/28 17:05
  * @version 3.2.2
  */

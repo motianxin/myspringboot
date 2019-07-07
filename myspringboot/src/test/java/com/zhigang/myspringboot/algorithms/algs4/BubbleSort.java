@@ -27,7 +27,7 @@ public class BubbleSort extends SortClass {
             // 标记一轮排序后是否有序
             boolean isSorted = true;
             for (int j = 0; j < sortBorder; j++) {
-                if (less(array[j], array[j + 1])) {
+                if (less(array[j + 1], array[j])) {
                     swap(array, j, j + 1);
                     // 有交换说明无序，没有交换说明有序
                     isSorted = false;

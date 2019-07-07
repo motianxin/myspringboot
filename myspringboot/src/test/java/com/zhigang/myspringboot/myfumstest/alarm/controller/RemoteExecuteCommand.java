@@ -1,6 +1,6 @@
 /**
  * FileName: RemoteExecuteCommand
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/3/11 10:29
  * Description: 远程登录Linux并执行脚本
  * History:
@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * 〈远程登录Linux并执行脚本〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/3/11 10:29
  */

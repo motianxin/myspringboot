@@ -3,7 +3,7 @@ package com.zhigang.myspringboot.proxy;
 /**
  * @program: Code
  * @Description 静态代理
- * @Author zghuang
+ * @Author admin
  * @Date 2019/6/23 23:05
  * @Version 3.2.2
  **/

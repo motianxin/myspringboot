@@ -5,13 +5,13 @@ import com.zhigang.myspringboot.algorithms.stdlib.StdDraw;
 /**
  * @program: Code
  * @Description 一句话描述
- * @Author zghuang
+ * @Author admin
  * @Date 2019/7/6 17:10
  * @Version 3.2.2
  **/
 public class DrawNode {
 
-    private static final int ARRAY_LENGTH = 6;
+    private static final int ARRAY_LENGTH = 58;
 
     /**
      * @Description: 根据序号得到该值所在的层数
@@ -113,15 +113,25 @@ public class DrawNode {
     }
 
     public static void main(String[] args) {
+        if (ARRAY_LENGTH == 0) {
+            StdDraw.filledCircle(.5, .5, .5);
+        }
         double diameter = getDiameter();
         for (int i = 0; i <= ARRAY_LENGTH; i++) {
             double x = getScaleX(i);
             double y = getScaleY(i);
+            if ((getNumPower(i) & 1) == 0) {
+                StdDraw.setPenColor(StdDraw.BLACK);
+            } else {
+                StdDraw.setPenColor(StdDraw.RED);
+            }
             // System.out.println(" x = " + x + ", y = " + y);
             StdDraw.filledCircle(x, y, diameter / 2);
+            if (2 * i + 1 <= ARRAY_LENGTH) {
+                StdDraw.line(x, y, getScaleX(2 * i + 1), getScaleY(2 * i + 1));
+            }
             if (2 * i + 2 <= ARRAY_LENGTH) {
-                StdDraw.line(getScaleX(i), getScaleY(i), getScaleX(2 * i + 1), getScaleY(2 * i + 1));
-                StdDraw.line(getScaleX(i), getScaleY(i), getScaleX(2 * i + 2), getScaleY(2 * i + 2));
+                StdDraw.line(x, y, getScaleX(2 * i + 2), getScaleY(2 * i + 2));
             }
         }
     }

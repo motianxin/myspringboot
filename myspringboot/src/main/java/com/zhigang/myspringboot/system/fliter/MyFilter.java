@@ -1,6 +1,6 @@
 /**
  * FileName: MyFilter
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/3/19 11:35
  * Description: 自定义过滤器
  * History:
@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * 〈自定义过滤器〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/3/19 11:35
  * @version 3.2.2
  */

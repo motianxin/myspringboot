@@ -1,6 +1,6 @@
 /**
  * FileName: QuartzScheduler
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/25 16:05
  * Description: 注入工厂实例和scheduler
  * History:
@@ -22,7 +22,7 @@ import java.util.Properties;
 /**
  * 〈注入工厂实例和scheduler〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/4/25 16:05
  */

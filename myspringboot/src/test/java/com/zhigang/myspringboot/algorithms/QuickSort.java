@@ -9,7 +9,7 @@ import java.util.Stack;
 /**
  * @program: Code
  * @Description 快速排序
- * @Author zghuang
+ * @Author admin
  * @Date 2019/3/27 22:21
  * @Version 3.2.2
  **/
@@ -30,7 +30,7 @@ public class QuickSort {
      * @Description: 挖坑法
      * @Param: [arr, startIndex, endIndex]
      * @return: int
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/3/27 22:37
      */
     public static int partition(int[] arr, int startIndex, int endIndex) {
@@ -71,7 +71,7 @@ public class QuickSort {
      * @Description: 指针交换法
      * @Param: [arr, startIndex, endIndex]
      * @return: int
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/3/27 22:37
      */
     public static int partition2(int[] arr, int startIndex, int endIndex) {
@@ -154,7 +154,7 @@ public class QuickSort {
      * @Description: 用栈实现，非递归
      * @Param: [arr, startIndex, endIndex]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/3/27 22:45
      */
     public static void quickSortWithStack(int[] arr, int startIndex, int endIndex) {
@@ -191,7 +191,7 @@ public class QuickSort {
      * @Description: bubble Sort
      * @Param: [array]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 17:26
      */
     public static void bubbleSort(int[] array) {
@@ -227,7 +227,7 @@ public class QuickSort {
      * @Description: Comparison of size
      * @Param: [a, b]
      * @return: boolean
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 17:21
      */
     public static boolean less(int a, int b) {
@@ -238,7 +238,7 @@ public class QuickSort {
      * @Description: Exchange element
      * @Param: [arr, i, j]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 17:21
      */
     public static void swap(int[] arr, int i, int j) {
@@ -251,7 +251,7 @@ public class QuickSort {
      * @Description: Insert sort
      * @Param: [arr]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 17:35
      */
     public static void insertSort(int[] arr) {
@@ -267,7 +267,7 @@ public class QuickSort {
      * @Description: 希尔排序
      * @Param: [arr]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 17:36
      */
     public static void shellSort(int[] arr) {
@@ -322,7 +322,7 @@ public class QuickSort {
      * @Description: 归并排序，自顶向下
      * @Param: [arr, lo, hi]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 23:12
      */
     public static void mergeSort(int[] arr, int lo, int hi) {
@@ -339,7 +339,7 @@ public class QuickSort {
      * @Description: 归并排序，自下而上
      * @Param: [arr]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 23:19
      */
     public static void mergeBUsort(int[] arr) {
@@ -357,7 +357,7 @@ public class QuickSort {
      * @Description: 初始化数组
      * @Param: [n]
      * @return: int[]
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 18:25
      */
     public static int[] initArray(int n) {
@@ -375,7 +375,7 @@ public class QuickSort {
      * @Description: 数组随机重排
      * @Param: [a]
      * @return: void
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/8 22:44
      */
     public static void shuffle(int[] a) {
@@ -406,7 +406,7 @@ public class QuickSort {
      * @Description: 判断一个整数的二进制位有多少个一
      * @Param: [number]
      * @return: int
-     * @Author: zghuang
+     * @Author: admin
      * @Date: 2019/6/10 23:58
      */
     public static int hasOneNumbers(long number) {

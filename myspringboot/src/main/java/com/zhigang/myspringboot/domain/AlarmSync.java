@@ -1,6 +1,6 @@
 /**
  * FileName: AlarmSync
- * Author:   zghuang
+ * Author:   admin
  * Date:     2018/12/19 16:57
  * Description:
  * History:
@@ -17,7 +17,7 @@ import javax.persistence.*;
  * 〈一句话功能简述〉<br> 
  * 〈〉
  *
- * @author zghuang
+ * @author admin
  * @create 2018/12/19 16:57
  * @version 3.2.2
  */

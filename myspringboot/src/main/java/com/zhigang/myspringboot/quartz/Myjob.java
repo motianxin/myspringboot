@@ -1,6 +1,6 @@
 /**
  * FileName: Myjob
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/25 16:14
  * Description: 自定义定时任务
  * History:
@@ -16,7 +16,7 @@ import org.quartz.JobExecutionException;
 /**
  * 〈自定义定时任务〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/4/25 16:14
  * @version 3.2.2
  */

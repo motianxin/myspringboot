@@ -31,7 +31,7 @@ public class AllSortCompare {
         put(SORT_NAMES[0], new QuickSort());
         put(SORT_NAMES[1], new ShellSort());
         put(SORT_NAMES[2], new InsertSort());
-        put(SORT_NAMES[3], new MegerSort());
+        put(SORT_NAMES[3], new MergeSort());
         put(SORT_NAMES[4], new BubbleSort());
         put(SORT_NAMES[5], new HeapSort());
     }};

@@ -3,13 +3,13 @@ package com.zhigang.myspringboot.algorithms.algs4;
 import com.zhigang.myspringboot.algorithms.stdlib.Draw;
 
 /**
- * 〈排序接口〉
+ * 〈排序父类〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/7/2 19:28
  * @since 3.2.2
  */
-public abstract class SortClass {
+public class SortClass {
 
     private Draw draw;
 

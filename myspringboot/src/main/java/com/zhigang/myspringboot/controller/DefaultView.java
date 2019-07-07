@@ -1,6 +1,6 @@
 /**
  * FileName: DefaultView
- * Author:   zghuang
+ * Author:   admin
  * Date:     2018/12/21 17:02
  * Description: 默认首页
  * History:
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * 〈一句话功能简述〉<br>
  * 〈默认首页〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2018/12/21 17:02
  */

@@ -1,6 +1,6 @@
 /**
  * FileName: WebConfig
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/3/19 14:50
  * Description: 配置类
  * History:
@@ -18,7 +18,7 @@ import java.util.Arrays;
 /**
  * 〈配置类〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/3/19 14:50
  * @version 3.2.2
  */

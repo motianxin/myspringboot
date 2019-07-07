@@ -1,6 +1,6 @@
 /**
  * FileName: GlobalDefaultExceptionHandler
- * Author:   zghuang
+ * Author:   admin
  * Date:     2018/12/27 21:40
  * Description: 全局异常捕获
  * History:
@@ -20,7 +20,7 @@ import java.util.Map;
  * 〈一句话功能简述〉<br> 
  * 〈全局异常捕获〉
  *
- * @author zghuang
+ * @author admin
  * @create 2018/12/27 21:40
  * @version 3.2.2
  */

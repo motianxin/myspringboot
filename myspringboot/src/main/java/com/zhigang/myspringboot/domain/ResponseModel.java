@@ -1,6 +1,6 @@
 /**
  * FileName: ResponseModel
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/1/24 16:23
  * Description: 响应对象
  * History:
@@ -12,7 +12,7 @@ package com.zhigang.myspringboot.domain;
  * 〈一句话功能简述〉<br> 
  * 〈响应对象〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/1/24 16:23
  * @version 3.2.2
  */

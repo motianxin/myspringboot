@@ -1,6 +1,6 @@
 /**
  * FileName: QuartzController
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/25 15:51
  * Description: 定时任务控制类
  * History:
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 〈定时任务控制类〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/4/25 15:51
  * @version 3.2.2
  */

@@ -1,6 +1,6 @@
 /**
  * FileName: QuartzManager
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/25 15:54
  * Description: 定时任务管理类
  * History:
@@ -26,7 +26,7 @@ import java.util.Date;
 /**
  * 〈定时任务管理类〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/4/25 15:54
  */

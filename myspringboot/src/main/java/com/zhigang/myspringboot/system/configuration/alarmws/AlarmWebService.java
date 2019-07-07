@@ -1,6 +1,6 @@
 /**
  * FileName: AlarmWebService
- * Author:   zghuang
+ * Author:   admin
  * Date:     2018/12/19 16:45
  * Description:
  * History:
@@ -23,7 +23,7 @@ import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
  * 〈一句话功能简述〉<br>
  * 〈〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2018/12/19 16:45
  */

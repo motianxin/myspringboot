@@ -1,6 +1,6 @@
 /**
  * FileName: StringTools
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/1/10 20:24
  * Description: 字符串工具类
  * History:
@@ -17,7 +17,7 @@ import java.util.Date;
  * 〈一句话功能简述〉<br>
  * 〈字符串工具类〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/1/10 20:24
  */

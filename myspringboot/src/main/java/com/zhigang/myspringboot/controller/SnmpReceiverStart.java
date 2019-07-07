@@ -1,6 +1,6 @@
 /**
  * FileName: SnmpReceiverStart
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/1/9 14:46
  * Description:
  * History:
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 〈一句话功能简述〉<br>
  * 〈〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/1/9 14:46
  */

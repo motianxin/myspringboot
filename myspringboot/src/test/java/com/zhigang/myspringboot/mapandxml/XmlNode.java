@@ -1,6 +1,6 @@
 /**
  * FileName: XmlNode
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/3/14 19:21
  * Description: xml数据类型封装对象
  * History:
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 〈xml数据类型封装对象〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/3/14 19:21
  * @version 3.2.2
  */

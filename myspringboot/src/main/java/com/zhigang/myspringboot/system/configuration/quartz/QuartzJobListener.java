@@ -1,6 +1,6 @@
 /**
  * FileName: QuartzJobListener
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/25 15:56
  * Description: 定时任务启动监听类
  * History:
@@ -22,7 +22,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 /**
  * 〈定时任务启动监听类〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/4/25 15:56
  * @version 3.2.2
  */

@@ -1,6 +1,6 @@
 /**
  * FileName: MyJob2
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/26 9:50
  * Description: 测试任务2
  * History:
@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * 〈测试任务2〉
  *
- * @author zghuang
+ * @author admin
  * @create 2019/4/26 9:50
  * @version 3.2.2
  */

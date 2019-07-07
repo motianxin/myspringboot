@@ -1,6 +1,6 @@
 /**
  * FileName: StringTools
- * Author:   zghuang
+ * Author:   admin
  * Date:     2019/4/29 10:25
  * Description: str tools
  * History:
@@ -17,7 +17,7 @@ import java.util.StringJoiner;
 /**
  * 〈str tools〉
  *
- * @author zghuang
+ * @author admin
  * @version 3.2.2
  * @create 2019/4/29 10:25
  */
@@ -82,7 +82,7 @@ public class StringTools {
     }
 
     /**
-     * @Author zghuang
+     * @Author admin
      * @Description 通过IP地址段添加IP集合，IP段格式：abc.xxx.kkk.jjj~abc.xxx.mmm.nnn
      * @Param [ips, ipBlock]
      * @Return void
