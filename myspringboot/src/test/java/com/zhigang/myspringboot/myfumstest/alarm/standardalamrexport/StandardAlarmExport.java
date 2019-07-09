@@ -65,13 +65,13 @@ public class StandardAlarmExport {
 
     private static final String DBNAME = "fumsdb";
 
-    private static final String HOST = "10.96.156.241";
+    private static final String HOST = "localhost";
 
-    private static final int PORT = 3306;
+    private static final int PORT = 3307;
 
-    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DB_URL = new StringBuilder("jdbc:mysql://").append(HOST).append(":").append(PORT)
-            .append("/").append(DBNAME).toString();
+            .append("/").append(DBNAME).append("?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8").toString();
     private static final String PATH = "C:/Users/Documents";
 
     public static final String FILE_NAME = "StandardAlarms";
@@ -204,7 +204,7 @@ public class StandardAlarmExport {
             while (rs.next()) {
                 row = sheet.createRow(rowNum++);
                 for (int i = 1; i <= columnCount; i++) {
-                    // System.out.print(rs.getObject(i) + ", ");
+                    System.out.print(rs.getObject(i) + ", ");
                     cell = row.createCell(i - 1);
                     cell.setCellValue(rs.getObject(i) + "");
                 }

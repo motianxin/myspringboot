@@ -24,21 +24,17 @@ public class HeapSort extends SortClass {
     @Override
     public void sort(double[] arr) {
         super.sort(arr);
-        // 取数组长度
-        // System.out.println(Arrays.toString(arr));
         int n = arr.length - 1;
         //构造最大堆，重最后一个叶子节点开始依次下沉
         for (int i = (n - 1) / 2; i >= 0; i--) {
             sink(arr, i, n);
         }
-        // System.out.println(Arrays.toString(arr));
         while (n > 0) {
             // 交换顶节点和最后一个节点，再下沉，
             // 相当于重顶节点删除一个节点，直到节点删除只剩一个
             swap(arr, 0, n--);
             sink(arr, 0, n);
         }
-        // System.out.println(Arrays.toString(arr));
     }
 
     /**

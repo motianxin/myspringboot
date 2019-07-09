@@ -6,7 +6,7 @@
  * History:
  * <author>          <time>          <version>          <desc>
  */
-package com.zhigang.myspringboot.threadtest;
+package com.zhigang.myspringboot.threadtest.producerandconsumer;
 
 /**
  * 〈BlockQueueTest〉

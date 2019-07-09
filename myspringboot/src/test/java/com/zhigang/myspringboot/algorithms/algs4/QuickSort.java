@@ -38,7 +38,7 @@ public class QuickSort extends SortClass {
     }
 
     /** 
-     * @Description: 快速排序核心方法，得到一个基准下标 
+     * @Description: 快速排序核心方法，得到一个基准下标，双边循环法
      * @Param: [arr, lo, hi] 
      * @return: int 
      * @Author: admin
@@ -130,7 +130,7 @@ public class QuickSort extends SortClass {
 
     public static void main(String[] args) {
         SortClass sortClass = new QuickSort();
-        double[] dArray = new double[1000];
+        double[] dArray = new double[300];
         for (int i = 0; i < dArray.length; i++) {
             dArray[i] = StdRandom.uniform();
         }

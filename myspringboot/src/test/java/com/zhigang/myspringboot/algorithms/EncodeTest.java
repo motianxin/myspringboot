@@ -34,6 +34,8 @@ public class EncodeTest {
      * 签名算法
      */
     private static final String SIGN_ALGORITHMS = "SHA1PRNG";
+
+
     private static String aesEncode(String content) throws Exception {
 
         SecretKey key = createKey(KEYGEN);

@@ -60,6 +60,7 @@ public class AesTest {
             for (byte b : cipherText) {
                 System.out.print(b + ", ");
             }
+
             System.out.println(new String(cipherText));
 
 

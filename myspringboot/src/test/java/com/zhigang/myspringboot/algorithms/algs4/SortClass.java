@@ -11,23 +11,45 @@ import com.zhigang.myspringboot.algorithms.stdlib.Draw;
  */
 public class SortClass {
 
+    /**
+     * 画图对象
+     */
     private Draw draw;
 
     public void setDraw(Draw draw) {
         this.draw = draw;
     }
 
-    protected void sort(double[] arr){
+    /**
+     * 排序入口
+     *
+     * @param arr
+     */
+    protected void sort(double[] arr) {
         int n = arr.length;
         for (int i = 0; i < n; i++) {
             filledRec(n, arr[i], i);
         }
     }
 
+    /**
+     * 对比大小
+     *
+     * @param a
+     * @param b
+     * @return
+     */
     protected boolean less(double a, double b) {
         return a < b;
     }
 
+    /**
+     * 交换数组下标元素
+     *
+     * @param arr
+     * @param i
+     * @param j
+     */
     protected void swap(double[] arr, int i, int j) {
         int n = arr.length;
         double tmp = arr[i];
@@ -37,6 +59,12 @@ public class SortClass {
         filledChange(n, arr[j], j);
     }
 
+    /**
+     * 重画直方图
+     * @param n
+     * @param v
+     * @param i
+     */
     protected void filledChange(int n, double v, int i) {
         draw.setPenColor(draw.WHITE);
         filledRec(n, 1.0, i);
@@ -44,6 +72,13 @@ public class SortClass {
         filledRec(n, v, i);
     }
 
+    /**
+     * 画直方图
+     *
+     * @param n
+     * @param v
+     * @param i
+     */
     protected void filledRec(int n, double v, int i) {
         double x = 1.0 * i / n;
         double y = v / 2.0;

@@ -16,7 +16,6 @@ package com.zhigang.myspringboot.algorithms.algs4;
  * @version 3.2.2
  */
 public class BubbleSort extends SortClass {
-
     @Override
     public void sort(double[] array) {
         super.sort(array);

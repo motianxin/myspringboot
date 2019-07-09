@@ -10,6 +10,8 @@ package com.zhigang.myspringboot.algorithms.algs4;
 
 import com.zhigang.myspringboot.algorithms.stdlib.Draw;
 import com.zhigang.myspringboot.algorithms.stdlib.StdRandom;
+import com.zhigang.myspringboot.threadtest.asyncresult.MyExecutor;
+import com.zhigang.myspringboot.threadtest.asyncresult.MyFuture;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +20,6 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * 〈排序时间对比〉
@@ -29,7 +30,8 @@ import java.util.concurrent.Future;
  */
 public class SortTimesCalculate {
 
-    public static final String[] SORT_NAMES = new String[]{"quickSort", "shellSort", "insertSort", "mergeSort", "bubbleSort", "heapSort"};
+    public static final String[] SORT_NAMES =
+            new String[]{"quickSort", "shellSort", "insertSort", "mergeSort", "bubbleSort", "heapSort"};
 
     public static final Map<String, SortClass> CLASS_MAP = new HashMap<String, SortClass>() {{
         put(SORT_NAMES[0], new QuickSort());
@@ -40,7 +42,7 @@ public class SortTimesCalculate {
         put(SORT_NAMES[5], new HeapSort());
     }};
 
-    private static final int N = 200;
+    private static final int N = 100;
 
     public static void main(String[] args) {
         Draw draw = null;
@@ -71,12 +73,12 @@ public class SortTimesCalculate {
         doubles.add(dArray5);
         int length = SORT_NAMES.length;
         ExecutorService threadPoor = Executors.newFixedThreadPool(length);
-        Map<String, Future<Double>> futures = new HashMap<>(length);
+        Map<String, MyFuture<Double>> futures = new HashMap<>(length);
         for (int i = 0; i < length; i++) {
             draw = new Draw(SORT_NAMES[i], 960 * (i / 3), 350 * (i % 3));
             sortClass = CLASS_MAP.get(SORT_NAMES[i]);
             sortClass.setDraw(draw);
-            futures.put(SORT_NAMES[i], threadPoor.submit(new SortCallAble(sortClass, doubles.get(i))));
+            futures.put(SORT_NAMES[i], new MyExecutor().execute(new SortCallAble(sortClass, doubles.get(i))));
         }
 
         Map<String, Double> result = new HashMap<>(length);
@@ -86,6 +88,8 @@ public class SortTimesCalculate {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

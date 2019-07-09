@@ -78,7 +78,7 @@ public class AesTools {
 
     public static void main(String[] args) {
         try {
-            String string = aesEncode("adgfadfgadfgadfgadgdfg");
+            String string = aesEncode("111111");
             System.out.println(string);
             System.out.println(aesDecode(string));
         } catch (Exception e) {

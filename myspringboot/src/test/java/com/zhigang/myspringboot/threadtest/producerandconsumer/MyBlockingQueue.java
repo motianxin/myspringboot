@@ -6,7 +6,7 @@
  * History:
  * <author>          <time>          <version>          <desc>
  */
-package com.zhigang.myspringboot.threadtest;
+package com.zhigang.myspringboot.threadtest.producerandconsumer;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -29,6 +29,7 @@ public class MyBlockingQueue<E> {
 
     public synchronized void put(E e) throws InterruptedException {
         while (queue.size() == limit) {
+            // 队列满了，等待
             wait();
         }
         queue.add(e);
@@ -37,9 +38,11 @@ public class MyBlockingQueue<E> {
 
     public synchronized E take() throws InterruptedException {
         while (queue.isEmpty()) {
+            // 队列空了等待
             wait();
         }
         E e = queue.poll();
+        //唤醒所有在条件等待队列中的线程
         notifyAll();
         return e;
     }

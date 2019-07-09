@@ -175,46 +175,45 @@ public class Gf28 {
     }
 
     public static void creatGf28() {
-        // 利用生成元g = x + 1 , table[n] = g^n (g^0 = 1) 生成正表
+        // 利用生成元g = x + 1 , initTable[n] = g^n (g^0 = 1) 生成正表
         // 知道n 得到g^n 的值
-        int[] table = new int[256];
-        table[0] = 1;
+        int[] initTable = new int[256];
+        initTable[0] = 1;
         for (int i = 1; i < 255; ++i) {
-            //下面是m_table[i] = m_table[i-1] * (x + 1)的简写形式
-            table[i] = (table[i - 1] << 1) ^ table[i - 1];
+            //initTable[i] = initTable[i-1] * (x + 1)的简写形式，因为g = 0x3 = 11
+            initTable[i] = (initTable[i - 1] << 1) ^ initTable[i - 1];
             //最高指数已经到了8，需要模上m(x) = x^8 + x^4 + x^3 + x + 1  (0x11b)
-            if ((table[i] & 0x100) > 255) {
-                table[i] ^= 0x11B;
+            if ((initTable[i] & 0x100) > 255) {
+                initTable[i] ^= 0x11B;
             }
         }
         System.out.println("初始化数组值，得到正表：");
-        printArray(table);
-        // 其中周期性质：g^(i+j) = 1, i+j=255
+        printArray(initTable);
+        // 其中周期性质：g^(i+j) = 1, (i+j)%255=1
         // 得到反表：知道g^n 求 n：
-        int[] arc_table = new int[256];
+        int[] arcTable = new int[256];
         for (int i = 0; i < 255; i++) {
-            arc_table[table[i]] = i;
+            arcTable[initTable[i]] = i;
         }
         System.out.println("由正表得到反表：");
-        printArray(arc_table);
-        // 利用周期性得到g^a的逆元g^b, b = 255 - a; s[g^i] = g^(255-i)
-        int[] s = new int[256];
+        printArray(arcTable);
+        // 利用周期性得到g^a的逆元g^b, b = 255 - a; midTable[g^i] = g^(255-i)
+        int[] midTable = new int[256];
         for (int i = 1; i < 256; i++) {
             // k = g^a
-            int k = arc_table[i];
+            int k = arcTable[i];
             k = 255 - k;
             k = k % 255;
-            s[i] = table[k];
+            midTable[i] = initTable[k];
         }
         System.out.println("根据正反表得到S盒中间盒：");
-        printArray(s);
+        printArray(midTable);
         System.out.println("S中间盒做仿射变换得到S盒：");
 
         int[][] sbox = new int[16][16];
-
-        for (int i = 0; i < s.length; i++) {
-            sbox[i / 16][i % 16] = byteTransformation(s[i], 0x63);
-            System.out.print(Integer.toHexString(byteTransformation(s[i], 0x63)) + ", ");
+        for (int i = 0; i < midTable.length; i++) {
+            sbox[i / 16][i % 16] = byteTransformation(midTable[i], 0x63);
+            System.out.print(Integer.toHexString(byteTransformation(midTable[i], 0x63)) + ", ");
             if ((i + 1) % 16 == 0) {
                 System.out.println();
             }
@@ -269,7 +268,20 @@ public class Gf28 {
     }
 
     public static void main(String[] args) {
-        creatGf28();
+        int g = 0x3, a =1, temp = 1;
+        for (int i = 1; i < 267; i++) {
+            System.out.print(temp +  ", ");
+            temp = aMultiplyB(g, temp);
+        }
+        System.out.println(aMultiplyB(5, 82));
+        int x1 = aMultiplyB(3, 199);
+        System.out.println(x1);
+        int x2 = aMultiplyB(x1, 3);
+        System.out.println(x2);
+        int x = aMultiplyB(x2, 3);
+        System.out.println(x);
+        System.out.println(Integer.toBinaryString(109));
+         creatGf28();
     }
 
 }
