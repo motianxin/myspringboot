@@ -42,7 +42,7 @@ public class HttpsConfig {
     @Bean
     @ConditionalOnProperty(name="condition.http2https",havingValue="true", matchIfMissing=false)
     public TomcatServletWebServerFactory tomcatServletWebServerFactory(){
-        TomcatServletWebServerFactory tomcat=new TomcatServletWebServerFactory(){
+        TomcatServletWebServerFactory tomcat= new TomcatServletWebServerFactory(){
             @Override
             protected void postProcessContext(Context context) {
                 SecurityConstraint securityConstraint=new SecurityConstraint();

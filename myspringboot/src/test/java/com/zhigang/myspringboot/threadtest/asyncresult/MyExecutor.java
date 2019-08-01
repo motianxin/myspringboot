@@ -10,7 +10,6 @@ import java.util.concurrent.Callable;
  * @Version 3.2.2
  **/
 public class MyExecutor {
-
     public <V> MyFuture<V> execute(final Callable<V> task) {
         Object lock = new Object();
         ExcuteThread<V> excuteThread = new ExcuteThread<>(task, lock);

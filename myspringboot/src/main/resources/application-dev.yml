@@ -1,8 +1,9 @@
 server:
   servlet:
+    context-path: /myboot
   port: 443
   ssl:
-    key-store: classpath:pfx/www.admin.top.pfx
+    key-store: classpath:pfx/www.zghuang.top.pfx
     key-alias: alias
     enabled: true
     key-store-password: 2z0tihGH

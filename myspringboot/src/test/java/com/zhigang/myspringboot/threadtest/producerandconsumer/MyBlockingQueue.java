@@ -46,6 +46,4 @@ public class MyBlockingQueue<E> {
         notifyAll();
         return e;
     }
-
-
 }

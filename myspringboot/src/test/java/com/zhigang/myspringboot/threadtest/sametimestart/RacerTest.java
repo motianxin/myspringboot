@@ -10,7 +10,6 @@ package com.zhigang.myspringboot.threadtest.sametimestart;
 public class RacerTest {
     public static void main(String[] args) {
         FireFlag flag = new FireFlag();
-
         int sum = 5;
         Racer[] racers = new Racer[sum];
         for (int i = 0; i < sum; i++) {
