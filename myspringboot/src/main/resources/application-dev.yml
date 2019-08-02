@@ -26,6 +26,13 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  redis:
+    host: 192.168.0.228
+    port: 6379
+    password: Myredis123!
+    database: 0
+
+
 logging:
   config: classpath:logging-config.xml
 
