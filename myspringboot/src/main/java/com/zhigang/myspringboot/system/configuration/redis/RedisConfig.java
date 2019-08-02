@@ -3,10 +3,11 @@ package com.zhigang.myspringboot.system.configuration.redis;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Configurable;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
@@ -24,8 +25,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @Date 2019/8/2 11:49
  * @Version 3.2.2
  **/
-@Configurable
+@Configuration
 @EnableCaching
+@Slf4j
 public class RedisConfig extends CachingConfigurerSupport {
     /**
      * retemplate相关配置
@@ -33,8 +35,8 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @return
      */
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-
+    public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
+        log.info("init redis template begin!");
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         // 配置连接工厂
         template.setConnectionFactory(factory);
@@ -52,10 +54,11 @@ public class RedisConfig extends CachingConfigurerSupport {
         // 值采用json序列化
         template.setValueSerializer(jacksonSeial);
         //使用StringRedisSerializer来序列化和反序列化redis的key值
-        template.setKeySerializer(new StringRedisSerializer());
+        StringRedisSerializer serializer = new StringRedisSerializer();
+        template.setKeySerializer(serializer);
 
         // 设置hash key 和value序列化模式
-        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(serializer);
         template.setHashValueSerializer(jacksonSeial);
         template.afterPropertiesSet();
 

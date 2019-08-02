@@ -35,7 +35,9 @@ public class RedisController {
 
     @RequestMapping("get")
     public Object redisget(@RequestParam("key") String key){
-        return redisUtil.get(key);
+        Object o = redisUtil.get(key);
+        log.info("get key {} value {}.", key, o);
+        return o;
     }
 
     @RequestMapping("expire")

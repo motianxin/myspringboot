@@ -1,6 +1,5 @@
 server:
   servlet:
-    context-path: /myboot
   port: 443
   ssl:
     key-store: classpath:pfx/www.zghuang.top.pfx
