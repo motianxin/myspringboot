@@ -31,6 +31,13 @@ spring:
     password: Myredis123!
     database: 0
 
+  rabbitmq:
+    host: 192.168.0.228
+    port: 5672
+    username: root
+    password: root1234
+    virtual-host: /
+    publisher-confirms: true
 
 logging:
   config: classpath:logging-config.xml
