@@ -67,7 +67,6 @@ public class Solution {
     }
 
     public static List<List<Integer>> threeSum(int[] nums) {
-
         List<List<Integer>> arrayList = new ArrayList<>();
         if (nums == null || nums.length < 3) {
             return arrayList;

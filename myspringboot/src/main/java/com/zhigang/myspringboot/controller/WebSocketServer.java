@@ -58,7 +58,7 @@ public class WebSocketServer {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("来自客户端的消息:" + message);
+        log.info("来自客户端的消息:" + message);
 
         //群发消息
         for (WebSocketServer item : webSocketSet) {
