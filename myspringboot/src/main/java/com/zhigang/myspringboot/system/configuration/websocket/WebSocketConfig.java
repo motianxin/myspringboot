@@ -1,7 +1,7 @@
 package com.zhigang.myspringboot.system.configuration.websocket;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @Date 2019/6/29 23:20
  * @Version 3.2.2
  **/
-@Configurable
+@Configuration
 public class WebSocketConfig {
 
     @Bean
