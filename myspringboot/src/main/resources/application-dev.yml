@@ -44,14 +44,16 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
         value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
-      group-id:
+      group-id: com.kafka.consumer.zhigang
       auto-offset-reset: latest
       enable-auto-commit: true
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     bootstrap-servers: 192.168.0.228:9032
-    template:
-      default-topic: "mytopic"
+    topic:
+      name: "mytopic"
+      numPartitions: 4
+      replicationFactor: 1
 
 logging:
   config: classpath:logging-config.xml
