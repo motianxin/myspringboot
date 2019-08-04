@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date 2019/8/3 23:32
  * @Version 3.2.2
  **/
-@RestController("/rabbitmq")
+@RestController
 @Slf4j
 public class RabbitMqSendMsgCtr {
 
@@ -24,11 +24,11 @@ public class RabbitMqSendMsgCtr {
     private QueueMessageService queueMessageService;
 
 
-    @GetMapping("/send")
+    @GetMapping("/sendtomq")
     public String sendMsgToMq(@RequestParam("msg") String msg){
         String result = "success";
         try {
-            queueMessageService.send(msg, ExchangeEnum.MY_EXCHANGE, QueueEnum.MY_QUEUE);
+            queueMessageService.send(msg, ExchangeEnum.DIRCEXCHANGE, QueueEnum.MY_QUEUE);
         } catch (Exception e) {
             log.error("", e);
             result = "failed";

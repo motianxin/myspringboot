@@ -19,5 +19,5 @@ public interface QueueMessageService extends RabbitTemplate.ConfirmCallback {
      * @Author: admin
      * @Date: 2019/8/3 23:58
      */
-    void send(Object message, ExchangeEnum exchangeEnum, QueueEnum queueEnum) throws Exception;
+    void send(String message, ExchangeEnum exchangeEnum, QueueEnum queueEnum) throws Exception;
 }

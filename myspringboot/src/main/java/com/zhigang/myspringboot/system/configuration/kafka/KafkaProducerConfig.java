@@ -3,7 +3,6 @@ package com.zhigang.myspringboot.system.configuration.kafka;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -39,13 +38,13 @@ public class KafkaProducerConfig {
         return props;
     }
 
-    @Bean
+    // @Bean
     public ProducerFactory<String, String> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     /* --------------kafka template configuration-----------------**/
-    @Bean
+    // @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         KafkaTemplate<String, String> kafkaTemplate = new KafkaTemplate<>(producerFactory());
         return kafkaTemplate;

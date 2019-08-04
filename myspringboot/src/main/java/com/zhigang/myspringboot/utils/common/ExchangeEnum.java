@@ -11,7 +11,9 @@ import lombok.Getter;
 @Getter
 public enum ExchangeEnum {
 
-    MY_EXCHANGE("zhigangExchange"),
+    DIRCEXCHANGE("Direct_exchange"),
+    FANOUTEXCHANGE("Fanout_exchange"),
+    TOPICEXCHANGE("Topic_exchange"),
     TEST_EXCHANGE("test")
 
     ;

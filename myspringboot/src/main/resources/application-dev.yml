@@ -28,8 +28,9 @@ spring:
   redis:
     host: 192.168.0.228
     port: 6379
-    password: Myredis123!
+    password: Myredis123
     database: 0
+    timeout: 10s
 
   rabbitmq:
     host: 192.168.0.228
@@ -42,18 +43,18 @@ spring:
   kafka:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
       group-id: com.kafka.consumer.zhigang
       auto-offset-reset: latest
       enable-auto-commit: true
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    bootstrap-servers: 192.168.0.228:9032
+    bootstrap-servers: 192.168.0.228:9092
     topic:
-      name: "mytopic"
-      numPartitions: 4
-      replicationFactor: 1
+      name: mytopic
+      numPartitions: 2
+      replicationFactor: 2
 
 logging:
   config: classpath:logging-config.xml

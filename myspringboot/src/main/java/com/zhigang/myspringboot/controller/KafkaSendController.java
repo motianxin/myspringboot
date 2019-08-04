@@ -19,14 +19,15 @@ import java.util.Date;
  * @Version 3.2.2
  **/
 @Slf4j
-@RestController("/kafka")
+@RestController
 public class KafkaSendController {
 
     @Autowired
     private KafkaService kafkaService;
 
-    @GetMapping("/send")
+    @GetMapping("/sendtoka")
     public String sendMsgToKafka(@RequestParam("msg") String msg) {
+        log.info("begin send msg {} to kafka.", msg);
         String result = "success";
         KafkaMsg kafkaMsg = new KafkaMsg();
         Date createTime = new Date();

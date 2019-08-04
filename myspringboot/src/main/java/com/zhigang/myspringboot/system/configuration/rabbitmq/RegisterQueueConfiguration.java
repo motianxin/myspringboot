@@ -25,16 +25,17 @@ public class RegisterQueueConfiguration {
      *
      * @return
      */
-    private DirectExchange registerDirectExchange() {
-        return new DirectExchange(ExchangeEnum.MY_EXCHANGE.getExchangeName());
+    @Bean
+    public DirectExchange registerDirectExchange() {
+        return new DirectExchange(ExchangeEnum.DIRCEXCHANGE.getExchangeName());
     }
-
-    private FanoutExchange registerFanoutExchange() {
-        return new FanoutExchange(ExchangeEnum.MY_EXCHANGE.getExchangeName());
+    @Bean
+    public FanoutExchange registerFanoutExchange() {
+        return new FanoutExchange(ExchangeEnum.FANOUTEXCHANGE.getExchangeName());
     }
-
-    private TopicExchange registerTopicExchange() {
-        return new TopicExchange(ExchangeEnum.MY_EXCHANGE.getExchangeName());
+    @Bean
+    public TopicExchange registerTopicExchange() {
+        return new TopicExchange(ExchangeEnum.TOPICEXCHANGE.getExchangeName());
     }
 
     /**

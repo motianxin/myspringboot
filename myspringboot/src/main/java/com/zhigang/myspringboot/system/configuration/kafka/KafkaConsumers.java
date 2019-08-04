@@ -23,6 +23,7 @@ public class KafkaConsumers {
 
     @KafkaListener(topics = {"mytopic"})
     public void consumerHandle(ConsumerRecord<?,?> record){
+        log.info("kafka consumer recever msg.");
         Optional<?> kafkaMessage = Optional.ofNullable(record.value());
         if (kafkaMessage.isPresent()) {
             String message = (String) kafkaMessage.get();

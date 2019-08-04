@@ -25,7 +25,7 @@ public class QueueMessageServiceSupport implements QueueMessageService {
     private RabbitTemplate rabbitTemplate;
 
     @Override
-    public void send(Object message, ExchangeEnum exchangeEnum, QueueEnum queueEnum) throws Exception {
+    public void send(String message, ExchangeEnum exchangeEnum, QueueEnum queueEnum) throws Exception {
         log.info("begin send msg to MQ!");
         //设置回调为当前类对象
         rabbitTemplate.setConfirmCallback(this);

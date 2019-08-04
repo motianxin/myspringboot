@@ -10,9 +10,9 @@ import lombok.Getter;
  **/
 @Getter
 public enum QueueEnum {
-    MY_QUEUE("zhigang_queue", "zhigang"), TEST_QUEUE("test_queue", "test");
+    MY_QUEUE("direc_queue", "queue"), TEST_QUEUE("test_queue", "test");
 
-    public final static String NAME = "zhigang_queue";
+    public final static String NAME = "direc_queue";
     private String queueName;
 
     private String routingKey;
