@@ -41,7 +41,7 @@ public class KafkaTopicConfig {
 
     @Bean
     public NewTopic myTopic() {
-//第三个参数是副本数量，确保集群中配置的数目大于等于副本数量
+        //第三个参数是副本数量，确保集群中配置的数目大于等于副本数量
         return new NewTopic(topicName, numPartitions, (short) replicationFactor);
     }
 }

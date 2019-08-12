@@ -49,21 +49,21 @@ public class HeapSort extends SortClass {
         // n 为数组最后一个x下标， 取<=n
        while (((k << 1) + 1) <= n) {
             // 叶子节点的左节点下标
-            int j = (k << 1) + 1;
+            int left = (k << 1) + 1;
             // 叶子节点的右节点下标
-            int right = j + 1;
+            int right = left + 1;
             // 如果右节点存在且左节点小于右节点，则取右节点，取子节点中的最大值
-            if (right <= n && less(arr[j], arr[right])) {
-                j = right;
+            if (right <= n && less(arr[left], arr[right])) {
+                left = right;
             }
             // 如果叶子节点大于子节的中的最大节点的值，则不用下沉，跳出循环
-            if (less(arr[j], arr[k])) {
+            if (less(arr[left], arr[k])) {
                 break;
             }
             // 前面没有跳出说明，叶子节点小于其中一个最大值节点，则与最大值节点交换，叶子节点下沉；
             // 节点下标更新为下沉后的节点下标，继续循环下沉
-            swap(arr, k, j);
-            k = j;
+            swap(arr, k, left);
+            k = left;
         }
     }
 

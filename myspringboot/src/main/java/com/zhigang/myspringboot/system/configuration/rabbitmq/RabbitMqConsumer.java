@@ -1,6 +1,7 @@
 package com.zhigang.myspringboot.system.configuration.rabbitmq;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +15,9 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 @Slf4j
+@RabbitListener(queues = "direc_queue")
 public class RabbitMqConsumer {
-    @RabbitListener(queues = "direc_queue")
+    @RabbitHandler
     public void onMessage(Object msg){
       log.info("开始消费消息， id 为 {}", msg);
     }

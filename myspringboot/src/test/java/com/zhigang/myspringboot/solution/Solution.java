@@ -66,6 +66,20 @@ public class Solution {
         return ans;
     }
 
+    public static Integer findOneRepeatNum(int[] arr){
+        Integer result = null;
+
+        int temp = 0, ans = 0;
+
+        for (int i = 0, k = 0 ,l = arr.length; i < l; i++) {
+
+        }
+
+
+
+        return result;
+    }
+
     public static List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> arrayList = new ArrayList<>();
         if (nums == null || nums.length < 3) {
@@ -186,7 +200,8 @@ public class Solution {
             mid_a = a[a_begin + k / 2 - 1];
         if (b_begin + k / 2 - 1 < b.length)
             mid_b = b[b_begin + k / 2 - 1];
-        //如果a数组的第 k / 2 个数小于b数组的第 k / 2 个数，表示总的第 k 个数位于 a的第k / 2个数的后半段，或者是b的第 k / 2个数的前半段
+        //如果a数组的第 k / 2 个数小于b数组的第 k / 2 个数，
+        // 表示总的第 k 个数位于 a的第k / 2个数的后半段，或者是b的第 k / 2个数的前半段
         //由于范围缩小了 k / 2 个数，此时总的第 k 个数实际上等于新的范围内的第 k - k / 2个数，依次递归
         if (mid_a < mid_b)
             return find_kth(a, a_begin + k / 2, b, b_begin, k - k / 2);
@@ -201,7 +216,7 @@ public class Solution {
         String s2 = Stream.generate(() -> ((char) ('a' + random.nextInt(26))) + "")
                 .limit(60)
                 .collect(Collectors.joining());
-        String s = "abcdefghijklmdfg";
+        String s = "123abcdefghijklmdfg";
         /*int[] a = new int[50];
         for (int i = 0; i < a.length; i++) {
             a[i] = random.nextInt(200) - 100;
@@ -211,7 +226,9 @@ public class Solution {
         System.out.println(arrayList);*/
 
         System.out.println(s);
-        System.out.println(lengthOfLongestSubstring(s));
+        System.out.println(lengthOfLongestSubstring(s2));
+
+        System.out.println(1^2^3^4^5^4);
     }
 
 

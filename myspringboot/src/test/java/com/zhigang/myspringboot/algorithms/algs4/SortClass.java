@@ -12,7 +12,7 @@ import com.zhigang.myspringboot.algorithms.stdlib.Draw;
 public class SortClass {
 
     /**
-     * 画图对象
+     * 画图对象 pause
      */
     private Draw draw;
 

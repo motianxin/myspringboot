@@ -91,12 +91,7 @@ public class QuickSort extends SortClass {
             }
         }
         //pivot和指针重合点交换
-        double p = arr[left];
-        arr[left] = arr[startIndex];
-        arr[startIndex] = p;
-        filledChange(arr.length, arr[left], left);
-        filledChange(arr.length, arr[startIndex], startIndex);
-
+        swap(arr, left, startIndex);
         return left;
     }
 

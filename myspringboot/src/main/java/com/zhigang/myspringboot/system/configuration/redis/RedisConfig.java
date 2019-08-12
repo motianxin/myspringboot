@@ -30,7 +30,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Slf4j
 public class RedisConfig extends CachingConfigurerSupport {
     /**
-     * retemplate相关配置
+     * RedisTemplate配置
      * @param factory
      * @return
      */

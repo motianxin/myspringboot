@@ -10,8 +10,6 @@ package com.zhigang.myspringboot.algorithms.algs4;
 
 import com.zhigang.myspringboot.algorithms.stdlib.Draw;
 import com.zhigang.myspringboot.algorithms.stdlib.StdRandom;
-import com.zhigang.myspringboot.threadtest.asyncresult.MyExecutor;
-import com.zhigang.myspringboot.threadtest.asyncresult.MyFuture;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +18,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * 〈排序时间对比〉
@@ -42,9 +41,14 @@ public class SortTimesCalculate {
         put(SORT_NAMES[5], new HeapSort());
     }};
 
-    private static final int N = 100;
+    private static final int N = 200;
 
     public static void main(String[] args) {
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Draw draw = null;
         SortClass sortClass = null;
         double temp;
@@ -73,12 +77,13 @@ public class SortTimesCalculate {
         doubles.add(dArray5);
         int length = SORT_NAMES.length;
         ExecutorService threadPoor = Executors.newFixedThreadPool(length);
-        Map<String, MyFuture<Double>> futures = new HashMap<>(length);
+
+        Map<String, Future<Double>> futures = new HashMap<>(length);
         for (int i = 0; i < length; i++) {
             draw = new Draw(SORT_NAMES[i], 960 * (i / 3), 350 * (i % 3));
             sortClass = CLASS_MAP.get(SORT_NAMES[i]);
             sortClass.setDraw(draw);
-            futures.put(SORT_NAMES[i], new MyExecutor().execute(new SortCallAble(sortClass, doubles.get(i))));
+            futures.put(SORT_NAMES[i], threadPoor.submit(new SortCallAble(sortClass, doubles.get(i))));
         }
 
         Map<String, Double> result = new HashMap<>(length);
@@ -95,7 +100,7 @@ public class SortTimesCalculate {
         }
 
         System.out.println(result);
-
+        threadPoor.shutdownNow();
     }
 
 }

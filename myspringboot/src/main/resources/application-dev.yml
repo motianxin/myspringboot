@@ -56,6 +56,15 @@ spring:
       numPartitions: 2
       replicationFactor: 2
 
+zookeeper:
+  baseSleepTimeMs: 100
+  maxRetries: 100
+  server: 192.168.0.228
+  sessionTimeoutMs: 100
+  connectionTimeoutMs: 100
+  namespace: zookeepertest
+  digest: tttt
+
 logging:
   config: classpath:logging-config.xml
 
