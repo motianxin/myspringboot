@@ -1,7 +1,5 @@
 package com.zhigang.myspringboot.solution;
 
-import java.util.Arrays;
-
 /**
  * @program: Code
  * @Description 一句话描述
@@ -33,6 +31,38 @@ public class PlalindromeString {
             sb.append('#');
         }
         return sb.toString();
+    }
+
+    // 寻找最长回文字串
+    public String longestPalindrome(String s) {
+        if (s == null) {
+            return null;
+        }
+        if (s.isEmpty()) {
+            return "";
+        }
+        int start = 0;
+        int end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = getLength(i, i, s);
+            int len2 = getLength(i, i + 1, s);
+            int len = Math.max(len1, len2);
+            if ((end - start) < len) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+    public int getLength(int l, int r, String s) {
+        int left = l;
+        int right = r;
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
     }
 
     // 寻找最长回文字串
@@ -94,13 +124,13 @@ public class PlalindromeString {
         for (int i = center - longestHalf + 1; i <= center + longestHalf; i += 2) {
             sb.append(str.charAt(i));
         }
-        System.out.println(String.format("数组内容为：%s", Arrays.toString(halfLenArr)));
+        //System.out.println(String.format("数组内容为：%s", Arrays.toString(halfLenArr)));
         return sb.toString();
     }
 
     public static void main(String[] args) {
 
-        PlalindromeString ps = new PlalindromeString();
+        /*PlalindromeString ps = new PlalindromeString();
 
         String[] testStrArr = new String[]{
                 "abcdcef",
@@ -115,7 +145,9 @@ public class PlalindromeString {
             System.out.println(String.format("原字串 : %s", str));
             System.out.println(String.format("最长回文串 : %s", ps.findLongestPlalindromeString(str)));
             System.out.println();
-        }
-
+        }*/
+        String s = "023";
+        int a = Integer.parseInt(s);
+        System.out.println(a);
     }
 }

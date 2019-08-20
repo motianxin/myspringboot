@@ -2,12 +2,12 @@ package com.zhigang.myspringboot.solution;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Stack;
 
 /**
  * @program: Code
@@ -46,6 +46,7 @@ public class Solution {
         return 1;
     }
 
+    // 查找最长不重复子串长度
     public static int lengthOfLongestSubstring(String s) {
         int n = s.length(), ans = 0;
         System.out.println("length = " + n);
@@ -55,40 +56,38 @@ public class Solution {
         for (int j = 0, i = 0; j < n; j++) {
             charnum = s.charAt(j);
             i = index[charnum] > i ? index[charnum] : i;
-
             ans = ans > j - i + 1 ? ans : j - i + 1;
-
             System.out.println(String.format("i = %d, j = %d, ans = %d, ", i, j, ans));
-
             index[charnum] = j + 1;
         }
         System.out.println(Arrays.toString(index));
         return ans;
     }
 
-    public static Integer findOneRepeatNum(int[] arr){
-        Integer result = null;
-
-        int temp = 0, ans = 0;
-
-        for (int i = 0, k = 0 ,l = arr.length; i < l; i++) {
-
+    // 两数之和
+    public int[] twoSum(int[] nums, int target) {
+        int[] temp = new int[2];
+        int l = nums.length;
+        Map<Integer, Integer> numsMap = new HashMap<>(l << 2);
+        for (int i = 0; i < l; i++) {
+            if (numsMap.containsKey(nums[i])) {
+                temp[0] = i;
+                temp[1] = numsMap.get(nums[i]);
+                return temp;
+            }
+            numsMap.put(target - nums[i], i);
         }
-
-
-
-        return result;
+        return temp;
     }
 
+    // 3数和
     public static List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> arrayList = new ArrayList<>();
         if (nums == null || nums.length < 3) {
             return arrayList;
         }
         // 数组排序 时间复杂度: O(nLog(n))
-        System.out.println(Arrays.toString(nums));
         Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
         int n = nums.length;
         int a = 0, b, c;
         do {
@@ -110,11 +109,9 @@ public class Solution {
                             c--;
                         } while (b < c && nums[c] == nums[c + 1]);
 
-                    } else if (sum < 0) {
-                        // 小于0，b 数小了，需要增大b
+                    } else if (sum < 0) { // 小于0，b 数小了，需要增大b
                         b++;
-                    } else {
-                        // 大于0，c 数大了，需要减小c
+                    } else { // 大于0，c 数大了，需要减小c
                         c--;
                     }
                 }
@@ -124,6 +121,7 @@ public class Solution {
         return arrayList;
     }
 
+    // 查找两个有序数组整合后的中位数
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         /**
          如果两个数组的中位数 mid1 < mid2, 则说明合并后的中位数位于 num1.right + num2之间
@@ -209,27 +207,557 @@ public class Solution {
         return find_kth(a, a_begin, b, b_begin + k / 2, k - k / 2);
     }
 
+    // 子串中重复K个字符的最长子串长度
+    public int longestSubstring(String s, int k) {
+        int len = s.length();
+        if (len == 0 || k > len) return 0;
+        if (k < 2) return len;
 
-    public static void main(String[] args) {
-
-        Random random = new Random();
-        String s2 = Stream.generate(() -> ((char) ('a' + random.nextInt(26))) + "")
-                .limit(60)
-                .collect(Collectors.joining());
-        String s = "123abcdefghijklmdfg";
-        /*int[] a = new int[50];
-        for (int i = 0; i < a.length; i++) {
-            a[i] = random.nextInt(200) - 100;
-        }
-        List<List<Integer>> arrayList = threeSum(a);
-
-        System.out.println(arrayList);*/
-
-        System.out.println(s);
-        System.out.println(lengthOfLongestSubstring(s2));
-
-        System.out.println(1^2^3^4^5^4);
+        return count(s.toCharArray(), k, 0, len - 1);
     }
 
+    private static int count(char[] chars, int k, int p1, int p2) {
+        if (p2 - p1 + 1 < k) return 0;
+        int[] times = new int[26];  //  26个字母
+        //  统计出现频次
+        for (int i = p1; i <= p2; ++i) {
+            ++times[chars[i] - 'a'];
+        }
+        //  如果该字符出现频次小于k，则不可能出现在结果子串中
+        //  分别排除，然后挪动两个指针
+        while (p2 - p1 + 1 >= k && times[chars[p1] - 'a'] < k) {
+            ++p1;
+        }
+        while (p2 - p1 + 1 >= k && times[chars[p2] - 'a'] < k) {
+            --p2;
+        }
+
+        if (p2 - p1 + 1 < k) return 0;
+        //  得到临时子串，再递归处理
+        for (int i = p1; i <= p2; ++i) {
+            //  如果第i个不符合要求，切分成左右两段分别递归求得
+            if (times[chars[i] - 'a'] < k) {
+                return Math.max(count(chars, k, p1, i - 1), count(chars, k, i + 1, p2));
+            }
+        }
+        return p2 - p1 + 1;
+    }
+
+
+    public int rob(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        int length = nums.length;
+        int[] dp = new int[length];
+        //偷窃n家房屋获得的金额最大值
+        if (length == 1) return nums[0];
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+        for (int j = 2; j < length; j++) {
+            dp[j] = Math.max(dp[j - 1], dp[j - 2] + nums[j]);
+        }
+        return dp[length - 1];
+    }
+
+    // 计算岛屿数量
+    public int numIslands(char[][] grid) {
+        int sum = 0;
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == '1') {
+                    sum++;
+                    lj(grid, i, j);
+                }
+            }
+        }
+        return sum;
+    }
+
+    private void lj(char[][] grid, int i, int j) {
+        if (i >= 0 && i < grid.length && j >= 0 && j < grid[i].length) {
+            grid[i][j] = '2';
+            // 上边
+            if (i - 1 >= 0 && grid[i - 1][j] == '1')
+                lj(grid, i - 1, j);
+            // 下边
+            if (i + 1 < grid.length && grid[i + 1][j] == '1')
+                lj(grid, i + 1, j);
+            // 左边
+            if (j - 1 >= 0 && grid[i][j - 1] == '1')
+                lj(grid, i, j - 1);
+            // 右边
+            if (j + 1 < grid[i].length && grid[i][j + 1] == '1')
+                lj(grid, i, j + 1);
+        }
+    }
+
+
+    public ArrayList<String> restoreIpAddresses(String s) {
+        ArrayList<String> result = new ArrayList<String>();
+        int len = s.length();
+
+        for (int i = 1; i < 4 && i < len - 2; i++) {
+            for (int j = i + 1; j < i + 4 && j < len - 1; j++) {
+                for (int k = j + 1; k < j + 4 && k < len; k++) {
+                    if (len - k >= 4)      //判断字符串 是否有剩余
+                        continue;
+                    int a = Integer.parseInt(s.substring(0, i));
+                    int b = Integer.parseInt(s.substring(i, j));
+                    int c = Integer.parseInt(s.substring(j, k));
+                    int d = Integer.parseInt(s.substring(k));
+
+                    if (a > 255 || b > 255 || c > 255 || d > 255)
+                        continue;
+                    String ip = a + "." + b + "." + c + "." + d;
+                    if (ip.length() < len + 3)
+                        continue;
+                    result.add(ip);
+                }
+            }
+        }
+        return result;
+    }
+
+    public String multiply(String num1, String num2) {
+        char[] result = new char[num1.length() + num2.length()];
+        Arrays.fill(result, '0');
+
+        for (int i = num1.length() - 1; i >= 0; i--) {
+            int num1Val = num1.charAt(i) - '0';
+            for (int j = num2.length() - 1; j >= 0; j--) {
+                int num2Val = num2.charAt(j) - '0';
+                int sum = (result[i + j + 1] - '0') + num1Val * num2Val;
+                result[i + j + 1] = (char) (sum % 10 + '0');
+                result[i + j] += sum / 10;
+            }
+        }
+
+        for (int i = 0; i < result.length; i++) {
+            if (result[i] != '0' || i == result.length - 1) {
+                return new String(result, i, result.length - i);
+            }
+        }
+        return "0";
+
+    }
+
+    public static String decodeString(String s) {
+        if (!s.contains("[")) {
+            return s;
+        }
+        StringBuilder stringBuilder = new StringBuilder(s);
+        Stack<Integer> leftIndex = new Stack<>();
+        char left = '[', right = ']';
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == left) {
+                leftIndex.push(i);
+            }
+            if (s.charAt(i) == right) {
+                int lefti = leftIndex.pop();
+                String str = stringBuilder.substring(lefti + 1, i);
+                int numindex = 0;
+                for (int j = lefti - 1; j >= 0; j--) {
+                    if (j == 0) {
+                        numindex = 0;
+                        break;
+                    }
+                    if (!Character.isDigit(s.charAt(j))) {
+                        numindex = j;
+                        break;
+                    }
+                }
+                numindex = numindex == 0 ? 0 : numindex + 1;
+                int number = Integer.parseInt(stringBuilder.substring(numindex, lefti));
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < number; j++) {
+                    sb.append(str);
+                }
+                stringBuilder.replace(numindex, i + 1, sb.toString());
+                break;
+            }
+        }
+        return decodeString(stringBuilder.toString());
+    }
+
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode x = l1, y = l2;
+        ListNode result = new ListNode((x.val + y.val) % 10);
+        ListNode tempNode = result;
+        int i = (x.val + y.val) / 10;
+        x = x.next;
+        y = y.next;
+        while (x != null || y != null) {
+            if (y != null && x != null) {
+                tempNode.next = new ListNode((x.val + y.val + i) % 10);
+                i = (x.val + y.val + i) / 10;
+                x = x.next;
+                y = y.next;
+            } else if (y != null && x == null) {
+                tempNode.next = new ListNode((y.val + i) % 10);
+                i = (y.val + i) / 10;
+                y = y.next;
+            } else if (y == null && x != null) {
+                tempNode.next = new ListNode((x.val + i) % 10);
+                i = (x.val + i) / 10;
+                x = x.next;
+            }
+            tempNode = tempNode.next;
+        }
+        if (i != 0) {
+            tempNode.next = new ListNode(i);
+        }
+        return result;
+    }
+
+    public static String originalDigits(String s) {
+        String[] digit = new String[]{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+        StringBuilder result = new StringBuilder();
+        Map<Character, Integer> charAndNum = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (charAndNum.containsKey(s.charAt(i))) {
+                charAndNum.put(s.charAt(i), charAndNum.get(s.charAt(i)) + 1);
+            } else {
+                charAndNum.put(s.charAt(i), 1);
+            }
+        }
+        Map<String, Integer> map = new HashMap<>();
+        if (charAndNum.containsKey('z')) {
+            Integer z = charAndNum.get('z');
+            map.put(digit[0], z);
+            Integer e = charAndNum.get('e');
+            Integer r = charAndNum.get('r');
+            Integer o = charAndNum.get('o');
+            charAndNum.put('e', e - z);
+            charAndNum.put('r', r - z);
+            charAndNum.put('o', o - z);
+        }
+
+        if (charAndNum.containsKey('w')) {
+            Integer z = charAndNum.get('w');
+            map.put(digit[2], z);
+            Integer t = charAndNum.get('t');
+            Integer o = charAndNum.get('o');
+            charAndNum.put('t', t - z);
+            charAndNum.put('o', o - z);
+        }
+        if (charAndNum.containsKey('u')) {
+            Integer z = charAndNum.get('u');
+            map.put(digit[4], z);
+            Integer f = charAndNum.get('f');
+            Integer r = charAndNum.get('r');
+            Integer o = charAndNum.get('o');
+            charAndNum.put('f', f - z);
+            charAndNum.put('r', r - z);
+            charAndNum.put('o', o - z);
+        }
+        if (charAndNum.containsKey('x')) {
+            Integer z = charAndNum.get('x');
+            map.put(digit[6], z);
+            Integer s1 = charAndNum.get('s');
+            Integer i = charAndNum.get('i');
+            charAndNum.put('s', s1 - z);
+            charAndNum.put('i', i - z);
+        }
+        if (charAndNum.containsKey('g')) {
+            Integer z = charAndNum.get('g');
+            map.put(digit[8], z);
+            Integer e = charAndNum.get('e');
+            Integer i = charAndNum.get('i');
+            Integer h = charAndNum.get('h');
+            Integer t = charAndNum.get('t');
+            charAndNum.put('e', e - z);
+            charAndNum.put('i', i - z);
+            charAndNum.put('h', h - z);
+            charAndNum.put('t', t - z);
+        }
+
+        if (charAndNum.containsKey('t') && charAndNum.get('t') != 0) {
+            int three_t = charAndNum.get('t');
+            map.put(digit[3], three_t);
+        }
+
+        if (charAndNum.containsKey('s') && charAndNum.get('s') != 0) {
+            int three_t = charAndNum.get('s');
+            map.put(digit[7], three_t);
+        }
+
+        if (charAndNum.containsKey('f') && charAndNum.get('f') != 0) {
+            int three_t = charAndNum.get('f');
+            map.put(digit[5], three_t);
+            charAndNum.put('i', charAndNum.get('i') - three_t);
+        }
+
+        if (charAndNum.containsKey('o') && charAndNum.get('o') != 0) {
+            int three_t = charAndNum.get('o');
+            map.put(digit[1], three_t);
+        }
+
+        if (charAndNum.containsKey('i') && charAndNum.get('i') != 0) {
+            int three_t = charAndNum.get('i');
+            map.put(digit[9], three_t);
+        }
+
+        for (int i = 0; i < digit.length; i++) {
+            if (map.get(digit[i]) != null) {
+                for (int j = 0; j < map.get(digit[i]); j++) {
+                    result.append(i);
+                }
+            }
+        }
+        return result.toString();
+    }
+
+    public List<String> findRepeatedDnaSequences(String s) {
+        Set visited = new HashSet(), res = new HashSet();
+        for (int i = 0; i + 10 <= s.length(); i++) {
+            String tmp = s.substring(i, i + 10);
+            if (visited.contains(tmp)) {
+                res.add(tmp);
+            } else {
+                visited.add(tmp);
+            }
+        }
+        return new ArrayList<>(res);
+    }
+
+    public static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+        }
+    }
+
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        int length = nums.length;
+        for (int i = 0; i < length; i++) {
+            if (nums[Math.abs(nums[i]) - 1] < 0) {
+                result.add(Math.abs(nums[i]));
+            } else {
+                nums[Math.abs(nums[i]) - 1] *= -1;
+            }
+        }
+        return result;
+    }
+
+    public int maxProfit(int[] prices) {
+        int maxCur = 0, maxSoFar = 0;
+        for(int i = 1; i < prices.length; i++) {
+            maxCur = Math.max(0, maxCur += prices[i] - prices[i-1]);
+            maxSoFar = Math.max(maxCur, maxSoFar);
+        }
+        return maxSoFar;
+    }
+
+    public static int myAtoi(String str) {
+        if (str == null || str.trim().isEmpty() || str.replaceAll("-", "").trim().isEmpty()) {
+            return 0;
+        }
+        String temp = str.replaceAll(" ", "");
+        if (temp.charAt(0) != '-' &&temp.charAt(0) != '+' && !Character.isDigit(temp.charAt(0))) {
+            return 0;
+        }
+        int notDigitIndex = 1;
+        if (temp.length() < 2 && !Character.isDigit(temp.charAt(0))) {
+            return 0;
+        }
+        for (int i = 1; i < temp.length(); i++) {
+            if (Character.isDigit(temp.charAt(i))) {
+                notDigitIndex++;
+            } else {
+                break;
+            }
+        }
+        String numstr = temp.substring(0, notDigitIndex);
+        if (numstr.length() < 2) {
+            return 0;
+        }
+        System.out.println(numstr);
+        if (numstr.startsWith("-")) {
+            try {
+                return Integer.parseInt(numstr);
+            } catch (Exception e){
+                return Integer.MIN_VALUE;
+            }
+        } else {
+            try {
+                return Integer.parseInt(numstr);
+            } catch (Exception e){
+                return Integer.MAX_VALUE;
+            }
+        }
+    }
+
+    public static void reorderList(ListNode head) {
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        ListNode slow = head, fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        ListNode halfAntiNode = reverse(slow.next);
+        slow.next = null;
+        ListNode headTemp = head;
+        ListNode positTemp = null, antiTemp = null;
+        while (headTemp != null && halfAntiNode != null) {
+            positTemp = headTemp.next;
+            headTemp.next = halfAntiNode;
+            headTemp = positTemp;
+            antiTemp = halfAntiNode.next;
+            halfAntiNode.next = headTemp;
+            halfAntiNode = antiTemp;
+        }
+
+
+  /*      ListNode positiveNode = head;
+        ListNode antiNode = getAntiNode(head);
+        int number = antiNode.val;
+        antiNode = halfAntiNode.next;
+        // ListNode positTemp = null, antiTemp = null;
+        *//*for (int i = 1; i < number; i++) {
+            if ((i & 1) == 1) {
+                positTemp = positiveNode.next;
+                positiveNode.next = antiNode;
+                if (i == number - 1) {
+                    antiNode.next = null;
+                } else {
+                    positiveNode = positTemp;
+                }
+            } else {
+                antiTemp = antiNode.next;
+                antiNode.next = positiveNode;
+                if (i == number - 1) {
+                    positiveNode.next = null;
+                } else {
+                    antiNode = antiTemp;
+                }
+            }
+        }*/
+    }
+
+    private static ListNode reverse(ListNode head) {
+        ListNode temp = head.next;
+        head.next = null;
+        ListNode index = head;
+        ListNode next = null;
+        while (temp != null){
+            next = temp.next;
+            temp.next = index;
+            index = temp;
+            temp = next;
+        }
+        return index;
+    }
+
+    private static ListNode getAntiNode(ListNode head) {
+        ListNode copy = new ListNode(head.val);
+        ListNode copyTemp = copy;
+        ListNode headTemp = head.next;
+        while (headTemp != null) {
+            copyTemp.next = new ListNode(headTemp.val);
+            copyTemp = copyTemp.next;
+            headTemp = headTemp.next;
+        }
+        ListNode temp = copy.next;
+        copy.next = null;
+        ListNode index = copy;
+        ListNode next = null;
+        int i = 1;
+        while (temp != null){
+           next = temp.next;
+            temp.next = index;
+            index = temp;
+            temp = next;
+            i ++;
+        }
+        ListNode number = new ListNode(i);
+        number.next = index;
+        return number;
+    }
+
+    public static void main(String[] args) {
+        ListNode head = new ListNode(4);
+        head.next = new ListNode(5);
+        head.next.next = new ListNode(9);
+        head.next.next.next = new ListNode(7);
+
+        printNode(head);
+        printNode(getAntiNode(head));
+        reorderList(head);
+        System.out.println();
+        printNode(head);
+
+    }
+
+    private static void printNode(ListNode head) {
+        ListNode temp = head;
+        while (temp != null){
+            System.out.print(String.format("%d -> ", temp.val));
+            temp = temp.next;
+        }
+    }
+
+    public ListNode sortList(ListNode head) {
+        //  0个节点 ||  1个节点
+        if (head == null || head.next == null)
+            return head;
+        //  >= 2个节点
+        ListNode first = head, second = null, mid = getMid(head);
+        second = mid.next;
+        mid.next = null;  //将链表分为两段！！！！
+        //递归
+        first = sortList(first);
+        second = sortList(second);
+        return merge(first, second);
+    }
+
+    //排序
+    ListNode merge(ListNode first, ListNode second) {
+        if (first == null)
+            return second;
+        if (second == null)
+            return first;
+
+        ListNode res = new ListNode(0);
+        ListNode curr = res;//控制新链表顺序的point
+
+        while (first != null && second != null) {
+            if (first.val < second.val) {
+                curr.next = first;
+                curr = curr.next;
+                first = first.next;
+            } else {
+                curr.next = second;
+                curr = curr.next;
+                second = second.next;
+            }
+        }
+
+        if (first != null)
+            curr.next = first;
+        if (second != null)
+            curr.next = second;
+
+        return res.next;
+    }
+
+    //将链表平分为两段，返回第一段末尾   例如：5个点返回2号点，6个点返回3号点
+    ListNode getMid(ListNode head) {
+        ListNode slow = head, fast = head.next;
+
+        while (fast!=null&&fast.next!=null) {
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+
+        return slow;
+    }
 
 }
