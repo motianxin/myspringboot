@@ -16,6 +16,10 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.BinaryStdIn;
+import edu.princeton.cs.algs4.base.Picture;
+import edu.princeton.cs.algs4.find.BinaryDump;
+
 import java.awt.*;
 
 

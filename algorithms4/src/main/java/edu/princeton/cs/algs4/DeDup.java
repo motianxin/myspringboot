@@ -32,6 +32,10 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.find.SET;
+
 /**
  * The {@code DeDup} class provides a client for reading in a sequence of
  * words from standard input and printing each word, removing any duplicates.

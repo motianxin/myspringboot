@@ -9,6 +9,9 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+
 /**
  * The {@code Inversions} class provides static methods to count the
  * number of <em>inversions</em> in either an array of integers or comparables.

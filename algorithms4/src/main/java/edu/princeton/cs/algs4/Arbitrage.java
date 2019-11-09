@@ -24,6 +24,12 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.map.BellmanFordSP;
+import edu.princeton.cs.algs4.map.DirectedEdge;
+import edu.princeton.cs.algs4.map.EdgeWeightedDigraph;
+
 /**
  * The {@code Arbitrage} class provides a client that finds an arbitrage
  * opportunity in a currency exchange table by constructing a

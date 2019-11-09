@@ -28,6 +28,9 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+
 /**
  * The {@code LongestRepeatedSubstring} class provides a {@link SuffixArray}
  * client for computing the longest repeated substring of a string that

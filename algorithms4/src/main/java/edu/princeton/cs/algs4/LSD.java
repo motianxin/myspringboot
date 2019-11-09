@@ -29,6 +29,9 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+
 /**
  * The {@code LSD} class provides static methods for sorting an
  * array of <em>w</em>-character strings or 32-bit integers using LSD radix sort.

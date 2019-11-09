@@ -27,6 +27,12 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.In;
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.find.SET;
+import edu.princeton.cs.algs4.find.ST;
+
 import java.io.File;
 
 /**

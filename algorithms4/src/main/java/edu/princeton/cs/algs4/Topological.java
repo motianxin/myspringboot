@@ -28,6 +28,16 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.map.DepthFirstOrder;
+import edu.princeton.cs.algs4.map.Digraph;
+import edu.princeton.cs.algs4.map.DirectedCycle;
+import edu.princeton.cs.algs4.map.DirectedCycleX;
+import edu.princeton.cs.algs4.map.EdgeWeightedDigraph;
+import edu.princeton.cs.algs4.map.EdgeWeightedDirectedCycle;
+import edu.princeton.cs.algs4.map.SymbolDigraph;
+import edu.princeton.cs.algs4.map.TopologicalX;
+
 /**
  * The {@code Topological} class represents a data type for
  * determining a topological order of a directed acyclic graph (DAG).

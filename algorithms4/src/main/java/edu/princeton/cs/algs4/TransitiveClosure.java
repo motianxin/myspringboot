@@ -32,6 +32,11 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.In;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.map.Digraph;
+import edu.princeton.cs.algs4.map.DirectedDFS;
+
 /**
  * The {@code TransitiveClosure} class represents a data type for
  * computing the transitive closure of a digraph.

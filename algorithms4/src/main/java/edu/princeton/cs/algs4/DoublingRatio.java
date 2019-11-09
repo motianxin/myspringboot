@@ -18,6 +18,11 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.base.StdRandom;
+import edu.princeton.cs.algs4.base.Stopwatch;
+import edu.princeton.cs.algs4.base.ThreeSum;
+
 /**
  * The {@code DoublingRatio} class provides a client for measuring
  * the running time of a method using a doubling ratio test.

@@ -26,6 +26,10 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.BinaryStdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.find.BinaryDump;
+
 /**
  * The {@code HexDump} class provides a client for displaying the contents
  * of a binary file in hexadecimal.

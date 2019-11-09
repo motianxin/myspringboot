@@ -10,6 +10,16 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.Queue;
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.find.BST;
+import edu.princeton.cs.algs4.find.BinarySearchST;
+import edu.princeton.cs.algs4.find.RedBlackBST;
+import edu.princeton.cs.algs4.find.ST;
+import edu.princeton.cs.algs4.find.SeparateChainingHashST;
+import edu.princeton.cs.algs4.find.SequentialSearchST;
+
 /**
  * The {@code LinearProbingHashST} class represents a symbol table of generic
  * key-value pairs.

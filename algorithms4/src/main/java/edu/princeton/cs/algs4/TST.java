@@ -38,6 +38,10 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.Queue;
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+
 /**
  * The {@code TST} class represents an symbol table of key-value
  * pairs, with string keys and generic values.

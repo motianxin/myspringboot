@@ -1,5 +1,11 @@
 package com.zhigang.myspringboot.solution;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
 /**
  * @program: Code
  * @Description 一句话描述
@@ -50,6 +56,9 @@ public class PlalindromeString {
             if ((end - start) < len) {
                 start = i - (len - 1) / 2;
                 end = i + len / 2;
+            }
+            if (end - start > s.length() - i) {
+                break;
             }
         }
         return s.substring(start, end + 1);
@@ -128,26 +137,189 @@ public class PlalindromeString {
         return sb.toString();
     }
 
+    public static boolean canCross(int[] stones) {
+        HashMap<Integer, Set<Integer>> map = new HashMap<>();
+        for (int i = 0; i < stones.length; i++) {
+            map.put(stones[i], new HashSet<Integer>());
+        }
+        map.get(0).add(0);
+        boolean canJump;
+        for (int i = 0; i < stones.length - 1; i++) {
+            canJump = false;
+            for (int k : map.get(stones[i])) {
+                for (int step = k - 1; step <= k + 1; step++) {
+                    if (step > 0 && map.containsKey(stones[i] + step)) {
+                        canJump = true;
+                        map.get(stones[i] + step).add(step);
+                    }
+                }
+            }
+            if (!canJump) {
+                break;
+            }
+        }
+        return map.get(stones[stones.length - 1]).size() > 0;
+    }
+
+    public int maximalRectangle(char[][] matrix) {
+        if (matrix.length == 0) return 0;
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int[] left = new int[n]; // initialize left as the leftmost boundary possible
+        int[] right = new int[n];
+        int[] height = new int[n];
+
+        Arrays.fill(right, n); // initialize right as the rightmost boundary possible
+
+        int maxarea = 0;
+        for (int i = 0; i < m; i++) {
+            int cur_left = 0, cur_right = n;
+            // update height
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == '1') {
+                    height[j]++;
+                    left[j] = Math.max(left[j], cur_left);
+                } else {
+                    height[j] = 0;
+                    left[j] = 0;
+                    cur_left = j + 1;
+                }
+            }
+           /* // update left
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == '1') {
+                    left[j] = Math.max(left[j], cur_left);
+                } else {
+                    left[j] = 0;
+                    cur_left = j + 1;
+                }
+            }*/
+            // update right
+            for (int j = n - 1; j >= 0; j--) {
+                if (matrix[i][j] == '1') {
+                    right[j] = Math.min(right[j], cur_right);
+                } else {
+                    right[j] = n;
+                    cur_right = j;
+                }
+            }
+            // update area
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == '1') {
+                    maxarea = Math.max(maxarea, (right[j] - left[j]) * height[j]);
+                }
+            }
+        }
+        return maxarea;
+    }
+
+    public boolean isScramble(String s1, String s2) {
+        if (s1.length() != s2.length()) {
+            return false;
+        }
+        if (s1.equals(s2)) {
+            return true;
+        }
+
+        //判断两个字符串每个字母出现的次数是否一致
+        int[] letters = new int[26];
+        for (int i = 0; i < s1.length(); i++) {
+            letters[s1.charAt(i) - 'a']++;
+            letters[s2.charAt(i) - 'a']--;
+        }
+        //如果两个字符串的字母出现不一致直接返回 false
+        for (int i = 0; i < 26; i++) {
+            if (letters[i] != 0) {
+                return false;
+            }
+        }
+        //遍历每个切割位置
+        for (int i = 1; i < s1.length(); i++) {
+            //对应情况 1 ，判断 S1 的子树能否变为 S2 相应部分
+            if ((isScramble(s1.substring(0, i), s2.substring(0, i))
+                    && isScramble(s1.substring(i), s2.substring(i)))
+                    || (isScramble(s1.substring(i), s2.substring(0, s2.length() - i))
+                    && isScramble(s1.substring(0, i), s2.substring(s2.length() - i)))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkStr(String s1, String s2) {
+        if (s1.length() != s2.length()) {
+            return false;
+        }
+        if (s1.equals(s2)) {
+            return true;
+        }
+        //遍历每个切割位置
+        for (int i = 1; i < s1.length(); i++) {
+            //对应情况 1 ，判断 S1 的子树能否变为 S2 相应部分
+            if ((checkStr(s1.substring(0, i), s2.substring(0, i))
+                    && checkStr(s1.substring(i), s2.substring(i)))
+                    || (checkStr(s1.substring(i), s2.substring(0, s2.length() - i))
+                    && checkStr(s1.substring(0, i), s2.substring(s2.length() - i)))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        String ch = sc.nextLine();
+        System.out.println(cul(str, ch));
+        sc.close();
 
-        /*PlalindromeString ps = new PlalindromeString();
+    }
 
-        String[] testStrArr = new String[]{
-                "abcdcef",
-                "adaelele",
-                "cabadabae",
-                "aaaabcdefgfedcbaa",
-                "aaba",
-                "aaaaaaaaa"
-        };
+    public static int cul(String str) {
+        int l = str.length();
+        for (int i = l - 1; i >= 0; i--) {
+            System.out.println(str.charAt(i));
+            if (Character.isSpace(str.charAt(i))) {
+                return l - i;
+            }
+        }
+        return l;
+    }
 
-        for (String str : testStrArr) {
-            System.out.println(String.format("原字串 : %s", str));
-            System.out.println(String.format("最长回文串 : %s", ps.findLongestPlalindromeString(str)));
-            System.out.println();
-        }*/
-        String s = "023";
-        int a = Integer.parseInt(s);
-        System.out.println(a);
+    public static int cul(String str, String ch) {
+        int sum = 0;
+        String temp = str.toLowerCase();
+        String chtemp = ch.toLowerCase();
+        for (int i = 0; i < str.length(); i++) {
+            if (chtemp.charAt(0) == temp.charAt(i)) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    /*
+     * 功能: 判断两台计算机IP地址是同一子网络。
+     * 输入参数：    String Mask: 子网掩码，格式：“255.255.255.0”；
+     *               String ip1: 计算机1的IP地址，格式：“192.168.0.254”；
+     *               String ip2: 计算机2的IP地址，格式：“192.168.0.1”；
+     *
+
+     * 返回值：      0：IP1与IP2属于同一子网络；     1：IP地址或子网掩码格式非法；    2：IP1与IP2不属于同一子网络
+     */
+    public int checkNetSegment(String mask, String ip1, String ip2) {
+        /*在这里实现功能*/
+
+        boolean n = checkIp(mask);
+
+
+        return 0;
+    }
+
+    private static boolean checkIp(String mask) {
+
+
+        return mask.length() == 0;
     }
 }

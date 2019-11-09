@@ -30,6 +30,11 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.In;
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.find.SET;
+
 /**
  * The {@code BlackFilter} class provides a client for reading in a <em>blacklist</em>
  * of words from a file; then, reading in a sequence of words from standard input,

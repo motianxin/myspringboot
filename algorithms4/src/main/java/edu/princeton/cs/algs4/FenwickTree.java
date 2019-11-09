@@ -8,6 +8,9 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+
 /**
  * Created by ricardodpsx@gmail.com on 4/01/15.
  * <p>

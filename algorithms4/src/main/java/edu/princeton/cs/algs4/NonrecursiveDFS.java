@@ -37,6 +37,12 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.In;
+import edu.princeton.cs.algs4.base.Stack;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.map.DepthFirstSearch;
+import edu.princeton.cs.algs4.map.Graph;
+
 import java.util.Iterator;
 
 /**

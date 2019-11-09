@@ -11,6 +11,14 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.Queue;
+import edu.princeton.cs.algs4.base.Stack;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.map.BipartiteMatching;
+import edu.princeton.cs.algs4.map.BipartiteX;
+import edu.princeton.cs.algs4.map.Graph;
+import edu.princeton.cs.algs4.map.GraphGenerator;
+
 import java.util.Iterator;
 
 /**

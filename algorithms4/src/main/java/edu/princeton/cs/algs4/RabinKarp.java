@@ -33,6 +33,8 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdOut;
+
 import java.math.BigInteger;
 import java.util.Random;
 

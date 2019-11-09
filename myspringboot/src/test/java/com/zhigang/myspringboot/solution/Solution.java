@@ -41,7 +41,6 @@ public class Solution {
                     return i;
                 }
             }
-
         }
         return 1;
     }
@@ -544,8 +543,8 @@ public class Solution {
 
     public int maxProfit(int[] prices) {
         int maxCur = 0, maxSoFar = 0;
-        for(int i = 1; i < prices.length; i++) {
-            maxCur = Math.max(0, maxCur += prices[i] - prices[i-1]);
+        for (int i = 1; i < prices.length; i++) {
+            maxCur = Math.max(0, maxCur += prices[i] - prices[i - 1]);
             maxSoFar = Math.max(maxCur, maxSoFar);
         }
         return maxSoFar;
@@ -556,7 +555,7 @@ public class Solution {
             return 0;
         }
         String temp = str.replaceAll(" ", "");
-        if (temp.charAt(0) != '-' &&temp.charAt(0) != '+' && !Character.isDigit(temp.charAt(0))) {
+        if (temp.charAt(0) != '-' && temp.charAt(0) != '+' && !Character.isDigit(temp.charAt(0))) {
             return 0;
         }
         int notDigitIndex = 1;
@@ -578,13 +577,13 @@ public class Solution {
         if (numstr.startsWith("-")) {
             try {
                 return Integer.parseInt(numstr);
-            } catch (Exception e){
+            } catch (Exception e) {
                 return Integer.MIN_VALUE;
             }
         } else {
             try {
                 return Integer.parseInt(numstr);
-            } catch (Exception e){
+            } catch (Exception e) {
                 return Integer.MAX_VALUE;
             }
         }
@@ -614,32 +613,6 @@ public class Solution {
             halfAntiNode.next = headTemp;
             halfAntiNode = antiTemp;
         }
-
-
-  /*      ListNode positiveNode = head;
-        ListNode antiNode = getAntiNode(head);
-        int number = antiNode.val;
-        antiNode = halfAntiNode.next;
-        // ListNode positTemp = null, antiTemp = null;
-        *//*for (int i = 1; i < number; i++) {
-            if ((i & 1) == 1) {
-                positTemp = positiveNode.next;
-                positiveNode.next = antiNode;
-                if (i == number - 1) {
-                    antiNode.next = null;
-                } else {
-                    positiveNode = positTemp;
-                }
-            } else {
-                antiTemp = antiNode.next;
-                antiNode.next = positiveNode;
-                if (i == number - 1) {
-                    positiveNode.next = null;
-                } else {
-                    antiNode = antiTemp;
-                }
-            }
-        }*/
     }
 
     private static ListNode reverse(ListNode head) {
@@ -647,7 +620,7 @@ public class Solution {
         head.next = null;
         ListNode index = head;
         ListNode next = null;
-        while (temp != null){
+        while (temp != null) {
             next = temp.next;
             temp.next = index;
             index = temp;
@@ -670,20 +643,45 @@ public class Solution {
         ListNode index = copy;
         ListNode next = null;
         int i = 1;
-        while (temp != null){
-           next = temp.next;
+        while (temp != null) {
+            next = temp.next;
             temp.next = index;
             index = temp;
             temp = next;
-            i ++;
+            i++;
         }
         ListNode number = new ListNode(i);
         number.next = index;
         return number;
     }
 
+    public static int mySqrt(int x) {
+
+        double a = Math.sqrt(x);
+        String str = String.valueOf(a);
+        System.out.println(str);
+        return Integer.parseInt(str.substring(0, str.indexOf(".")));
+
+
+    }
+
+    public static int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        Arrays.fill(dp[0],1);
+        for (int i = 1; i < m; i++) {
+            dp[i][0] = 1;
+        }
+        dp[0][0] = 1;
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = dp[i][j-1] + dp[i-1][j];
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
     public static void main(String[] args) {
-        ListNode head = new ListNode(4);
+        /*ListNode head = new ListNode(4);
         head.next = new ListNode(5);
         head.next.next = new ListNode(9);
         head.next.next.next = new ListNode(7);
@@ -692,27 +690,28 @@ public class Solution {
         printNode(getAntiNode(head));
         reorderList(head);
         System.out.println();
-        printNode(head);
+        printNode(head);*/
+
+        System.out.println(uniquePaths(7, 3));
 
     }
 
     private static void printNode(ListNode head) {
         ListNode temp = head;
-        while (temp != null){
+        while (temp != null) {
             System.out.print(String.format("%d -> ", temp.val));
             temp = temp.next;
         }
     }
 
     public ListNode sortList(ListNode head) {
-        //  0个节点 ||  1个节点
         if (head == null || head.next == null)
             return head;
-        //  >= 2个节点
+
         ListNode first = head, second = null, mid = getMid(head);
         second = mid.next;
-        mid.next = null;  //将链表分为两段！！！！
-        //递归
+        mid.next = null;
+
         first = sortList(first);
         second = sortList(second);
         return merge(first, second);
@@ -749,15 +748,28 @@ public class Solution {
     }
 
     //将链表平分为两段，返回第一段末尾   例如：5个点返回2号点，6个点返回3号点
-    ListNode getMid(ListNode head) {
+    public ListNode getMid(ListNode head) {
         ListNode slow = head, fast = head.next;
 
-        while (fast!=null&&fast.next!=null) {
-            slow=slow.next;
-            fast=fast.next.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
 
         return slow;
     }
 
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int row = triangle.size();
+        int[] dp = new int[row];
+        for (int i = 0; i < row; i++) {
+            dp[i] = triangle.get(row - 1).get(i);
+        }
+        for (int i = row - 2; i >= 0; i--) {
+            for (int j = 0; j <= i; j++) {
+                dp[j] = Math.min(dp[j], dp[j + 1]) + triangle.get(i).get(j);
+            }
+        }
+        return dp[0];
+    }
 }

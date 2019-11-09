@@ -27,6 +27,10 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.Stack;
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+
 /**
  * The {@code AmericanFlagX} class provides static methods for sorting an
  * array of extended ASCII strings or integers in-place using

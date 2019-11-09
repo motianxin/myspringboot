@@ -10,6 +10,9 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdDraw;
+import edu.princeton.cs.algs4.base.StdRandom;
+
 import java.awt.*;
 
 /**

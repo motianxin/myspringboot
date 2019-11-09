@@ -15,6 +15,9 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.In;
+import edu.princeton.cs.algs4.base.StdOut;
+
 /**
  * The {@code LongestCommonSubstring} class provides a {@link SuffixArray}
  * client for computing the longest common substring that appears in two

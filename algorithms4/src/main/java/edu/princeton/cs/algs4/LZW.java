@@ -20,6 +20,9 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.BinaryStdIn;
+import edu.princeton.cs.algs4.base.BinaryStdOut;
+
 /**
  * The {@code LZW} class provides static methods for compressing
  * and expanding a binary input using LZW compression over the 8-bit extended

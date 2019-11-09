@@ -9,6 +9,8 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdOut;
+
 /**
  * The {@code FlowEdge} class represents a capacitated edge with a
  * flow in a {@link FlowNetwork}. Each edge consists of two integers

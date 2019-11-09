@@ -10,6 +10,12 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.base.StdRandom;
+import edu.princeton.cs.algs4.map.DijkstraSP;
+import edu.princeton.cs.algs4.map.DirectedEdge;
+import edu.princeton.cs.algs4.map.EdgeWeightedDigraph;
+
 /**
  * The {@code AssignmentProblem} class represents a data type for computing
  * an optimal solution to an <em>n</em>-by-<em>n</em> <em>assignment problem</em>.

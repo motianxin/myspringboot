@@ -23,6 +23,14 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.In;
+import edu.princeton.cs.algs4.base.Queue;
+import edu.princeton.cs.algs4.base.Stack;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.map.Digraph;
+import edu.princeton.cs.algs4.map.GabowSCC;
+import edu.princeton.cs.algs4.map.KosarajuSharirSCC;
+
 /**
  * The {@code TarjanSCC} class represents a data type for
  * determining the strong components in a digraph.

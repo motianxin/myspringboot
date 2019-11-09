@@ -22,6 +22,10 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.BinaryStdIn;
+import edu.princeton.cs.algs4.base.BinaryStdOut;
+import edu.princeton.cs.algs4.sort.MinPQ;
+
 /**
  * The {@code Huffman} class provides static methods for compressing
  * and expanding a binary input using Huffman codes over the 8-bit extended

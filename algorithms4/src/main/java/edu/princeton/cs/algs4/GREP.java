@@ -27,6 +27,9 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+
 /**
  * The {@code GREP} class provides a client for reading in a sequence of
  * lines from standard input and printing to standard output those lines

@@ -9,6 +9,9 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.Date;
+import edu.princeton.cs.algs4.base.StdOut;
+
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -184,7 +187,6 @@ public class Transaction implements Comparable<Transaction> {
      */
     public static class WhoOrder implements Comparator<Transaction> {
 
-        @Override
         public int compare(Transaction v, Transaction w) {
             return v.who.compareTo(w.who);
         }
@@ -195,7 +197,6 @@ public class Transaction implements Comparable<Transaction> {
      */
     public static class WhenOrder implements Comparator<Transaction> {
 
-        @Override
         public int compare(Transaction v, Transaction w) {
             return v.when.compareTo(w.when);
         }
@@ -206,7 +207,6 @@ public class Transaction implements Comparable<Transaction> {
      */
     public static class HowMuchOrder implements Comparator<Transaction> {
 
-        @Override
         public int compare(Transaction v, Transaction w) {
             return Double.compare(v.amount, w.amount);
         }

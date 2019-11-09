@@ -27,6 +27,12 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.Bag;
+import edu.princeton.cs.algs4.base.Stack;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.map.Digraph;
+import edu.princeton.cs.algs4.map.DirectedDFS;
+
 /**
  * The {@code NFA} class provides a data type for creating a
  * <em>nondeterministic finite state automaton</em> (NFA) from a regular

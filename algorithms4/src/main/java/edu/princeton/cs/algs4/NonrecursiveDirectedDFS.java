@@ -22,6 +22,11 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.In;
+import edu.princeton.cs.algs4.base.Stack;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.map.Digraph;
+
 import java.util.Iterator;
 
 /**

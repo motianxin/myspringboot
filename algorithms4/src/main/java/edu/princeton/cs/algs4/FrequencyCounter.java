@@ -26,6 +26,10 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.StdIn;
+import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.find.ST;
+
 /**
  * The {@code FrequencyCounter} class provides a client for
  * reading in a sequence of words and printing a word (exceeding

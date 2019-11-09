@@ -142,7 +142,7 @@ public class AStarSearch {
             // 在OpenList中查找 F值最小的节点作为当前方格节点
             Node current = findMinNode();
             // 当前方格节点从open list中移除
-            System.out.println(current);
+            // System.out.println(current);
             openList.remove(current);
             // 当前方格节点进入 close list
             closeList.add(current);

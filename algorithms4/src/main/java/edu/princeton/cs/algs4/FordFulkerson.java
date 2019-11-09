@@ -11,6 +11,9 @@
 
 package edu.princeton.cs.algs4;
 
+import edu.princeton.cs.algs4.base.Queue;
+import edu.princeton.cs.algs4.base.StdOut;
+
 /**
  * The {@code FordFulkerson} class represents a data type for computing a
  * <em>maximum st-flow</em> and <em>minimum st-cut</em> in a flow
