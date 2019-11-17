@@ -54,10 +54,15 @@ public class MergeBU {
         // merge back to a[]
         int i = lo, j = mid + 1;
         for (int k = lo; k <= hi; k++) {
-            if (i > mid) a[k] = aux[j++];  // this copying is unneccessary
-            else if (j > hi) a[k] = aux[i++];
-            else if (less(aux[j], aux[i])) a[k] = aux[j++];
-            else a[k] = aux[i++];
+            if (i > mid) {
+                a[k] = aux[j++];  // this copying is unneccessary
+            } else if (j > hi) {
+                a[k] = aux[i++];
+            } else if (MergeBU.less(aux[j], aux[i])) {
+                a[k] = aux[j++];
+            } else {
+                a[k] = aux[i++];
+            }
         }
 
     }
@@ -74,10 +79,10 @@ public class MergeBU {
             for (int lo = 0; lo < n - len; lo += len + len) {
                 int mid = lo + len - 1;
                 int hi = Math.min(lo + len + len - 1, n - 1);
-                merge(a, aux, lo, mid, hi);
+                MergeBU.merge(a, aux, lo, mid, hi);
             }
         }
-        assert isSorted(a);
+        assert MergeBU.isSorted(a);
     }
 
     /***********************************************************************
@@ -94,8 +99,11 @@ public class MergeBU {
      *  Check if array is sorted - useful for debugging.
      ***************************************************************************/
     private static boolean isSorted(Comparable[] a) {
-        for (int i = 1; i < a.length; i++)
-            if (less(a[i], a[i - 1])) return false;
+        for (int i = 1; i < a.length; i++) {
+            if (MergeBU.less(a[i], a[i - 1])) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -115,7 +123,7 @@ public class MergeBU {
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
         MergeBU.sort(a);
-        show(a);
+        MergeBU.show(a);
     }
 }
 

@@ -1,4 +1,3 @@
-
 package com.zhigang.myspringboot.domain.alarmws;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -29,12 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-        "alarmSyncOoperation",
-        "businessType",
-        "provinceSX",
-        "alarmSyncSN"
-})
+@XmlType(name = "", propOrder = {"alarmSyncOoperation", "businessType", "provinceSX", "alarmSyncSN"})
 @XmlRootElement(name = "notifyAlarmSyncReq", namespace = "http://www.ctsi.com.cn/webservices/service")
 public class NotifyAlarmSyncReq {
 
@@ -59,7 +53,7 @@ public class NotifyAlarmSyncReq {
      * 获取alarmSyncOoperation属性的值。
      */
     public int getAlarmSyncOoperation() {
-        return alarmSyncOoperation;
+        return this.alarmSyncOoperation;
     }
 
     /**
@@ -73,7 +67,7 @@ public class NotifyAlarmSyncReq {
      * 获取businessType属性的值。
      */
     public int getBusinessType() {
-        return businessType;
+        return this.businessType;
     }
 
     /**
@@ -90,14 +84,14 @@ public class NotifyAlarmSyncReq {
      * {@link String }
      */
     public String getProvinceSX() {
-        return provinceSX;
+        return this.provinceSX;
     }
 
     /**
      * 设置provinceSX属性的值。
      *
      * @param value allowed object is
-     *              {@link String }
+     * {@link String }
      */
     public void setProvinceSX(String value) {
         this.provinceSX = value;
@@ -110,14 +104,14 @@ public class NotifyAlarmSyncReq {
      * {@link String }
      */
     public String getAlarmSyncSN() {
-        return alarmSyncSN;
+        return this.alarmSyncSN;
     }
 
     /**
      * 设置alarmSyncSN属性的值。
      *
      * @param value allowed object is
-     *              {@link String }
+     * {@link String }
      */
     public void setAlarmSyncSN(String value) {
         this.alarmSyncSN = value;
@@ -126,10 +120,10 @@ public class NotifyAlarmSyncReq {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("NotifyAlarmSyncReq{");
-        sb.append("alarmSyncOoperation=").append(alarmSyncOoperation);
-        sb.append(", businessType=").append(businessType);
-        sb.append(", provinceSX='").append(provinceSX).append('\'');
-        sb.append(", alarmSyncSN='").append(alarmSyncSN).append('\'');
+        sb.append("alarmSyncOoperation=").append(this.alarmSyncOoperation);
+        sb.append(", businessType=").append(this.businessType);
+        sb.append(", provinceSX='").append(this.provinceSX).append('\'');
+        sb.append(", alarmSyncSN='").append(this.alarmSyncSN).append('\'');
         sb.append('}');
         return sb.toString();
     }

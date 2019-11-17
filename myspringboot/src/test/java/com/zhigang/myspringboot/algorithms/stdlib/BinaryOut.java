@@ -1,4 +1,5 @@
-package com.zhigang.myspringboot.algorithms.stdlib; /******************************************************************************
+package com.zhigang.myspringboot.algorithms.stdlib; /**
+ ****************************************************************************
  *  Compilation:  javac BinaryOut.java
  *  Execution:    java BinaryOut
  *  Dependencies: none
@@ -114,11 +115,15 @@ public final class BinaryOut {
     private void writeBit(boolean x) {
         // add bit to buffer
         buffer <<= 1;
-        if (x) buffer |= 1;
+        if (x) {
+            buffer |= 1;
+        }
 
         // if buffer is full (8 bits), write out as a single byte
         n++;
-        if (n == 8) clearBuffer();
+        if (n == 8) {
+            clearBuffer();
+        }
     }
 
     /**
@@ -148,8 +153,12 @@ public final class BinaryOut {
 
     // write out any remaining bits in buffer to the binary output stream, padding with 0s
     private void clearBuffer() {
-        if (n == 0) return;
-        if (n > 0) buffer <<= (8 - n);
+        if (n == 0) {
+            return;
+        }
+        if (n > 0) {
+            buffer <<= (8 - n);
+        }
         try {
             out.write(buffer);
         } catch (IOException e) {
@@ -220,6 +229,7 @@ public final class BinaryOut {
      *
      * @param x the {@code int} to write
      * @param r the number of relevant bits in the char
+     *
      * @throws IllegalArgumentException unless {@code r} is between 1 and 32
      * @throws IllegalArgumentException unless {@code x} is between 0 and 2<sup>r</sup> - 1
      */
@@ -228,8 +238,12 @@ public final class BinaryOut {
             write(x);
             return;
         }
-        if (r < 1 || r > 32) throw new IllegalArgumentException("Illegal value for r = " + r);
-        if (x >= (1 << r)) throw new IllegalArgumentException("Illegal " + r + "-bit char = " + x);
+        if (r < 1 || r > 32) {
+            throw new IllegalArgumentException("Illegal value for r = " + r);
+        }
+        if (x >= (1 << r)) {
+            throw new IllegalArgumentException("Illegal " + r + "-bit char = " + x);
+        }
         for (int i = 0; i < r; i++) {
             boolean bit = ((x >>> (r - i - 1)) & 1) == 1;
             writeBit(bit);
@@ -284,10 +298,13 @@ public final class BinaryOut {
      * Writes the 8-bit char to the binary output stream.
      *
      * @param x the {@code char} to write
+     *
      * @throws IllegalArgumentException unless {@code x} is betwen 0 and 255
      */
     public void write(char x) {
-        if (x < 0 || x >= 256) throw new IllegalArgumentException("Illegal 8-bit char = " + x);
+        if (x < 0 || x >= 256) {
+            throw new IllegalArgumentException("Illegal 8-bit char = " + x);
+        }
         writeByte(x);
     }
 
@@ -296,6 +313,7 @@ public final class BinaryOut {
      *
      * @param x the {@code char} to write
      * @param r the number of relevant bits in the char
+     *
      * @throws IllegalArgumentException unless {@code r} is between 1 and 16
      * @throws IllegalArgumentException unless {@code x} is between 0 and 2<sup>r</sup> - 1
      */
@@ -304,8 +322,12 @@ public final class BinaryOut {
             write(x);
             return;
         }
-        if (r < 1 || r > 16) throw new IllegalArgumentException("Illegal value for r = " + r);
-        if (x >= (1 << r)) throw new IllegalArgumentException("Illegal " + r + "-bit char = " + x);
+        if (r < 1 || r > 16) {
+            throw new IllegalArgumentException("Illegal value for r = " + r);
+        }
+        if (x >= (1 << r)) {
+            throw new IllegalArgumentException("Illegal " + r + "-bit char = " + x);
+        }
         for (int i = 0; i < r; i++) {
             boolean bit = ((x >>> (r - i - 1)) & 1) == 1;
             writeBit(bit);
@@ -316,12 +338,14 @@ public final class BinaryOut {
      * Writes the string of 8-bit characters to the binary output stream.
      *
      * @param s the {@code String} to write
+     *
      * @throws IllegalArgumentException if any character in the string is not
-     *                                  between 0 and 255
+     * between 0 and 255
      */
     public void write(String s) {
-        for (int i = 0; i < s.length(); i++)
+        for (int i = 0; i < s.length(); i++) {
             write(s.charAt(i));
+        }
     }
 
     /**
@@ -329,13 +353,15 @@ public final class BinaryOut {
      *
      * @param s the {@code String} to write
      * @param r the number of relevants bits in each character
+     *
      * @throws IllegalArgumentException unless r is between 1 and 16
      * @throws IllegalArgumentException if any character in the string is not
-     *                                  between 0 and 2<sup>r</sup> - 1
+     * between 0 and 2<sup>r</sup> - 1
      */
     public void write(String s, int r) {
-        for (int i = 0; i < s.length(); i++)
+        for (int i = 0; i < s.length(); i++) {
             write(s.charAt(i), r);
+        }
     }
 
 }

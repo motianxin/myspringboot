@@ -23,7 +23,7 @@ public class RacerTest {
         }
         System.out.println("before set flag");
         for (int i = 0; i < sum; i++) {
-            System.out.println(racers[i].getThreadName() +  " 's state is " + racers[i].getState());
+            System.out.println(racers[i].getThreadName() + " 's state is " + racers[i].getState());
         }
         flag.setFlag();
         System.out.println("after set flag");

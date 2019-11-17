@@ -25,6 +25,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +70,7 @@ public final class StdAudio {
 
     // static initializer
     static {
-        init();
+        StdAudio.init();
     }
 
     private StdAudio() {
@@ -80,22 +81,22 @@ public final class StdAudio {
     private static void init() {
         try {
             // 44,100 Hz, 16-bit audio, mono, signed PCM, little endian
-            AudioFormat format = new AudioFormat((float) SAMPLE_RATE, BITS_PER_SAMPLE, MONO, SIGNED, LITTLE_ENDIAN);
+            AudioFormat format = new AudioFormat((float) StdAudio.SAMPLE_RATE, StdAudio.BITS_PER_SAMPLE, StdAudio.MONO, StdAudio.SIGNED, StdAudio.LITTLE_ENDIAN);
             DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
 
-            line = (SourceDataLine) AudioSystem.getLine(info);
-            line.open(format, SAMPLE_BUFFER_SIZE * BYTES_PER_SAMPLE);
+            StdAudio.line = (SourceDataLine) AudioSystem.getLine(info);
+            StdAudio.line.open(format, StdAudio.SAMPLE_BUFFER_SIZE * StdAudio.BYTES_PER_SAMPLE);
 
             // the internal buffer is a fraction of the actual buffer size, this choice is arbitrary
             // it gets divided because we can't expect the buffered data to line up exactly with when
             // the sound card decides to push out its samples.
-            buffer = new byte[SAMPLE_BUFFER_SIZE * BYTES_PER_SAMPLE / 3];
+            StdAudio.buffer = new byte[StdAudio.SAMPLE_BUFFER_SIZE * StdAudio.BYTES_PER_SAMPLE / 3];
         } catch (LineUnavailableException e) {
             System.out.println(e.getMessage());
         }
 
         // no sound gets made before this call
-        line.start();
+        StdAudio.line.start();
     }
 
     // get an AudioInputStream object from a file
@@ -138,8 +139,8 @@ public final class StdAudio {
      * Closes standard audio.
      */
     public static void close() {
-        line.drain();
-        line.stop();
+        StdAudio.line.drain();
+        StdAudio.line.stop();
     }
 
     /**
@@ -147,24 +148,31 @@ public final class StdAudio {
      * If the sample is outside the range, it will be clipped.
      *
      * @param sample the sample to play
+     *
      * @throws IllegalArgumentException if the sample is {@code Double.NaN}
      */
     public static void play(double sample) {
-        if (Double.isNaN(sample)) throw new IllegalArgumentException("sample is NaN");
+        if (Double.isNaN(sample)) {
+            throw new IllegalArgumentException("sample is NaN");
+        }
 
         // clip if outside [-1, +1]
-        if (sample < -1.0) sample = -1.0;
-        if (sample > +1.0) sample = +1.0;
+        if (sample < -1.0) {
+            sample = -1.0;
+        }
+        if (sample > +1.0) {
+            sample = +1.0;
+        }
 
         // convert to bytes
-        short s = (short) (MAX_16_BIT * sample);
-        buffer[bufferSize++] = (byte) s;
-        buffer[bufferSize++] = (byte) (s >> 8);   // little endian
+        short s = (short) (StdAudio.MAX_16_BIT * sample);
+        StdAudio.buffer[StdAudio.bufferSize++] = (byte) s;
+        StdAudio.buffer[StdAudio.bufferSize++] = (byte) (s >> 8);   // little endian
 
         // send to sound card if buffer is full        
-        if (bufferSize >= buffer.length) {
-            line.write(buffer, 0, buffer.length);
-            bufferSize = 0;
+        if (StdAudio.bufferSize >= StdAudio.buffer.length) {
+            StdAudio.line.write(StdAudio.buffer, 0, StdAudio.buffer.length);
+            StdAudio.bufferSize = 0;
         }
     }
 
@@ -173,13 +181,16 @@ public final class StdAudio {
      * If a sample is outside the range, it will be clipped.
      *
      * @param samples the array of samples to play
+     *
      * @throws IllegalArgumentException if any sample is {@code Double.NaN}
      * @throws IllegalArgumentException if {@code samples} is {@code null}
      */
     public static void play(double[] samples) {
-        if (samples == null) throw new IllegalArgumentException("argument to play() is null");
+        if (samples == null) {
+            throw new IllegalArgumentException("argument to play() is null");
+        }
         for (int i = 0; i < samples.length; i++) {
-            play(samples[i]);
+            StdAudio.play(samples[i]);
         }
     }
 
@@ -190,30 +201,28 @@ public final class StdAudio {
      * It can be mono or stereo.
      *
      * @param filename the name of the audio file
+     *
      * @return the array of samples
      */
     public static double[] read(String filename) {
 
         // make sure that AudioFormat is 16-bit, 44,100 Hz, little endian
-        final AudioInputStream ais = getAudioInputStreamFromFile(filename);
+        final AudioInputStream ais = StdAudio.getAudioInputStreamFromFile(filename);
         AudioFormat audioFormat = ais.getFormat();
 
         // require sampling rate = 44,100 Hz
-        if (audioFormat.getSampleRate() != SAMPLE_RATE) {
-            throw new IllegalArgumentException("StdAudio.read() currently supports only a sample rate of " + SAMPLE_RATE + " Hz\n"
-                    + "audio format: " + audioFormat);
+        if (audioFormat.getSampleRate() != StdAudio.SAMPLE_RATE) {
+            throw new IllegalArgumentException("StdAudio.read() currently supports only a sample rate of " + StdAudio.SAMPLE_RATE + " Hz\n" + "audio format: " + audioFormat);
         }
 
         // require 16-bit audio
-        if (audioFormat.getSampleSizeInBits() != BITS_PER_SAMPLE) {
-            throw new IllegalArgumentException("StdAudio.read() currently supports only " + BITS_PER_SAMPLE + "-bit audio\n"
-                    + "audio format: " + audioFormat);
+        if (audioFormat.getSampleSizeInBits() != StdAudio.BITS_PER_SAMPLE) {
+            throw new IllegalArgumentException("StdAudio.read() currently supports only " + StdAudio.BITS_PER_SAMPLE + "-bit " + "audio\n" + "audio format: " + audioFormat);
         }
 
         // require little endian
         if (audioFormat.isBigEndian()) {
-            throw new IllegalArgumentException("StdAudio.read() currently supports only audio stored using little endian\n"
-                    + "audio format: " + audioFormat);
+            throw new IllegalArgumentException("StdAudio.read() currently supports only audio stored using little " + "endian\n" + "audio format: " + audioFormat);
         }
 
         byte[] bytes = null;
@@ -231,40 +240,45 @@ public final class StdAudio {
         int n = bytes.length;
 
         // little endian, mono
-        if (audioFormat.getChannels() == MONO) {
+        if (audioFormat.getChannels() == StdAudio.MONO) {
             double[] data = new double[n / 2];
             for (int i = 0; i < n / 2; i++) {
                 // little endian, mono
-                data[i] = ((short) (((bytes[2 * i + 1] & 0xFF) << 8) | (bytes[2 * i] & 0xFF))) / ((double) MAX_16_BIT);
+                data[i] = ((short) (((bytes[2 * i + 1] & 0xFF) << 8) | (bytes[2 * i] & 0xFF))) / ((double) StdAudio.MAX_16_BIT);
             }
             return data;
         }
 
         // little endian, stereo
-        else if (audioFormat.getChannels() == STEREO) {
+        else if (audioFormat.getChannels() == StdAudio.STEREO) {
             double[] data = new double[n / 4];
             for (int i = 0; i < n / 4; i++) {
-                double left = ((short) (((bytes[4 * i + 1] & 0xFF) << 8) | (bytes[4 * i + 0] & 0xFF))) / ((double) MAX_16_BIT);
-                double right = ((short) (((bytes[4 * i + 3] & 0xFF) << 8) | (bytes[4 * i + 2] & 0xFF))) / ((double) MAX_16_BIT);
+                double left =
+                        ((short) (((bytes[4 * i + 1] & 0xFF) << 8) | (bytes[4 * i + 0] & 0xFF))) / ((double) StdAudio.MAX_16_BIT);
+                double right =
+                        ((short) (((bytes[4 * i + 3] & 0xFF) << 8) | (bytes[4 * i + 2] & 0xFF))) / ((double) StdAudio.MAX_16_BIT);
                 data[i] = (left + right) / 2.0;
             }
             return data;
         }
 
         // TODO: handle big endian (or other formats)
-        else throw new IllegalStateException("audio format is neither mono or stereo");
+        else {
+            throw new IllegalStateException("audio format is neither mono or stereo");
+        }
     }
 
     /**
      * Saves the double array as an audio file (using .wav or .au format).
      *
      * @param filename the name of the audio file
-     * @param samples  the array of samples
+     * @param samples the array of samples
+     *
      * @throws IllegalArgumentException if unable to save {@code filename}
      * @throws IllegalArgumentException if {@code samples} is {@code null}
      * @throws IllegalArgumentException if {@code filename} is {@code null}
      * @throws IllegalArgumentException if {@code filename} extension is not {@code .wav}
-     *                                  or {@code .au}
+     * or {@code .au}
      */
     public static void save(String filename, double[] samples) {
         if (filename == null) {
@@ -276,10 +290,10 @@ public final class StdAudio {
 
         // assumes 16-bit samples with sample rate = 44,100 Hz
         // use 16-bit audio, mono, signed PCM, little Endian
-        AudioFormat format = new AudioFormat(SAMPLE_RATE, 16, MONO, SIGNED, LITTLE_ENDIAN);
+        AudioFormat format = new AudioFormat(StdAudio.SAMPLE_RATE, 16, StdAudio.MONO, StdAudio.SIGNED, StdAudio.LITTLE_ENDIAN);
         byte[] data = new byte[2 * samples.length];
         for (int i = 0; i < samples.length; i++) {
-            int temp = (short) (samples[i] * MAX_16_BIT);
+            int temp = (short) (samples[i] * StdAudio.MAX_16_BIT);
             data[2 * i + 0] = (byte) temp;
             data[2 * i + 1] = (byte) (temp >> 8);   // little endian
         }
@@ -305,14 +319,15 @@ public final class StdAudio {
      * Plays an audio file (in .wav, .mid, or .au format) in a background thread.
      *
      * @param filename the name of the audio file
+     *
      * @throws IllegalArgumentException if unable to play {@code filename}
      * @throws IllegalArgumentException if {@code filename} is {@code null}
      */
     public static synchronized void play(final String filename) {
         new Thread(new Runnable() {
             public void run() {
-                AudioInputStream ais = getAudioInputStreamFromFile(filename);
-                stream(ais);
+                AudioInputStream ais = StdAudio.getAudioInputStreamFromFile(filename);
+                StdAudio.stream(ais);
             }
         }).start();
     }
@@ -353,12 +368,15 @@ public final class StdAudio {
      * Loops an audio file (in .wav, .mid, or .au format) in a background thread.
      *
      * @param filename the name of the audio file
+     *
      * @throws IllegalArgumentException if {@code filename} is {@code null}
      */
     public static synchronized void loop(String filename) {
-        if (filename == null) throw new IllegalArgumentException();
+        if (filename == null) {
+            throw new IllegalArgumentException();
+        }
 
-        final AudioInputStream ais = getAudioInputStreamFromFile(filename);
+        final AudioInputStream ais = StdAudio.getAudioInputStreamFromFile(filename);
 
         try {
             Clip clip = AudioSystem.getClip();
@@ -395,8 +413,9 @@ public final class StdAudio {
     private static double[] note(double hz, double duration, double amplitude) {
         int n = (int) (StdAudio.SAMPLE_RATE * duration);
         double[] a = new double[n + 1];
-        for (int i = 0; i <= n; i++)
+        for (int i = 0; i <= n; i++) {
             a[i] = amplitude * Math.sin(2 * Math.PI * i * hz / StdAudio.SAMPLE_RATE);
+        }
         return a;
     }
 
@@ -422,7 +441,7 @@ public final class StdAudio {
         int[] steps = {0, 2, 4, 5, 7, 9, 11, 12};
         for (int i = 0; i < steps.length; i++) {
             double hz = 440.0 * Math.pow(2, steps[i] / 12.0);
-            StdAudio.play(note(hz, 1.0, 0.5));
+            StdAudio.play(StdAudio.note(hz, 1.0, 0.5));
         }
 
 

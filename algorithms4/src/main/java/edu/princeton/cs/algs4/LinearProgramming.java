@@ -57,29 +57,39 @@ public class LinearProgramming {
      * @param A the <em>m</em>-by-<em>b</em> matrix
      * @param b the <em>m</em>-length RHS vector
      * @param c the <em>n</em>-length cost vector
+     *
      * @throws IllegalArgumentException unless {@code b[i] >= 0} for each {@code i}
-     * @throws ArithmeticException      if the linear program is unbounded
+     * @throws ArithmeticException if the linear program is unbounded
      */
     public LinearProgramming(double[][] A, double[] b, double[] c) {
         m = b.length;
         n = c.length;
-        for (int i = 0; i < m; i++)
-            if (!(b[i] >= 0)) throw new IllegalArgumentException("RHS must be nonnegative");
+        for (int i = 0; i < m; i++) {
+            if (!(b[i] >= 0)) {
+                throw new IllegalArgumentException("RHS must be nonnegative");
+            }
+        }
 
         a = new double[m + 1][n + m + 1];
-        for (int i = 0; i < m; i++)
-            for (int j = 0; j < n; j++)
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 a[i][j] = A[i][j];
-        for (int i = 0; i < m; i++)
+            }
+        }
+        for (int i = 0; i < m; i++) {
             a[i][n + i] = 1.0;
-        for (int j = 0; j < n; j++)
+        }
+        for (int j = 0; j < n; j++) {
             a[m][j] = c[j];
-        for (int i = 0; i < m; i++)
+        }
+        for (int i = 0; i < m; i++) {
             a[i][m + n] = b[i];
+        }
 
         basis = new int[m];
-        for (int i = 0; i < m; i++)
+        for (int i = 0; i < m; i++) {
             basis[i] = n + i;
+        }
 
         solve();
 
@@ -98,21 +108,17 @@ public class LinearProgramming {
 
         StdOut.println("value = " + lp.value());
         double[] x = lp.primal();
-        for (int i = 0; i < x.length; i++)
+        for (int i = 0; i < x.length; i++) {
             StdOut.println("x[" + i + "] = " + x[i]);
+        }
         double[] y = lp.dual();
-        for (int j = 0; j < y.length; j++)
+        for (int j = 0; j < y.length; j++) {
             StdOut.println("y[" + j + "] = " + y[j]);
+        }
     }
 
     private static void test1() {
-        double[][] A = {
-                {-1, 1, 0},
-                {1, 4, 0},
-                {2, 1, 0},
-                {3, -4, 0},
-                {0, 0, 1},
-        };
+        double[][] A = {{-1, 1, 0}, {1, 4, 0}, {2, 1, 0}, {3, -4, 0}, {0, 0, 1},};
         double[] c = {1, 1, 1};
         double[] b = {5, 45, 27, 24, 4};
         test(A, b, c);
@@ -122,11 +128,7 @@ public class LinearProgramming {
     private static void test2() {
         double[] c = {13.0, 23.0};
         double[] b = {480.0, 160.0, 1190.0};
-        double[][] A = {
-                {5.0, 15.0},
-                {4.0, 4.0},
-                {35.0, 20.0},
-        };
+        double[][] A = {{5.0, 15.0}, {4.0, 4.0}, {35.0, 20.0},};
         test(A, b, c);
     }
 
@@ -134,10 +136,7 @@ public class LinearProgramming {
     private static void test3() {
         double[] c = {2.0, 3.0, -1.0, -12.0};
         double[] b = {3.0, 2.0};
-        double[][] A = {
-                {-2.0, -9.0, 1.0, 9.0},
-                {1.0, 1.0, -1.0, -2.0},
-        };
+        double[][] A = {{-2.0, -9.0, 1.0, 9.0}, {1.0, 1.0, -1.0, -2.0},};
         test(A, b, c);
     }
 
@@ -145,11 +144,7 @@ public class LinearProgramming {
     private static void test4() {
         double[] c = {10.0, -57.0, -9.0, -24.0};
         double[] b = {0.0, 0.0, 1.0};
-        double[][] A = {
-                {0.5, -5.5, -2.5, 9.0},
-                {0.5, -1.5, -0.5, 1.0},
-                {1.0, 0.0, 0.0, 0.0},
-        };
+        double[][] A = {{0.5, -5.5, -2.5, 9.0}, {0.5, -1.5, -0.5, 1.0}, {1.0, 0.0, 0.0, 0.0},};
         test(A, b, c);
     }
 
@@ -182,13 +177,17 @@ public class LinearProgramming {
         double[] c = new double[n];
         double[] b = new double[m];
         double[][] A = new double[m][n];
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < n; j++) {
             c[j] = StdRandom.uniform(1000);
-        for (int i = 0; i < m; i++)
+        }
+        for (int i = 0; i < m; i++) {
             b[i] = StdRandom.uniform(1000);
-        for (int i = 0; i < m; i++)
-            for (int j = 0; j < n; j++)
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 A[i][j] = StdRandom.uniform(100);
+            }
+        }
         LinearProgramming lp = new LinearProgramming(A, b, c);
         test(A, b, c);
     }
@@ -199,11 +198,15 @@ public class LinearProgramming {
 
             // find entering column q
             int q = bland();
-            if (q == -1) break;  // optimal
+            if (q == -1) {
+                break;  // optimal
+            }
 
             // find leaving row p
             int p = minRatioRule(q);
-            if (p == -1) throw new ArithmeticException("Linear program is unbounded");
+            if (p == -1) {
+                throw new ArithmeticException("Linear program is unbounded");
+            }
 
             // pivot
             pivot(p, q);
@@ -215,19 +218,28 @@ public class LinearProgramming {
 
     // lowest index of a non-basic column with a positive cost
     private int bland() {
-        for (int j = 0; j < m + n; j++)
-            if (a[m][j] > 0) return j;
+        for (int j = 0; j < m + n; j++) {
+            if (a[m][j] > 0) {
+                return j;
+            }
+        }
         return -1;  // optimal
     }
 
     // index of a non-basic column with most positive cost
     private int dantzig() {
         int q = 0;
-        for (int j = 1; j < m + n; j++)
-            if (a[m][j] > a[m][q]) q = j;
+        for (int j = 1; j < m + n; j++) {
+            if (a[m][j] > a[m][q]) {
+                q = j;
+            }
+        }
 
-        if (a[m][q] <= 0) return -1;  // optimal
-        else return q;
+        if (a[m][q] <= 0) {
+            return -1;  // optimal
+        } else {
+            return q;
+        }
     }
 
     // find row p using min ratio rule (-1 if no such row)
@@ -236,9 +248,13 @@ public class LinearProgramming {
         int p = -1;
         for (int i = 0; i < m; i++) {
             // if (a[i][q] <= 0) continue;
-            if (a[i][q] <= EPSILON) continue;
-            else if (p == -1) p = i;
-            else if ((a[i][m + n] / a[i][q]) < (a[p][m + n] / a[p][q])) p = i;
+            if (a[i][q] <= EPSILON) {
+                continue;
+            } else if (p == -1) {
+                p = i;
+            } else if ((a[i][m + n] / a[i][q]) < (a[p][m + n] / a[p][q])) {
+                p = i;
+            }
         }
         return p;
     }
@@ -247,17 +263,27 @@ public class LinearProgramming {
     private void pivot(int p, int q) {
 
         // everything but row p and column q
-        for (int i = 0; i <= m; i++)
-            for (int j = 0; j <= m + n; j++)
-                if (i != p && j != q) a[i][j] -= a[p][j] * a[i][q] / a[p][q];
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= m + n; j++) {
+                if (i != p && j != q) {
+                    a[i][j] -= a[p][j] * a[i][q] / a[p][q];
+                }
+            }
+        }
 
         // zero out column q
-        for (int i = 0; i <= m; i++)
-            if (i != p) a[i][q] = 0.0;
+        for (int i = 0; i <= m; i++) {
+            if (i != p) {
+                a[i][q] = 0.0;
+            }
+        }
 
         // scale row p
-        for (int j = 0; j <= m + n; j++)
-            if (j != q) a[p][j] /= a[p][q];
+        for (int j = 0; j <= m + n; j++) {
+            if (j != q) {
+                a[p][j] /= a[p][q];
+            }
+        }
         a[p][q] = 1.0;
     }
 
@@ -277,8 +303,11 @@ public class LinearProgramming {
      */
     public double[] primal() {
         double[] x = new double[n];
-        for (int i = 0; i < m; i++)
-            if (basis[i] < n) x[basis[i]] = a[i][m + n];
+        for (int i = 0; i < m; i++) {
+            if (basis[i] < n) {
+                x[basis[i]] = a[i][m + n];
+            }
+        }
         return x;
     }
 
@@ -289,8 +318,9 @@ public class LinearProgramming {
      */
     public double[] dual() {
         double[] y = new double[m];
-        for (int i = 0; i < m; i++)
+        for (int i = 0; i < m; i++) {
             y[i] = -a[m][n + i];
+        }
         return y;
     }
 
@@ -356,11 +386,13 @@ public class LinearProgramming {
 
         // check that value = cx = yb
         double value1 = 0.0;
-        for (int j = 0; j < x.length; j++)
+        for (int j = 0; j < x.length; j++) {
             value1 += c[j] * x[j];
+        }
         double value2 = 0.0;
-        for (int i = 0; i < y.length; i++)
+        for (int i = 0; i < y.length; i++) {
             value2 += y[i] * b[i];
+        }
         if (Math.abs(value - value1) > EPSILON || Math.abs(value - value2) > EPSILON) {
             StdOut.println("value = " + value + ", cx = " + value1 + ", yb = " + value2);
             return false;
@@ -385,8 +417,11 @@ public class LinearProgramming {
             StdOut.println();
         }
         StdOut.println("value = " + value());
-        for (int i = 0; i < m; i++)
-            if (basis[i] < n) StdOut.println("x_" + basis[i] + " = " + a[i][m + n]);
+        for (int i = 0; i < m; i++) {
+            if (basis[i] < n) {
+                StdOut.println("x_" + basis[i] + " = " + a[i][m + n]);
+            }
+        }
         StdOut.println();
     }
 

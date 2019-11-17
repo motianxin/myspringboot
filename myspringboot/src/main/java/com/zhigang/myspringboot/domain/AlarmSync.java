@@ -12,14 +12,16 @@ import com.zhigang.myspringboot.domain.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈〉
  *
  * @author admin
- * @create 2018/12/19 16:57
  * @version 3.2.2
+ * @create 2018/12/19 16:57
  */
 @Entity
 @Table(name = "alarmsync")
@@ -27,22 +29,16 @@ import javax.persistence.*;
 @Setter
 public class AlarmSync extends BaseEntity {
 
-	private int opration;
+    private int opration;
 
-	private int businessType;
+    private int businessType;
 
-	private String provinceSX;
+    private String provinceSX;
 
-	private String alarmSyncSN;
+    private String alarmSyncSN;
 
-	@Override
-	public String toString() {
-		return "AlarmSync{" +
-				"id=" + id +
-				", opration=" + opration +
-				", businessType=" + businessType +
-				", provinceSX='" + provinceSX + '\'' +
-				", alarmSyncSN='" + alarmSyncSN + '\'' +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "AlarmSync{" + "id=" + this.id + ", opration=" + this.opration + ", businessType=" + this.businessType + ", provinceSX='" + this.provinceSX + '\'' + ", alarmSyncSN='" + this.alarmSyncSN + '\'' + '}';
+    }
 }

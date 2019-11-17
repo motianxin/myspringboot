@@ -54,7 +54,7 @@ public final class BinaryIn {
      * Initializes a binary input stream from standard input.
      */
     public BinaryIn() {
-        in = new BufferedInputStream(System.in);
+        this.in = new BufferedInputStream(System.in);
         fillBuffer();
     }
 
@@ -64,7 +64,7 @@ public final class BinaryIn {
      * @param is the {@code InputStream} object
      */
     public BinaryIn(InputStream is) {
-        in = new BufferedInputStream(is);
+        this.in = new BufferedInputStream(is);
         fillBuffer();
     }
 
@@ -76,7 +76,7 @@ public final class BinaryIn {
     public BinaryIn(Socket socket) {
         try {
             InputStream is = socket.getInputStream();
-            in = new BufferedInputStream(is);
+            this.in = new BufferedInputStream(is);
             fillBuffer();
         } catch (IOException ioe) {
             System.err.println("Could not open " + socket);
@@ -92,7 +92,7 @@ public final class BinaryIn {
         try {
             URLConnection site = url.openConnection();
             InputStream is = site.getInputStream();
-            in = new BufferedInputStream(is);
+            this.in = new BufferedInputStream(is);
             fillBuffer();
         } catch (IOException ioe) {
             System.err.println("Could not open " + url);
@@ -111,7 +111,7 @@ public final class BinaryIn {
             File file = new File(name);
             if (file.exists()) {
                 FileInputStream fis = new FileInputStream(file);
-                in = new BufferedInputStream(fis);
+                this.in = new BufferedInputStream(fis);
                 fillBuffer();
                 return;
             }
@@ -126,7 +126,7 @@ public final class BinaryIn {
 
             URLConnection site = url.openConnection();
             InputStream is = site.getInputStream();
-            in = new BufferedInputStream(is);
+            this.in = new BufferedInputStream(is);
             fillBuffer();
         } catch (IOException ioe) {
             System.err.println("Could not open " + name);
@@ -154,12 +154,12 @@ public final class BinaryIn {
 
     private void fillBuffer() {
         try {
-            buffer = in.read();
-            n = 8;
+            this.buffer = this.in.read();
+            this.n = 8;
         } catch (IOException e) {
             System.err.println("EOF");
-            buffer = EOF;
-            n = -1;
+            this.buffer = BinaryIn.EOF;
+            this.n = -1;
         }
     }
 
@@ -170,7 +170,7 @@ public final class BinaryIn {
      * {@code false} otherwise
      */
     public boolean exists() {
-        return in != null;
+        return this.in != null;
     }
 
     /**
@@ -180,20 +180,25 @@ public final class BinaryIn {
      * {@code false} otherwise
      */
     public boolean isEmpty() {
-        return buffer == EOF;
+        return this.buffer == BinaryIn.EOF;
     }
 
     /**
      * Reads the next bit of data from this binary input stream and return as a boolean.
      *
      * @return the next bit of data from this binary input stream as a {@code boolean}
+     *
      * @throws NoSuchElementException if this binary input stream is empty
      */
     public boolean readBoolean() {
-        if (isEmpty()) throw new NoSuchElementException("Reading from empty input stream");
-        n--;
-        boolean bit = ((buffer >> n) & 1) == 1;
-        if (n == 0) fillBuffer();
+        if (isEmpty()) {
+            throw new NoSuchElementException("Reading from empty input stream");
+        }
+        this.n--;
+        boolean bit = ((this.buffer >> this.n) & 1) == 1;
+        if (this.n == 0) {
+            fillBuffer();
+        }
         return bit;
     }
 
@@ -201,26 +206,31 @@ public final class BinaryIn {
      * Reads the next 8 bits from this binary input stream and return as an 8-bit char.
      *
      * @return the next 8 bits of data from this binary input stream as a {@code char}
+     *
      * @throws NoSuchElementException if there are fewer than 8 bits available
      */
     public char readChar() {
-        if (isEmpty()) throw new NoSuchElementException("Reading from empty input stream");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Reading from empty input stream");
+        }
 
         // special case when aligned byte
-        if (n == 8) {
-            int x = buffer;
+        if (this.n == 8) {
+            int x = this.buffer;
             fillBuffer();
             return (char) (x & 0xff);
         }
 
         // combine last N bits of current buffer with first 8-N bits of new buffer
-        int x = buffer;
-        x <<= (8 - n);
-        int oldN = n;
+        int x = this.buffer;
+        x <<= (8 - this.n);
+        int oldN = this.n;
         fillBuffer();
-        if (isEmpty()) throw new NoSuchElementException("Reading from empty input stream");
-        n = oldN;
-        x |= (buffer >>> n);
+        if (isEmpty()) {
+            throw new NoSuchElementException("Reading from empty input stream");
+        }
+        this.n = oldN;
+        x |= (this.buffer >>> this.n);
         return (char) (x & 0xff);
         // the above code doesn't quite work for the last character if N = 8
         // because buffer will be -1
@@ -230,21 +240,29 @@ public final class BinaryIn {
      * Reads the next r bits from this binary input stream and return as an r-bit character.
      *
      * @param r number of bits to read
+     *
      * @return the next {@code r} bits of data from this binary input streamt as a {@code char}
-     * @throws NoSuchElementException   if there are fewer than {@code r} bits available
+     *
+     * @throws NoSuchElementException if there are fewer than {@code r} bits available
      * @throws IllegalArgumentException unless {@code 1 <= r <= 16}
      */
     public char readChar(int r) {
-        if (r < 1 || r > 16) throw new IllegalArgumentException("Illegal value of r = " + r);
+        if (r < 1 || r > 16) {
+            throw new IllegalArgumentException("Illegal value of r = " + r);
+        }
 
         // optimize r = 8 case
-        if (r == 8) return readChar();
+        if (r == 8) {
+            return readChar();
+        }
 
         char x = 0;
         for (int i = 0; i < r; i++) {
             x <<= 1;
             boolean bit = readBoolean();
-            if (bit) x |= 1;
+            if (bit) {
+                x |= 1;
+            }
         }
         return x;
     }
@@ -253,11 +271,14 @@ public final class BinaryIn {
      * Reads the remaining bytes of data from this binary input stream and return as a string.
      *
      * @return the remaining bytes of data from this binary input stream as a {@code String}
+     *
      * @throws NoSuchElementException if this binary input stream is empty or if the number of bits
-     *                                available is not a multiple of 8 (byte-aligned)
+     * available is not a multiple of 8 (byte-aligned)
      */
     public String readString() {
-        if (isEmpty()) throw new NoSuchElementException("Reading from empty input stream");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Reading from empty input stream");
+        }
 
         StringBuilder sb = new StringBuilder();
         while (!isEmpty()) {
@@ -271,6 +292,7 @@ public final class BinaryIn {
      * Reads the next 16 bits from this binary input stream and return as a 16-bit short.
      *
      * @return the next 16 bits of data from this binary input stream as a {@code short}
+     *
      * @throws NoSuchElementException if there are fewer than 16 bits available
      */
     public short readShort() {
@@ -287,6 +309,7 @@ public final class BinaryIn {
      * Reads the next 32 bits from this binary input stream and return as a 32-bit int.
      *
      * @return the next 32 bits of data from this binary input stream as a {@code int}
+     *
      * @throws NoSuchElementException if there are fewer than 32 bits available
      */
     public int readInt() {
@@ -303,21 +326,29 @@ public final class BinaryIn {
      * Reads the next r bits from this binary input stream return as an r-bit int.
      *
      * @param r number of bits to read
+     *
      * @return the next {@code r} bits of data from this binary input stream as a {@code int}
-     * @throws NoSuchElementException   if there are fewer than r bits available
+     *
+     * @throws NoSuchElementException if there are fewer than r bits available
      * @throws IllegalArgumentException unless {@code 1 <= r <= 32}
      */
     public int readInt(int r) {
-        if (r < 1 || r > 32) throw new IllegalArgumentException("Illegal value of r = " + r);
+        if (r < 1 || r > 32) {
+            throw new IllegalArgumentException("Illegal value of r = " + r);
+        }
 
         // optimize r = 32 case
-        if (r == 32) return readInt();
+        if (r == 32) {
+            return readInt();
+        }
 
         int x = 0;
         for (int i = 0; i < r; i++) {
             x <<= 1;
             boolean bit = readBoolean();
-            if (bit) x |= 1;
+            if (bit) {
+                x |= 1;
+            }
         }
         return x;
     }
@@ -326,6 +357,7 @@ public final class BinaryIn {
      * Reads the next 64 bits from this binary input stream and return as a 64-bit long.
      *
      * @return the next 64 bits of data from this binary input stream as a {@code long}
+     *
      * @throws NoSuchElementException if there are fewer than 64 bits available
      */
     public long readLong() {
@@ -342,6 +374,7 @@ public final class BinaryIn {
      * Reads the next 64 bits from this binary input stream and return as a 64-bit double.
      *
      * @return the next 64 bits of data from this binary input stream as a {@code double}
+     *
      * @throws NoSuchElementException if there are fewer than 64 bits available
      */
     public double readDouble() {
@@ -352,6 +385,7 @@ public final class BinaryIn {
      * Reads the next 32 bits from this binary input stream and return as a 32-bit float.
      *
      * @return the next 32 bits of data from this binary input stream as a {@code float}
+     *
      * @throws NoSuchElementException if there are fewer than 32 bits available
      */
     public float readFloat() {
@@ -362,6 +396,7 @@ public final class BinaryIn {
      * Reads the next 8 bits from this binary input stream and return as an 8-bit byte.
      *
      * @return the next 8 bits of data from this binary input stream as a {@code byte}
+     *
      * @throws NoSuchElementException if there are fewer than 8 bits available
      */
     public byte readByte() {

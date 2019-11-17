@@ -15,6 +15,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
 import java.security.SecureRandom;
 
 /**
@@ -53,7 +54,7 @@ public class EncodeTest {
     }
 
 
-    private static String aesDecode(String enMsg) throws Exception{
+    private static String aesDecode(String enMsg) throws Exception {
         byte[] message = Base64.decodeBase64(enMsg);
         SecretKey key = createKey(KEYGEN);
         Cipher cipher = Cipher.getInstance(AES_GCM_PKCS5_PADDING);

@@ -89,11 +89,16 @@ public class PrimMST {
         distTo = new double[G.V()];
         marked = new boolean[G.V()];
         pq = new IndexMinPQ<Double>(G.V());
-        for (int v = 0; v < G.V(); v++)
+        for (int v = 0; v < G.V(); v++) {
             distTo[v] = Double.POSITIVE_INFINITY;
+        }
 
         for (int v = 0; v < G.V(); v++)      // run from each vertex to find
-            if (!marked[v]) prim(G, v);      // minimum spanning forest
+        {
+            if (!marked[v]) {
+                prim(G, v);      // minimum spanning forest
+            }
+        }
 
         // check optimality conditions
         assert check(G);
@@ -129,12 +134,17 @@ public class PrimMST {
         marked[v] = true;
         for (Edge e : G.adj(v)) {
             int w = e.other(v);
-            if (marked[w]) continue;         // v-w is obsolete edge
+            if (marked[w]) {
+                continue;         // v-w is obsolete edge
+            }
             if (e.weight() < distTo[w]) {
                 distTo[w] = e.weight();
                 edgeTo[w] = e;
-                if (pq.contains(w)) pq.decreaseKey(w, distTo[w]);
-                else pq.insert(w, distTo[w]);
+                if (pq.contains(w)) {
+                    pq.decreaseKey(w, distTo[w]);
+                } else {
+                    pq.insert(w, distTo[w]);
+                }
             }
         }
     }
@@ -163,8 +173,9 @@ public class PrimMST {
      */
     public double weight() {
         double weight = 0.0;
-        for (Edge e : edges())
+        for (Edge e : edges()) {
             weight += e.weight();
+        }
         return weight;
     }
 
@@ -208,7 +219,9 @@ public class PrimMST {
             uf = new UF(G.V());
             for (Edge f : edges()) {
                 int x = f.either(), y = f.other(x);
-                if (f != e) uf.union(x, y);
+                if (f != e) {
+                    uf.union(x, y);
+                }
             }
 
             // check that e is min weight edge in crossing cut

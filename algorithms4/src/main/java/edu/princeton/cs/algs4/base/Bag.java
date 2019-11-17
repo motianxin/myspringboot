@@ -50,6 +50,7 @@ import java.util.NoSuchElementException;
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *
  * @param <Item> the generic type of an item in this bag
+ *
  * @author Robert Sedgewick
  * @author Kevin Wayne
  */
@@ -61,8 +62,8 @@ public class Bag<Item> implements Iterable<Item> {
      * Initializes an empty bag.
      */
     public Bag() {
-        first = null;
-        n = 0;
+        this.first = null;
+        this.n = 0;
     }
 
     /**
@@ -90,7 +91,7 @@ public class Bag<Item> implements Iterable<Item> {
      * {@code false} otherwise
      */
     public boolean isEmpty() {
-        return first == null;
+        return this.first == null;
     }
 
     /**
@@ -99,7 +100,7 @@ public class Bag<Item> implements Iterable<Item> {
      * @return the number of items in this bag
      */
     public int size() {
-        return n;
+        return this.n;
     }
 
     /**
@@ -108,11 +109,11 @@ public class Bag<Item> implements Iterable<Item> {
      * @param item the item to add to this bag
      */
     public void add(Item item) {
-        Node<Item> oldfirst = first;
-        first = new Node<Item>();
-        first.item = item;
-        first.next = oldfirst;
-        n++;
+        Node<Item> oldfirst = this.first;
+        this.first = new Node<Item>();
+        this.first.item = item;
+        this.first.next = oldfirst;
+        this.n++;
     }
 
 
@@ -122,7 +123,7 @@ public class Bag<Item> implements Iterable<Item> {
      * @return an iterator that iterates over the items in this bag in arbitrary order
      */
     public Iterator<Item> iterator() {
-        return new ListIterator(first);
+        return new ListIterator(this.first);
     }
 
     // helper linked list class
@@ -136,11 +137,11 @@ public class Bag<Item> implements Iterable<Item> {
         private Node<Item> current;
 
         public ListIterator(Node<Item> first) {
-            current = first;
+            this.current = first;
         }
 
         public boolean hasNext() {
-            return current != null;
+            return this.current != null;
         }
 
         public void remove() {
@@ -148,9 +149,11 @@ public class Bag<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            Item item = current.item;
-            current = current.next;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Item item = this.current.item;
+            this.current = this.current.next;
             return item;
         }
     }

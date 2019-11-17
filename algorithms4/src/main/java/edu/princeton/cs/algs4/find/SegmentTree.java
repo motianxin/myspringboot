@@ -20,14 +20,16 @@ import java.util.Arrays;
  * <p>
  * Also it has been develop with  {@code LazyPropagation} for range updates, which means
  * when you perform update operations over a range, the update process affects the least nodes as possible
- * so that the bigger the range you want to update the less time it consumes to update it. Eventually those changes will be propagated
+ * so that the bigger the range you want to update the less time it consumes to update it. Eventually those changes
+ * will be propagated
  * to the children and the whole array will be up to date.
  * <p>
  * Example:
  * <p>
  * SegmentTreeHeap st = new SegmentTreeHeap(new Integer[]{1,3,4,2,1, -2, 4});
  * st.update(0,3, 1)
- * In the above case only the node that represents the range [0,3] will be updated (and not their children) so in this case
+ * In the above case only the node that represents the range [0,3] will be updated (and not their children) so in
+ * this case
  * the update task will be less than n*log(n)
  * <p>
  * Memory usage:  O(n)
@@ -48,8 +50,8 @@ public class SegmentTree {
     public SegmentTree(int[] array) {
         this.array = Arrays.copyOf(array, array.length);
         //The max size of this array is about 2 * 2 ^ log2(n) + 1
-        size = (int) (2 * Math.pow(2.0, Math.floor((Math.log((double) array.length) / Math.log(2.0)) + 1)));
-        heap = new Node[size];
+        this.size = (int) (2 * Math.pow(2.0, Math.floor((Math.log((double) array.length) / Math.log(2.0)) + 1)));
+        this.heap = new Node[this.size];
         build(1, 0, array.length);
     }
 
@@ -83,7 +85,9 @@ public class SegmentTree {
         while (true) {
             String[] line = StdIn.readLine().split(" ");
 
-            if (line[0].equals("exit")) break;
+            if (line[0].equals("exit")) {
+                break;
+            }
 
             int arg1 = 0, arg2 = 0, arg3 = 0;
 
@@ -135,26 +139,26 @@ public class SegmentTree {
     }
 
     public int size() {
-        return array.length;
+        return this.array.length;
     }
 
     //Initialize the Nodes of the Segment tree
     private void build(int v, int from, int size) {
-        heap[v] = new Node();
-        heap[v].from = from;
-        heap[v].to = from + size - 1;
+        this.heap[v] = new Node();
+        this.heap[v].from = from;
+        this.heap[v].to = from + size - 1;
 
         if (size == 1) {
-            heap[v].sum = array[from];
-            heap[v].min = array[from];
+            this.heap[v].sum = this.array[from];
+            this.heap[v].min = this.array[from];
         } else {
             //Build childs
             build(2 * v, from, size / 2);
             build(2 * v + 1, from + size / 2, size - size / 2);
 
-            heap[v].sum = heap[2 * v].sum + heap[2 * v + 1].sum;
+            this.heap[v].sum = this.heap[2 * v].sum + this.heap[2 * v + 1].sum;
             //min = min of the children
-            heap[v].min = Math.min(heap[2 * v].min, heap[2 * v + 1].min);
+            this.heap[v].min = Math.min(this.heap[2 * v].min, this.heap[2 * v + 1].min);
         }
     }
 
@@ -164,7 +168,8 @@ public class SegmentTree {
      * Time-Complexity: O(log(n))
      *
      * @param from from index
-     * @param to   to index
+     * @param to to index
+     *
      * @return sum
      */
     public int rsq(int from, int to) {
@@ -172,7 +177,7 @@ public class SegmentTree {
     }
 
     private int rsq(int v, int from, int to) {
-        Node n = heap[v];
+        Node n = this.heap[v];
 
         //If you did a range update that contained this node, you can infer the Sum without going down the tree
         if (n.pendingVal != null && contains(n.from, n.to, from, to)) {
@@ -180,7 +185,7 @@ public class SegmentTree {
         }
 
         if (contains(from, to, n.from, n.to)) {
-            return heap[v].sum;
+            return this.heap[v].sum;
         }
 
         if (intersects(from, to, n.from, n.to)) {
@@ -200,7 +205,8 @@ public class SegmentTree {
      * Time-Complexity: O(log(n))
      *
      * @param from from index
-     * @param to   to index
+     * @param to to index
+     *
      * @return min
      */
     public int rMinQ(int from, int to) {
@@ -208,7 +214,7 @@ public class SegmentTree {
     }
 
     private int rMinQ(int v, int from, int to) {
-        Node n = heap[v];
+        Node n = this.heap[v];
 
 
         //If you did a range update that contained this node, you can infer the Min value without going down the tree
@@ -217,7 +223,7 @@ public class SegmentTree {
         }
 
         if (contains(from, to, n.from, n.to)) {
-            return heap[v].min;
+            return this.heap[v].min;
         }
 
         if (intersects(from, to, n.from, n.to)) {
@@ -240,8 +246,8 @@ public class SegmentTree {
      * <p>
      * Time-Complexity: O(log(n))
      *
-     * @param from  from index
-     * @param to    to index
+     * @param from from index
+     * @param to to index
      * @param value value
      */
     public void update(int from, int to, int value) {
@@ -251,18 +257,21 @@ public class SegmentTree {
     private void update(int v, int from, int to, int value) {
 
         //The Node of the heap tree represents a range of the array with bounds: [n.from, n.to]
-        Node n = heap[v];
+        Node n = this.heap[v];
 
         /**
          * If the updating-range contains the portion of the current Node  We lazily update it.
          * This means We do NOT update each position of the vector, but update only some temporal
-         * values into the Node; such values into the Node will be propagated down to its children only when they need to.
+         * values into the Node; such values into the Node will be propagated down to its children only when they
+         * need to.
          */
         if (contains(from, to, n.from, n.to)) {
             change(n, value);
         }
 
-        if (n.size() == 1) return;
+        if (n.size() == 1) {
+            return;
+        }
 
         if (intersects(from, to, n.from, n.to)) {
             /**
@@ -275,18 +284,18 @@ public class SegmentTree {
             update(2 * v, from, to, value);
             update(2 * v + 1, from, to, value);
 
-            n.sum = heap[2 * v].sum + heap[2 * v + 1].sum;
-            n.min = Math.min(heap[2 * v].min, heap[2 * v + 1].min);
+            n.sum = this.heap[2 * v].sum + this.heap[2 * v + 1].sum;
+            n.min = Math.min(this.heap[2 * v].min, this.heap[2 * v + 1].min);
         }
     }
 
     //Propagate temporal values to children
     private void propagate(int v) {
-        Node n = heap[v];
+        Node n = this.heap[v];
 
         if (n.pendingVal != null) {
-            change(heap[2 * v], n.pendingVal);
-            change(heap[2 * v + 1], n.pendingVal);
+            change(this.heap[2 * v], n.pendingVal);
+            change(this.heap[2 * v + 1], n.pendingVal);
             n.pendingVal = null; //unset the pending propagation value
         }
     }
@@ -296,7 +305,7 @@ public class SegmentTree {
         n.pendingVal = value;
         n.sum = n.size() * value;
         n.min = value;
-        array[n.from] = value;
+        this.array[n.from] = value;
 
     }
 
@@ -321,7 +330,7 @@ public class SegmentTree {
         int to;
 
         int size() {
-            return to - from + 1;
+            return this.to - this.from + 1;
         }
 
     }

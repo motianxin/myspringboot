@@ -13,35 +13,35 @@ import java.util.List;
 @Slf4j
 public class AlarmSyncServiceTest extends MyspringbootApplicationTests {
 
-	@Autowired
-	private SyncService syncService;
+    @Autowired
+    private SyncService syncService;
 
-	@Test
-	public void saveAlarmSync() {
-		NotifyAlarmSyncReq req = new NotifyAlarmSyncReq(47, 88, "hb", "yueme");
-		log.info("NotifyAlarmSyncReq is {}", req);
-		try {
-			syncService.saveAlarmSync(req);
-		} catch (Exception e) {
-			log.info("exception:", e);
-		}
-	}
+    @Test
+    public void saveAlarmSync() {
+        NotifyAlarmSyncReq req = new NotifyAlarmSyncReq(47, 88, "hb", "yueme");
+        log.info("NotifyAlarmSyncReq is {}", req);
+        try {
+            syncService.saveAlarmSync(req);
+        } catch (Exception e) {
+            log.info("exception:", e);
+        }
+    }
 
-	@Test
-	public void getOneById() {
-		AlarmSync alarmSync = syncService.getOneById(syncService.getAllAlarmSync().get(0).getId());
-		log.info("alarmsync is {}", alarmSync);
-	}
+    @Test
+    public void getOneById() {
+        AlarmSync alarmSync = syncService.getOneById(syncService.getAllAlarmSync().get(0).getId());
+        log.info("alarmsync is {}", alarmSync);
+    }
 
-	@Test
-	public void deleteAlarmSync() {
-		syncService.deleteAlarmSync(syncService.getAllAlarmSync().get(0).getId());
-		syncService.getAllAlarmSync().forEach(System.out :: println);
-	}
+    @Test
+    public void deleteAlarmSync() {
+        syncService.deleteAlarmSync(syncService.getAllAlarmSync().get(0).getId());
+        syncService.getAllAlarmSync().forEach(System.out::println);
+    }
 
-	@Test
-	public void getAllAlarmSync() {
-		List<AlarmSync> alarmSyncList = syncService.getAllAlarmSync();
+    @Test
+    public void getAllAlarmSync() {
+        List<AlarmSync> alarmSyncList = syncService.getAllAlarmSync();
         System.out.println(Arrays.toString(alarmSyncList.toArray(new AlarmSync[]{})));
-	}
+    }
 }

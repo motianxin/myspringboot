@@ -14,6 +14,68 @@ import java.util.Set;
  * @Version 3.2.2
  **/
 public class PlalindromeString {
+    public static boolean canCross(int[] stones) {
+        HashMap<Integer, Set<Integer>> map = new HashMap<>();
+        for (int i = 0; i < stones.length; i++) {
+            map.put(stones[i], new HashSet<Integer>());
+        }
+        map.get(0).add(0);
+        boolean canJump;
+        for (int i = 0; i < stones.length - 1; i++) {
+            canJump = false;
+            for (int k : map.get(stones[i])) {
+                for (int step = k - 1; step <= k + 1; step++) {
+                    if (step > 0 && map.containsKey(stones[i] + step)) {
+                        canJump = true;
+                        map.get(stones[i] + step).add(step);
+                    }
+                }
+            }
+            if (!canJump) {
+                break;
+            }
+        }
+        return map.get(stones[stones.length - 1]).size() > 0;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        String ch = sc.nextLine();
+        System.out.println(cul(str, ch));
+        sc.close();
+
+    }
+
+    public static int cul(String str) {
+        int l = str.length();
+        for (int i = l - 1; i >= 0; i--) {
+            System.out.println(str.charAt(i));
+            if (Character.isSpace(str.charAt(i))) {
+                return l - i;
+            }
+        }
+        return l;
+    }
+
+    public static int cul(String str, String ch) {
+        int sum = 0;
+        String temp = str.toLowerCase();
+        String chtemp = ch.toLowerCase();
+        for (int i = 0; i < str.length(); i++) {
+            if (chtemp.charAt(0) == temp.charAt(i)) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    private static boolean checkIp(String mask) {
+
+
+        return mask.length() == 0;
+    }
+
     // 判断一个字符串是否回文，算法中用不到了
     @Deprecated
     private boolean isPlalindrome(String s) {
@@ -137,32 +199,10 @@ public class PlalindromeString {
         return sb.toString();
     }
 
-    public static boolean canCross(int[] stones) {
-        HashMap<Integer, Set<Integer>> map = new HashMap<>();
-        for (int i = 0; i < stones.length; i++) {
-            map.put(stones[i], new HashSet<Integer>());
-        }
-        map.get(0).add(0);
-        boolean canJump;
-        for (int i = 0; i < stones.length - 1; i++) {
-            canJump = false;
-            for (int k : map.get(stones[i])) {
-                for (int step = k - 1; step <= k + 1; step++) {
-                    if (step > 0 && map.containsKey(stones[i] + step)) {
-                        canJump = true;
-                        map.get(stones[i] + step).add(step);
-                    }
-                }
-            }
-            if (!canJump) {
-                break;
-            }
-        }
-        return map.get(stones[stones.length - 1]).size() > 0;
-    }
-
     public int maximalRectangle(char[][] matrix) {
-        if (matrix.length == 0) return 0;
+        if (matrix.length == 0) {
+            return 0;
+        }
         int m = matrix.length;
         int n = matrix[0].length;
 
@@ -237,10 +277,7 @@ public class PlalindromeString {
         //遍历每个切割位置
         for (int i = 1; i < s1.length(); i++) {
             //对应情况 1 ，判断 S1 的子树能否变为 S2 相应部分
-            if ((isScramble(s1.substring(0, i), s2.substring(0, i))
-                    && isScramble(s1.substring(i), s2.substring(i)))
-                    || (isScramble(s1.substring(i), s2.substring(0, s2.length() - i))
-                    && isScramble(s1.substring(0, i), s2.substring(s2.length() - i)))) {
+            if ((isScramble(s1.substring(0, i), s2.substring(0, i)) && isScramble(s1.substring(i), s2.substring(i))) || (isScramble(s1.substring(i), s2.substring(0, s2.length() - i)) && isScramble(s1.substring(0, i), s2.substring(s2.length() - i)))) {
                 return true;
             }
         }
@@ -257,46 +294,11 @@ public class PlalindromeString {
         //遍历每个切割位置
         for (int i = 1; i < s1.length(); i++) {
             //对应情况 1 ，判断 S1 的子树能否变为 S2 相应部分
-            if ((checkStr(s1.substring(0, i), s2.substring(0, i))
-                    && checkStr(s1.substring(i), s2.substring(i)))
-                    || (checkStr(s1.substring(i), s2.substring(0, s2.length() - i))
-                    && checkStr(s1.substring(0, i), s2.substring(s2.length() - i)))) {
+            if ((checkStr(s1.substring(0, i), s2.substring(0, i)) && checkStr(s1.substring(i), s2.substring(i))) || (checkStr(s1.substring(i), s2.substring(0, s2.length() - i)) && checkStr(s1.substring(0, i), s2.substring(s2.length() - i)))) {
                 return true;
             }
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String str = sc.nextLine();
-        String ch = sc.nextLine();
-        System.out.println(cul(str, ch));
-        sc.close();
-
-    }
-
-    public static int cul(String str) {
-        int l = str.length();
-        for (int i = l - 1; i >= 0; i--) {
-            System.out.println(str.charAt(i));
-            if (Character.isSpace(str.charAt(i))) {
-                return l - i;
-            }
-        }
-        return l;
-    }
-
-    public static int cul(String str, String ch) {
-        int sum = 0;
-        String temp = str.toLowerCase();
-        String chtemp = ch.toLowerCase();
-        for (int i = 0; i < str.length(); i++) {
-            if (chtemp.charAt(0) == temp.charAt(i)) {
-                sum++;
-            }
-        }
-        return sum;
     }
 
     /*
@@ -315,11 +317,5 @@ public class PlalindromeString {
 
 
         return 0;
-    }
-
-    private static boolean checkIp(String mask) {
-
-
-        return mask.length() == 0;
     }
 }

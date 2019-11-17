@@ -56,8 +56,8 @@ public class Complex {
      * @param imag the imaginary part
      */
     public Complex(double real, double imag) {
-        re = real;
-        im = imag;
+        this.re = real;
+        this.im = imag;
     }
 
     /**
@@ -90,11 +90,18 @@ public class Complex {
      * @return a string representation of this complex number,
      * of the form 34 - 56i.
      */
+    @Override
     public String toString() {
-        if (im == 0) return re + "";
-        if (re == 0) return im + "i";
-        if (im < 0) return re + " - " + (-im) + "i";
-        return re + " + " + im + "i";
+        if (this.im == 0) {
+            return this.re + "";
+        }
+        if (this.re == 0) {
+            return this.im + "i";
+        }
+        if (this.im < 0) {
+            return this.re + " - " + (-this.im) + "i";
+        }
+        return this.re + " + " + this.im + "i";
     }
 
     /**
@@ -104,7 +111,7 @@ public class Complex {
      * @return the absolute value of this complex number
      */
     public double abs() {
-        return Math.hypot(re, im);
+        return Math.hypot(this.re, this.im);
     }
 
     /**
@@ -114,13 +121,14 @@ public class Complex {
      * @return the phase of this complex number, a real number between -pi and pi
      */
     public double phase() {
-        return Math.atan2(im, re);
+        return Math.atan2(this.im, this.re);
     }
 
     /**
      * Returns the sum of this complex number and the specified complex number.
      *
      * @param that the other complex number
+     *
      * @return the complex number whose value is {@code (this + that)}
      */
     public Complex plus(Complex that) {
@@ -134,6 +142,7 @@ public class Complex {
      * this complex number.
      *
      * @param that the other complex number
+     *
      * @return the complex number whose value is {@code (this - that)}
      */
     public Complex minus(Complex that) {
@@ -146,6 +155,7 @@ public class Complex {
      * Returns the product of this complex number and the specified complex number.
      *
      * @param that the other complex number
+     *
      * @return the complex number whose value is {@code (this * that)}
      */
     public Complex times(Complex that) {
@@ -158,22 +168,25 @@ public class Complex {
      * Returns the product of this complex number and the specified scalar.
      *
      * @param alpha the scalar
+     *
      * @return the complex number whose value is {@code (alpha * this)}
      */
     public Complex scale(double alpha) {
-        return new Complex(alpha * re, alpha * im);
+        return new Complex(alpha * this.re, alpha * this.im);
     }
 
     /**
      * Returns the product of this complex number and the specified scalar.
      *
      * @param alpha the scalar
+     *
      * @return the complex number whose value is {@code (alpha * this)}
+     *
      * @deprecated Replaced by {@link #scale(double)}.
      */
     @Deprecated
     public Complex times(double alpha) {
-        return new Complex(alpha * re, alpha * im);
+        return new Complex(alpha * this.re, alpha * this.im);
     }
 
     /**
@@ -182,7 +195,7 @@ public class Complex {
      * @return the complex conjugate of this complex number
      */
     public Complex conjugate() {
-        return new Complex(re, -im);
+        return new Complex(this.re, -this.im);
     }
 
     /**
@@ -191,8 +204,8 @@ public class Complex {
      * @return the complex number whose value is {@code (1 / this)}
      */
     public Complex reciprocal() {
-        double scale = re * re + im * im;
-        return new Complex(re / scale, -im / scale);
+        double scale = this.re * this.re + this.im * this.im;
+        return new Complex(this.re / scale, -this.im / scale);
     }
 
     /**
@@ -201,7 +214,7 @@ public class Complex {
      * @return the real part of this complex number
      */
     public double re() {
-        return re;
+        return this.re;
     }
 
     /**
@@ -210,7 +223,7 @@ public class Complex {
      * @return the imaginary part of this complex number
      */
     public double im() {
-        return im;
+        return this.im;
     }
 
     /**
@@ -218,6 +231,7 @@ public class Complex {
      * this complex number.
      *
      * @param that the other complex number
+     *
      * @return the complex number whose value is {@code (this / that)}
      */
     public Complex divides(Complex that) {
@@ -230,7 +244,7 @@ public class Complex {
      * @return the complex exponential of this complex number
      */
     public Complex exp() {
-        return new Complex(Math.exp(re) * Math.cos(im), Math.exp(re) * Math.sin(im));
+        return new Complex(Math.exp(this.re) * Math.cos(this.im), Math.exp(this.re) * Math.sin(this.im));
     }
 
     /**
@@ -239,7 +253,7 @@ public class Complex {
      * @return the complex sine of this complex number
      */
     public Complex sin() {
-        return new Complex(Math.sin(re) * Math.cosh(im), Math.cos(re) * Math.sinh(im));
+        return new Complex(Math.sin(this.re) * Math.cosh(this.im), Math.cos(this.re) * Math.sinh(this.im));
     }
 
     /**
@@ -248,7 +262,7 @@ public class Complex {
      * @return the complex cosine of this complex number
      */
     public Complex cos() {
-        return new Complex(Math.cos(re) * Math.cosh(im), -Math.sin(re) * Math.sinh(im));
+        return new Complex(Math.cos(this.re) * Math.cosh(this.im), -Math.sin(this.re) * Math.sinh(this.im));
     }
 
     /**

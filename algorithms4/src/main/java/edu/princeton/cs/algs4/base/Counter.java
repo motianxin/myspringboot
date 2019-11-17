@@ -41,7 +41,7 @@ public class Counter implements Comparable<Counter> {
      * @param id the name of the counter
      */
     public Counter(String id) {
-        name = id;
+        this.name = id;
     }
 
     /**
@@ -75,7 +75,7 @@ public class Counter implements Comparable<Counter> {
      * Increments the counter by 1.
      */
     public void increment() {
-        count++;
+        this.count++;
     }
 
     /**
@@ -84,7 +84,7 @@ public class Counter implements Comparable<Counter> {
      * @return the current value of this counter
      */
     public int tally() {
-        return count;
+        return this.count;
     }
 
     /**
@@ -92,14 +92,16 @@ public class Counter implements Comparable<Counter> {
      *
      * @return a string representation of this counter
      */
+    @Override
     public String toString() {
-        return count + " " + name;
+        return this.count + " " + this.name;
     }
 
     /**
      * Compares this counter to the specified counter.
      *
      * @param that the other counter
+     *
      * @return {@code 0} if the value of this counter equals
      * the value of that counter; a negative integer if
      * the value of this counter is less than the value of
@@ -108,9 +110,13 @@ public class Counter implements Comparable<Counter> {
      * counter
      */
     public int compareTo(Counter that) {
-        if (this.count < that.count) return -1;
-        else if (this.count > that.count) return +1;
-        else return 0;
+        if (this.count < that.count) {
+            return -1;
+        } else if (this.count > that.count) {
+            return +1;
+        } else {
+            return 0;
+        }
     }
 }
 

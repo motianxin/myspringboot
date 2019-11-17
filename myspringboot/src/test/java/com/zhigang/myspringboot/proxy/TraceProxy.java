@@ -15,6 +15,13 @@ public class TraceProxy implements IService {
         this.realService = realService;
     }
 
+    public static void main(String[] args) {
+        IService realService = new RealService();
+        IService traceProxy = new TraceProxy(realService);
+        traceProxy.doSomething();
+        traceProxy.saySomething();
+    }
+
     @Override
     public void doSomething() {
         System.out.println("before realService dosomething.");
@@ -27,13 +34,6 @@ public class TraceProxy implements IService {
         System.out.println("before realService saySomething.");
         realService.saySomething();
         System.out.println("after realservice saySomething");
-    }
-
-    public static void main(String[] args) {
-        IService realService = new RealService();
-        IService traceProxy = new TraceProxy(realService);
-        traceProxy.doSomething();
-        traceProxy.saySomething();
     }
 
 }

@@ -20,14 +20,14 @@ import java.util.Map;
  * 〈快速排序性能对比〉
  *
  * @author Administrator
- * @create 2019/7/4 16:27
  * @version 3.2.2
+ * @create 2019/7/4 16:27
  */
 public class QuickSortCompare {
 
     private static final String[] QUICK_SORT_NAMES = new String[]{"QuickSort", "QuickSortLast"};
 
-    private static final Map<String, SortClass> QUICK_CLASS_MAP = new HashMap<String, SortClass>(){{
+    private static final Map<String, SortClass> QUICK_CLASS_MAP = new HashMap<String, SortClass>() {{
         put(QUICK_SORT_NAMES[0], new QuickSort());
         put(QUICK_SORT_NAMES[1], new QuickSortLast());
     }};
@@ -53,7 +53,7 @@ public class QuickSortCompare {
         doubles.add(dArray1);
 
         for (int i = 0; i < QUICK_SORT_NAMES.length; i++) {
-            draw = new Draw(QUICK_SORT_NAMES[i], 960 *( i/3), 510 * (i % 3), w, h);
+            draw = new Draw(QUICK_SORT_NAMES[i], 960 * (i / 3), 510 * (i % 3), w, h);
             sortClass = QUICK_CLASS_MAP.get(QUICK_SORT_NAMES[i]);
             sortClass.setDraw(draw);
             SortThread sortThread = new SortThread(sortClass, doubles.get(i));

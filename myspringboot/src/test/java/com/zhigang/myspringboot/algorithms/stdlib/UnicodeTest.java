@@ -67,12 +67,22 @@ public class UnicodeTest {
     // Returns a string representation of the given codePoint, or a single
     // space if the codePoint should not be suppressed when printing.
     private static String toString(int codePoint) {
-        if (!Character.isDefined(codePoint)) return " ";
-        if (Character.isISOControl(codePoint)) return " ";
-        if (Character.isWhitespace(codePoint)) return " ";
+        if (!Character.isDefined(codePoint)) {
+            return " ";
+        }
+        if (Character.isISOControl(codePoint)) {
+            return " ";
+        }
+        if (Character.isWhitespace(codePoint)) {
+            return " ";
+        }
         // if (Character.isSurrogate(codePoint)             return " ";   // Java 1.7+ only
-        if (Character.isLowSurrogate((char) codePoint)) return " ";   // Java 1.5+
-        if (Character.isHighSurrogate((char) codePoint)) return " ";   // Java 1.5+
+        if (Character.isLowSurrogate((char) codePoint)) {
+            return " ";   // Java 1.5+
+        }
+        if (Character.isHighSurrogate((char) codePoint)) {
+            return " ";   // Java 1.5+
+        }
 
         switch (Character.getType(codePoint)) {
             case Character.MODIFIER_SYMBOL:

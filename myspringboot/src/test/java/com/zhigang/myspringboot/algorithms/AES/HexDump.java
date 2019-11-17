@@ -7,6 +7,7 @@
  * <author>          <time>          <version>          <desc>
  */
 package com.zhigang.myspringboot.algorithms.AES;
+
 import java.nio.ByteBuffer;
 
 /**
@@ -17,22 +18,19 @@ import java.nio.ByteBuffer;
  * @create 2019/6/24 16:38
  */
 public class HexDump {
-    private static  byte[] highDigits = null;
-    private static  byte[] lowDigits = null;
+    private static byte[] highDigits = null;
+    private static byte[] lowDigits = null;
 
 
     static {
 
-        final byte[] digits =
-                {
-                        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
-                };
+        final byte[] digits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
         int i;
         byte[] high = new byte[256];
         byte[] low = new byte[256];
 
-        for (i = 0; i< 256; i++){
+        for (i = 0; i < 256; i++) {
 
             high[i] = digits[i >>> 4];
             low[i] = digits[i & 0x0F];
@@ -50,11 +48,11 @@ public class HexDump {
         ByteBuffer buf = ByteBuffer.wrap(new byte[hexs.length() / 2]);
         byte b1;
         char c1, c2;
-        for (int i = 0; i< hexs.length() - 1; i += 2){
+        for (int i = 0; i < hexs.length() - 1; i += 2) {
 
             c1 = hexs.charAt(i);
             c2 = hexs.charAt(i + 1);
-            b1 = (byte) ((char2byte(c1)<< 4) |(0x0f & char2byte(c2)));
+            b1 = (byte) ((char2byte(c1) << 4) | (0x0f & char2byte(c2)));
             buf.put(b1);
 
         }
@@ -73,14 +71,18 @@ public class HexDump {
 
     public static final String toHex(byte[] in, int offset, int len) {
 
-        if (null == in || offset < 0 || len < 0)
+        if (null == in || offset < 0 || len < 0) {
             return "empty";
-        if (offset< 0 )
-        offset = 0;
-        if (len<0 )
-        len = in.length;
-        if ((offset + len) > in.length)
+        }
+        if (offset < 0) {
+            offset = 0;
+        }
+        if (len < 0) {
+            len = in.length;
+        }
+        if ((offset + len) > in.length) {
             len = in.length - offset;
+        }
         StringBuffer out = new StringBuffer(len * 2);
 
         int byteValue;
@@ -106,8 +108,9 @@ public class HexDump {
 
     public static String hexDump(ByteBuffer in) {
 
-        if (null == in)
+        if (null == in) {
             return "null";
+        }
         int size = in.remaining();
 
         if (size == 0) {
@@ -145,8 +148,9 @@ public class HexDump {
 
     public static String hexDumpCompact(ByteBuffer in) {
 
-        if (null == in)
+        if (null == in) {
             return "";
+        }
         int size = in.remaining();
 
         if (size == 0) {
@@ -178,8 +182,9 @@ public class HexDump {
 
     public static String hexDumpCompactSilent(ByteBuffer in) {
 
-        if (null == in)
+        if (null == in) {
             return "";
+        }
         int size = in.remaining();
 
         if (size == 0) {
@@ -209,8 +214,9 @@ public class HexDump {
     public static String hexDump(byte[] in, int offset, int length) {
 
         int size = in.length;
-        if (size == 0 || length< 0 || length > size || offset<0 || offset > size )
-        return "empty";
+        if (size == 0 || length < 0 || length > size || offset < 0 || offset > size) {
+            return "empty";
+        }
 
         if (offset + length > size) {
 
@@ -242,11 +248,13 @@ public class HexDump {
 
     public static String hexDumpCompact(byte[] in, int offset, int length) {
 
-        if (null == in)
+        if (null == in) {
             return "";
+        }
         int size = in.length;
-        if (size == 0 || length< 0 || length > size || offset<0 || offset > size )
-        return "";
+        if (size == 0 || length < 0 || length > size || offset < 0 || offset > size) {
+            return "";
+        }
 
         if (offset + length > size) {
 
@@ -321,11 +329,11 @@ public class HexDump {
         ByteBuffer buff = ByteBuffer.wrap(new byte[str.length() / 2]);
         byte b1;
         char c1, c2;
-        for (int i = 0; i<str.length() - 1; i += 2){
+        for (int i = 0; i < str.length() - 1; i += 2) {
 
             c1 = str.charAt(i);
             c2 = str.charAt(i + 1);
-            b1 = (byte) ((char2byte(c1)<< 4) |(0x0f & char2byte(c2)));
+            b1 = (byte) ((char2byte(c1) << 4) | (0x0f & char2byte(c2)));
             buff.put(b1);
 
         }
@@ -336,15 +344,16 @@ public class HexDump {
 
     public static ByteBuffer toByteBuffer(final ByteBuffer dest, String str) {
 
-        if (null == str || str.length() == 0)
+        if (null == str || str.length() == 0) {
             return dest;
+        }
         byte b1;
         char c1, c2;
         for (int i = 0; i < str.length() - 1; i += 2) {
 
             c1 = str.charAt(i);
             c2 = str.charAt(i + 1);
-            b1 = (byte) ((char2byte(c1)<< 4) |(0x0f & char2byte(c2)));
+            b1 = (byte) ((char2byte(c1) << 4) | (0x0f & char2byte(c2)));
             dest.put(b1);
 
         }
@@ -354,12 +363,15 @@ public class HexDump {
 
     private static byte char2byte(char c) {
 
-        if (c >= '0' && c <= '9')
+        if (c >= '0' && c <= '9') {
             return (byte) (c - '0');
-        if (c >= 'A' && c <= 'F')
+        }
+        if (c >= 'A' && c <= 'F') {
             return (byte) (c - 'A' + 10);
-        if (c >= 'a' && c <= 'f')
+        }
+        if (c >= 'a' && c <= 'f') {
             return (byte) (c - 'a' + 10);
+        }
         return 0;
 
     }

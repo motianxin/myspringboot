@@ -12,8 +12,8 @@ package com.zhigang.myspringboot.algorithms.algs4;
  * 〈插入排序〉
  *
  * @author Administrator
- * @create 2019/7/2 19:49
  * @version 3.2.2
+ * @create 2019/7/2 19:49
  */
 public class InsertSort extends SortClass {
 

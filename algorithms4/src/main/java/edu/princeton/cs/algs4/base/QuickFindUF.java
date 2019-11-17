@@ -90,13 +90,15 @@ public class QuickFindUF {
      * component.
      *
      * @param n the number of sites
+     *
      * @throws IllegalArgumentException if {@code n < 0}
      */
     public QuickFindUF(int n) {
-        count = n;
-        id = new int[n];
-        for (int i = 0; i < n; i++)
-            id[i] = i;
+        this.count = n;
+        this.id = new int[n];
+        for (int i = 0; i < n; i++) {
+            this.id[i] = i;
+        }
     }
 
     /**
@@ -113,7 +115,9 @@ public class QuickFindUF {
         while (!StdIn.isEmpty()) {
             int p = StdIn.readInt();
             int q = StdIn.readInt();
-            if (uf.connected(p, q)) continue;
+            if (uf.connected(p, q)) {
+                continue;
+            }
             uf.union(p, q);
             StdOut.println(p + " " + q);
         }
@@ -126,24 +130,26 @@ public class QuickFindUF {
      * @return the number of components (between {@code 1} and {@code n})
      */
     public int count() {
-        return count;
+        return this.count;
     }
 
     /**
      * Returns the component identifier for the component containing site {@code p}.
      *
      * @param p the integer representing one site
+     *
      * @return the component identifier for the component containing site {@code p}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= p < n}
      */
     public int find(int p) {
         validate(p);
-        return id[p];
+        return this.id[p];
     }
 
     // validate that p is a valid index
     private void validate(int p) {
-        int n = id.length;
+        int n = this.id.length;
         if (p < 0 || p >= n) {
             throw new IllegalArgumentException("index " + p + " is not between 0 and " + (n - 1));
         }
@@ -154,15 +160,17 @@ public class QuickFindUF {
      *
      * @param p the integer representing one site
      * @param q the integer representing the other site
+     *
      * @return {@code true} if the two sites {@code p} and {@code q} are in the same component;
      * {@code false} otherwise
+     *
      * @throws IllegalArgumentException unless
-     *                                  both {@code 0 <= p < n} and {@code 0 <= q < n}
+     * both {@code 0 <= p < n} and {@code 0 <= q < n}
      */
     public boolean connected(int p, int q) {
         validate(p);
         validate(q);
-        return id[p] == id[q];
+        return this.id[p] == this.id[q];
     }
 
     /**
@@ -171,21 +179,27 @@ public class QuickFindUF {
      *
      * @param p the integer representing one site
      * @param q the integer representing the other site
+     *
      * @throws IllegalArgumentException unless
-     *                                  both {@code 0 <= p < n} and {@code 0 <= q < n}
+     * both {@code 0 <= p < n} and {@code 0 <= q < n}
      */
     public void union(int p, int q) {
         validate(p);
         validate(q);
-        int pID = id[p];   // needed for correctness
-        int qID = id[q];   // to reduce the number of array accesses
+        int pID = this.id[p];   // needed for correctness
+        int qID = this.id[q];   // to reduce the number of array accesses
 
         // p and q are already in the same component
-        if (pID == qID) return;
+        if (pID == qID) {
+            return;
+        }
 
-        for (int i = 0; i < id.length; i++)
-            if (id[i] == pID) id[i] = qID;
-        count--;
+        for (int i = 0; i < this.id.length; i++) {
+            if (this.id[i] == pID) {
+                this.id[i] = qID;
+            }
+        }
+        this.count--;
     }
 
 }

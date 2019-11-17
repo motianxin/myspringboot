@@ -141,8 +141,9 @@ public class BipartiteX {
                         y = edgeTo[y];
                     }
                     stack.push(x);
-                    while (!stack.isEmpty())
+                    while (!stack.isEmpty()) {
                         cycle.enqueue(stack.pop());
+                    }
                     cycle.enqueue(w);
                     return;
                 }
@@ -163,17 +164,20 @@ public class BipartiteX {
      * Returns the side of the bipartite that vertex {@code v} is on.
      *
      * @param v the vertex
+     *
      * @return the side of the bipartition that vertex {@code v} is on; two vertices
      * are in the same side of the bipartition if and only if they have the
      * same color
-     * @throws IllegalArgumentException      unless {@code 0 <= v < V}
+     *
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
      * @throws UnsupportedOperationException if this method is called when the graph
-     *                                       is not bipartite
+     * is not bipartite
      */
     public boolean color(int v) {
         validateVertex(v);
-        if (!isBipartite)
+        if (!isBipartite) {
             throw new UnsupportedOperationException("Graph is not bipartite");
+        }
         return color[v];
     }
 
@@ -207,7 +211,9 @@ public class BipartiteX {
             // verify cycle
             int first = -1, last = -1;
             for (int v : oddCycle()) {
-                if (first == -1) first = v;
+                if (first == -1) {
+                    first = v;
+                }
                 last = v;
             }
             if (first != last) {
@@ -221,8 +227,9 @@ public class BipartiteX {
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = marked.length;
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 
 

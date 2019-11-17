@@ -11,13 +11,8 @@ import lombok.Getter;
 @Getter
 public enum ExchangeEnum {
 
-    DIRCEXCHANGE("Direct_exchange"),
-    FANOUTEXCHANGE("Fanout_exchange"),
-    TOPICEXCHANGE("Topic_exchange"),
-    TEST_EXCHANGE("test")
-
-    ;
-
+    DIRCEXCHANGE("Direct_exchange"), FANOUTEXCHANGE("Fanout_exchange"), TOPICEXCHANGE("Topic_exchange"),
+    TEST_EXCHANGE("test");
 
 
     private String exchangeName;

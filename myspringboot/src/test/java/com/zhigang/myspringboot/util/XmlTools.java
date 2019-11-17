@@ -77,39 +77,39 @@ public class XmlTools {
     }
 
 
-    private static String nodeToStr_dsf(XmlNode xmlNode){
-		if (xmlNode == null || xmlNode.getKey() == null) {
-			throw new NullPointerException("XmlNode or XmlNode's key is null");
-		}
-		StringBuffer sb = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    private static String nodeToStr_dsf(XmlNode xmlNode) {
+        if (xmlNode == null || xmlNode.getKey() == null) {
+            throw new NullPointerException("XmlNode or XmlNode's key is null");
+        }
+        StringBuffer sb = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 
-		System.out.println(sb.toString());
+        System.out.println(sb.toString());
 
 
-		Stack<XmlNode> nodeStack = new Stack<>();
-		sb.append(LT).append(xmlNode.getKey()).append(GT).append(NEW_LINE);
-		nodeStack.push(xmlNode);
-		while (!nodeStack.empty()) {
-			XmlNode node = nodeStack.pop();
+        Stack<XmlNode> nodeStack = new Stack<>();
+        sb.append(LT).append(xmlNode.getKey()).append(GT).append(NEW_LINE);
+        nodeStack.push(xmlNode);
+        while (!nodeStack.empty()) {
+            XmlNode node = nodeStack.pop();
 
-			if (node.getValue() == null) {
-				List<XmlNode> xmlNodes = node.getSubXmlNodes();
-				if (xmlNodes != null && !xmlNodes.isEmpty()) {
-					Iterator<XmlNode> nodeIterable = xmlNodes.iterator();
-					while (nodeIterable.hasNext()) {
-						XmlNode subNode = nodeIterable.next();
-						sb.append(LT).append(subNode.getKey()).append(GT).append(NEW_LINE);
-						nodeStack.push(subNode);
-					}
-				}
+            if (node.getValue() == null) {
+                List<XmlNode> xmlNodes = node.getSubXmlNodes();
+                if (xmlNodes != null && !xmlNodes.isEmpty()) {
+                    Iterator<XmlNode> nodeIterable = xmlNodes.iterator();
+                    while (nodeIterable.hasNext()) {
+                        XmlNode subNode = nodeIterable.next();
+                        sb.append(LT).append(subNode.getKey()).append(GT).append(NEW_LINE);
+                        nodeStack.push(subNode);
+                    }
+                }
 
-			} else {
-				sb.append(node.getValue());
-			}
-			sb.append(LT_SPRIT).append(node.getKey()).append(GT).append(NEW_LINE);
-		}
-		return sb.toString();
-	}
+            } else {
+                sb.append(node.getValue());
+            }
+            sb.append(LT_SPRIT).append(node.getKey()).append(GT).append(NEW_LINE);
+        }
+        return sb.toString();
+    }
 
 
     public static void main(String[] args) {
@@ -134,7 +134,7 @@ public class XmlTools {
         xmlNode.setSubXmlNodes(subXmlNodes);
 
         System.out.println(nodeToStr(xmlNode));
-		System.out.println(nodeToStr_dsf(xmlNode));
+        System.out.println(nodeToStr_dsf(xmlNode));
         try {
             System.out.println(formatXML(nodeToStr(xmlNode)));
         } catch (Exception e) {

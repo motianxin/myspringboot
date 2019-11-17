@@ -53,24 +53,32 @@ public class FarthestPair {
      * Computes the farthest pair of points in the specified array of points.
      *
      * @param points the array of points
+     *
      * @throws IllegalArgumentException if {@code points} is {@code null} or if any
-     *                                  entry in {@code points[]} is {@code null}
+     * entry in {@code points[]} is {@code null}
      */
     public FarthestPair(Point2D[] points) {
-        if (points == null) throw new IllegalArgumentException("constructor argument is null");
+        if (points == null) {
+            throw new IllegalArgumentException("constructor argument is null");
+        }
         for (int i = 0; i < points.length; i++) {
-            if (points[i] == null) throw new IllegalArgumentException("array element " + i + " is null");
+            if (points[i] == null) {
+                throw new IllegalArgumentException("array element " + i + " is null");
+            }
         }
 
         GrahamScan graham = new GrahamScan(points);
 
         // single point
-        if (points.length <= 1) return;
+        if (points.length <= 1) {
+            return;
+        }
 
         // number of points on the hull
         int m = 0;
-        for (Point2D p : graham.hull())
+        for (Point2D p : graham.hull()) {
             m++;
+        }
 
         // the hull, in counterclockwise order hull[1] to hull[m]
         Point2D[] hull = new Point2D[m + 1];
@@ -81,7 +89,9 @@ public class FarthestPair {
         m--;
 
         // all points are equal
-        if (m == 1) return;
+        if (m == 1) {
+            return;
+        }
 
         // points are collinear
         if (m == 2) {
@@ -105,7 +115,8 @@ public class FarthestPair {
                 best2 = hull[j];
                 bestDistanceSquared = hull[i].distanceSquaredTo(hull[j]);
             }
-            while ((j < m) && Point2D.area2(hull[i], hull[i + 1], hull[j + 1]) > Point2D.area2(hull[i], hull[i + 1], hull[j])) {
+            while ((j < m) && Point2D.area2(hull[i], hull[i + 1], hull[j + 1]) > Point2D.area2(hull[i], hull[i + 1],
+                    hull[j])) {
                 j++;
                 // StdOut.println(hull[i] + " and " + hull[j] + " are antipodal");
                 double distanceSquared = hull[i].distanceSquaredTo(hull[j]);

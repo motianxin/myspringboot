@@ -29,8 +29,8 @@ import java.util.concurrent.Future;
  */
 public class SortTimesCalculate {
 
-    public static final String[] SORT_NAMES =
-            new String[]{"quickSort", "shellSort", "insertSort", "mergeSort", "bubbleSort", "heapSort"};
+    public static final String[] SORT_NAMES = new String[]{"quickSort", "shellSort", "insertSort", "mergeSort",
+            "bubbleSort", "heapSort"};
 
     public static final Map<String, SortClass> CLASS_MAP = new HashMap<String, SortClass>() {{
         put(SORT_NAMES[0], new QuickSort());

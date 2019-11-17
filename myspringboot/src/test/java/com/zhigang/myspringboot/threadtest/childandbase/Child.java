@@ -9,25 +9,25 @@ package com.zhigang.myspringboot.threadtest.childandbase;
  **/
 public class Child extends Base {
 
-    private int a = 8;
-
     private static int child = 9;
 
     static {
-        System.out.println("child static method:" + child);
+        System.out.println("child static method:" + Child.child);
     }
+
+    private int a = 8;
 
     public Child() {
         printa();
     }
 
+    public static void main(String[] args) {
+        new Child();
+    }
+
     @Override
     public void printa() {
         // super.printa();
-        System.out.println("child a is :" + a);
-    }
-
-    public static void main(String[] args) {
-        new Child();
+        System.out.println("child a is :" + this.a);
     }
 }

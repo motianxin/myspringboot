@@ -12,8 +12,8 @@ package com.zhigang.myspringboot.threadtest.producerandconsumer;
  * 〈BlockQueueTest〉
  *
  * @author Administrator
- * @create 2019/6/4 10:11
  * @version 3.2.2
+ * @create 2019/6/4 10:11
  */
 public class BlockQueueTest {
 

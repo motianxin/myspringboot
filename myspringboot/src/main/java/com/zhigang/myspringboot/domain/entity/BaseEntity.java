@@ -17,15 +17,15 @@ import javax.persistence.MappedSuperclass;
  * 〈entity基类〉
  *
  * @author admin
- * @create 2019/3/19 10:24
  * @version 3.2.2
+ * @create 2019/3/19 10:24
  */
 @MappedSuperclass
-public class BaseEntity extends IdEntity{
+public class BaseEntity extends IdEntity {
     @Override
     @Id
     @GeneratedValue
-    @Column(length=20)
+    @Column(length = 20)
     public Long getId() {
         return super.id;
     }

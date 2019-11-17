@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.ctsi.com.cn/webservices/service" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="NotifyAlarmSyncPortService" targetNamespace="http://www.ctsi.com.cn/webservices/service">
-	<wsdl:types>
-        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.ctsi.com.cn/webservices/service">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.ctsi.com.cn/webservices/service"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="NotifyAlarmSyncPortService"
+                  targetNamespace="http://www.ctsi.com.cn/webservices/service">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+                   targetNamespace="http://www.ctsi.com.cn/webservices/service">
             <xs:element name="notifyAlarmSyncReq">
                 <xs:complexType>
                     <xs:sequence>
@@ -22,17 +25,17 @@
                 </xs:complexType>
             </xs:element>
         </xs:schema>
-	</wsdl:types>
+    </wsdl:types>
     <wsdl:message name="notifyAlarmSyncResponse">
-        <wsdl:part element="tns:notifyAlarmSyncRsp" name="notifyAlarmSyncRsp"> </wsdl:part>
+        <wsdl:part element="tns:notifyAlarmSyncRsp" name="notifyAlarmSyncRsp"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="notifyAlarmSync">
-        <wsdl:part element="tns:notifyAlarmSyncReq" name="notifyAlarmSyncReq"> </wsdl:part>
+        <wsdl:part element="tns:notifyAlarmSyncReq" name="notifyAlarmSyncReq"></wsdl:part>
     </wsdl:message>
     <wsdl:portType name="NotifyAlarmSyncPort">
         <wsdl:operation name="notifyAlarmSync">
-            <wsdl:input message="tns:notifyAlarmSync" name="notifyAlarmSync"> </wsdl:input>
-            <wsdl:output message="tns:notifyAlarmSyncResponse" name="notifyAlarmSyncResponse"> </wsdl:output>
+            <wsdl:input message="tns:notifyAlarmSync" name="notifyAlarmSync"></wsdl:input>
+            <wsdl:output message="tns:notifyAlarmSyncResponse" name="notifyAlarmSyncResponse"></wsdl:output>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="NotifyAlarmSyncPortServiceSoapBinding" type="tns:NotifyAlarmSyncPort">
@@ -47,9 +50,9 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-	<wsdl:service name="NotifyAlarmSyncPortService">
-		<wsdl:port binding="tns:NotifyAlarmSyncPortServiceSoapBinding" name="NotifyAlarmSyncPortSoap11">
-			<soap:address location="http://localhost:8080/fums/ws/notifyAlarmSync" />
-		</wsdl:port>
-	</wsdl:service>
+    <wsdl:service name="NotifyAlarmSyncPortService">
+        <wsdl:port binding="tns:NotifyAlarmSyncPortServiceSoapBinding" name="NotifyAlarmSyncPortSoap11">
+            <soap:address location="http://localhost:8080/fums/ws/notifyAlarmSync"/>
+        </wsdl:port>
+    </wsdl:service>
 </wsdl:definitions>

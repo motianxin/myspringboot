@@ -49,10 +49,13 @@ public class AdjMatrixEdgeWeightedDigraph {
      * Initializes an empty edge-weighted digraph with {@code V} vertices and 0 edges.
      *
      * @param V the number of vertices
+     *
      * @throws IllegalArgumentException if {@code V < 0}
      */
     public AdjMatrixEdgeWeightedDigraph(int V) {
-        if (V < 0) throw new IllegalArgumentException("number of vertices must be nonnegative");
+        if (V < 0) {
+            throw new IllegalArgumentException("number of vertices must be nonnegative");
+        }
         this.V = V;
         this.E = 0;
         this.adj = new DirectedEdge[V][V];
@@ -63,13 +66,18 @@ public class AdjMatrixEdgeWeightedDigraph {
      *
      * @param V the number of vertices
      * @param E the number of edges
+     *
      * @throws IllegalArgumentException if {@code V < 0}
      * @throws IllegalArgumentException if {@code E < 0}
      */
     public AdjMatrixEdgeWeightedDigraph(int V, int E) {
         this(V);
-        if (E < 0) throw new IllegalArgumentException("number of edges must be nonnegative");
-        if (E > V * V) throw new IllegalArgumentException("too many edges");
+        if (E < 0) {
+            throw new IllegalArgumentException("number of edges must be nonnegative");
+        }
+        if (E > V * V) {
+            throw new IllegalArgumentException("too many edges");
+        }
 
         // can be inefficient
         while (this.E != E) {
@@ -131,7 +139,9 @@ public class AdjMatrixEdgeWeightedDigraph {
      * Returns the directed edges incident from vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the directed edges incident from vertex {@code v} as an Iterable
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public Iterable<DirectedEdge> adj(int v) {
@@ -161,8 +171,9 @@ public class AdjMatrixEdgeWeightedDigraph {
 
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 
     // support iteration over graph vertices
@@ -180,7 +191,9 @@ public class AdjMatrixEdgeWeightedDigraph {
 
         public boolean hasNext() {
             while (w < V) {
-                if (adj[v][w] != null) return true;
+                if (adj[v][w] != null) {
+                    return true;
+                }
                 w++;
             }
             return false;

@@ -26,22 +26,22 @@ public class RedisController {
     private RedisUtil redisUtil;
 
     @RequestMapping("set")
-    public boolean redisset(@RequestParam("key") String key, @RequestParam("value") String value){
+    public boolean redisset(@RequestParam("key") String key, @RequestParam("value") String value) {
 
         //return redisUtil.set(key,userEntity,ExpireTime);
 
-        return redisUtil.set(key,value);
+        return this.redisUtil.set(key, value);
     }
 
     @RequestMapping("get")
-    public Object redisget(@RequestParam("key") String key){
-        Object o = redisUtil.get(key);
-        log.info("get key {} value {}.", key, o);
+    public Object redisget(@RequestParam("key") String key) {
+        Object o = this.redisUtil.get(key);
+        RedisController.log.info("get key {} value {}.", key, o);
         return o;
     }
 
     @RequestMapping("expire")
-    public boolean expire(@RequestParam("key") String key){
-        return redisUtil.expire(key,ExpireTime);
+    public boolean expire(@RequestParam("key") String key) {
+        return this.redisUtil.expire(key, RedisController.ExpireTime);
     }
 }

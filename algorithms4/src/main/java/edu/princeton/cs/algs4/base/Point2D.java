@@ -53,20 +53,29 @@ public final class Point2D implements Comparable<Point2D> {
      *
      * @param x the x-coordinate
      * @param y the y-coordinate
+     *
      * @throws IllegalArgumentException if either {@code x} or {@code y}
-     *                                  is {@code Double.NaN}, {@code Double.POSITIVE_INFINITY} or
-     *                                  {@code Double.NEGATIVE_INFINITY}
+     * is {@code Double.NaN}, {@code Double.POSITIVE_INFINITY} or
+     * {@code Double.NEGATIVE_INFINITY}
      */
     public Point2D(double x, double y) {
-        if (Double.isInfinite(x) || Double.isInfinite(y))
+        if (Double.isInfinite(x) || Double.isInfinite(y)) {
             throw new IllegalArgumentException("Coordinates must be finite");
-        if (Double.isNaN(x) || Double.isNaN(y))
+        }
+        if (Double.isNaN(x) || Double.isNaN(y)) {
             throw new IllegalArgumentException("Coordinates cannot be NaN");
-        if (x == 0.0) this.x = 0.0;  // convert -0.0 to +0.0
-        else this.x = x;
+        }
+        if (x == 0.0) {
+            this.x = 0.0;  // convert -0.0 to +0.0
+        } else {
+            this.x = x;
+        }
 
-        if (y == 0.0) this.y = 0.0;  // convert -0.0 to +0.0
-        else this.y = y;
+        if (y == 0.0) {
+            this.y = 0.0;  // convert -0.0 to +0.0
+        } else {
+            this.y = y;
+        }
     }
 
     /**
@@ -75,13 +84,18 @@ public final class Point2D implements Comparable<Point2D> {
      * @param a first point
      * @param b second point
      * @param c third point
+     *
      * @return { -1, 0, +1 } if a→b→c is a { clockwise, collinear; counterclocwise } turn.
      */
     public static int ccw(Point2D a, Point2D b, Point2D c) {
         double area2 = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
-        if (area2 < 0) return -1;
-        else if (area2 > 0) return +1;
-        else return 0;
+        if (area2 < 0) {
+            return -1;
+        } else if (area2 > 0) {
+            return +1;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -90,6 +104,7 @@ public final class Point2D implements Comparable<Point2D> {
      * @param a first point
      * @param b second point
      * @param c third point
+     *
      * @return twice the signed area of the triangle a-b-c
      */
     public static double area2(Point2D a, Point2D b, Point2D c) {
@@ -144,7 +159,7 @@ public final class Point2D implements Comparable<Point2D> {
      * @return the x-coordinate
      */
     public double x() {
-        return x;
+        return this.x;
     }
 
     /**
@@ -153,7 +168,7 @@ public final class Point2D implements Comparable<Point2D> {
      * @return the y-coordinate
      */
     public double y() {
-        return y;
+        return this.y;
     }
 
     /**
@@ -162,7 +177,7 @@ public final class Point2D implements Comparable<Point2D> {
      * @return the polar radius of this point in polar coordiantes: sqrt(x*x + y*y)
      */
     public double r() {
-        return Math.sqrt(x * x + y * y);
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
     /**
@@ -171,7 +186,7 @@ public final class Point2D implements Comparable<Point2D> {
      * @return the angle (in radians) of this point in polar coordiantes (between –&pi; and &pi;)
      */
     public double theta() {
-        return Math.atan2(y, x);
+        return Math.atan2(this.y, this.x);
     }
 
     /**
@@ -189,6 +204,7 @@ public final class Point2D implements Comparable<Point2D> {
      * Returns the Euclidean distance between this point and that point.
      *
      * @param that the other point
+     *
      * @return the Euclidean distance between this point and that point
      */
     public double distanceTo(Point2D that) {
@@ -201,6 +217,7 @@ public final class Point2D implements Comparable<Point2D> {
      * Returns the square of the Euclidean distance between this point and that point.
      *
      * @param that the other point
+     *
      * @return the square of the Euclidean distance between this point and that point
      */
     public double distanceSquaredTo(Point2D that) {
@@ -215,6 +232,7 @@ public final class Point2D implements Comparable<Point2D> {
      * if and only if either {@code y0 < y1} or if {@code y0 == y1} and {@code x0 < x1}.
      *
      * @param that the other point
+     *
      * @return the value {@code 0} if this string is equal to the argument
      * string (precisely when {@code equals()} returns {@code true});
      * a negative integer if this point is less than the argument
@@ -222,10 +240,18 @@ public final class Point2D implements Comparable<Point2D> {
      * argument point
      */
     public int compareTo(Point2D that) {
-        if (this.y < that.y) return -1;
-        if (this.y > that.y) return +1;
-        if (this.x < that.x) return -1;
-        if (this.x > that.x) return +1;
+        if (this.y < that.y) {
+            return -1;
+        }
+        if (this.y > that.y) {
+            return +1;
+        }
+        if (this.x < that.x) {
+            return -1;
+        }
+        if (this.x > that.x) {
+            return +1;
+        }
         return 0;
     }
 
@@ -260,14 +286,21 @@ public final class Point2D implements Comparable<Point2D> {
      * Compares this point to the specified point.
      *
      * @param other the other point
+     *
      * @return {@code true} if this point equals {@code other};
      * {@code false} otherwise
      */
     @Override
     public boolean equals(Object other) {
-        if (other == this) return true;
-        if (other == null) return false;
-        if (other.getClass() != this.getClass()) return false;
+        if (other == this) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+        if (other.getClass() != this.getClass()) {
+            return false;
+        }
         Point2D that = (Point2D) other;
         return this.x == that.x && this.y == that.y;
     }
@@ -279,7 +312,7 @@ public final class Point2D implements Comparable<Point2D> {
      */
     @Override
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return "(" + this.x + ", " + this.y + ")";
     }
 
     /**
@@ -289,8 +322,8 @@ public final class Point2D implements Comparable<Point2D> {
      */
     @Override
     public int hashCode() {
-        int hashX = ((Double) x).hashCode();
-        int hashY = ((Double) y).hashCode();
+        int hashX = ((Double) this.x).hashCode();
+        int hashY = ((Double) this.y).hashCode();
         return 31 * hashX + hashY;
     }
 
@@ -298,7 +331,7 @@ public final class Point2D implements Comparable<Point2D> {
      * Plot this point using standard draw.
      */
     public void draw() {
-        StdDraw.point(x, y);
+        StdDraw.point(this.x, this.y);
     }
 
     /**
@@ -313,8 +346,12 @@ public final class Point2D implements Comparable<Point2D> {
     // compare points according to their x-coordinate
     private static class XOrder implements Comparator<Point2D> {
         public int compare(Point2D p, Point2D q) {
-            if (p.x < q.x) return -1;
-            if (p.x > q.x) return +1;
+            if (p.x < q.x) {
+                return -1;
+            }
+            if (p.x > q.x) {
+                return +1;
+            }
             return 0;
         }
     }
@@ -322,8 +359,12 @@ public final class Point2D implements Comparable<Point2D> {
     // compare points according to their y-coordinate
     private static class YOrder implements Comparator<Point2D> {
         public int compare(Point2D p, Point2D q) {
-            if (p.y < q.y) return -1;
-            if (p.y > q.y) return +1;
+            if (p.y < q.y) {
+                return -1;
+            }
+            if (p.y > q.y) {
+                return +1;
+            }
             return 0;
         }
     }
@@ -332,8 +373,12 @@ public final class Point2D implements Comparable<Point2D> {
     private static class ROrder implements Comparator<Point2D> {
         public int compare(Point2D p, Point2D q) {
             double delta = (p.x * p.x + p.y * p.y) - (q.x * q.x + q.y * q.y);
-            if (delta < 0) return -1;
-            if (delta > 0) return +1;
+            if (delta < 0) {
+                return -1;
+            }
+            if (delta > 0) {
+                return +1;
+            }
             return 0;
         }
     }
@@ -343,27 +388,39 @@ public final class Point2D implements Comparable<Point2D> {
         public int compare(Point2D q1, Point2D q2) {
             double angle1 = angleTo(q1);
             double angle2 = angleTo(q2);
-            if (angle1 < angle2) return -1;
-            else if (angle1 > angle2) return +1;
-            else return 0;
+            if (angle1 < angle2) {
+                return -1;
+            } else if (angle1 > angle2) {
+                return +1;
+            } else {
+                return 0;
+            }
         }
     }
 
     // compare other points relative to polar angle (between 0 and 2pi) they make with this Point
     private class PolarOrder implements Comparator<Point2D> {
         public int compare(Point2D q1, Point2D q2) {
-            double dx1 = q1.x - x;
-            double dy1 = q1.y - y;
-            double dx2 = q2.x - x;
-            double dy2 = q2.y - y;
+            double dx1 = q1.x - Point2D.this.x;
+            double dy1 = q1.y - Point2D.this.y;
+            double dx2 = q2.x - Point2D.this.x;
+            double dy2 = q2.y - Point2D.this.y;
 
-            if (dy1 >= 0 && dy2 < 0) return -1;    // q1 above; q2 below
-            else if (dy2 >= 0 && dy1 < 0) return +1;    // q1 below; q2 above
-            else if (dy1 == 0 && dy2 == 0) {            // 3-collinear and horizontal
-                if (dx1 >= 0 && dx2 < 0) return -1;
-                else if (dx2 >= 0 && dx1 < 0) return +1;
-                else return 0;
-            } else return -ccw(Point2D.this, q1, q2);     // both above or below
+            if (dy1 >= 0 && dy2 < 0) {
+                return -1;    // q1 above; q2 below
+            } else if (dy2 >= 0 && dy1 < 0) {
+                return +1;    // q1 below; q2 above
+            } else if (dy1 == 0 && dy2 == 0) {            // 3-collinear and horizontal
+                if (dx1 >= 0 && dx2 < 0) {
+                    return -1;
+                } else if (dx2 >= 0 && dx1 < 0) {
+                    return +1;
+                } else {
+                    return 0;
+                }
+            } else {
+                return -Point2D.ccw(Point2D.this, q1, q2);     // both above or below
+            }
 
             // Note: ccw() recomputes dx1, dy1, dx2, and dy2
         }
@@ -374,9 +431,13 @@ public final class Point2D implements Comparable<Point2D> {
         public int compare(Point2D p, Point2D q) {
             double dist1 = distanceSquaredTo(p);
             double dist2 = distanceSquaredTo(q);
-            if (dist1 < dist2) return -1;
-            else if (dist1 > dist2) return +1;
-            else return 0;
+            if (dist1 < dist2) {
+                return -1;
+            } else if (dist1 > dist2) {
+                return +1;
+            } else {
+                return 0;
+            }
         }
     }
 }

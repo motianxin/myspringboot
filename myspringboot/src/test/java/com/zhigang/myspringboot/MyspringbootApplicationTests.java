@@ -18,17 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class MyspringbootApplicationTests {
 
-	@Before
-	public void init() {
-		log.info("start my test!");
-		System.out.println("开始测试-----------------");
-	}
+    @Before
+    public void init() {
+        log.info("start my test!");
+        System.out.println("开始测试-----------------");
+    }
 
-	@After
-	public void after() {
-		log.info("end my test");
-		System.out.println("测试结束-----------------");
-	}
+    @After
+    public void after() {
+        log.info("end my test");
+        System.out.println("测试结束-----------------");
+    }
 
 }
 

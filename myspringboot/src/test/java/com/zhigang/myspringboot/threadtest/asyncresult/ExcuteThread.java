@@ -53,7 +53,7 @@ public class ExcuteThread<V> extends Thread {
         } catch (Exception e) {
             exception = e;
         } finally {
-            synchronized (lock){
+            synchronized (lock) {
                 done = true;
                 lock.notifyAll();
             }

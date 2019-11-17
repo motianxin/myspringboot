@@ -31,12 +31,14 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig extends CachingConfigurerSupport {
     /**
      * RedisTemplate配置
+     *
      * @param factory
+     *
      * @return
      */
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
-        log.info("init redis template begin!");
+        RedisConfig.log.info("init redis template begin!");
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         // 配置连接工厂
         template.setConnectionFactory(factory);
@@ -69,6 +71,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * 对hash类型的数据操作
      *
      * @param redisTemplate
+     *
      * @return
      */
     @Bean
@@ -80,6 +83,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * 对redis字符串类型数据操作
      *
      * @param redisTemplate
+     *
      * @return
      */
     @Bean
@@ -91,6 +95,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * 对链表类型的数据操作
      *
      * @param redisTemplate
+     *
      * @return
      */
     @Bean
@@ -102,6 +107,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * 对无序集合类型的数据操作
      *
      * @param redisTemplate
+     *
      * @return
      */
     @Bean
@@ -113,6 +119,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * 对有序集合类型的数据操作
      *
      * @param redisTemplate
+     *
      * @return
      */
     @Bean

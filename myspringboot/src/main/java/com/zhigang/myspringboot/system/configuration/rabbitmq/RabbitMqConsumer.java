@@ -18,8 +18,8 @@ import org.springframework.stereotype.Component;
 @RabbitListener(queues = "direc_queue")
 public class RabbitMqConsumer {
     @RabbitHandler
-    public void onMessage(Object msg){
-      log.info("开始消费消息， id 为 {}", msg);
+    public void onMessage(Object msg) {
+        RabbitMqConsumer.log.info("开始消费消息， id 为 {}", msg);
     }
 
 

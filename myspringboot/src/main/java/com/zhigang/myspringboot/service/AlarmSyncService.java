@@ -20,47 +20,51 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈〉
  *
  * @author admin
- * @create 2018/12/19 16:56
  * @version 3.2.2
+ * @create 2018/12/19 16:56
  */
 @Service
 @Transactional
 @Slf4j
-public class AlarmSyncService implements SyncService{
-	@Autowired
-	private AlarmSyncRepos alarmSyncRepos;
+public class AlarmSyncService implements SyncService {
+    @Autowired
+    private AlarmSyncRepos alarmSyncRepos;
 
-	@Autowired
-	private SyncInfoDao infoDao;
+    @Autowired
+    private SyncInfoDao infoDao;
 
-	public void saveAlarmSync(NotifyAlarmSyncReq req) {
+    @Override
+    public void saveAlarmSync(NotifyAlarmSyncReq req) {
 
-		log.info("begin save model, model is [{}]:", req);
-		AlarmSync sync  = new AlarmSync();
-		sync.setAlarmSyncSN(req.getAlarmSyncSN());
-		sync.setBusinessType(req.getBusinessType());
-		sync.setOpration(req.getAlarmSyncOoperation());
-		sync.setProvinceSX(req.getProvinceSX());
-		alarmSyncRepos.saveAlarmSync(sync);
-		log.info("save end.");
+        AlarmSyncService.log.info("begin save model, model is [{}]:", req);
+        AlarmSync sync = new AlarmSync();
+        sync.setAlarmSyncSN(req.getAlarmSyncSN());
+        sync.setBusinessType(req.getBusinessType());
+        sync.setOpration(req.getAlarmSyncOoperation());
+        sync.setProvinceSX(req.getProvinceSX());
+        this.alarmSyncRepos.saveAlarmSync(sync);
+        AlarmSyncService.log.info("save end.");
 
-	}
+    }
 
-	public AlarmSync getOneById(Long id) {
-		return infoDao.getOne(id);
-	}
+    @Override
+    public AlarmSync getOneById(Long id) {
+        return this.infoDao.getOne(id);
+    }
 
-	public void deleteAlarmSync(Long id){
-		infoDao.delete(getOneById(id));
-	}
+    @Override
+    public void deleteAlarmSync(Long id) {
+        this.infoDao.delete(getOneById(id));
+    }
 
-	public List<AlarmSync> getAllAlarmSync(){
-		return infoDao.findAll();
-	}
+    @Override
+    public List<AlarmSync> getAllAlarmSync() {
+        return this.infoDao.findAll();
+    }
 
 
 }

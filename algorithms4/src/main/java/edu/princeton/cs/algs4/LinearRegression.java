@@ -35,6 +35,7 @@ public class LinearRegression {
      *
      * @param x the values of the predictor variable
      * @param y the corresponding values of the response variable
+     *
      * @throws IllegalArgumentException if the lengths of the two arrays are not equal
      */
     public LinearRegression(double[] x, double[] y) {
@@ -80,7 +81,8 @@ public class LinearRegression {
     }
 
     /**
-     * Returns the <em>y</em>-intercept &alpha; of the best of the best-fit line <em>y</em> = &alpha; + &beta; <em>x</em>.
+     * Returns the <em>y</em>-intercept &alpha; of the best of the best-fit line <em>y</em> = &alpha; + &beta;
+     * <em>x</em>.
      *
      * @return the <em>y</em>-intercept &alpha; of the best-fit line <em>y = &alpha; + &beta; x</em>
      */
@@ -130,6 +132,7 @@ public class LinearRegression {
      * variable {@code x}.
      *
      * @param x the value of the predictor variable
+     *
      * @return the expected response {@code y} given the value of the predictor
      * variable {@code x}
      */

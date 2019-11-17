@@ -44,59 +44,67 @@ public class QuickX {
      */
     public static void sort(Comparable[] a) {
         // StdRandom.shuffle(a);
-        sort(a, 0, a.length - 1);
-        assert isSorted(a);
+        QuickX.sort(a, 0, a.length - 1);
+        assert QuickX.isSorted(a);
     }
 
     // quicksort the subarray from a[lo] to a[hi]
     private static void sort(Comparable[] a, int lo, int hi) {
-        if (hi <= lo) return;
+        if (hi <= lo) {
+            return;
+        }
 
         // cutoff to insertion sort (Insertion.sort() uses half-open intervals)
         int n = hi - lo + 1;
-        if (n <= INSERTION_SORT_CUTOFF) {
+        if (n <= QuickX.INSERTION_SORT_CUTOFF) {
             Insertion.sort(a, lo, hi + 1);
             return;
         }
 
-        int j = partition(a, lo, hi);
-        sort(a, lo, j - 1);
-        sort(a, j + 1, hi);
+        int j = QuickX.partition(a, lo, hi);
+        QuickX.sort(a, lo, j - 1);
+        QuickX.sort(a, j + 1, hi);
     }
 
     // partition the subarray a[lo..hi] so that a[lo..j-1] <= a[j] <= a[j+1..hi]
     // and return the index j.
     private static int partition(Comparable[] a, int lo, int hi) {
         int n = hi - lo + 1;
-        int m = median3(a, lo, lo + n / 2, hi);
-        exch(a, m, lo);
+        int m = QuickX.median3(a, lo, lo + n / 2, hi);
+        QuickX.exch(a, m, lo);
 
         int i = lo;
         int j = hi + 1;
         Comparable v = a[lo];
 
         // a[lo] is unique largest element
-        while (less(a[++i], v)) {
+        while (QuickX.less(a[++i], v)) {
             if (i == hi) {
-                exch(a, lo, hi);
+                QuickX.exch(a, lo, hi);
                 return hi;
             }
         }
 
         // a[lo] is unique smallest element
-        while (less(v, a[--j])) {
-            if (j == lo + 1) return lo;
+        while (QuickX.less(v, a[--j])) {
+            if (j == lo + 1) {
+                return lo;
+            }
         }
 
         // the main loop
         while (i < j) {
-            exch(a, i, j);
-            while (less(a[++i], v)) ;
-            while (less(v, a[--j])) ;
+            QuickX.exch(a, i, j);
+            while (QuickX.less(a[++i], v)) {
+                ;
+            }
+            while (QuickX.less(v, a[--j])) {
+                ;
+            }
         }
 
         // put partitioning item v at a[j]
-        exch(a, lo, j);
+        QuickX.exch(a, lo, j);
 
         // now, a[lo .. j-1] <= a[j] <= a[j+1 .. hi]
         return j;
@@ -104,9 +112,7 @@ public class QuickX {
 
     // return the index of the median element among a[i], a[j], and a[k]
     private static int median3(Comparable[] a, int i, int j, int k) {
-        return (less(a[i], a[j]) ?
-                (less(a[j], a[k]) ? j : less(a[i], a[k]) ? k : i) :
-                (less(a[k], a[j]) ? j : less(a[k], a[i]) ? k : i));
+        return (QuickX.less(a[i], a[j]) ? (QuickX.less(a[j], a[k]) ? j : QuickX.less(a[i], a[k]) ? k : i) : (QuickX.less(a[k], a[j]) ? j : QuickX.less(a[k], a[i]) ? k : i));
     }
 
     /***************************************************************************
@@ -130,8 +136,11 @@ public class QuickX {
      *  Check if array is sorted - useful for debugging.
      ***************************************************************************/
     private static boolean isSorted(Comparable[] a) {
-        for (int i = 1; i < a.length; i++)
-            if (less(a[i], a[i - 1])) return false;
+        for (int i = 1; i < a.length; i++) {
+            if (QuickX.less(a[i], a[i - 1])) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -152,8 +161,8 @@ public class QuickX {
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
         QuickX.sort(a);
-        assert isSorted(a);
-        show(a);
+        assert QuickX.isSorted(a);
+        QuickX.show(a);
     }
 
 }

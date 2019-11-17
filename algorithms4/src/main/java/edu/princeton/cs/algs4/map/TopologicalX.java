@@ -67,8 +67,11 @@ public class TopologicalX {
 
         // initialize queue to contain all vertices with indegree = 0
         Queue<Integer> queue = new Queue<Integer>();
-        for (int v = 0; v < G.V(); v++)
-            if (indegree[v] == 0) queue.enqueue(v);
+        for (int v = 0; v < G.V(); v++) {
+            if (indegree[v] == 0) {
+                queue.enqueue(v);
+            }
+        }
 
         while (!queue.isEmpty()) {
             int v = queue.dequeue();
@@ -76,7 +79,9 @@ public class TopologicalX {
             ranks[v] = count++;
             for (int w : G.adj(v)) {
                 indegree[w]--;
-                if (indegree[w] == 0) queue.enqueue(w);
+                if (indegree[w] == 0) {
+                    queue.enqueue(w);
+                }
             }
         }
 
@@ -109,8 +114,11 @@ public class TopologicalX {
 
         // initialize queue to contain all vertices with indegree = 0
         Queue<Integer> queue = new Queue<Integer>();
-        for (int v = 0; v < G.V(); v++)
-            if (indegree[v] == 0) queue.enqueue(v);
+        for (int v = 0; v < G.V(); v++) {
+            if (indegree[v] == 0) {
+                queue.enqueue(v);
+            }
+        }
 
         while (!queue.isEmpty()) {
             int v = queue.dequeue();
@@ -119,7 +127,9 @@ public class TopologicalX {
             for (DirectedEdge e : G.adj(v)) {
                 int w = e.to();
                 indegree[w]--;
-                if (indegree[w] == 0) queue.enqueue(w);
+                if (indegree[w] == 0) {
+                    queue.enqueue(w);
+                }
             }
         }
 
@@ -147,9 +157,11 @@ public class TopologicalX {
 
         // corresponding edge-weighted digraph
         EdgeWeightedDigraph G2 = new EdgeWeightedDigraph(V);
-        for (int v = 0; v < G1.V(); v++)
-            for (int w : G1.adj(v))
+        for (int v = 0; v < G1.V(); v++) {
+            for (int w : G1.adj(v)) {
                 G2.addEdge(new DirectedEdge(v, w, 0.0));
+            }
+        }
 
         // add F extra edges
         for (int i = 0; i < F; i++) {
@@ -221,14 +233,19 @@ public class TopologicalX {
      * -1 if the digraph is not a DAG
      *
      * @param v vertex
+     *
      * @return the position of vertex {@code v} in a topological order
      * of the digraph; -1 if the digraph is not a DAG
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int rank(int v) {
         validateVertex(v);
-        if (hasOrder()) return ranks[v];
-        else return -1;
+        if (hasOrder()) {
+            return ranks[v];
+        } else {
+            return -1;
+        }
     }
 
     // certify that digraph is acyclic
@@ -252,8 +269,7 @@ public class TopologicalX {
             for (int v = 0; v < G.V(); v++) {
                 for (int w : G.adj(v)) {
                     if (rank(v) > rank(w)) {
-                        System.err.printf("%d-%d: rank(%d) = %d, rank(%d) = %d\n",
-                                v, w, v, rank(v), w, rank(w));
+                        System.err.printf("%d-%d: rank(%d) = %d, rank(%d) = %d\n", v, w, v, rank(v), w, rank(w));
                         return false;
                     }
                 }
@@ -296,8 +312,7 @@ public class TopologicalX {
                 for (DirectedEdge e : G.adj(v)) {
                     int w = e.to();
                     if (rank(v) > rank(w)) {
-                        System.err.printf("%d-%d: rank(%d) = %d, rank(%d) = %d\n",
-                                v, w, v, rank(v), w, rank(w));
+                        System.err.printf("%d-%d: rank(%d) = %d, rank(%d) = %d\n", v, w, v, rank(v), w, rank(w));
                         return false;
                     }
                 }
@@ -321,8 +336,9 @@ public class TopologicalX {
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = ranks.length;
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 
 }

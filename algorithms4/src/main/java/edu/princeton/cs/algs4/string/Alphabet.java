@@ -62,7 +62,8 @@ public class Alphabet {
     /**
      * The base-64 alphabet (64 characters).
      */
-    public static final Alphabet BASE64 = new Alphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
+    public static final Alphabet BASE64 = new Alphabet(
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
 
     /**
      * The ASCII alphabet (0-127).
@@ -93,20 +94,23 @@ public class Alphabet {
         boolean[] unicode = new boolean[Character.MAX_VALUE];
         for (int i = 0; i < alpha.length(); i++) {
             char c = alpha.charAt(i);
-            if (unicode[c])
+            if (unicode[c]) {
                 throw new IllegalArgumentException("Illegal alphabet: repeated character = '" + c + "'");
+            }
             unicode[c] = true;
         }
 
-        alphabet = alpha.toCharArray();
-        R = alpha.length();
-        inverse = new int[Character.MAX_VALUE];
-        for (int i = 0; i < inverse.length; i++)
-            inverse[i] = -1;
+        this.alphabet = alpha.toCharArray();
+        this.R = alpha.length();
+        this.inverse = new int[Character.MAX_VALUE];
+        for (int i = 0; i < this.inverse.length; i++) {
+            this.inverse[i] = -1;
+        }
 
         // can't use char since R can be as big as 65,536
-        for (int c = 0; c < R; c++)
-            inverse[alphabet[c]] = c;
+        for (int c = 0; c < this.R; c++) {
+            this.inverse[this.alphabet[c]] = c;
+        }
     }
 
     /**
@@ -116,14 +120,16 @@ public class Alphabet {
      */
     private Alphabet(int radix) {
         this.R = radix;
-        alphabet = new char[R];
-        inverse = new int[R];
+        this.alphabet = new char[this.R];
+        this.inverse = new int[this.R];
 
         // can't use char since R can be as big as 65,536
-        for (int i = 0; i < R; i++)
-            alphabet[i] = (char) i;
-        for (int i = 0; i < R; i++)
-            inverse[i] = i;
+        for (int i = 0; i < this.R; i++) {
+            this.alphabet[i] = (char) i;
+        }
+        for (int i = 0; i < this.R; i++) {
+            this.inverse[i] = i;
+        }
     }
 
     /**
@@ -156,22 +162,24 @@ public class Alphabet {
      * Returns true if the argument is a character in this alphabet.
      *
      * @param c the character
+     *
      * @return {@code true} if {@code c} is a character in this alphabet;
      * {@code false} otherwise
      */
     public boolean contains(char c) {
-        return inverse[c] != -1;
+        return this.inverse[c] != -1;
     }
 
     /**
      * Returns the number of characters in this alphabet (the radix).
      *
      * @return the number of characters in this alphabet
+     *
      * @deprecated Replaced by {@link #radix()}.
      */
     @Deprecated
     public int R() {
-        return R;
+        return this.R;
     }
 
     /**
@@ -180,7 +188,7 @@ public class Alphabet {
      * @return the number of characters in this alphabet
      */
     public int radix() {
-        return R;
+        return this.R;
     }
 
     /**
@@ -190,8 +198,9 @@ public class Alphabet {
      */
     public int lgR() {
         int lgR = 0;
-        for (int t = R - 1; t >= 1; t /= 2)
+        for (int t = this.R - 1; t >= 1; t /= 2) {
             lgR++;
+        }
         return lgR;
     }
 
@@ -199,29 +208,34 @@ public class Alphabet {
      * Returns the index corresponding to the argument character.
      *
      * @param c the character
+     *
      * @return the index corresponding to the character {@code c}
+     *
      * @throws IllegalArgumentException unless {@code c} is a character in this alphabet
      */
     public int toIndex(char c) {
-        if (c >= inverse.length || inverse[c] == -1) {
+        if (c >= this.inverse.length || this.inverse[c] == -1) {
             throw new IllegalArgumentException("Character " + c + " not in alphabet");
         }
-        return inverse[c];
+        return this.inverse[c];
     }
 
     /**
      * Returns the indices corresponding to the argument characters.
      *
      * @param s the characters
+     *
      * @return the indices corresponding to the characters {@code s}
+     *
      * @throws IllegalArgumentException unless every character in {@code s}
-     *                                  is a character in this alphabet
+     * is a character in this alphabet
      */
     public int[] toIndices(String s) {
         char[] source = s.toCharArray();
         int[] target = new int[s.length()];
-        for (int i = 0; i < source.length; i++)
+        for (int i = 0; i < source.length; i++) {
             target[i] = toIndex(source[i]);
+        }
         return target;
     }
 
@@ -229,28 +243,33 @@ public class Alphabet {
      * Returns the character corresponding to the argument index.
      *
      * @param index the index
+     *
      * @return the character corresponding to the index {@code index}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= index < R}
      */
     public char toChar(int index) {
-        if (index < 0 || index >= R) {
-            throw new IllegalArgumentException("index must be between 0 and " + R + ": " + index);
+        if (index < 0 || index >= this.R) {
+            throw new IllegalArgumentException("index must be between 0 and " + this.R + ": " + index);
         }
-        return alphabet[index];
+        return this.alphabet[index];
     }
 
     /**
      * Returns the characters corresponding to the argument indices.
      *
      * @param indices the indices
+     *
      * @return the characters corresponding to the indices {@code indices}
+     *
      * @throws IllegalArgumentException unless {@code 0 < indices[i] < R}
-     *                                  for every {@code i}
+     * for every {@code i}
      */
     public String toChars(int[] indices) {
         StringBuilder s = new StringBuilder(indices.length);
-        for (int i = 0; i < indices.length; i++)
+        for (int i = 0; i < indices.length; i++) {
             s.append(toChar(indices[i]));
+        }
         return s.toString();
     }
 }

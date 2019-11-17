@@ -22,6 +22,16 @@ import com.zhigang.myspringboot.algorithms.stdlib.StdRandom;
 public class QuickSort extends SortClass {
 
 
+    public static void main(String[] args) {
+        SortClass sortClass = new QuickSort();
+        double[] dArray = new double[300];
+        for (int i = 0; i < dArray.length; i++) {
+            dArray[i] = StdRandom.uniform();
+        }
+        sortClass.setDraw(new Draw("QuickSort", 30, 300, 1800, 512));
+        sortClass.sort(dArray);
+    }
+
     @Override
     public void sort(double[] arr) {
         super.sort(arr);
@@ -37,10 +47,10 @@ public class QuickSort extends SortClass {
         quickSort(arr, pivot + 1, hi);
     }
 
-    /** 
+    /**
      * @Description: 快速排序核心方法，得到一个基准下标，双边循环法
-     * @Param: [arr, lo, hi] 
-     * @return: int 
+     * @Param: [arr, lo, hi]
+     * @return: int
      * @Author: admin
      * @Date: 2019/7/3 22:14
      */
@@ -52,7 +62,7 @@ public class QuickSort extends SortClass {
                 swap(arr, right, left);
                 changeTimes++;
             }
-            if ((changeTimes & 1) ==1){
+            if ((changeTimes & 1) == 1) {
                 left++;
             } else {
                 right--;
@@ -95,7 +105,6 @@ public class QuickSort extends SortClass {
         return left;
     }
 
-
     /**
      * @Author Administrator
      * @Description 单边循环法
@@ -121,15 +130,5 @@ public class QuickSort extends SortClass {
         filledChange(arr.length, arr[mark], mark);
 
         return mark;
-    }
-
-    public static void main(String[] args) {
-        SortClass sortClass = new QuickSort();
-        double[] dArray = new double[300];
-        for (int i = 0; i < dArray.length; i++) {
-            dArray[i] = StdRandom.uniform();
-        }
-        sortClass.setDraw(new Draw("QuickSort", 30, 300, 1800, 512));
-        sortClass.sort(dArray);
     }
 }

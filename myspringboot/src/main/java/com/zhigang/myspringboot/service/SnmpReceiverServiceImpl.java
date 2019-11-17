@@ -24,36 +24,36 @@ import org.springframework.stereotype.Service;
 public class SnmpReceiverServiceImpl implements SnmpReceiverService {
 
 
-	private static boolean start = false;
+    private static boolean start = false;
 
-	private SnmpTrapMultiThreadReceiver receiver;
+    private SnmpTrapMultiThreadReceiver receiver;
 
-	@Autowired
-	private SnmpModel snmpModel;
+    @Autowired
+    private SnmpModel snmpModel;
 
-	@Override
-	public String snmpReceiverstatus(String ip, String port) throws Exception {
-		String result = "snmp listener is already started!";
-		String snmpip = ip == null ? snmpModel.getIp() : ip;
-		String snmpport = port == null ? snmpModel.getPort() : port;
-		if (!start) {
-			receiver = new SnmpTrapMultiThreadReceiver(snmpip, snmpport);
-			receiver.run();
-			start = true;
-			result = "snmp listener start succeed!";
-		}
-		return result;
-	}
+    @Override
+    public String snmpReceiverstatus(String ip, String port) throws Exception {
+        String result = "snmp listener is already started!";
+        String snmpip = ip == null ? this.snmpModel.getIp() : ip;
+        String snmpport = port == null ? this.snmpModel.getPort() : port;
+        if (!SnmpReceiverServiceImpl.start) {
+            this.receiver = new SnmpTrapMultiThreadReceiver(snmpip, snmpport);
+            this.receiver.run();
+            SnmpReceiverServiceImpl.start = true;
+            result = "snmp listener start succeed!";
+        }
+        return result;
+    }
 
-	@Override
-	public String closeReceiver() throws Exception{
-		String result = "snmp listener is already stoped";
-		if (start || receiver != null) {
-			receiver.closeSnmp();
-			start = false;
-			receiver = null;
-			result = "snmp listener stop succeed";
-		}
-		return result;
-	}
+    @Override
+    public String closeReceiver() throws Exception {
+        String result = "snmp listener is already stoped";
+        if (SnmpReceiverServiceImpl.start || this.receiver != null) {
+            this.receiver.closeSnmp();
+            SnmpReceiverServiceImpl.start = false;
+            this.receiver = null;
+            result = "snmp listener stop succeed";
+        }
+        return result;
+    }
 }

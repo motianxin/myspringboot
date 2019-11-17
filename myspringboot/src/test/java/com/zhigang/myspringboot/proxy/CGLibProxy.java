@@ -14,15 +14,6 @@ import java.lang.reflect.Method;
  * @Version 3.2.2
  **/
 public class CGLibProxy implements MethodInterceptor {
-    @Override
-    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-
-        System.out.println("cglib proxy begin.");
-        Object object = methodProxy.invokeSuper(o, objects);
-        System.out.println("cglib proxy end.");
-        return object;
-    }
-
     public static <T> T getProxy(Class<T> cla) {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(cla);
@@ -34,5 +25,14 @@ public class CGLibProxy implements MethodInterceptor {
         RealService realService = getProxy(RealService.class);
         realService.doSomething();
         realService.saySomething();
+    }
+
+    @Override
+    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+
+        System.out.println("cglib proxy begin.");
+        Object object = methodProxy.invokeSuper(o, objects);
+        System.out.println("cglib proxy end.");
+        return object;
     }
 }

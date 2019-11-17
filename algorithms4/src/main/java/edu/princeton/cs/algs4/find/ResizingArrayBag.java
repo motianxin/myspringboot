@@ -40,8 +40,8 @@ public class ResizingArrayBag<Item> implements Iterable<Item> {
      * Initializes an empty bag.
      */
     public ResizingArrayBag() {
-        a = (Item[]) new Object[2];
-        n = 0;
+        this.a = (Item[]) new Object[2];
+        this.n = 0;
     }
 
     /**
@@ -57,8 +57,9 @@ public class ResizingArrayBag<Item> implements Iterable<Item> {
         bag.add("are");
         bag.add("you");
 
-        for (String s : bag)
+        for (String s : bag) {
             StdOut.println(s);
+        }
     }
 
     /**
@@ -67,7 +68,7 @@ public class ResizingArrayBag<Item> implements Iterable<Item> {
      * @return true if this bag is empty; false otherwise
      */
     public boolean isEmpty() {
-        return n == 0;
+        return this.n == 0;
     }
 
     /**
@@ -76,16 +77,17 @@ public class ResizingArrayBag<Item> implements Iterable<Item> {
      * @return the number of items in this bag
      */
     public int size() {
-        return n;
+        return this.n;
     }
 
     // resize the underlying array holding the elements
     private void resize(int capacity) {
-        assert capacity >= n;
+        assert capacity >= this.n;
         Item[] temp = (Item[]) new Object[capacity];
-        for (int i = 0; i < n; i++)
-            temp[i] = a[i];
-        a = temp;
+        for (int i = 0; i < this.n; i++) {
+            temp[i] = this.a[i];
+        }
+        this.a = temp;
     }
 
     /**
@@ -94,8 +96,10 @@ public class ResizingArrayBag<Item> implements Iterable<Item> {
      * @param item the item to add to this bag
      */
     public void add(Item item) {
-        if (n == a.length) resize(2 * a.length);    // double size of array if necessary
-        a[n++] = item;                            // add item
+        if (this.n == this.a.length) {
+            resize(2 * this.a.length);    // double size of array if necessary
+        }
+        this.a[this.n++] = item;                            // add item
     }
 
     /**
@@ -112,7 +116,7 @@ public class ResizingArrayBag<Item> implements Iterable<Item> {
         private int i = 0;
 
         public boolean hasNext() {
-            return i < n;
+            return this.i < ResizingArrayBag.this.n;
         }
 
         public void remove() {
@@ -120,8 +124,10 @@ public class ResizingArrayBag<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            return a[i++];
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return ResizingArrayBag.this.a[this.i++];
         }
     }
 

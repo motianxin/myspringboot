@@ -44,9 +44,9 @@ public class LinkedQueue<Item> implements Iterable<Item> {
      * Initializes an empty queue.
      */
     public LinkedQueue() {
-        first = null;
-        last = null;
-        n = 0;
+        this.first = null;
+        this.last = null;
+        this.n = 0;
         assert check();
     }
 
@@ -59,10 +59,11 @@ public class LinkedQueue<Item> implements Iterable<Item> {
         LinkedQueue<String> queue = new LinkedQueue<String>();
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
-            if (!item.equals("-"))
+            if (!item.equals("-")) {
                 queue.enqueue(item);
-            else if (!queue.isEmpty())
+            } else if (!queue.isEmpty()) {
                 StdOut.print(queue.dequeue() + " ");
+            }
         }
         StdOut.println("(" + queue.size() + " left on queue)");
     }
@@ -73,7 +74,7 @@ public class LinkedQueue<Item> implements Iterable<Item> {
      * @return true if this queue is empty; false otherwise
      */
     public boolean isEmpty() {
-        return first == null;
+        return this.first == null;
     }
 
     /**
@@ -82,18 +83,21 @@ public class LinkedQueue<Item> implements Iterable<Item> {
      * @return the number of items in this queue
      */
     public int size() {
-        return n;
+        return this.n;
     }
 
     /**
      * Returns the item least recently added to this queue.
      *
      * @return the item least recently added to this queue
+     *
      * @throws java.util.NoSuchElementException if this queue is empty
      */
     public Item peek() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
-        return first.item;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue underflow");
+        }
+        return this.first.item;
     }
 
     /**
@@ -102,13 +106,16 @@ public class LinkedQueue<Item> implements Iterable<Item> {
      * @param item the item to add
      */
     public void enqueue(Item item) {
-        Node oldlast = last;
-        last = new Node();
-        last.item = item;
-        last.next = null;
-        if (isEmpty()) first = last;
-        else oldlast.next = last;
-        n++;
+        Node oldlast = this.last;
+        this.last = new Node();
+        this.last.item = item;
+        this.last.next = null;
+        if (isEmpty()) {
+            this.first = this.last;
+        } else {
+            oldlast.next = this.last;
+        }
+        this.n++;
         assert check();
     }
 
@@ -116,14 +123,19 @@ public class LinkedQueue<Item> implements Iterable<Item> {
      * Removes and returns the item on this queue that was least recently added.
      *
      * @return the item on this queue that was least recently added
+     *
      * @throws java.util.NoSuchElementException if this queue is empty
      */
     public Item dequeue() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
-        Item item = first.item;
-        first = first.next;
-        n--;
-        if (isEmpty()) last = null;   // to avoid loitering
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue underflow");
+        }
+        Item item = this.first.item;
+        this.first = this.first.next;
+        this.n--;
+        if (isEmpty()) {
+            this.last = null;   // to avoid loitering
+        }
         assert check();
         return item;
     }
@@ -133,43 +145,67 @@ public class LinkedQueue<Item> implements Iterable<Item> {
      *
      * @return the sequence of items in FIFO order, separated by spaces
      */
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Item item : this)
+        for (Item item : this) {
             s.append(item + " ");
+        }
         return s.toString();
     }
 
     // check internal invariants
     private boolean check() {
-        if (n < 0) {
+        if (this.n < 0) {
             return false;
-        } else if (n == 0) {
-            if (first != null) return false;
-            if (last != null) return false;
-        } else if (n == 1) {
-            if (first == null || last == null) return false;
-            if (first != last) return false;
-            if (first.next != null) return false;
+        } else if (this.n == 0) {
+            if (this.first != null) {
+                return false;
+            }
+            if (this.last != null) {
+                return false;
+            }
+        } else if (this.n == 1) {
+            if (this.first == null || this.last == null) {
+                return false;
+            }
+            if (this.first != this.last) {
+                return false;
+            }
+            if (this.first.next != null) {
+                return false;
+            }
         } else {
-            if (first == null || last == null) return false;
-            if (first == last) return false;
-            if (first.next == null) return false;
-            if (last.next != null) return false;
+            if (this.first == null || this.last == null) {
+                return false;
+            }
+            if (this.first == this.last) {
+                return false;
+            }
+            if (this.first.next == null) {
+                return false;
+            }
+            if (this.last.next != null) {
+                return false;
+            }
 
             // check internal consistency of instance variable n
             int numberOfNodes = 0;
-            for (Node x = first; x != null && numberOfNodes <= n; x = x.next) {
+            for (Node x = this.first; x != null && numberOfNodes <= this.n; x = x.next) {
                 numberOfNodes++;
             }
-            if (numberOfNodes != n) return false;
+            if (numberOfNodes != this.n) {
+                return false;
+            }
 
             // check internal consistency of instance variable last
-            Node lastNode = first;
+            Node lastNode = this.first;
             while (lastNode.next != null) {
                 lastNode = lastNode.next;
             }
-            if (last != lastNode) return false;
+            if (this.last != lastNode) {
+                return false;
+            }
         }
 
         return true;
@@ -193,10 +229,10 @@ public class LinkedQueue<Item> implements Iterable<Item> {
 
     // an iterator, doesn't implement remove() since it's optional
     private class ListIterator implements Iterator<Item> {
-        private Node current = first;
+        private Node current = LinkedQueue.this.first;
 
         public boolean hasNext() {
-            return current != null;
+            return this.current != null;
         }
 
         public void remove() {
@@ -204,9 +240,11 @@ public class LinkedQueue<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            Item item = current.item;
-            current = current.next;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Item item = this.current.item;
+            this.current = this.current.next;
             return item;
         }
     }

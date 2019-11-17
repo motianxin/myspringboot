@@ -82,11 +82,14 @@ public class GabowSCC {
         stack2 = new Stack<Integer>();
         id = new int[G.V()];
         preorder = new int[G.V()];
-        for (int v = 0; v < G.V(); v++)
+        for (int v = 0; v < G.V(); v++) {
             id[v] = -1;
+        }
 
         for (int v = 0; v < G.V(); v++) {
-            if (!marked[v]) dfs(G, v);
+            if (!marked[v]) {
+                dfs(G, v);
+            }
         }
 
         // check that id[] gives strong components
@@ -132,10 +135,12 @@ public class GabowSCC {
         stack1.push(v);
         stack2.push(v);
         for (int w : G.adj(v)) {
-            if (!marked[w]) dfs(G, w);
-            else if (id[w] == -1) {
-                while (preorder[stack2.peek()] > preorder[w])
+            if (!marked[w]) {
+                dfs(G, w);
+            } else if (id[w] == -1) {
+                while (preorder[stack2.peek()] > preorder[w]) {
                     stack2.pop();
+                }
             }
         }
 
@@ -165,8 +170,10 @@ public class GabowSCC {
      *
      * @param v one vertex
      * @param w the other vertex
+     *
      * @return {@code true} if vertices {@code v} and {@code w} are in the same
      * strong component, and {@code false} otherwise
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      * @throws IllegalArgumentException unless {@code 0 <= w < V}
      */
@@ -180,7 +187,9 @@ public class GabowSCC {
      * Returns the component id of the strong component containing vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the component id of the strong component containing vertex {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int id(int v) {
@@ -193,8 +202,9 @@ public class GabowSCC {
         TransitiveClosure tc = new TransitiveClosure(G);
         for (int v = 0; v < G.V(); v++) {
             for (int w = 0; w < G.V(); w++) {
-                if (stronglyConnected(v, w) != (tc.reachable(v, w) && tc.reachable(w, v)))
+                if (stronglyConnected(v, w) != (tc.reachable(v, w) && tc.reachable(w, v))) {
                     return false;
+                }
             }
         }
         return true;
@@ -203,8 +213,9 @@ public class GabowSCC {
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = marked.length;
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 
 }

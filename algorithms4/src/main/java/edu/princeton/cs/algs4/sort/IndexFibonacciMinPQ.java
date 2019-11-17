@@ -48,13 +48,16 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      * Worst case is O(n)
      *
      * @param N number of keys in the priority queue, index from {@code 0} to {@code N-1}
+     *
      * @throws java.lang.IllegalArgumentException if {@code N < 0}
      */
     public IndexFibonacciMinPQ(int N) {
-        if (N < 0) throw new IllegalArgumentException("Cannot create a priority queue of negative size");
-        n = N;
-        nodes = (Node<Key>[]) new Node[n];
-        comp = new MyComparator();
+        if (N < 0) {
+            throw new IllegalArgumentException("Cannot create a priority queue of negative size");
+        }
+        this.n = N;
+        this.nodes = (Node<Key>[]) new Node[this.n];
+        this.comp = new MyComparator();
     }
 
     /**
@@ -63,13 +66,16 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      *
      * @param N number of keys in the priority queue, index from {@code 0} to {@code N-1}
      * @param C a Comparator over the keys
+     *
      * @throws java.lang.IllegalArgumentException if {@code N < 0}
      */
     public IndexFibonacciMinPQ(Comparator<Key> C, int N) {
-        if (N < 0) throw new IllegalArgumentException("Cannot create a priority queue of negative size");
-        n = N;
-        nodes = (Node<Key>[]) new Node[n];
-        comp = C;
+        if (N < 0) {
+            throw new IllegalArgumentException("Cannot create a priority queue of negative size");
+        }
+        this.n = N;
+        this.nodes = (Node<Key>[]) new Node[this.n];
+        this.comp = C;
     }
 
     /**
@@ -80,7 +86,7 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      */
 
     public boolean isEmpty() {
-        return size == 0;
+        return this.size == 0;
     }
 
     /**
@@ -88,13 +94,18 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      * Worst case is O(1)
      *
      * @param i an index
+     *
      * @return true if i is on the priority queue, false if not
+     *
      * @throws java.lang.IllegalArgumentException if the specified index is invalid
      */
 
     public boolean contains(int i) {
-        if (i < 0 || i >= n) throw new IllegalArgumentException();
-        else return nodes[i] != null;
+        if (i < 0 || i >= this.n) {
+            throw new IllegalArgumentException();
+        } else {
+            return this.nodes[i] != null;
+        }
     }
 
     /**
@@ -105,30 +116,38 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      */
 
     public int size() {
-        return size;
+        return this.size;
     }
 
     /**
      * Associates a key with an index
      * Worst case is O(1)
      *
-     * @param i   an index
+     * @param i an index
      * @param key a Key associated with i
+     *
      * @throws java.lang.IllegalArgumentException if the specified index is invalid
      * @throws java.lang.IllegalArgumentException if the index is already in the queue
      */
 
     public void insert(int i, Key key) {
-        if (i < 0 || i >= n) throw new IllegalArgumentException();
-        if (contains(i)) throw new IllegalArgumentException("Specified index is already in the queue");
+        if (i < 0 || i >= this.n) {
+            throw new IllegalArgumentException();
+        }
+        if (contains(i)) {
+            throw new IllegalArgumentException("Specified index is already in the queue");
+        }
         Node<Key> x = new Node<Key>();
         x.key = key;
         x.index = i;
-        nodes[i] = x;
-        size++;
-        head = insert(x, head);
-        if (min == null) min = head;
-        else min = (greater(min.key, key)) ? head : min;
+        this.nodes[i] = x;
+        this.size++;
+        this.head = insert(x, this.head);
+        if (this.min == null) {
+            this.min = this.head;
+        } else {
+            this.min = (greater(this.min.key, key)) ? this.head : this.min;
+        }
     }
 
     /**
@@ -136,12 +155,15 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      * Worst case is O(1)
      *
      * @return the index associated with the minimum key
+     *
      * @throws java.util.NoSuchElementException if the priority queue is empty
      */
 
     public int minIndex() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue is empty");
-        return min.index;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue is empty");
+        }
+        return this.min.index;
     }
 
     /**
@@ -149,12 +171,15 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      * Worst case is O(1)
      *
      * @return the minimum key currently in the priority queue
+     *
      * @throws java.util.NoSuchElementException if the priority queue is empty
      */
 
     public Key minKey() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue is empty");
-        return min.key;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue is empty");
+        }
+        return this.min.key;
     }
 
     /**
@@ -162,27 +187,33 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      * Worst case is O(log(n)) (amortized)
      *
      * @return the index associated with the minimum key
+     *
      * @throws java.util.NoSuchElementException if the priority queue is empty
      */
 
     public int delMin() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue is empty");
-        head = cut(min, head);
-        Node<Key> x = min.child;
-        int index = min.index;
-        min.key = null;                    //For garbage collection
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue is empty");
+        }
+        this.head = cut(this.min, this.head);
+        Node<Key> x = this.min.child;
+        int index = this.min.index;
+        this.min.key = null;                    //For garbage collection
         if (x != null) {
             do {
                 x.parent = null;
                 x = x.next;
-            } while (x != min.child);
-            head = meld(head, x);
-            min.child = null;            //For garbage collection
+            } while (x != this.min.child);
+            this.head = meld(this.head, x);
+            this.min.child = null;            //For garbage collection
         }
-        size--;
-        if (!isEmpty()) consolidate();
-        else min = null;
-        nodes[index] = null;
+        this.size--;
+        if (!isEmpty()) {
+            consolidate();
+        } else {
+            this.min = null;
+        }
+        this.nodes[index] = null;
         return index;
     }
 
@@ -191,15 +222,21 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      * Worst case is O(1)
      *
      * @param i an index
+     *
      * @return the key associated with index i
+     *
      * @throws java.lang.IllegalArgumentException if the specified index is invalid
-     * @throws java.util.NoSuchElementException   if the index is not in the queue
+     * @throws java.util.NoSuchElementException if the index is not in the queue
      */
 
     public Key keyOf(int i) {
-        if (i < 0 || i >= n) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("Specified index is not in the queue");
-        return nodes[i].key;
+        if (i < 0 || i >= this.n) {
+            throw new IllegalArgumentException();
+        }
+        if (!contains(i)) {
+            throw new NoSuchElementException("Specified index is not in the queue");
+        }
+        return this.nodes[i].key;
     }
 
     /**
@@ -207,38 +244,54 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      * If the given key is greater, Worst case is O(log(n))
      * If the given key is lower, Worst case is O(1) (amortized)
      *
-     * @param i   an index
+     * @param i an index
      * @param key the key to associate with i
+     *
      * @throws java.lang.IllegalArgumentException if the specified index is invalid
-     * @throws java.util.NoSuchElementException   if the index has no key associated with
+     * @throws java.util.NoSuchElementException if the index has no key associated with
      */
 
     public void changeKey(int i, Key key) {
-        if (i < 0 || i >= n) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("Specified index is not in the queue");
-        if (greater(key, nodes[i].key)) increaseKey(i, key);
-        else decreaseKey(i, key);
+        if (i < 0 || i >= this.n) {
+            throw new IllegalArgumentException();
+        }
+        if (!contains(i)) {
+            throw new NoSuchElementException("Specified index is not in the queue");
+        }
+        if (greater(key, this.nodes[i].key)) {
+            increaseKey(i, key);
+        } else {
+            decreaseKey(i, key);
+        }
     }
 
     /**
      * Decreases the key associated with index i to the given key
      * Worst case is O(1) (amortized).
      *
-     * @param i   an index
+     * @param i an index
      * @param key the key to associate with i
+     *
      * @throws java.lang.IllegalArgumentException if the specified index is invalid
-     * @throws java.util.NoSuchElementException   if the index has no key associated with
+     * @throws java.util.NoSuchElementException if the index has no key associated with
      * @throws java.lang.IllegalArgumentException if the given key is greater than the current key
      */
 
     public void decreaseKey(int i, Key key) {
-        if (i < 0 || i >= n) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("Specified index is not in the queue");
-        if (greater(key, nodes[i].key))
+        if (i < 0 || i >= this.n) {
+            throw new IllegalArgumentException();
+        }
+        if (!contains(i)) {
+            throw new NoSuchElementException("Specified index is not in the queue");
+        }
+        if (greater(key, this.nodes[i].key)) {
             throw new IllegalArgumentException("Calling with this argument would not decrease the key");
-        Node<Key> x = nodes[i];
+        }
+        Node<Key> x = this.nodes[i];
         x.key = key;
-        if (greater(min.key, key)) min = x;
+        if (greater(this.min.key, key)) {
+            this.min = x;
+        }
         if (x.parent != null && greater(x.parent.key, key)) {
             cut(i);
         }
@@ -248,18 +301,24 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      * Increases the key associated with index i to the given key
      * Worst case is O(log(n))
      *
-     * @param i   an index
+     * @param i an index
      * @param key the key to associate with i
+     *
      * @throws java.lang.IllegalArgumentException if the specified index is invalid
-     * @throws java.util.NoSuchElementException   if the index has no key associated with
+     * @throws java.util.NoSuchElementException if the index has no key associated with
      * @throws java.lang.IllegalArgumentException if the given key is lower than the current key
      */
 
     public void increaseKey(int i, Key key) {
-        if (i < 0 || i >= n) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("Specified index is not in the queue");
-        if (greater(nodes[i].key, key))
+        if (i < 0 || i >= this.n) {
+            throw new IllegalArgumentException();
+        }
+        if (!contains(i)) {
+            throw new NoSuchElementException("Specified index is not in the queue");
+        }
+        if (greater(this.nodes[i].key, key)) {
             throw new IllegalArgumentException("Calling with this argument would not increase the key");
+        }
         delete(i);
         insert(i, key);
     }
@@ -269,19 +328,24 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
      * Worst case is O(log(n)) (amortized)
      *
      * @param i an index
+     *
      * @throws java.lang.IllegalArgumentException if the specified index is invalid
-     * @throws java.util.NoSuchElementException   if the given index has no key associated with
+     * @throws java.util.NoSuchElementException if the given index has no key associated with
      */
 
     public void delete(int i) {
-        if (i < 0 || i >= n) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("Specified index is not in the queue");
-        Node<Key> x = nodes[i];
+        if (i < 0 || i >= this.n) {
+            throw new IllegalArgumentException();
+        }
+        if (!contains(i)) {
+            throw new NoSuchElementException("Specified index is not in the queue");
+        }
+        Node<Key> x = this.nodes[i];
         x.key = null;                //For garbage collection
         if (x.parent != null) {
             cut(i);
         }
-        head = cut(x, head);
+        this.head = cut(x, this.head);
         if (x.child != null) {
             Node<Key> child = x.child;
             x.child = null;            //For garbage collection
@@ -290,12 +354,15 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
                 child.parent = null;
                 child = child.next;
             } while (child != x);
-            head = meld(head, child);
+            this.head = meld(this.head, child);
         }
-        if (!isEmpty()) consolidate();
-        else min = null;
-        nodes[i] = null;
-        size--;
+        if (!isEmpty()) {
+            consolidate();
+        } else {
+            this.min = null;
+        }
+        this.nodes[i] = null;
+        this.size--;
     }
 
     /*************************************
@@ -304,9 +371,13 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
 
     //Compares two keys
     private boolean greater(Key n, Key m) {
-        if (n == null) return false;
-        if (m == null) return true;
-        return comp.compare(n, m) > 0;
+        if (n == null) {
+            return false;
+        }
+        if (m == null) {
+            return true;
+        }
+        return this.comp.compare(n, m) > 0;
     }
 
     //Assuming root1 holds a greater key than root2, root2 becomes the new root
@@ -323,12 +394,12 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
     //Removes a Node from its parent's child list and insert it in the root list
     //If the parent Node already lost a child, reshapes the heap accordingly
     private void cut(int i) {
-        Node<Key> x = nodes[i];
+        Node<Key> x = this.nodes[i];
         Node<Key> parent = x.parent;
         parent.child = cut(x, parent.child);
         x.parent = null;
         parent.order--;
-        head = insert(x, head);
+        this.head = insert(x, this.head);
         parent.mark = !parent.mark;
         if (!parent.mark && parent.parent != null) {
             cut(parent.index);
@@ -342,32 +413,34 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
     //Coalesces the roots, thus reshapes the heap
     //Caching a HashMap improves greatly performances
     private void consolidate() {
-        table.clear();
-        Node<Key> x = head;
+        this.table.clear();
+        Node<Key> x = this.head;
         int maxOrder = 0;
-        min = head;
+        this.min = this.head;
         Node<Key> y = null, z = null;
         do {
             y = x;
             x = x.next;
-            z = table.get(y.order);
+            z = this.table.get(y.order);
             while (z != null) {
-                table.remove(y.order);
+                this.table.remove(y.order);
                 if (greater(y.key, z.key)) {
                     link(y, z);
                     y = z;
                 } else {
                     link(z, y);
                 }
-                z = table.get(y.order);
+                z = this.table.get(y.order);
             }
-            table.put(y.order, y);
-            if (y.order > maxOrder) maxOrder = y.order;
-        } while (x != head);
-        head = null;
-        for (Node<Key> n : table.values()) {
-            min = greater(min.key, n.key) ? n : min;
-            head = insert(n, head);
+            this.table.put(y.order, y);
+            if (y.order > maxOrder) {
+                maxOrder = y.order;
+            }
+        } while (x != this.head);
+        this.head = null;
+        for (Node<Key> n : this.table.values()) {
+            this.min = greater(this.min.key, n.key) ? n : this.min;
+            this.head = insert(n, this.head);
         }
     }
 
@@ -401,15 +474,22 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
             Node<Key> res = x.next;
             x.next = null;
             x.prev = null;
-            if (head == x) return res;
-            else return head;
+            if (head == x) {
+                return res;
+            } else {
+                return head;
+            }
         }
     }
 
     //Merges two lists together.
     private Node<Key> meld(Node<Key> x, Node<Key> y) {
-        if (x == null) return y;
-        if (y == null) return x;
+        if (x == null) {
+            return y;
+        }
+        if (y == null) {
+            return x;
+        }
         x.prev.next = y.next;
         y.next.prev = x.prev;
         x.prev = y;
@@ -451,9 +531,11 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
 
         //Constructor takes linear time
         public MyIterator() {
-            copy = new IndexFibonacciMinPQ<Key>(comp, n);
-            for (Node<Key> x : nodes) {
-                if (x != null) copy.insert(x.index, x.key);
+            this.copy = new IndexFibonacciMinPQ<Key>(IndexFibonacciMinPQ.this.comp, IndexFibonacciMinPQ.this.n);
+            for (Node<Key> x : IndexFibonacciMinPQ.this.nodes) {
+                if (x != null) {
+                    this.copy.insert(x.index, x.key);
+                }
             }
         }
 
@@ -462,13 +544,15 @@ public class IndexFibonacciMinPQ<Key> implements Iterable<Integer> {
         }
 
         public boolean hasNext() {
-            return !copy.isEmpty();
+            return !this.copy.isEmpty();
         }
 
         //Takes amortized logarithmic time
         public Integer next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            return copy.delMin();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return this.copy.delMin();
         }
     }
 

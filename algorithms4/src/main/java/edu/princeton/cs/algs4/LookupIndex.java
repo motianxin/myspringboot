@@ -74,8 +74,12 @@ public class LookupIndex {
             String key = fields[0];
             for (int i = 1; i < fields.length; i++) {
                 String val = fields[i];
-                if (!st.contains(key)) st.put(key, new Queue<String>());
-                if (!ts.contains(val)) ts.put(val, new Queue<String>());
+                if (!st.contains(key)) {
+                    st.put(key, new Queue<String>());
+                }
+                if (!ts.contains(val)) {
+                    ts.put(val, new Queue<String>());
+                }
                 st.get(key).enqueue(val);
                 ts.get(val).enqueue(key);
             }
@@ -86,12 +90,16 @@ public class LookupIndex {
         // read queries from standard input, one per line
         while (!StdIn.isEmpty()) {
             String query = StdIn.readLine();
-            if (st.contains(query))
-                for (String vals : st.get(query))
+            if (st.contains(query)) {
+                for (String vals : st.get(query)) {
                     StdOut.println("  " + vals);
-            if (ts.contains(query))
-                for (String keys : ts.get(query))
+                }
+            }
+            if (ts.contains(query)) {
+                for (String keys : ts.get(query)) {
                     StdOut.println("  " + keys);
+                }
+            }
         }
 
     }

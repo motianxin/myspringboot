@@ -19,15 +19,7 @@ public class DynamicProxy implements InvocationHandler {
         this.realObj = realObj;
     }
 
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("befor excute method: " + method.getName());
-        Object result = method.invoke(realObj, args);
-        System.out.println("after excute method: " + method.getName());
-        return result;
-    }
-
-    private static <T> T getProxy(Class<T> tClass, T realObj){
+    private static <T> T getProxy(Class<T> tClass, T realObj) {
         return (T) Proxy.newProxyInstance(tClass.getClassLoader(), new Class<?>[]{tClass}, new DynamicProxy(realObj));
     }
 
@@ -36,5 +28,13 @@ public class DynamicProxy implements InvocationHandler {
         IService proxyService = getProxy(IService.class, realService);
         proxyService.doSomething();
         proxyService.saySomething();
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        System.out.println("befor excute method: " + method.getName());
+        Object result = method.invoke(realObj, args);
+        System.out.println("after excute method: " + method.getName());
+        return result;
     }
 }

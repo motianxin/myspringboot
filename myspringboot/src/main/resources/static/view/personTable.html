@@ -1,10 +1,8 @@
-
-
-<div class="row"style="height: 10%;">
+<div class="row" style="height: 10%;">
 </div>
 
 
-<div class="row" >
+<div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8">
 
@@ -15,13 +13,16 @@
                     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> 添加
                     </button>
 
-                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#updateModel" onclick="getModelData()">
+                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#updateModel"
+                            onclick="getModelData()">
                         <i class="glyphicon glyphicon-edit"></i> 编辑
                     </button>
                     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#delModel">
                         <i class="glyphicon glyphicon-trash"></i> 删除
                     </button>
-                    <button class="btn btn-sm btn-default" type="button"  onclick="view()"><i class="glyphicon glyphicon-eye-open"></i>查看</button>
+                    <button class="btn btn-sm btn-default" type="button" onclick="view()"><i
+                            class="glyphicon glyphicon-eye-open"></i>查看
+                    </button>
                 </div>
 
             </div>
@@ -42,7 +43,7 @@
 
 
 <!-- Modal add start -->
-<form  id="addForm" action="">
+<form id="addForm" action="">
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -58,7 +59,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">姓名:</label>
                         <div class="col-xs-8">
-                            <input type="text" name="username"  placeholder="请输入姓名" class="form-control">
+                            <input type="text" name="username" placeholder="请输入姓名" class="form-control">
                         </div>
                     </div>
 
@@ -66,7 +67,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">密码:</label>
                         <div class="col-xs-8">
-                            <input type="text" name="password"  placeholder="请输入密码" class="form-control">
+                            <input type="text" name="password" placeholder="请输入密码" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -99,14 +100,16 @@
             </div>
             <div class="modal-body">
                 <!-- 隐藏需要删除的id -->
-                <input type="hidden" id="deleteHaulId" />
+                <input type="hidden" id="deleteHaulId"/>
                 <p>您确认要删除该条信息吗？</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
-                        data-dismiss="modal">取消</button>
+                        data-dismiss="modal">取消
+                </button>
                 <button type="button" class="btn btn-primary"
-                        id="deleteHaulBtn" onclick="del()">确认</button>
+                        id="deleteHaulBtn" onclick="del()">确认
+                </button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -118,8 +121,9 @@
 
 <!--model update start-->
 
-<form  id="updateForm" action="">
-    <div class="modal fade" id="updateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form id="updateForm" action="">
+    <div class="modal fade" id="updateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -142,7 +146,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">姓名:</label>
                         <div class="col-xs-8">
-                            <input type="text" name="username" id="upusername"  class="form-control">
+                            <input type="text" name="username" id="upusername" class="form-control">
                         </div>
                     </div>
 
@@ -150,7 +154,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">密码:</label>
                         <div class="col-xs-8">
-                            <input type="text" name="password" id="uppassword"  class="form-control">
+                            <input type="text" name="password" id="uppassword" class="form-control">
                         </div>
                     </div>
                 </div>

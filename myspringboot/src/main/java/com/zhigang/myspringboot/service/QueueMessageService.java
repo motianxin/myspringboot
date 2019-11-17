@@ -12,10 +12,10 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
  **/
 public interface QueueMessageService extends RabbitTemplate.ConfirmCallback {
 
-    /** 
+    /**
      * @Description: 生产者发送消息方法
-     * @Param: [message, exchangeEnum, queueEnum] 
-     * @return: void 
+     * @Param: [message, exchangeEnum, queueEnum]
+     * @return: void
      * @Author: admin
      * @Date: 2019/8/3 23:58
      */

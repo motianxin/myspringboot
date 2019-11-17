@@ -39,6 +39,7 @@ import java.util.NoSuchElementException;
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *
  * @param <Key> the generic type of key on this priority queue
+ *
  * @author Robert Sedgewick
  * @author Kevin Wayne
  */
@@ -54,18 +55,22 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * and {@code maxN - 1}.
      *
      * @param maxN the keys on this priority queue are index from {@code 0}
-     *             {@code maxN - 1}
+     * {@code maxN - 1}
+     *
      * @throws IllegalArgumentException if {@code maxN < 0}
      */
     public IndexMinPQ(int maxN) {
-        if (maxN < 0) throw new IllegalArgumentException();
+        if (maxN < 0) {
+            throw new IllegalArgumentException();
+        }
         this.maxN = maxN;
-        n = 0;
-        keys = (Key[]) new Comparable[maxN + 1];    // make this of length maxN??
-        pq = new int[maxN + 1];
-        qp = new int[maxN + 1];                   // make this of length maxN??
-        for (int i = 0; i <= maxN; i++)
-            qp[i] = -1;
+        this.n = 0;
+        this.keys = (Key[]) new Comparable[maxN + 1];    // make this of length maxN??
+        this.pq = new int[maxN + 1];
+        this.qp = new int[maxN + 1];                   // make this of length maxN??
+        for (int i = 0; i <= maxN; i++) {
+            this.qp[i] = -1;
+        }
     }
 
     /**
@@ -111,20 +116,24 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * {@code false} otherwise
      */
     public boolean isEmpty() {
-        return n == 0;
+        return this.n == 0;
     }
 
     /**
      * Is {@code i} an index on this priority queue?
      *
      * @param i an index
+     *
      * @return {@code true} if {@code i} is an index on this priority queue;
      * {@code false} otherwise
+     *
      * @throws IllegalArgumentException unless {@code 0 <= i < maxN}
      */
     public boolean contains(int i) {
-        if (i < 0 || i >= maxN) throw new IllegalArgumentException();
-        return qp[i] != -1;
+        if (i < 0 || i >= this.maxN) {
+            throw new IllegalArgumentException();
+        }
+        return this.qp[i] != -1;
     }
 
     /**
@@ -133,65 +142,79 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * @return the number of keys on this priority queue
      */
     public int size() {
-        return n;
+        return this.n;
     }
 
     /**
      * Associates key with index {@code i}.
      *
-     * @param i   an index
+     * @param i an index
      * @param key the key to associate with index {@code i}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= i < maxN}
      * @throws IllegalArgumentException if there already is an item associated
-     *                                  with index {@code i}
+     * with index {@code i}
      */
     public void insert(int i, Key key) {
-        if (i < 0 || i >= maxN) throw new IllegalArgumentException();
-        if (contains(i)) throw new IllegalArgumentException("index is already in the priority queue");
-        n++;
-        qp[i] = n;
-        pq[n] = i;
-        keys[i] = key;
-        swim(n);
+        if (i < 0 || i >= this.maxN) {
+            throw new IllegalArgumentException();
+        }
+        if (contains(i)) {
+            throw new IllegalArgumentException("index is already in the priority queue");
+        }
+        this.n++;
+        this.qp[i] = this.n;
+        this.pq[this.n] = i;
+        this.keys[i] = key;
+        swim(this.n);
     }
 
     /**
      * Returns an index associated with a minimum key.
      *
      * @return an index associated with a minimum key
+     *
      * @throws NoSuchElementException if this priority queue is empty
      */
     public int minIndex() {
-        if (n == 0) throw new NoSuchElementException("Priority queue underflow");
-        return pq[1];
+        if (this.n == 0) {
+            throw new NoSuchElementException("Priority queue underflow");
+        }
+        return this.pq[1];
     }
 
     /**
      * Returns a minimum key.
      *
      * @return a minimum key
+     *
      * @throws NoSuchElementException if this priority queue is empty
      */
     public Key minKey() {
-        if (n == 0) throw new NoSuchElementException("Priority queue underflow");
-        return keys[pq[1]];
+        if (this.n == 0) {
+            throw new NoSuchElementException("Priority queue underflow");
+        }
+        return this.keys[this.pq[1]];
     }
 
     /**
      * Removes a minimum key and returns its associated index.
      *
      * @return an index associated with a minimum key
+     *
      * @throws NoSuchElementException if this priority queue is empty
      */
     public int delMin() {
-        if (n == 0) throw new NoSuchElementException("Priority queue underflow");
-        int min = pq[1];
-        exch(1, n--);
+        if (this.n == 0) {
+            throw new NoSuchElementException("Priority queue underflow");
+        }
+        int min = this.pq[1];
+        exch(1, this.n--);
         sink(1);
-        assert min == pq[n + 1];
-        qp[min] = -1;        // delete
-        keys[min] = null;    // to help with garbage collection
-        pq[n + 1] = -1;        // not needed
+        assert min == this.pq[this.n + 1];
+        this.qp[min] = -1;        // delete
+        this.keys[min] = null;    // to help with garbage collection
+        this.pq[this.n + 1] = -1;        // not needed
         return min;
     }
 
@@ -199,37 +222,50 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      * Returns the key associated with index {@code i}.
      *
      * @param i the index of the key to return
+     *
      * @return the key associated with index {@code i}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= i < maxN}
-     * @throws NoSuchElementException   no key is associated with index {@code i}
+     * @throws NoSuchElementException no key is associated with index {@code i}
      */
     public Key keyOf(int i) {
-        if (i < 0 || i >= maxN) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
-        else return keys[i];
+        if (i < 0 || i >= this.maxN) {
+            throw new IllegalArgumentException();
+        }
+        if (!contains(i)) {
+            throw new NoSuchElementException("index is not in the priority queue");
+        } else {
+            return this.keys[i];
+        }
     }
 
     /**
      * Change the key associated with index {@code i} to the specified value.
      *
-     * @param i   the index of the key to change
+     * @param i the index of the key to change
      * @param key change the key associated with index {@code i} to this key
+     *
      * @throws IllegalArgumentException unless {@code 0 <= i < maxN}
-     * @throws NoSuchElementException   no key is associated with index {@code i}
+     * @throws NoSuchElementException no key is associated with index {@code i}
      */
     public void changeKey(int i, Key key) {
-        if (i < 0 || i >= maxN) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
-        keys[i] = key;
-        swim(qp[i]);
-        sink(qp[i]);
+        if (i < 0 || i >= this.maxN) {
+            throw new IllegalArgumentException();
+        }
+        if (!contains(i)) {
+            throw new NoSuchElementException("index is not in the priority queue");
+        }
+        this.keys[i] = key;
+        swim(this.qp[i]);
+        sink(this.qp[i]);
     }
 
     /**
      * Change the key associated with index {@code i} to the specified value.
      *
-     * @param i   the index of the key to change
+     * @param i the index of the key to change
      * @param key change the key associated with index {@code i} to this key
+     *
      * @throws IllegalArgumentException unless {@code 0 <= i < maxN}
      * @deprecated Replaced by {@code changeKey(int, Key)}.
      */
@@ -241,70 +277,89 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
     /**
      * Decrease the key associated with index {@code i} to the specified value.
      *
-     * @param i   the index of the key to decrease
+     * @param i the index of the key to decrease
      * @param key decrease the key associated with index {@code i} to this key
+     *
      * @throws IllegalArgumentException unless {@code 0 <= i < maxN}
      * @throws IllegalArgumentException if {@code key >= keyOf(i)}
-     * @throws NoSuchElementException   no key is associated with index {@code i}
+     * @throws NoSuchElementException no key is associated with index {@code i}
      */
     public void decreaseKey(int i, Key key) {
-        if (i < 0 || i >= maxN) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
-        if (keys[i].compareTo(key) <= 0)
-            throw new IllegalArgumentException("Calling decreaseKey() with given argument would not strictly decrease the key");
-        keys[i] = key;
-        swim(qp[i]);
+        if (i < 0 || i >= this.maxN) {
+            throw new IllegalArgumentException();
+        }
+        if (!contains(i)) {
+            throw new NoSuchElementException("index is not in the priority queue");
+        }
+        if (this.keys[i].compareTo(key) <= 0) {
+            throw new IllegalArgumentException("Calling decreaseKey() with given argument would not strictly " +
+                    "decrease" + " the key");
+        }
+        this.keys[i] = key;
+        swim(this.qp[i]);
     }
 
     /**
      * Increase the key associated with index {@code i} to the specified value.
      *
-     * @param i   the index of the key to increase
+     * @param i the index of the key to increase
      * @param key increase the key associated with index {@code i} to this key
+     *
      * @throws IllegalArgumentException unless {@code 0 <= i < maxN}
      * @throws IllegalArgumentException if {@code key <= keyOf(i)}
-     * @throws NoSuchElementException   no key is associated with index {@code i}
+     * @throws NoSuchElementException no key is associated with index {@code i}
      */
     public void increaseKey(int i, Key key) {
-        if (i < 0 || i >= maxN) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
-        if (keys[i].compareTo(key) >= 0)
-            throw new IllegalArgumentException("Calling increaseKey() with given argument would not strictly increase the key");
-        keys[i] = key;
-        sink(qp[i]);
+        if (i < 0 || i >= this.maxN) {
+            throw new IllegalArgumentException();
+        }
+        if (!contains(i)) {
+            throw new NoSuchElementException("index is not in the priority queue");
+        }
+        if (this.keys[i].compareTo(key) >= 0) {
+            throw new IllegalArgumentException("Calling increaseKey() with given argument would not strictly " +
+                    "increase" + " the key");
+        }
+        this.keys[i] = key;
+        sink(this.qp[i]);
     }
 
     /**
      * Remove the key associated with index {@code i}.
      *
      * @param i the index of the key to remove
+     *
      * @throws IllegalArgumentException unless {@code 0 <= i < maxN}
-     * @throws NoSuchElementException   no key is associated with index {@code i}
+     * @throws NoSuchElementException no key is associated with index {@code i}
      */
     public void delete(int i) {
-        if (i < 0 || i >= maxN) throw new IllegalArgumentException();
-        if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
-        int index = qp[i];
-        exch(index, n--);
+        if (i < 0 || i >= this.maxN) {
+            throw new IllegalArgumentException();
+        }
+        if (!contains(i)) {
+            throw new NoSuchElementException("index is not in the priority queue");
+        }
+        int index = this.qp[i];
+        exch(index, this.n--);
         swim(index);
         sink(index);
-        keys[i] = null;
-        qp[i] = -1;
+        this.keys[i] = null;
+        this.qp[i] = -1;
     }
 
     /***************************************************************************
      * General helper functions.
      ***************************************************************************/
     private boolean greater(int i, int j) {
-        return keys[pq[i]].compareTo(keys[pq[j]]) > 0;
+        return this.keys[this.pq[i]].compareTo(this.keys[this.pq[j]]) > 0;
     }
 
     private void exch(int i, int j) {
-        int swap = pq[i];
-        pq[i] = pq[j];
-        pq[j] = swap;
-        qp[pq[i]] = i;
-        qp[pq[j]] = j;
+        int swap = this.pq[i];
+        this.pq[i] = this.pq[j];
+        this.pq[j] = swap;
+        this.qp[this.pq[i]] = i;
+        this.qp[this.pq[j]] = j;
     }
 
     /***************************************************************************
@@ -323,10 +378,14 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
      ***************************************************************************/
 
     private void sink(int k) {
-        while (2 * k <= n) {
+        while (2 * k <= this.n) {
             int j = 2 * k;
-            if (j < n && greater(j, j + 1)) j++;
-            if (!greater(k, j)) break;
+            if (j < this.n && greater(j, j + 1)) {
+                j++;
+            }
+            if (!greater(k, j)) {
+                break;
+            }
             exch(k, j);
             k = j;
         }
@@ -350,13 +409,14 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
         // add all elements to copy of heap
         // takes linear time since already in heap order so no keys move
         public HeapIterator() {
-            copy = new IndexMinPQ<Key>(pq.length - 1);
-            for (int i = 1; i <= n; i++)
-                copy.insert(pq[i], keys[pq[i]]);
+            this.copy = new IndexMinPQ<Key>(IndexMinPQ.this.pq.length - 1);
+            for (int i = 1; i <= IndexMinPQ.this.n; i++) {
+                this.copy.insert(IndexMinPQ.this.pq[i], IndexMinPQ.this.keys[IndexMinPQ.this.pq[i]]);
+            }
         }
 
         public boolean hasNext() {
-            return !copy.isEmpty();
+            return !this.copy.isEmpty();
         }
 
         public void remove() {
@@ -364,8 +424,10 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
         }
 
         public Integer next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            return copy.delMin();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return this.copy.delMin();
         }
     }
 }

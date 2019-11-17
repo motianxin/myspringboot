@@ -59,19 +59,21 @@ public class Shell {
 
         // 3x+1 increment sequence:  1, 4, 13, 40, 121, 364, 1093, ... 
         int h = 1;
-        while (h < n / 3) h = 3 * h + 1;
+        while (h < n / 3) {
+            h = 3 * h + 1;
+        }
 
         while (h >= 1) {
             // h-sort the array
             for (int i = h; i < n; i++) {
-                for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
-                    exch(a, j, j - h);
+                for (int j = i; j >= h && Shell.less(a[j], a[j - h]); j -= h) {
+                    Shell.exch(a, j, j - h);
                 }
             }
-            assert isHsorted(a, h);
+            assert Shell.isHsorted(a, h);
             h /= 3;
         }
-        assert isSorted(a);
+        assert Shell.isSorted(a);
     }
 
 
@@ -96,15 +98,21 @@ public class Shell {
      *  Check if array is sorted - useful for debugging.
      ***************************************************************************/
     private static boolean isSorted(Comparable[] a) {
-        for (int i = 1; i < a.length; i++)
-            if (less(a[i], a[i - 1])) return false;
+        for (int i = 1; i < a.length; i++) {
+            if (Shell.less(a[i], a[i - 1])) {
+                return false;
+            }
+        }
         return true;
     }
 
     // is the array h-sorted?
     private static boolean isHsorted(Comparable[] a, int h) {
-        for (int i = h; i < a.length; i++)
-            if (less(a[i], a[i - h])) return false;
+        for (int i = h; i < a.length; i++) {
+            if (Shell.less(a[i], a[i - h])) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -124,7 +132,7 @@ public class Shell {
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
         Shell.sort(a);
-        show(a);
+        Shell.show(a);
     }
 
 }

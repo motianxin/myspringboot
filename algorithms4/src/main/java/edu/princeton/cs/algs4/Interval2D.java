@@ -70,8 +70,11 @@ public class Interval2D {
             double y = StdRandom.uniform(0.0, 1.0);
             Point2D point = new Point2D(x, y);
 
-            if (box.contains(point)) counter.increment();
-            else point.draw();
+            if (box.contains(point)) {
+                counter.increment();
+            } else {
+                point.draw();
+            }
         }
 
         StdOut.println(counter);
@@ -82,12 +85,17 @@ public class Interval2D {
      * Does this two-dimensional interval intersect that two-dimensional interval?
      *
      * @param that the other two-dimensional interval
+     *
      * @return true if this two-dimensional interval intersects
      * that two-dimensional interval; false otherwise
      */
     public boolean intersects(Interval2D that) {
-        if (!this.x.intersects(that.x)) return false;
-        if (!this.y.intersects(that.y)) return false;
+        if (!this.x.intersects(that.x)) {
+            return false;
+        }
+        if (!this.y.intersects(that.y)) {
+            return false;
+        }
         return true;
     }
 
@@ -95,6 +103,7 @@ public class Interval2D {
      * Does this two-dimensional interval contain the point p?
      *
      * @param p the two-dimensional point
+     *
      * @return true if this two-dimensional interval contains the point p; false otherwise
      */
     public boolean contains(Point2D p) {
@@ -124,12 +133,19 @@ public class Interval2D {
      * Does this interval equal the other interval?
      *
      * @param other the other interval
+     *
      * @return true if this interval equals the other interval; false otherwise
      */
     public boolean equals(Object other) {
-        if (other == this) return true;
-        if (other == null) return false;
-        if (other.getClass() != this.getClass()) return false;
+        if (other == this) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+        if (other.getClass() != this.getClass()) {
+            return false;
+        }
         Interval2D that = (Interval2D) other;
         return this.x.equals(that.x) && this.y.equals(that.y);
     }

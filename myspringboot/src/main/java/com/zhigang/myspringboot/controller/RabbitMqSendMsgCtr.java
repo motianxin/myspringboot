@@ -25,12 +25,12 @@ public class RabbitMqSendMsgCtr {
 
 
     @GetMapping("/sendtomq")
-    public String sendMsgToMq(@RequestParam("msg") String msg){
+    public String sendMsgToMq(@RequestParam("msg") String msg) {
         String result = "success";
         try {
-            queueMessageService.send(msg, ExchangeEnum.DIRCEXCHANGE, QueueEnum.MY_QUEUE);
+            this.queueMessageService.send(msg, ExchangeEnum.DIRCEXCHANGE, QueueEnum.MY_QUEUE);
         } catch (Exception e) {
-            log.error("", e);
+            RabbitMqSendMsgCtr.log.error("", e);
             result = "failed";
         }
         return result;

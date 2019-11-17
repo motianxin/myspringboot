@@ -10,16 +10,18 @@ package com.zhigang.myspringboot.threadtest.sametimestart;
 public class FireFlag {
 
     private volatile boolean flag = false;
-    public synchronized void  waitFlag() throws InterruptedException {
-        while (!flag) {
+
+    public synchronized void waitFlag() throws InterruptedException {
+        while (!this.flag) {
             wait();
         }
-        System.out.println("FireFlag : "+Thread.currentThread().getState());
+        System.out.println("FireFlag : " + Thread.currentThread().getState());
     }
-    public synchronized void setFlag (){
+
+    public synchronized void setFlag() {
         this.flag = true;
         notifyAll();
-        System.out.println("after notifyall FireFlag : "+Thread.currentThread().getState());
+        System.out.println("after notifyall FireFlag : " + Thread.currentThread().getState());
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

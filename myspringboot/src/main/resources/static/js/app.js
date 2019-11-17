@@ -1,7 +1,7 @@
 angular.module('bossApp', [
     'ngRoute',
     'bossApp.snmpCtrl'
-        ])
+])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
@@ -12,7 +12,7 @@ angular.module('bossApp', [
             })
             .when('/snmp', {
                 templateUrl: 'view/snmp.html',
-                controller:'snmpCtrl'
+                controller: 'snmpCtrl'
             })
             .when('/flash', {
                 templateUrl: 'view/flash.html'

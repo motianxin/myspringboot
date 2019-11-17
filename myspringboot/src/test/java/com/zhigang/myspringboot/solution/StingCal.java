@@ -68,7 +68,7 @@ public class StingCal {
             for (int k = i - m - 1; k > m; k--) {
                 result.add(matrix[k][m]);
             }
-            if (m == count-1 && (i & 1) == 1) {
+            if (m == count - 1 && (i & 1) == 1) {
                 result.add(matrix[i / 2][j / 2]);
             }
             m++;

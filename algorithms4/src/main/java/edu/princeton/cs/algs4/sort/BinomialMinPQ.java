@@ -38,7 +38,7 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(1)
      */
     public BinomialMinPQ() {
-        comp = new MyComparator();
+        this.comp = new MyComparator();
     }
 
     /**
@@ -48,7 +48,7 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
      * @param C a comparator over the keys
      */
     public BinomialMinPQ(Comparator<Key> C) {
-        comp = C;
+        this.comp = C;
     }
 
     /**
@@ -58,8 +58,10 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
      * @param a an array of keys
      */
     public BinomialMinPQ(Key[] a) {
-        comp = new MyComparator();
-        for (Key k : a) insert(k);
+        this.comp = new MyComparator();
+        for (Key k : a) {
+            insert(k);
+        }
     }
 
     /**
@@ -70,8 +72,10 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
      * @param a an array of keys
      */
     public BinomialMinPQ(Comparator<Key> C, Key[] a) {
-        comp = C;
-        for (Key k : a) insert(k);
+        this.comp = C;
+        for (Key k : a) {
+            insert(k);
+        }
     }
 
     /**
@@ -81,7 +85,7 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
      * @return true if the priority queue is empty, false if not
      */
     public boolean isEmpty() {
-        return head == null;
+        return this.head == null;
     }
 
     /**
@@ -89,13 +93,15 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(log(n))
      *
      * @return the number of elements on the priority queue
+     *
      * @throws java.lang.ArithmeticException if there are more than 2^63-1 elements in the queue
      */
     public int size() {
         int result = 0, tmp;
-        for (Node node = head; node != null; node = node.sibling) {
+        for (Node node = this.head; node != null; node = node.sibling) {
             if (node.order > 30) {
-                throw new ArithmeticException("The number of elements cannot be evaluated, but the priority queue is still valid.");
+                throw new ArithmeticException("The number of elements cannot be evaluated, but the priority queue is "
+                        + "still valid.");
             }
             tmp = 1 << node.order;
             result |= tmp;
@@ -123,12 +129,15 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(log(n))
      *
      * @return the minimum key currently in the priority queue
+     *
      * @throws java.util.NoSuchElementException if the priority queue is empty
      */
     public Key minKey() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue is empty");
-        Node min = head;
-        Node current = head;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue is empty");
+        }
+        Node min = this.head;
+        Node current = this.head;
         while (current.sibling != null) {
             min = (greater(min.key, current.sibling.key)) ? current : min;
             current = current.sibling;
@@ -141,10 +150,13 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(log(n))
      *
      * @return the minimum key
+     *
      * @throws java.util.NoSuchElementException if the priority queue is empty
      */
     public Key delMin() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue is empty");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue is empty");
+        }
         Node min = eraseMin();
         Node x = (min.child == null) ? min : min.child;
         if (min.child != null) {
@@ -159,7 +171,7 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
             x.sibling = prevx;
             BinomialMinPQ<Key> H = new BinomialMinPQ<Key>();
             H.head = x;
-            head = union(H).head;
+            this.head = union(H).head;
         }
         return min.key;
     }
@@ -170,17 +182,20 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(log(n))
      *
      * @param heap a Binomial Heap to be merged with the current heap
+     *
      * @return the union of two heaps
+     *
      * @throws java.lang.IllegalArgumentException if the heap in parameter is null
      */
     public BinomialMinPQ<Key> union(BinomialMinPQ<Key> heap) {
-        if (heap == null) throw new IllegalArgumentException("Cannot merge a Binomial Heap with null");
+        if (heap == null) {
+            throw new IllegalArgumentException("Cannot merge a Binomial Heap with null");
+        }
         this.head = merge(new Node(), this.head, heap.head).sibling;
         Node x = this.head;
         Node prevx = null, nextx = x.sibling;
         while (nextx != null) {
-            if (x.order < nextx.order ||
-                    (nextx.sibling != null && nextx.sibling.order == x.order)) {
+            if (x.order < nextx.order || (nextx.sibling != null && nextx.sibling.order == x.order)) {
                 prevx = x;
                 x = nextx;
             } else if (greater(nextx.key, x.key)) {
@@ -206,9 +221,13 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
 
     //Compares two keys
     private boolean greater(Key n, Key m) {
-        if (n == null) return false;
-        if (m == null) return true;
-        return comp.compare(n, m) > 0;
+        if (n == null) {
+            return false;
+        }
+        if (m == null) {
+            return true;
+        }
+        return this.comp.compare(n, m) > 0;
     }
 
     //Assuming root1 holds a greater key than root2, root2 becomes the new root
@@ -220,9 +239,9 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
 
     //Deletes and return the node containing the minimum key
     private Node eraseMin() {
-        Node min = head;
+        Node min = this.head;
         Node previous = null;
-        Node current = head;
+        Node current = this.head;
         while (current.sibling != null) {
             if (greater(min.key, current.sibling.key)) {
                 previous = current;
@@ -231,7 +250,9 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
             current = current.sibling;
         }
         previous.sibling = min.sibling;
-        if (min == head) head = min.sibling;
+        if (min == this.head) {
+            this.head = min.sibling;
+        }
         return min;
     }
 
@@ -241,11 +262,17 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
 
     //Merges two root lists into one, there can be up to 2 Binomial Trees of same order
     private Node merge(Node h, Node x, Node y) {
-        if (x == null && y == null) return h;
-        else if (x == null) h.sibling = merge(y, null, y.sibling);
-        else if (y == null) h.sibling = merge(x, x.sibling, null);
-        else if (x.order < y.order) h.sibling = merge(x, x.sibling, y);
-        else h.sibling = merge(y, x, y.sibling);
+        if (x == null && y == null) {
+            return h;
+        } else if (x == null) {
+            h.sibling = merge(y, null, y.sibling);
+        } else if (y == null) {
+            h.sibling = merge(x, x.sibling, null);
+        } else if (x.order < y.order) {
+            h.sibling = merge(x, x.sibling, y);
+        } else {
+            h.sibling = merge(y, x, y.sibling);
+        }
         return h;
     }
 
@@ -279,12 +306,14 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
         //Constructor clones recursively the elements in the queue
         //It takes linear time
         public MyIterator() {
-            data = new BinomialMinPQ<Key>(comp);
-            data.head = clone(head, null);
+            this.data = new BinomialMinPQ<Key>(BinomialMinPQ.this.comp);
+            this.data.head = clone(BinomialMinPQ.this.head, null);
         }
 
         private Node clone(Node x, Node parent) {
-            if (x == null) return null;
+            if (x == null) {
+                return null;
+            }
             Node node = new Node();
             node.key = x.key;
             node.sibling = clone(x.sibling, parent);
@@ -293,12 +322,14 @@ public class BinomialMinPQ<Key> implements Iterable<Key> {
         }
 
         public boolean hasNext() {
-            return !data.isEmpty();
+            return !this.data.isEmpty();
         }
 
         public Key next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            return data.delMin();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return this.data.delMin();
         }
 
         public void remove() {

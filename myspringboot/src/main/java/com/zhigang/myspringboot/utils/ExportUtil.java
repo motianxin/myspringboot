@@ -14,11 +14,23 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +45,9 @@ import java.util.Map;
  * @create 2019/3/19 9:37
  */
 public class ExportUtil {
+    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private final static String FILE_NAME_FORMAT = "yyyyMMddHHmmss";
+    private static final String SUFFIX = ".xls";
     /**
      * 标题行样式
      */
@@ -58,12 +73,6 @@ public class ExportUtil {
      */
     private static Font contentFont;
 
-    private final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    private final static String FILE_NAME_FORMAT = "yyyyMMddHHmmss";
-
-    private static final String SUFFIX = ".xls";
-
-
     /**
      * @Author admin
      * @Description 表格导出公共方法
@@ -72,16 +81,17 @@ public class ExportUtil {
      * @date 2019/3/19 10:27
      **/
     public static <T extends ExportBaseVo> Workbook getWbByVos(List<T> vos, String[] tableHeader, String sheetName) {
-        HSSFWorkbook wb = init();
+        HSSFWorkbook wb = ExportUtil.init();
         HSSFSheet sheet = wb.createSheet(sheetName);
-        createTableHeadRow(sheet.createRow(0), tableHeader);
-        createTableDataRows(sheet, vos, tableHeader);
-        adjustColumnSize(sheet, tableHeader.length);
+        ExportUtil.createTableHeadRow(sheet.createRow(0), tableHeader);
+        ExportUtil.createTableDataRows(sheet, vos, tableHeader);
+        ExportUtil.adjustColumnSize(sheet, tableHeader.length);
         return wb;
     }
 
 
-    private static <T extends ExportBaseVo> void createTableDataRows(HSSFSheet sheet, List<T> vos, String[] tableHeader) {
+    private static <T extends ExportBaseVo> void createTableDataRows(HSSFSheet sheet, List<T> vos,
+                                                                     String[] tableHeader) {
         if (vos != null) {
             HSSFRow row;
             HSSFCell cell;
@@ -109,86 +119,87 @@ public class ExportUtil {
     public static HSSFWorkbook init() {
         HSSFWorkbook wb = new HSSFWorkbook();
 
-        titleFont = wb.createFont();
-        titleStyle = wb.createCellStyle();
-        headStyle = wb.createCellStyle();
-        headFont = wb.createFont();
-        contentStyle = wb.createCellStyle();
-        contentFont = wb.createFont();
+        ExportUtil.titleFont = wb.createFont();
+        ExportUtil.titleStyle = wb.createCellStyle();
+        ExportUtil.headStyle = wb.createCellStyle();
+        ExportUtil.headFont = wb.createFont();
+        ExportUtil.contentStyle = wb.createCellStyle();
+        ExportUtil.contentFont = wb.createFont();
 
-        initTitleCellStyle();
-        initTitleFont();
-        initHeadCellStyle();
-        initHeadFont();
-        initContentCellStyle();
-        initContentFont();
+        ExportUtil.initTitleCellStyle();
+        ExportUtil.initTitleFont();
+        ExportUtil.initHeadCellStyle();
+        ExportUtil.initHeadFont();
+        ExportUtil.initContentCellStyle();
+        ExportUtil.initContentFont();
         return wb;
     }
 
     private static void initContentFont() {
-        contentFont.setFontName("微软雅黑");
-        contentFont.setFontHeightInPoints((short) 10);
-        contentFont.setBold(false);
-        contentFont.setCharSet(Font.DEFAULT_CHARSET);
-        contentFont.setColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.contentFont.setFontName("微软雅黑");
+        ExportUtil.contentFont.setFontHeightInPoints((short) 10);
+        ExportUtil.contentFont.setBold(false);
+        ExportUtil.contentFont.setCharSet(Font.DEFAULT_CHARSET);
+        ExportUtil.contentFont.setColor(IndexedColors.BLACK.getIndex());
     }
 
     private static void initHeadFont() {
-        headFont.setFontName("微软雅黑");
-        headFont.setFontHeightInPoints((short) 10);
-        headFont.setBold(true);
-        headFont.setCharSet(Font.DEFAULT_CHARSET);
-        headFont.setColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.headFont.setFontName("微软雅黑");
+        ExportUtil.headFont.setFontHeightInPoints((short) 10);
+        ExportUtil.headFont.setBold(true);
+        ExportUtil.headFont.setCharSet(Font.DEFAULT_CHARSET);
+        ExportUtil.headFont.setColor(IndexedColors.BLACK.getIndex());
     }
 
     private static void initTitleFont() {
-        titleFont.setFontName("微软雅黑");
-        titleFont.setFontHeightInPoints((short) 20);
-        titleFont.setBold(true);
-        titleFont.setCharSet(Font.DEFAULT_CHARSET);
-        titleFont.setColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.titleFont.setFontName("微软雅黑");
+        ExportUtil.titleFont.setFontHeightInPoints((short) 20);
+        ExportUtil.titleFont.setBold(true);
+        ExportUtil.titleFont.setCharSet(Font.DEFAULT_CHARSET);
+        ExportUtil.titleFont.setColor(IndexedColors.BLACK.getIndex());
     }
 
     private static void initContentCellStyle() {
-        contentStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
-        contentStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-        contentStyle.setFont(contentFont);
-        contentStyle.setBorderTop(BorderStyle.THIN);
-        contentStyle.setBorderBottom(BorderStyle.THIN);
-        contentStyle.setBorderLeft(BorderStyle.THIN);
-        contentStyle.setBorderRight(BorderStyle.THIN);
-        contentStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-        contentStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-        contentStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-        contentStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-        contentStyle.setWrapText(true);
+        ExportUtil.contentStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+        ExportUtil.contentStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        ExportUtil.contentStyle.setFont(ExportUtil.contentFont);
+        ExportUtil.contentStyle.setBorderTop(BorderStyle.THIN);
+        ExportUtil.contentStyle.setBorderBottom(BorderStyle.THIN);
+        ExportUtil.contentStyle.setBorderLeft(BorderStyle.THIN);
+        ExportUtil.contentStyle.setBorderRight(BorderStyle.THIN);
+        ExportUtil.contentStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.contentStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.contentStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.contentStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.contentStyle.setWrapText(true);
     }
 
     private static void initHeadCellStyle() {
-        headStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
-        headStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-        headStyle.setFont(headFont);
-        headStyle.setFillBackgroundColor(IndexedColors.YELLOW.getIndex());
-        headStyle.setBorderTop(BorderStyle.MEDIUM);
-        headStyle.setBorderBottom(BorderStyle.THIN);
-        headStyle.setBorderLeft(BorderStyle.THIN);
-        headStyle.setBorderRight(BorderStyle.THIN);
-        headStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-        headStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-        headStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-        headStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.headStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+        ExportUtil.headStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        ExportUtil.headStyle.setFont(ExportUtil.headFont);
+        ExportUtil.headStyle.setFillBackgroundColor(IndexedColors.YELLOW.getIndex());
+        ExportUtil.headStyle.setBorderTop(BorderStyle.MEDIUM);
+        ExportUtil.headStyle.setBorderBottom(BorderStyle.THIN);
+        ExportUtil.headStyle.setBorderLeft(BorderStyle.THIN);
+        ExportUtil.headStyle.setBorderRight(BorderStyle.THIN);
+        ExportUtil.headStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.headStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.headStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.headStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
     }
 
     private static void initTitleCellStyle() {
-        titleStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
-        titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-        titleStyle.setFont(titleFont);
-        titleStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
+        ExportUtil.titleStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+        ExportUtil.titleStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        ExportUtil.titleStyle.setFont(ExportUtil.titleFont);
+        ExportUtil.titleStyle.setFillBackgroundColor(IndexedColors.BLACK.getIndex());
     }
 
     /**
      * 调整列宽
      * sheet.AutoSizeColumn(i)不能解决中文列宽
+     *
      * @param sheet
      * @param columnNum
      */
@@ -206,23 +217,23 @@ public class ExportUtil {
         HSSFCell cell = null;
         for (int i = 0; i < colNames.length; i++) {
             cell = row.createCell(i);
-            cell.setCellStyle(headStyle);
+            cell.setCellStyle(ExportUtil.headStyle);
             cell.setCellValue(colNames[i]);
         }
     }
 
     public static String getFielNameSuf() {
-        SimpleDateFormat format = new SimpleDateFormat(FILE_NAME_FORMAT);
-        return format.format(new Date()) + SUFFIX;
+        SimpleDateFormat format = new SimpleDateFormat(ExportUtil.FILE_NAME_FORMAT);
+        return format.format(new Date()) + ExportUtil.SUFFIX;
     }
 
     public static String getTime(Timestamp alarmOccurTime) {
-        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat format = new SimpleDateFormat(ExportUtil.DATE_FORMAT);
         return format.format(alarmOccurTime);
     }
 
     public static String formatData(Date createTime) {
-        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat format = new SimpleDateFormat(ExportUtil.DATE_FORMAT);
         return format.format(createTime);
     }
 
@@ -231,7 +242,7 @@ public class ExportUtil {
         wb.write(os);
         byte[] content = os.toByteArray();
         InputStream is = new ByteArrayInputStream(content);
-        fileNameIntoResp(response, fileName);
+        ExportUtil.fileNameIntoResp(response, fileName);
         ServletOutputStream out = response.getOutputStream();
         BufferedInputStream bis = new BufferedInputStream(is);
         BufferedOutputStream bos = new BufferedOutputStream(out);
@@ -251,8 +262,7 @@ public class ExportUtil {
     public static void fileNameIntoResp(HttpServletResponse response, String fileName) throws UnsupportedEncodingException {
         response.reset();
         response.setContentType("multipart/form-data;charset=utf-8");
-        response.setHeader("Content-Disposition", "attachment;filename=" +
-                new String(fileName.getBytes(), "UTF-8"));
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "UTF-8"));
         response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
         response.setCharacterEncoding("utf-8");
     }

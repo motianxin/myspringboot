@@ -15,19 +15,19 @@ public class MyExecutor {
         ExcuteThread<V> excuteThread = new ExcuteThread<>(task, lock);
         excuteThread.start();
         return () -> {
-                synchronized (lock){
-                    while (!excuteThread.isDone()){
-                        try {
-                            lock.wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+            synchronized (lock) {
+                while (!excuteThread.isDone()) {
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                    if (excuteThread.getException() != null) {
-                        throw excuteThread.getException();
-                    }
-                    return excuteThread.getResult();
                 }
+                if (excuteThread.getException() != null) {
+                    throw excuteThread.getException();
+                }
+                return excuteThread.getResult();
+            }
         };
     }
 }

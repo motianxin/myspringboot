@@ -17,7 +17,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int size = sc.nextInt();
         Set<Integer> numbers = new TreeSet<>();
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             numbers.add(sc.nextInt());
         }
         numbers.forEach((i) -> System.out.println(i));

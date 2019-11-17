@@ -9,32 +9,32 @@
 package com.zhigang.myspringboot.domain;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈响应对象〉
  *
  * @author admin
- * @create 2019/1/24 16:23
  * @version 3.2.2
+ * @create 2019/1/24 16:23
  */
 public class ResponseModel {
 
-	private int code;
+    private int code;
 
-	private String msg;
+    private String msg;
 
-	public int getCode() {
-		return code;
-	}
+    public int getCode() {
+        return this.code;
+    }
 
-	public void setCode(int code) {
-		this.code = code;
-	}
+    public void setCode(int code) {
+        this.code = code;
+    }
 
-	public String getMsg() {
-		return msg;
-	}
+    public String getMsg() {
+        return this.msg;
+    }
 
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 }

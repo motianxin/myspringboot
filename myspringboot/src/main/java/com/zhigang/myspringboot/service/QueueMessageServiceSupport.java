@@ -32,8 +32,7 @@ public class QueueMessageServiceSupport implements QueueMessageService {
         //构建回调id为uuid
         CorrelationData correlationId = new CorrelationData(UUID.randomUUID().toString());
         //发送消息到消息队列
-        rabbitTemplate.convertAndSend(exchangeEnum.getExchangeName(),
-                queueEnum.getQueueName(), message, correlationId);
+        rabbitTemplate.convertAndSend(exchangeEnum.getExchangeName(), queueEnum.getQueueName(), message, correlationId);
     }
 
     /**

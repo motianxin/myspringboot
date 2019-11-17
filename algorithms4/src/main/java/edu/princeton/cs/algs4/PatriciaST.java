@@ -132,8 +132,12 @@ public class PatriciaST<Value> {
      * (because these methods do not regard string lengths).
      */
     private static boolean safeBitTest(String key, int b) {
-        if (b < key.length() * 16) return bitTest(key, b) != 0;
-        if (b > key.length() * 16 + 15) return false;   // padding
+        if (b < key.length() * 16) {
+            return bitTest(key, b) != 0;
+        }
+        if (b > key.length() * 16 + 15) {
+            return false;   // padding
+        }
         /* 16 bits of 0xffff */
         return true;    // end marker
     }
@@ -148,9 +152,14 @@ public class PatriciaST<Value> {
      * '\u0000' characters, appended to the end.
      */
     private static int safeCharAt(String key, int i) {
-        if (i < key.length()) return key.charAt(i);
-        if (i > key.length()) return 0x0000;            // padding
-        else return 0xffff;            // end marker
+        if (i < key.length()) {
+            return key.charAt(i);
+        }
+        if (i > key.length()) {
+            return 0x0000;            // padding
+        } else {
+            return 0xffff;            // end marker
+        }
     }
 
     /* For efficiency's sake, the firstDifferingBit function compares entire
@@ -173,12 +182,16 @@ public class PatriciaST<Value> {
         int c2 = safeCharAt(k2, 0) & ~1;
         if (c1 == c2) {
             i = 1;
-            while (safeCharAt(k1, i) == safeCharAt(k2, i)) i++;
+            while (safeCharAt(k1, i) == safeCharAt(k2, i)) {
+                i++;
+            }
             c1 = safeCharAt(k1, i);
             c2 = safeCharAt(k2, i);
         }
         int b = 0;
-        while (((c1 >>> b) & 1) == ((c2 >>> b) & 1)) b++;
+        while (((c1 >>> b) & 1) == ((c2 >>> b) & 1)) {
+            b++;
+        }
         return i * 16 + b;
     }
 
@@ -199,8 +212,12 @@ public class PatriciaST<Value> {
         int countPass = 0;
         boolean ok = true;
 
-        if (args.length > 0) limitItem = Integer.parseInt(args[0]);
-        if (args.length > 1) limitPass = Integer.parseInt(args[1]);
+        if (args.length > 0) {
+            limitItem = Integer.parseInt(args[0]);
+        }
+        if (args.length > 1) {
+            limitPass = Integer.parseInt(args[1]);
+        }
 
         do {
             String[] a = new String[limitItem];
@@ -216,60 +233,90 @@ public class PatriciaST<Value> {
             StdRandom.shuffle(v);
 
             StdOut.printf("Adding (%d items)...\n", limitItem);
-            for (int i = 0; i < limitItem; i++)
+            for (int i = 0; i < limitItem; i++) {
                 st.put(a[v[i]], v[i]);
+            }
 
             int countKeys = 0;
             StdOut.printf("Iterating...\n");
-            for (String key : st.keys()) countKeys++;
+            for (String key : st.keys()) {
+                countKeys++;
+            }
             StdOut.printf("%d items iterated\n", countKeys);
-            if (countKeys != limitItem) ok = false;
-            if (countKeys != st.size()) ok = false;
+            if (countKeys != limitItem) {
+                ok = false;
+            }
+            if (countKeys != st.size()) {
+                ok = false;
+            }
 
             StdOut.printf("Shuffling...\n");
             StdRandom.shuffle(v);
 
             int limitDelete = limitItem / 2;
             StdOut.printf("Deleting (%d items)...\n", limitDelete);
-            for (int i = 0; i < limitDelete; i++)
+            for (int i = 0; i < limitDelete; i++) {
                 st.delete(a[v[i]]);
+            }
 
             countKeys = 0;
             StdOut.printf("Iterating...\n");
-            for (String key : st.keys()) countKeys++;
+            for (String key : st.keys()) {
+                countKeys++;
+            }
             StdOut.printf("%d items iterated\n", countKeys);
-            if (countKeys != limitItem - limitDelete) ok = false;
-            if (countKeys != st.size()) ok = false;
+            if (countKeys != limitItem - limitDelete) {
+                ok = false;
+            }
+            if (countKeys != st.size()) {
+                ok = false;
+            }
 
             int countDelete = 0;
             int countRemain = 0;
             StdOut.printf("Checking...\n");
             for (int i = 0; i < limitItem; i++) {
                 if (i < limitDelete) {
-                    if (!st.contains(a[v[i]])) countDelete++;
+                    if (!st.contains(a[v[i]])) {
+                        countDelete++;
+                    }
                 } else {
                     int val = st.get(a[v[i]]);
-                    if (val == v[i]) countRemain++;
+                    if (val == v[i]) {
+                        countRemain++;
+                    }
                 }
             }
-            StdOut.printf("%d items found and %d (deleted) items missing\n",
-                    countRemain, countDelete);
-            if (countRemain + countDelete != limitItem) ok = false;
-            if (countRemain != st.size()) ok = false;
-            if (st.isEmpty()) ok = false;
+            StdOut.printf("%d items found and %d (deleted) items missing\n", countRemain, countDelete);
+            if (countRemain + countDelete != limitItem) {
+                ok = false;
+            }
+            if (countRemain != st.size()) {
+                ok = false;
+            }
+            if (st.isEmpty()) {
+                ok = false;
+            }
 
-            StdOut.printf("Deleting the rest (%d items)...\n",
-                    limitItem - countDelete);
-            for (int i = countDelete; i < limitItem; i++)
+            StdOut.printf("Deleting the rest (%d items)...\n", limitItem - countDelete);
+            for (int i = countDelete; i < limitItem; i++) {
                 st.delete(a[v[i]]);
-            if (!st.isEmpty()) ok = false;
+            }
+            if (!st.isEmpty()) {
+                ok = false;
+            }
 
             countPass++;
-            if (ok) StdOut.printf("PASS %d TESTS SUCCEEDED\n", countPass);
-            else StdOut.printf("PASS %d TESTS FAILED\n", countPass);
+            if (ok) {
+                StdOut.printf("PASS %d TESTS SUCCEEDED\n", countPass);
+            } else {
+                StdOut.printf("PASS %d TESTS FAILED\n", countPass);
+            }
         } while (ok && countPass < limitPass);
 
-        if (!ok) throw new java.lang.RuntimeException("TESTS FAILED");
+        if (!ok) {
+            throw new java.lang.RuntimeException("TESTS FAILED");
+        }
     }
 
     /**
@@ -280,27 +327,40 @@ public class PatriciaST<Value> {
      *
      * @param key the key
      * @param val the value
+     *
      * @throws IllegalArgumentException if {@code key} is {@code null}
      * @throws IllegalArgumentException if {@code key} is the empty string.
      */
     public void put(String key, Value val) {
-        if (key == null) throw new IllegalArgumentException("called put(null)");
-        if (key.length() == 0) throw new IllegalArgumentException("invalid key");
-        if (val == null) delete(key);
+        if (key == null) {
+            throw new IllegalArgumentException("called put(null)");
+        }
+        if (key.length() == 0) {
+            throw new IllegalArgumentException("invalid key");
+        }
+        if (val == null) {
+            delete(key);
+        }
         Node p;
         Node x = head;
         do {
             p = x;
-            if (safeBitTest(key, x.b)) x = x.right;
-            else x = x.left;
+            if (safeBitTest(key, x.b)) {
+                x = x.right;
+            } else {
+                x = x.left;
+            }
         } while (p.b < x.b);
         if (!x.key.equals(key)) {
             int b = firstDifferingBit(x.key, key);
             x = head;
             do {
                 p = x;
-                if (safeBitTest(key, x.b)) x = x.right;
-                else x = x.left;
+                if (safeBitTest(key, x.b)) {
+                    x = x.right;
+                } else {
+                    x = x.left;
+                }
             } while (p.b < x.b && x.b < b);
             Node t = new Node(key, val, b);
             if (safeBitTest(key, b)) {
@@ -310,33 +370,50 @@ public class PatriciaST<Value> {
                 t.left = t;
                 t.right = x;
             }
-            if (safeBitTest(key, p.b)) p.right = t;
-            else p.left = t;
+            if (safeBitTest(key, p.b)) {
+                p.right = t;
+            } else {
+                p.left = t;
+            }
             count++;
-        } else x.val = val;
+        } else {
+            x.val = val;
+        }
     }
 
     /**
      * Retrieves the value associated with the given key.
      *
      * @param key the key
+     *
      * @return the value associated with the given key if the key is in the
      * symbol table and {@code null} if the key is not in the symbol table
+     *
      * @throws IllegalArgumentException if {@code key} is {@code null}
      * @throws IllegalArgumentException if {@code key} is the empty string.
      */
     public Value get(String key) {
-        if (key == null) throw new IllegalArgumentException("called get(null)");
-        if (key.length() == 0) throw new IllegalArgumentException("invalid key");
+        if (key == null) {
+            throw new IllegalArgumentException("called get(null)");
+        }
+        if (key.length() == 0) {
+            throw new IllegalArgumentException("invalid key");
+        }
         Node p;
         Node x = head;
         do {
             p = x;
-            if (safeBitTest(key, x.b)) x = x.right;
-            else x = x.left;
+            if (safeBitTest(key, x.b)) {
+                x = x.right;
+            } else {
+                x = x.left;
+            }
         } while (p.b < x.b);
-        if (x.key.equals(key)) return x.val;
-        else return null;
+        if (x.key.equals(key)) {
+            return x.val;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -344,43 +421,69 @@ public class PatriciaST<Value> {
      * exists.
      *
      * @param key the key
+     *
      * @throws IllegalArgumentException if {@code key} is {@code null}
      * @throws IllegalArgumentException if {@code key} is the empty string.
      */
     public void delete(String key) {
-        if (key == null) throw new IllegalArgumentException("called delete(null)");
-        if (key.length() == 0) throw new IllegalArgumentException("invalid key");
+        if (key == null) {
+            throw new IllegalArgumentException("called delete(null)");
+        }
+        if (key.length() == 0) {
+            throw new IllegalArgumentException("invalid key");
+        }
         Node g;             // previous previous (grandparent)
         Node p = head;      // previous (parent)
         Node x = head;      // node to delete
         do {
             g = p;
             p = x;
-            if (safeBitTest(key, x.b)) x = x.right;
-            else x = x.left;
+            if (safeBitTest(key, x.b)) {
+                x = x.right;
+            } else {
+                x = x.left;
+            }
         } while (p.b < x.b);
         if (x.key.equals(key)) {
             Node z;
             Node y = head;
             do {            // find the true parent (z) of x
                 z = y;
-                if (safeBitTest(key, y.b)) y = y.right;
-                else y = y.left;
+                if (safeBitTest(key, y.b)) {
+                    y = y.right;
+                } else {
+                    y = y.left;
+                }
             } while (y != x);
             if (x == p) {   // case 1: remove (leaf node) x
                 Node c;     // child of x
-                if (safeBitTest(key, x.b)) c = x.left;
-                else c = x.right;
-                if (safeBitTest(key, z.b)) z.right = c;
-                else z.left = c;
+                if (safeBitTest(key, x.b)) {
+                    c = x.left;
+                } else {
+                    c = x.right;
+                }
+                if (safeBitTest(key, z.b)) {
+                    z.right = c;
+                } else {
+                    z.left = c;
+                }
             } else {          // case 2: p replaces (internal node) x
                 Node c;     // child of p
-                if (safeBitTest(key, p.b)) c = p.left;
-                else c = p.right;
-                if (safeBitTest(key, g.b)) g.right = c;
-                else g.left = c;
-                if (safeBitTest(key, z.b)) z.right = p;
-                else z.left = p;
+                if (safeBitTest(key, p.b)) {
+                    c = p.left;
+                } else {
+                    c = p.right;
+                }
+                if (safeBitTest(key, g.b)) {
+                    g.right = c;
+                } else {
+                    g.left = c;
+                }
+                if (safeBitTest(key, z.b)) {
+                    z.right = p;
+                } else {
+                    z.left = p;
+                }
                 p.left = x.left;
                 p.right = x.right;
                 p.b = x.b;
@@ -394,8 +497,10 @@ public class PatriciaST<Value> {
      * key, exists within the symbol table.
      *
      * @param key the key
+     *
      * @return {@code true} if this symbol table contains the given
      * {@code key} and {@code false} otherwise
+     *
      * @throws IllegalArgumentException if {@code key} is {@code null}
      * @throws IllegalArgumentException if {@code key} is the empty string.
      */
@@ -432,8 +537,12 @@ public class PatriciaST<Value> {
      */
     public Iterable<String> keys() {
         Queue<String> queue = new Queue<String>();
-        if (head.left != head) keys(head.left, 0, queue);
-        if (head.right != head) keys(head.right, 0, queue);
+        if (head.left != head) {
+            keys(head.left, 0, queue);
+        }
+        if (head.right != head) {
+            keys(head.right, 0, queue);
+        }
         return queue;
     }
 

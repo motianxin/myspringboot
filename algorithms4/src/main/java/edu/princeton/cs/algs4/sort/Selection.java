@@ -54,18 +54,20 @@ public class Selection {
         for (int i = 0; i < n; i++) {
             int min = i;
             for (int j = i + 1; j < n; j++) {
-                if (less(a[j], a[min])) min = j;
+                if (Selection.less(a[j], a[min])) {
+                    min = j;
+                }
             }
-            exch(a, i, min);
-            assert isSorted(a, 0, i);
+            Selection.exch(a, i, min);
+            assert Selection.isSorted(a, 0, i);
         }
-        assert isSorted(a);
+        assert Selection.isSorted(a);
     }
 
     /**
      * Rearranges the array in ascending order, using a comparator.
      *
-     * @param a          the array
+     * @param a the array
      * @param comparator the comparator specifying the order
      */
     public static void sort(Object[] a, Comparator comparator) {
@@ -73,12 +75,14 @@ public class Selection {
         for (int i = 0; i < n; i++) {
             int min = i;
             for (int j = i + 1; j < n; j++) {
-                if (less(comparator, a[j], a[min])) min = j;
+                if (Selection.less(comparator, a[j], a[min])) {
+                    min = j;
+                }
             }
-            exch(a, i, min);
-            assert isSorted(a, comparator, 0, i);
+            Selection.exch(a, i, min);
+            assert Selection.isSorted(a, comparator, 0, i);
         }
-        assert isSorted(a, comparator);
+        assert Selection.isSorted(a, comparator);
     }
 
 
@@ -111,25 +115,31 @@ public class Selection {
 
     // is the array a[] sorted?
     private static boolean isSorted(Comparable[] a) {
-        return isSorted(a, 0, a.length - 1);
+        return Selection.isSorted(a, 0, a.length - 1);
     }
 
     // is the array sorted from a[lo] to a[hi]
     private static boolean isSorted(Comparable[] a, int lo, int hi) {
-        for (int i = lo + 1; i <= hi; i++)
-            if (less(a[i], a[i - 1])) return false;
+        for (int i = lo + 1; i <= hi; i++) {
+            if (Selection.less(a[i], a[i - 1])) {
+                return false;
+            }
+        }
         return true;
     }
 
     // is the array a[] sorted?
     private static boolean isSorted(Object[] a, Comparator comparator) {
-        return isSorted(a, comparator, 0, a.length - 1);
+        return Selection.isSorted(a, comparator, 0, a.length - 1);
     }
 
     // is the array sorted from a[lo] to a[hi]
     private static boolean isSorted(Object[] a, Comparator comparator, int lo, int hi) {
-        for (int i = lo + 1; i <= hi; i++)
-            if (less(comparator, a[i], a[i - 1])) return false;
+        for (int i = lo + 1; i <= hi; i++) {
+            if (Selection.less(comparator, a[i], a[i - 1])) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -150,7 +160,7 @@ public class Selection {
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
         Selection.sort(a);
-        show(a);
+        Selection.show(a);
     }
 }
 

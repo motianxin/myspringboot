@@ -164,7 +164,9 @@ public class CC {
      * Returns the component id of the connected component containing vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the component id of the connected component containing vertex {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int id(int v) {
@@ -176,7 +178,9 @@ public class CC {
      * Returns the number of vertices in the connected component containing vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the number of vertices in the connected component containing vertex {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int size(int v) {
@@ -199,8 +203,10 @@ public class CC {
      *
      * @param v one vertex
      * @param w the other vertex
+     *
      * @return {@code true} if vertices {@code v} and {@code w} are in the same
      * connected component; {@code false} otherwise
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      * @throws IllegalArgumentException unless {@code 0 <= w < V}
      */
@@ -216,8 +222,10 @@ public class CC {
      *
      * @param v one vertex
      * @param w the other vertex
+     *
      * @return {@code true} if vertices {@code v} and {@code w} are in the same
      * connected component; {@code false} otherwise
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      * @throws IllegalArgumentException unless {@code 0 <= w < V}
      * @deprecated Replaced by {@link #connected(int, int)}.
@@ -232,8 +240,9 @@ public class CC {
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = marked.length;
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 }
 

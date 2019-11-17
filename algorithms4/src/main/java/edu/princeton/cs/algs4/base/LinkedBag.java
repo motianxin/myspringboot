@@ -56,8 +56,8 @@ public class LinkedBag<Item> implements Iterable<Item> {
      * Initializes an empty bag.
      */
     public LinkedBag() {
-        first = null;
-        n = 0;
+        this.first = null;
+        this.n = 0;
     }
 
     /**
@@ -84,7 +84,7 @@ public class LinkedBag<Item> implements Iterable<Item> {
      * @return true if this bag is empty; false otherwise
      */
     public boolean isEmpty() {
-        return first == null;
+        return this.first == null;
     }
 
     /**
@@ -93,7 +93,7 @@ public class LinkedBag<Item> implements Iterable<Item> {
      * @return the number of items in this bag
      */
     public int size() {
-        return n;
+        return this.n;
     }
 
     /**
@@ -102,11 +102,11 @@ public class LinkedBag<Item> implements Iterable<Item> {
      * @param item the item to add to this bag
      */
     public void add(Item item) {
-        Node oldfirst = first;
-        first = new Node();
-        first.item = item;
-        first.next = oldfirst;
-        n++;
+        Node oldfirst = this.first;
+        this.first = new Node();
+        this.first.item = item;
+        this.first.next = oldfirst;
+        this.n++;
     }
 
 
@@ -129,12 +129,12 @@ public class LinkedBag<Item> implements Iterable<Item> {
 
         // creates a new iterator
         public ListIterator() {
-            current = first;
+            this.current = LinkedBag.this.first;
         }
 
         // is there a next item in the iterator?
         public boolean hasNext() {
-            return current != null;
+            return this.current != null;
         }
 
         // this method is optional in Iterator interface
@@ -144,9 +144,11 @@ public class LinkedBag<Item> implements Iterable<Item> {
 
         // returns the next item in the iterator (and advances the iterator)
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            Item item = current.item;
-            current = current.next;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Item item = this.current.item;
+            this.current = this.current.next;
             return item;
         }
     }

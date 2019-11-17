@@ -74,7 +74,7 @@ public class SimpleMapper {
         return obj;
     }
 
-    private static void setFieldValue(Field field, Object obj, String s) throws Exception{
+    private static void setFieldValue(Field field, Object obj, String s) throws Exception {
         Class<?> type = field.getType();
         String name = type.getSimpleName();
         switch (name) {

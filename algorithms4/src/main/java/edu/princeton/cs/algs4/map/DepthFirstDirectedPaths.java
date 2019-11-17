@@ -64,6 +64,7 @@ public class DepthFirstDirectedPaths {
      *
      * @param G the digraph
      * @param s the source vertex
+     *
      * @throws IllegalArgumentException unless {@code 0 <= s < V}
      */
     public DepthFirstDirectedPaths(Digraph G, int s) {
@@ -91,8 +92,11 @@ public class DepthFirstDirectedPaths {
             if (dfs.hasPathTo(v)) {
                 StdOut.printf("%d to %d:  ", s, v);
                 for (int x : dfs.pathTo(v)) {
-                    if (x == s) StdOut.print(x);
-                    else StdOut.print("-" + x);
+                    if (x == s) {
+                        StdOut.print(x);
+                    } else {
+                        StdOut.print("-" + x);
+                    }
                 }
                 StdOut.println();
             } else {
@@ -116,8 +120,10 @@ public class DepthFirstDirectedPaths {
      * Is there a directed path from the source vertex {@code s} to vertex {@code v}?
      *
      * @param v the vertex
+     *
      * @return {@code true} if there is a directed path from the source
      * vertex {@code s} to vertex {@code v}, {@code false} otherwise
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public boolean hasPathTo(int v) {
@@ -130,16 +136,21 @@ public class DepthFirstDirectedPaths {
      * {@code null} if no such path.
      *
      * @param v the vertex
+     *
      * @return the sequence of vertices on a directed path from the source vertex
      * {@code s} to vertex {@code v}, as an Iterable
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public Iterable<Integer> pathTo(int v) {
         validateVertex(v);
-        if (!hasPathTo(v)) return null;
+        if (!hasPathTo(v)) {
+            return null;
+        }
         Stack<Integer> path = new Stack<Integer>();
-        for (int x = v; x != s; x = edgeTo[x])
+        for (int x = v; x != s; x = edgeTo[x]) {
             path.push(x);
+        }
         path.push(s);
         return path;
     }
@@ -147,8 +158,9 @@ public class DepthFirstDirectedPaths {
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = marked.length;
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 
 }

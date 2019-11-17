@@ -30,46 +30,46 @@ import org.springframework.web.bind.annotation.RestController;
 public class SnmpReceiverStart {
 
 
-	@Autowired
-	private SnmpReceiverService snmpReceiverService;
+    @Autowired
+    private SnmpReceiverService snmpReceiverService;
 
-	@GetMapping("/startReceiverSnmpTrap")
-	public ResponseModel startReceiverSnmpTrap(@RequestParam("ip") String ip, @RequestParam("port") String port) {
+    @GetMapping("/startReceiverSnmpTrap")
+    public ResponseModel startReceiverSnmpTrap(@RequestParam("ip") String ip, @RequestParam("port") String port) {
 
-		log.info("startReceiverSnmpTrap begin, Receiver ip is {}, port is {}", ip, port);
-		ResponseModel responseModel = new ResponseModel();
+        SnmpReceiverStart.log.info("startReceiverSnmpTrap begin, Receiver ip is {}, port is {}", ip, port);
+        ResponseModel responseModel = new ResponseModel();
 
-		String result;
-		try {
-			result = snmpReceiverService.snmpReceiverstatus(ip, port);
-			responseModel.setCode(Constans.SUCCESS);
+        String result;
+        try {
+            result = this.snmpReceiverService.snmpReceiverstatus(ip, port);
+            responseModel.setCode(Constans.SUCCESS);
 
-		} catch (Exception e) {
-			log.error("startReceiverSnmpTrap exception.", e);
-			result = "startReceiverSnmpTrap exception :" + e.getMessage();
-			responseModel.setCode(Constans.FAIL);
-		}
-		responseModel.setMsg(result);
-		return responseModel;
+        } catch (Exception e) {
+            SnmpReceiverStart.log.error("startReceiverSnmpTrap exception.", e);
+            result = "startReceiverSnmpTrap exception :" + e.getMessage();
+            responseModel.setCode(Constans.FAIL);
+        }
+        responseModel.setMsg(result);
+        return responseModel;
 
-	}
+    }
 
 
-	@GetMapping("/closeReceiverSnmpTrap")
-	public ResponseModel closeReceiverSnmpTrap() {
-		ResponseModel responseModel = new ResponseModel();
-		String result;
-		try {
-			result = snmpReceiverService.closeReceiver();
-			responseModel.setCode(Constans.SUCCESS);
-		} catch (Exception e) {
-			log.error("startReceiverSnmpTrap exception.", e);
-			result = "closeReceiverSnmpTrap exception:" + e.getMessage();
-			responseModel.setCode(Constans.FAIL);
-		}
-		responseModel.setMsg(result);
-		return responseModel;
+    @GetMapping("/closeReceiverSnmpTrap")
+    public ResponseModel closeReceiverSnmpTrap() {
+        ResponseModel responseModel = new ResponseModel();
+        String result;
+        try {
+            result = this.snmpReceiverService.closeReceiver();
+            responseModel.setCode(Constans.SUCCESS);
+        } catch (Exception e) {
+            SnmpReceiverStart.log.error("startReceiverSnmpTrap exception.", e);
+            result = "closeReceiverSnmpTrap exception:" + e.getMessage();
+            responseModel.setCode(Constans.FAIL);
+        }
+        responseModel.setMsg(result);
+        return responseModel;
 
-	}
+    }
 
 }

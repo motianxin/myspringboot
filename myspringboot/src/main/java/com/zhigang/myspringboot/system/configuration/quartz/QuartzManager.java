@@ -53,7 +53,7 @@ public class QuartzManager {
      */
     public void startJob() throws SchedulerException {
         // startJobTask(scheduler);
-        scheduler.start();
+        this.scheduler.start();
     }
 
     /**
@@ -62,10 +62,11 @@ public class QuartzManager {
      * @param scheduler
      */
     private void startJobTask(Scheduler scheduler) throws SchedulerException {
-        JobDetail jobDetail = JobBuilder.newJob(Myjob.class).withIdentity(JOB_NAME, GROUP_NAME).storeDurably().build();
-        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(DEFAULT_CRON);
-        CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(JOB_NAME, GROUP_NAME).forJob(jobDetail)
-                .withSchedule(cronScheduleBuilder).build();
+        JobDetail jobDetail = JobBuilder.newJob(Myjob.class).withIdentity(QuartzManager.JOB_NAME,
+                QuartzManager.GROUP_NAME).storeDurably().build();
+        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(QuartzManager.DEFAULT_CRON);
+        CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(QuartzManager.JOB_NAME,
+                QuartzManager.GROUP_NAME).forJob(jobDetail).withSchedule(cronScheduleBuilder).build();
         scheduler.addJob(jobDetail, true);
         scheduler.scheduleJob(cronTrigger);
 
@@ -79,9 +80,9 @@ public class QuartzManager {
      */
     public String getjobInfo(String name, String group) throws SchedulerException {
         TriggerKey triggerKey = new TriggerKey(name, group);
-        CronTrigger cronTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+        CronTrigger cronTrigger = (CronTrigger) this.scheduler.getTrigger(triggerKey);
         return String.format("time:%s,state:%s", cronTrigger.getCronExpression(),
-                scheduler.getTriggerState(triggerKey).name());
+                this.scheduler.getTriggerState(triggerKey).name());
     }
 
     /**
@@ -89,21 +90,22 @@ public class QuartzManager {
      *
      * @param name
      * @param group
-     * @param cron  cron表达式
+     * @param cron cron表达式
+     *
      * @return
+     *
      * @throws SchedulerException
      */
     public boolean modifyJob(String name, String group, String cron) throws SchedulerException {
         Date date = null;
         TriggerKey triggerKey = new TriggerKey(name, group);
-        CronTrigger cronTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+        CronTrigger cronTrigger = (CronTrigger) this.scheduler.getTrigger(triggerKey);
         String oldTime = cronTrigger.getCronExpression();
         if (!oldTime.equalsIgnoreCase(cron)) {
             CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(cron);
-            CronTrigger trigger = TriggerBuilder.newTrigger()
-                    .withIdentity(name, group)
-                    .withSchedule(cronScheduleBuilder).build();
-            date = scheduler.rescheduleJob(triggerKey, trigger);
+            CronTrigger trigger =
+                    TriggerBuilder.newTrigger().withIdentity(name, group).withSchedule(cronScheduleBuilder).build();
+            date = this.scheduler.rescheduleJob(triggerKey, trigger);
         }
         return date != null;
     }
@@ -114,7 +116,7 @@ public class QuartzManager {
      * @throws SchedulerException
      */
     public void pauseAllJob() throws SchedulerException {
-        scheduler.pauseAll();
+        this.scheduler.pauseAll();
     }
 
     /**
@@ -122,15 +124,16 @@ public class QuartzManager {
      *
      * @param name
      * @param group
+     *
      * @throws SchedulerException
      */
     public void pauseJob(String name, String group) throws SchedulerException {
         JobKey jobKey = new JobKey(name, group);
-        JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+        JobDetail jobDetail = this.scheduler.getJobDetail(jobKey);
         if (jobDetail == null) {
             return;
         }
-        scheduler.pauseJob(jobKey);
+        this.scheduler.pauseJob(jobKey);
     }
 
     /**
@@ -139,7 +142,7 @@ public class QuartzManager {
      * @throws SchedulerException
      */
     public void resumeAllJob() throws SchedulerException {
-        scheduler.resumeAll();
+        this.scheduler.resumeAll();
     }
 
     /**
@@ -147,11 +150,11 @@ public class QuartzManager {
      */
     public void resumeJob(String name, String group) throws SchedulerException {
         JobKey jobKey = new JobKey(name, group);
-        JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+        JobDetail jobDetail = this.scheduler.getJobDetail(jobKey);
         if (jobDetail == null) {
             return;
         }
-        scheduler.resumeJob(jobKey);
+        this.scheduler.resumeJob(jobKey);
     }
 
     /**
@@ -159,14 +162,15 @@ public class QuartzManager {
      *
      * @param name
      * @param group
+     *
      * @throws SchedulerException
      */
     public void deleteJob(String name, String group) throws SchedulerException {
         JobKey jobKey = new JobKey(name, group);
-        JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+        JobDetail jobDetail = this.scheduler.getJobDetail(jobKey);
         if (jobDetail == null) {
             return;
         }
-        scheduler.deleteJob(jobKey);
+        this.scheduler.deleteJob(jobKey);
     }
 }

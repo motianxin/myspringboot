@@ -167,7 +167,9 @@ public class KosarajuSharirSCC {
         marked[v] = true;
         id[v] = count;
         for (int w : G.adj(v)) {
-            if (!marked[w]) dfs(G, w);
+            if (!marked[w]) {
+                dfs(G, w);
+            }
         }
     }
 
@@ -185,8 +187,10 @@ public class KosarajuSharirSCC {
      *
      * @param v one vertex
      * @param w the other vertex
+     *
      * @return {@code true} if vertices {@code v} and {@code w} are in the same
      * strong component, and {@code false} otherwise
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      * @throws IllegalArgumentException unless {@code 0 <= w < V}
      */
@@ -200,7 +204,9 @@ public class KosarajuSharirSCC {
      * Returns the component id of the strong component containing vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the component id of the strong component containing vertex {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= s < V}
      */
     public int id(int v) {
@@ -213,8 +219,9 @@ public class KosarajuSharirSCC {
         TransitiveClosure tc = new TransitiveClosure(G);
         for (int v = 0; v < G.V(); v++) {
             for (int w = 0; w < G.V(); w++) {
-                if (stronglyConnected(v, w) != (tc.reachable(v, w) && tc.reachable(w, v)))
+                if (stronglyConnected(v, w) != (tc.reachable(v, w) && tc.reachable(w, v))) {
                     return false;
+                }
             }
         }
         return true;
@@ -223,8 +230,9 @@ public class KosarajuSharirSCC {
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = marked.length;
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 
 }

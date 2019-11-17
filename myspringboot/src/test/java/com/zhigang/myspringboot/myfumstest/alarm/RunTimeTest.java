@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
  */
 public class RunTimeTest {
 
-    private static final String[] CHECK_PROCESS_CMD =new String[]{"sh","-c","ps -ef | grep [i]notify.sh"};
+    private static final String[] CHECK_PROCESS_CMD = new String[]{"sh", "-c", "ps -ef | grep [i]notify.sh"};
     // String CHECK_PROCESS_CMD = "sh -c \"ps -ef | grep [i]notify.sh\"";
 
     public static void main(String[] args) {

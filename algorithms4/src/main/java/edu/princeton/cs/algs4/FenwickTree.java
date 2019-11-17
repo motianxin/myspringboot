@@ -14,8 +14,10 @@ import edu.princeton.cs.algs4.base.StdOut;
 /**
  * Created by ricardodpsx@gmail.com on 4/01/15.
  * <p>
- * In {@code Fenwick Tree} structure We arrange the array in an smart way to perform efficient <em>range queries and updates</em>.
- * The key point is this: In a fenwick array, each position "responsible" for storing cumulative data of N previous positions (N could be 1)
+ * In {@code Fenwick Tree} structure We arrange the array in an smart way to perform efficient <em>range queries and
+ * updates</em>.
+ * The key point is this: In a fenwick array, each position "responsible" for storing cumulative data of N previous
+ * positions (N could be 1)
  * For example:
  * array[40] stores: array[40] + array[39] ... + array[32] (8 positions)
  * array[32] stores: array[32] + array[31] ... + array[1]  (32 positions)
@@ -41,7 +43,8 @@ import edu.princeton.cs.algs4.base.StdOut;
  */
 public class FenwickTree {
 
-    int[] array; // 1-indexed array, In this array We save cumulative information to perform efficient range queries and updates
+    int[] array; // 1-indexed array, In this array We save cumulative information to perform efficient range queries
+    // and updates
 
     public FenwickTree(int size) {
         array = new int[size + 1];
@@ -76,7 +79,9 @@ public class FenwickTree {
         while (true) {
             String[] line = StdIn.readLine().split(" ");
 
-            if (line[0].equals("exit")) break;
+            if (line[0].equals("exit")) {
+                break;
+            }
 
             int arg1 = 0, arg2 = 0;
 
@@ -125,6 +130,7 @@ public class FenwickTree {
      * Time-Complexity:    O(log(n))
      *
      * @param ind index
+     *
      * @return sum
      */
     public int rsq(int ind) {
@@ -132,7 +138,8 @@ public class FenwickTree {
         int sum = 0;
         while (ind > 0) {
             sum += array[ind];
-            //Extracting the portion up to the first significant one of the binary representation of 'ind' and decrementing ind by that number
+            //Extracting the portion up to the first significant one of the binary representation of 'ind' and
+            // decrementing ind by that number
             ind -= ind & (-ind);
         }
 
@@ -148,6 +155,7 @@ public class FenwickTree {
      *
      * @param a left index
      * @param b right index
+     *
      * @return sum
      */
     public int rsq(int a, int b) {
@@ -162,14 +170,15 @@ public class FenwickTree {
      * <p>
      * Time-Complexity:    O(log(n))
      *
-     * @param ind   index
+     * @param ind index
      * @param value value
      */
     public void update(int ind, int value) {
         assert ind > 0;
         while (ind < array.length) {
             array[ind] += value;
-            //Extracting the portion up to the first significant one of the binary representation of 'ind' and incrementing ind by that number
+            //Extracting the portion up to the first significant one of the binary representation of 'ind' and
+            // incrementing ind by that number
             ind += ind & (-ind);
         }
     }

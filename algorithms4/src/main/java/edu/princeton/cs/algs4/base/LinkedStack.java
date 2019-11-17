@@ -48,8 +48,8 @@ public class LinkedStack<Item> implements Iterable<Item> {
      * Initializes an empty stack.
      */
     public LinkedStack() {
-        first = null;
-        n = 0;
+        this.first = null;
+        this.n = 0;
         assert check();
     }
 
@@ -62,10 +62,11 @@ public class LinkedStack<Item> implements Iterable<Item> {
         LinkedStack<String> stack = new LinkedStack<String>();
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
-            if (!item.equals("-"))
+            if (!item.equals("-")) {
                 stack.push(item);
-            else if (!stack.isEmpty())
+            } else if (!stack.isEmpty()) {
                 StdOut.print(stack.pop() + " ");
+            }
         }
         StdOut.println("(" + stack.size() + " left on stack)");
     }
@@ -76,7 +77,7 @@ public class LinkedStack<Item> implements Iterable<Item> {
      * @return true if this stack is empty; false otherwise
      */
     public boolean isEmpty() {
-        return first == null;
+        return this.first == null;
     }
 
     /**
@@ -85,7 +86,7 @@ public class LinkedStack<Item> implements Iterable<Item> {
      * @return the number of items in the stack
      */
     public int size() {
-        return n;
+        return this.n;
     }
 
     /**
@@ -94,11 +95,11 @@ public class LinkedStack<Item> implements Iterable<Item> {
      * @param item the item to add
      */
     public void push(Item item) {
-        Node oldfirst = first;
-        first = new Node();
-        first.item = item;
-        first.next = oldfirst;
-        n++;
+        Node oldfirst = this.first;
+        this.first = new Node();
+        this.first.item = item;
+        this.first.next = oldfirst;
+        this.n++;
         assert check();
     }
 
@@ -106,13 +107,16 @@ public class LinkedStack<Item> implements Iterable<Item> {
      * Removes and returns the item most recently added to this stack.
      *
      * @return the item most recently added
+     *
      * @throws java.util.NoSuchElementException if this stack is empty
      */
     public Item pop() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
-        Item item = first.item;        // save item to return
-        first = first.next;            // delete first node
-        n--;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack underflow");
+        }
+        Item item = this.first.item;        // save item to return
+        this.first = this.first.next;            // delete first node
+        this.n--;
         assert check();
         return item;                   // return the saved item
     }
@@ -122,11 +126,14 @@ public class LinkedStack<Item> implements Iterable<Item> {
      * Returns (but does not remove) the item most recently added to this stack.
      *
      * @return the item most recently added to this stack
+     *
      * @throws java.util.NoSuchElementException if this stack is empty
      */
     public Item peek() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
-        return first.item;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack underflow");
+        }
+        return this.first.item;
     }
 
     /**
@@ -134,10 +141,12 @@ public class LinkedStack<Item> implements Iterable<Item> {
      *
      * @return the sequence of items in the stack in LIFO order, separated by spaces
      */
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Item item : this)
+        for (Item item : this) {
             s.append(item + " ");
+        }
         return s.toString();
     }
 
@@ -154,25 +163,37 @@ public class LinkedStack<Item> implements Iterable<Item> {
     private boolean check() {
 
         // check a few properties of instance variable 'first'
-        if (n < 0) {
+        if (this.n < 0) {
             return false;
         }
-        if (n == 0) {
-            if (first != null) return false;
-        } else if (n == 1) {
-            if (first == null) return false;
-            if (first.next != null) return false;
+        if (this.n == 0) {
+            if (this.first != null) {
+                return false;
+            }
+        } else if (this.n == 1) {
+            if (this.first == null) {
+                return false;
+            }
+            if (this.first.next != null) {
+                return false;
+            }
         } else {
-            if (first == null) return false;
-            if (first.next == null) return false;
+            if (this.first == null) {
+                return false;
+            }
+            if (this.first.next == null) {
+                return false;
+            }
         }
 
         // check internal consistency of instance variable n
         int numberOfNodes = 0;
-        for (Node x = first; x != null && numberOfNodes <= n; x = x.next) {
+        for (Node x = this.first; x != null && numberOfNodes <= this.n; x = x.next) {
             numberOfNodes++;
         }
-        if (numberOfNodes != n) return false;
+        if (numberOfNodes != this.n) {
+            return false;
+        }
 
         return true;
     }
@@ -185,10 +206,10 @@ public class LinkedStack<Item> implements Iterable<Item> {
 
     // an iterator, doesn't implement remove() since it's optional
     private class ListIterator implements Iterator<Item> {
-        private Node current = first;
+        private Node current = LinkedStack.this.first;
 
         public boolean hasNext() {
-            return current != null;
+            return this.current != null;
         }
 
         public void remove() {
@@ -196,9 +217,11 @@ public class LinkedStack<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            Item item = current.item;
-            current = current.next;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Item item = this.current.item;
+            this.current = this.current.next;
             return item;
         }
     }

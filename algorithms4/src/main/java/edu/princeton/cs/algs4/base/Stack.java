@@ -45,6 +45,7 @@ import java.util.NoSuchElementException;
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *
  * @param <Item> the generic type of an item in this stack
+ *
  * @author Robert Sedgewick
  * @author Kevin Wayne
  */
@@ -56,8 +57,8 @@ public class Stack<Item> implements Iterable<Item> {
      * Initializes an empty stack.
      */
     public Stack() {
-        first = null;
-        n = 0;
+        this.first = null;
+        this.n = 0;
     }
 
     /**
@@ -69,10 +70,11 @@ public class Stack<Item> implements Iterable<Item> {
         Stack<String> stack = new Stack<String>();
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
-            if (!item.equals("-"))
+            if (!item.equals("-")) {
                 stack.push(item);
-            else if (!stack.isEmpty())
+            } else if (!stack.isEmpty()) {
                 StdOut.print(stack.pop() + " ");
+            }
         }
         StdOut.println("(" + stack.size() + " left on stack)");
     }
@@ -83,7 +85,7 @@ public class Stack<Item> implements Iterable<Item> {
      * @return true if this stack is empty; false otherwise
      */
     public boolean isEmpty() {
-        return first == null;
+        return this.first == null;
     }
 
     /**
@@ -92,7 +94,7 @@ public class Stack<Item> implements Iterable<Item> {
      * @return the number of items in this stack
      */
     public int size() {
-        return n;
+        return this.n;
     }
 
     /**
@@ -101,24 +103,27 @@ public class Stack<Item> implements Iterable<Item> {
      * @param item the item to add
      */
     public void push(Item item) {
-        Node<Item> oldfirst = first;
-        first = new Node<Item>();
-        first.item = item;
-        first.next = oldfirst;
-        n++;
+        Node<Item> oldfirst = this.first;
+        this.first = new Node<Item>();
+        this.first.item = item;
+        this.first.next = oldfirst;
+        this.n++;
     }
 
     /**
      * Removes and returns the item most recently added to this stack.
      *
      * @return the item most recently added
+     *
      * @throws NoSuchElementException if this stack is empty
      */
     public Item pop() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
-        Item item = first.item;        // save item to return
-        first = first.next;            // delete first node
-        n--;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack underflow");
+        }
+        Item item = this.first.item;        // save item to return
+        this.first = this.first.next;            // delete first node
+        this.n--;
         return item;                   // return the saved item
     }
 
@@ -127,11 +132,14 @@ public class Stack<Item> implements Iterable<Item> {
      * Returns (but does not remove) the item most recently added to this stack.
      *
      * @return the item most recently added to this stack
+     *
      * @throws NoSuchElementException if this stack is empty
      */
     public Item peek() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
-        return first.item;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack underflow");
+        }
+        return this.first.item;
     }
 
     /**
@@ -139,6 +147,7 @@ public class Stack<Item> implements Iterable<Item> {
      *
      * @return the sequence of items in this stack in LIFO order, separated by spaces
      */
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (Item item : this) {
@@ -155,7 +164,7 @@ public class Stack<Item> implements Iterable<Item> {
      * @return an iterator to this stack that iterates through the items in LIFO order
      */
     public Iterator<Item> iterator() {
-        return new ListIterator(first);
+        return new ListIterator(this.first);
     }
 
     // helper linked list class
@@ -169,11 +178,11 @@ public class Stack<Item> implements Iterable<Item> {
         private Node<Item> current;
 
         public ListIterator(Node<Item> first) {
-            current = first;
+            this.current = first;
         }
 
         public boolean hasNext() {
-            return current != null;
+            return this.current != null;
         }
 
         public void remove() {
@@ -181,9 +190,11 @@ public class Stack<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            Item item = current.item;
-            current = current.next;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Item item = this.current.item;
+            this.current = this.current.next;
             return item;
         }
     }

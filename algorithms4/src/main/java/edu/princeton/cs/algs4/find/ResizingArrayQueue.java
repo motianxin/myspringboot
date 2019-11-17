@@ -50,10 +50,10 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
      * Initializes an empty queue.
      */
     public ResizingArrayQueue() {
-        q = (Item[]) new Object[2];
-        n = 0;
-        first = 0;
-        last = 0;
+        this.q = (Item[]) new Object[2];
+        this.n = 0;
+        this.first = 0;
+        this.last = 0;
     }
 
     /**
@@ -65,8 +65,11 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
         ResizingArrayQueue<String> queue = new ResizingArrayQueue<String>();
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
-            if (!item.equals("-")) queue.enqueue(item);
-            else if (!queue.isEmpty()) StdOut.print(queue.dequeue() + " ");
+            if (!item.equals("-")) {
+                queue.enqueue(item);
+            } else if (!queue.isEmpty()) {
+                StdOut.print(queue.dequeue() + " ");
+            }
         }
         StdOut.println("(" + queue.size() + " left on queue)");
     }
@@ -77,7 +80,7 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
      * @return true if this queue is empty; false otherwise
      */
     public boolean isEmpty() {
-        return n == 0;
+        return this.n == 0;
     }
 
     /**
@@ -86,19 +89,19 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
      * @return the number of items in this queue
      */
     public int size() {
-        return n;
+        return this.n;
     }
 
     // resize the underlying array
     private void resize(int capacity) {
-        assert capacity >= n;
+        assert capacity >= this.n;
         Item[] temp = (Item[]) new Object[capacity];
-        for (int i = 0; i < n; i++) {
-            temp[i] = q[(first + i) % q.length];
+        for (int i = 0; i < this.n; i++) {
+            temp[i] = this.q[(this.first + i) % this.q.length];
         }
-        q = temp;
-        first = 0;
-        last = n;
+        this.q = temp;
+        this.first = 0;
+        this.last = this.n;
     }
 
     /**
@@ -108,27 +111,38 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
      */
     public void enqueue(Item item) {
         // double size of array if necessary and recopy to front of array
-        if (n == q.length) resize(2 * q.length);   // double size of array if necessary
-        q[last++] = item;                        // add item
-        if (last == q.length) last = 0;          // wrap-around
-        n++;
+        if (this.n == this.q.length) {
+            resize(2 * this.q.length);   // double size of array if necessary
+        }
+        this.q[this.last++] = item;                        // add item
+        if (this.last == this.q.length) {
+            this.last = 0;          // wrap-around
+        }
+        this.n++;
     }
 
     /**
      * Removes and returns the item on this queue that was least recently added.
      *
      * @return the item on this queue that was least recently added
+     *
      * @throws java.util.NoSuchElementException if this queue is empty
      */
     public Item dequeue() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
-        Item item = q[first];
-        q[first] = null;                            // to avoid loitering
-        n--;
-        first++;
-        if (first == q.length) first = 0;           // wrap-around
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue underflow");
+        }
+        Item item = this.q[this.first];
+        this.q[this.first] = null;                            // to avoid loitering
+        this.n--;
+        this.first++;
+        if (this.first == this.q.length) {
+            this.first = 0;           // wrap-around
+        }
         // shrink size of array if necessary
-        if (n > 0 && n == q.length / 4) resize(q.length / 2);
+        if (this.n > 0 && this.n == this.q.length / 4) {
+            resize(this.q.length / 2);
+        }
         return item;
     }
 
@@ -136,11 +150,14 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
      * Returns the item least recently added to this queue.
      *
      * @return the item least recently added to this queue
+     *
      * @throws java.util.NoSuchElementException if this queue is empty
      */
     public Item peek() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
-        return q[first];
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue underflow");
+        }
+        return this.q[this.first];
     }
 
     /**
@@ -157,7 +174,7 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
         private int i = 0;
 
         public boolean hasNext() {
-            return i < n;
+            return this.i < ResizingArrayQueue.this.n;
         }
 
         public void remove() {
@@ -165,9 +182,12 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            Item item = q[(i + first) % q.length];
-            i++;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Item item =
+                    ResizingArrayQueue.this.q[(this.i + ResizingArrayQueue.this.first) % ResizingArrayQueue.this.q.length];
+            this.i++;
             return item;
         }
     }

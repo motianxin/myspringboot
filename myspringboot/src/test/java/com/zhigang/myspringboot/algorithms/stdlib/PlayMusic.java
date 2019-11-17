@@ -7,6 +7,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.io.File;
@@ -23,12 +24,16 @@ public class PlayMusic {
         URL url = null;
         try {
             File file = new File(filename);
-            if (file.canRead()) url = file.toURI().toURL();
+            if (file.canRead()) {
+                url = file.toURI().toURL();
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         // URL url = StdAudio.class.getResource(filename);
-        if (url == null) throw new RuntimeException("audio " + filename + " not found");
+        if (url == null) {
+            throw new RuntimeException("audio " + filename + " not found");
+        }
         AudioClip clip = Applet.newAudioClip(url);
         clip.play();
     }

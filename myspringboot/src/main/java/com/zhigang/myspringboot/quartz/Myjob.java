@@ -17,13 +17,13 @@ import org.quartz.JobExecutionException;
  * 〈自定义定时任务〉
  *
  * @author admin
- * @create 2019/4/25 16:14
  * @version 3.2.2
+ * @create 2019/4/25 16:14
  */
 @Slf4j
 public class Myjob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        log.info("The job start execute.");
+        Myjob.log.info("The job start execute.");
     }
 }

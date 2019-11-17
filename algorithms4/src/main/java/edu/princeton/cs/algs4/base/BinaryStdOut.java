@@ -44,39 +44,47 @@ public final class BinaryStdOut {
 
     // initialize BinaryStdOut
     private static void initialize() {
-        out = new BufferedOutputStream(System.out);
-        buffer = 0;
-        n = 0;
-        isInitialized = true;
+        BinaryStdOut.out = new BufferedOutputStream(System.out);
+        BinaryStdOut.buffer = 0;
+        BinaryStdOut.n = 0;
+        BinaryStdOut.isInitialized = true;
     }
 
     /**
      * Writes the specified bit to standard output.
      */
     private static void writeBit(boolean bit) {
-        if (!isInitialized) initialize();
+        if (!BinaryStdOut.isInitialized) {
+            BinaryStdOut.initialize();
+        }
 
         // add bit to buffer
-        buffer <<= 1;
-        if (bit) buffer |= 1;
+        BinaryStdOut.buffer <<= 1;
+        if (bit) {
+            BinaryStdOut.buffer |= 1;
+        }
 
         // if buffer is full (8 bits), write out as a single byte
-        n++;
-        if (n == 8) clearBuffer();
+        BinaryStdOut.n++;
+        if (BinaryStdOut.n == 8) {
+            BinaryStdOut.clearBuffer();
+        }
     }
 
     /**
      * Writes the 8-bit byte to standard output.
      */
     private static void writeByte(int x) {
-        if (!isInitialized) initialize();
+        if (!BinaryStdOut.isInitialized) {
+            BinaryStdOut.initialize();
+        }
 
         assert x >= 0 && x < 256;
 
         // optimized if byte-aligned
-        if (n == 0) {
+        if (BinaryStdOut.n == 0) {
             try {
-                out.write(x);
+                BinaryStdOut.out.write(x);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -86,23 +94,29 @@ public final class BinaryStdOut {
         // otherwise write one bit at a time
         for (int i = 0; i < 8; i++) {
             boolean bit = ((x >>> (8 - i - 1)) & 1) == 1;
-            writeBit(bit);
+            BinaryStdOut.writeBit(bit);
         }
     }
 
     // write out any remaining bits in buffer to standard output, padding with 0s
     private static void clearBuffer() {
-        if (!isInitialized) initialize();
+        if (!BinaryStdOut.isInitialized) {
+            BinaryStdOut.initialize();
+        }
 
-        if (n == 0) return;
-        if (n > 0) buffer <<= (8 - n);
+        if (BinaryStdOut.n == 0) {
+            return;
+        }
+        if (BinaryStdOut.n > 0) {
+            BinaryStdOut.buffer <<= (8 - BinaryStdOut.n);
+        }
         try {
-            out.write(buffer);
+            BinaryStdOut.out.write(BinaryStdOut.buffer);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        n = 0;
-        buffer = 0;
+        BinaryStdOut.n = 0;
+        BinaryStdOut.buffer = 0;
     }
 
     /**
@@ -110,9 +124,9 @@ public final class BinaryStdOut {
      * is not a multiple of 8.
      */
     public static void flush() {
-        clearBuffer();
+        BinaryStdOut.clearBuffer();
         try {
-            out.flush();
+            BinaryStdOut.out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,10 +137,10 @@ public final class BinaryStdOut {
      * longer write bits to it.
      */
     public static void close() {
-        flush();
+        BinaryStdOut.flush();
         try {
-            out.close();
-            isInitialized = false;
+            BinaryStdOut.out.close();
+            BinaryStdOut.isInitialized = false;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -139,7 +153,7 @@ public final class BinaryStdOut {
      * @param x the {@code boolean} to write.
      */
     public static void write(boolean x) {
-        writeBit(x);
+        BinaryStdOut.writeBit(x);
     }
 
     /**
@@ -148,7 +162,7 @@ public final class BinaryStdOut {
      * @param x the {@code byte} to write.
      */
     public static void write(byte x) {
-        writeByte(x & 0xff);
+        BinaryStdOut.writeByte(x & 0xff);
     }
 
     /**
@@ -157,10 +171,10 @@ public final class BinaryStdOut {
      * @param x the {@code int} to write.
      */
     public static void write(int x) {
-        writeByte((x >>> 24) & 0xff);
-        writeByte((x >>> 16) & 0xff);
-        writeByte((x >>> 8) & 0xff);
-        writeByte((x >>> 0) & 0xff);
+        BinaryStdOut.writeByte((x >>> 24) & 0xff);
+        BinaryStdOut.writeByte((x >>> 16) & 0xff);
+        BinaryStdOut.writeByte((x >>> 8) & 0xff);
+        BinaryStdOut.writeByte((x >>> 0) & 0xff);
     }
 
     /**
@@ -168,19 +182,24 @@ public final class BinaryStdOut {
      *
      * @param x the {@code int} to write.
      * @param r the number of relevant bits in the char.
+     *
      * @throws IllegalArgumentException if {@code r} is not between 1 and 32.
      * @throws IllegalArgumentException if {@code x} is not between 0 and 2<sup>r</sup> - 1.
      */
     public static void write(int x, int r) {
         if (r == 32) {
-            write(x);
+            BinaryStdOut.write(x);
             return;
         }
-        if (r < 1 || r > 32) throw new IllegalArgumentException("Illegal value for r = " + r);
-        if (x < 0 || x >= (1 << r)) throw new IllegalArgumentException("Illegal " + r + "-bit char = " + x);
+        if (r < 1 || r > 32) {
+            throw new IllegalArgumentException("Illegal value for r = " + r);
+        }
+        if (x < 0 || x >= (1 << r)) {
+            throw new IllegalArgumentException("Illegal " + r + "-bit char = " + x);
+        }
         for (int i = 0; i < r; i++) {
             boolean bit = ((x >>> (r - i - 1)) & 1) == 1;
-            writeBit(bit);
+            BinaryStdOut.writeBit(bit);
         }
     }
 
@@ -191,7 +210,7 @@ public final class BinaryStdOut {
      * @param x the {@code double} to write.
      */
     public static void write(double x) {
-        write(Double.doubleToRawLongBits(x));
+        BinaryStdOut.write(Double.doubleToRawLongBits(x));
     }
 
     /**
@@ -200,14 +219,14 @@ public final class BinaryStdOut {
      * @param x the {@code long} to write.
      */
     public static void write(long x) {
-        writeByte((int) ((x >>> 56) & 0xff));
-        writeByte((int) ((x >>> 48) & 0xff));
-        writeByte((int) ((x >>> 40) & 0xff));
-        writeByte((int) ((x >>> 32) & 0xff));
-        writeByte((int) ((x >>> 24) & 0xff));
-        writeByte((int) ((x >>> 16) & 0xff));
-        writeByte((int) ((x >>> 8) & 0xff));
-        writeByte((int) ((x >>> 0) & 0xff));
+        BinaryStdOut.writeByte((int) ((x >>> 56) & 0xff));
+        BinaryStdOut.writeByte((int) ((x >>> 48) & 0xff));
+        BinaryStdOut.writeByte((int) ((x >>> 40) & 0xff));
+        BinaryStdOut.writeByte((int) ((x >>> 32) & 0xff));
+        BinaryStdOut.writeByte((int) ((x >>> 24) & 0xff));
+        BinaryStdOut.writeByte((int) ((x >>> 16) & 0xff));
+        BinaryStdOut.writeByte((int) ((x >>> 8) & 0xff));
+        BinaryStdOut.writeByte((int) ((x >>> 0) & 0xff));
     }
 
     /**
@@ -216,7 +235,7 @@ public final class BinaryStdOut {
      * @param x the {@code float} to write.
      */
     public static void write(float x) {
-        write(Float.floatToRawIntBits(x));
+        BinaryStdOut.write(Float.floatToRawIntBits(x));
     }
 
     /**
@@ -225,19 +244,22 @@ public final class BinaryStdOut {
      * @param x the {@code short} to write.
      */
     public static void write(short x) {
-        writeByte((x >>> 8) & 0xff);
-        writeByte((x >>> 0) & 0xff);
+        BinaryStdOut.writeByte((x >>> 8) & 0xff);
+        BinaryStdOut.writeByte((x >>> 0) & 0xff);
     }
 
     /**
      * Writes the 8-bit char to standard output.
      *
      * @param x the {@code char} to write.
+     *
      * @throws IllegalArgumentException if {@code x} is not betwen 0 and 255.
      */
     public static void write(char x) {
-        if (x < 0 || x >= 256) throw new IllegalArgumentException("Illegal 8-bit char = " + x);
-        writeByte(x);
+        if (x < 0 || x >= 256) {
+            throw new IllegalArgumentException("Illegal 8-bit char = " + x);
+        }
+        BinaryStdOut.writeByte(x);
     }
 
     /**
@@ -245,19 +267,24 @@ public final class BinaryStdOut {
      *
      * @param x the {@code char} to write.
      * @param r the number of relevant bits in the char.
+     *
      * @throws IllegalArgumentException if {@code r} is not between 1 and 16.
      * @throws IllegalArgumentException if {@code x} is not between 0 and 2<sup>r</sup> - 1.
      */
     public static void write(char x, int r) {
         if (r == 8) {
-            write(x);
+            BinaryStdOut.write(x);
             return;
         }
-        if (r < 1 || r > 16) throw new IllegalArgumentException("Illegal value for r = " + r);
-        if (x >= (1 << r)) throw new IllegalArgumentException("Illegal " + r + "-bit char = " + x);
+        if (r < 1 || r > 16) {
+            throw new IllegalArgumentException("Illegal value for r = " + r);
+        }
+        if (x >= (1 << r)) {
+            throw new IllegalArgumentException("Illegal " + r + "-bit char = " + x);
+        }
         for (int i = 0; i < r; i++) {
             boolean bit = ((x >>> (r - i - 1)) & 1) == 1;
-            writeBit(bit);
+            BinaryStdOut.writeBit(bit);
         }
     }
 
@@ -265,12 +292,14 @@ public final class BinaryStdOut {
      * Writes the string of 8-bit characters to standard output.
      *
      * @param s the {@code String} to write.
+     *
      * @throws IllegalArgumentException if any character in the string is not
-     *                                  between 0 and 255.
+     * between 0 and 255.
      */
     public static void write(String s) {
-        for (int i = 0; i < s.length(); i++)
-            write(s.charAt(i));
+        for (int i = 0; i < s.length(); i++) {
+            BinaryStdOut.write(s.charAt(i));
+        }
     }
 
     /**
@@ -278,13 +307,15 @@ public final class BinaryStdOut {
      *
      * @param s the {@code String} to write.
      * @param r the number of relevants bits in each character.
+     *
      * @throws IllegalArgumentException if r is not between 1 and 16.
      * @throws IllegalArgumentException if any character in the string is not
-     *                                  between 0 and 2<sup>r</sup> - 1.
+     * between 0 and 2<sup>r</sup> - 1.
      */
     public static void write(String s, int r) {
-        for (int i = 0; i < s.length(); i++)
-            write(s.charAt(i), r);
+        for (int i = 0; i < s.length(); i++) {
+            BinaryStdOut.write(s.charAt(i), r);
+        }
     }
 
     /**

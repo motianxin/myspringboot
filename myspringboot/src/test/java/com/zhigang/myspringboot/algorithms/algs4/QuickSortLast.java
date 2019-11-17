@@ -12,14 +12,14 @@ package com.zhigang.myspringboot.algorithms.algs4;
  * 〈last〉
  *
  * @author Administrator
- * @create 2019/7/4 16:16
  * @version 3.2.2
+ * @create 2019/7/4 16:16
  */
 public class QuickSortLast extends SortClass {
     @Override
     protected void sort(double[] arr) {
         super.sort(arr);
-        quickSort(arr, 0, arr.length -1);
+        quickSort(arr, 0, arr.length - 1);
     }
 
     private void quickSort(double[] arr, int lo, int hi) {
@@ -46,7 +46,7 @@ public class QuickSortLast extends SortClass {
                 swap(arr, right, left);
                 changeTimes++;
             }
-            if ((changeTimes & 1) ==1){
+            if ((changeTimes & 1) == 1) {
                 left++;
             } else {
                 right--;

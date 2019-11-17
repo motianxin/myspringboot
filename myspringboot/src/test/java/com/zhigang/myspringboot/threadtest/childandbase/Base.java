@@ -8,22 +8,22 @@ package com.zhigang.myspringboot.threadtest.childandbase;
  * @Version 3.2.2
  **/
 public class Base {
-    private int a = 23;
     private static int base = 0;
 
     static {
-        System.out.println("static base method:" + base);
+        System.out.println("static base method:" + Base.base);
     }
+
+    private int a = 23;
+
     public Base() {
         printa();
 
     }
 
     public void printa() {
-        System.out.println("父类的a变量:" + a);
+        System.out.println("父类的a变量:" + this.a);
     }
-
-
 
 
 }

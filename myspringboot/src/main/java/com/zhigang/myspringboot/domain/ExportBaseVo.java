@@ -14,8 +14,8 @@ import java.util.Map;
  * 〈导出基类〉
  *
  * @author admin
- * @create 2019/3/19 9:39
  * @version 3.2.2
+ * @create 2019/3/19 9:39
  */
 public interface ExportBaseVo {
     Map<String, String> createMap(String[] tableHeader);

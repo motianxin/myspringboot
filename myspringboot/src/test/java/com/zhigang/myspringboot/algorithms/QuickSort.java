@@ -414,7 +414,7 @@ public class QuickSort {
         int count = 0;
         while (i != 0) {
             System.out.println(Long.toBinaryString(i));
-            i =  i & (i -1);
+            i = i & (i - 1);
             System.out.println(Long.toBinaryString(i));
             count++;
         }
@@ -471,18 +471,17 @@ public class QuickSort {
         System.out.println(b + 1);
         System.out.println(Long.highestOneBit(b));
         System.out.println(Long.numberOfLeadingZeros(b));
-        System.out.println(Long.numberOfLeadingZeros(b+1));
+        System.out.println(Long.numberOfLeadingZeros(b + 1));
 
     }
 
-    private static void exchange(int a, int b){
-        a = a^b;
-        b = b^a;
-        a = a^b;
+    private static void exchange(int a, int b) {
+        a = a ^ b;
+        b = b ^ a;
+        a = a ^ b;
         System.out.println("a = " + a);
         System.out.println("b = " + b);
     }
-
 
 
 }

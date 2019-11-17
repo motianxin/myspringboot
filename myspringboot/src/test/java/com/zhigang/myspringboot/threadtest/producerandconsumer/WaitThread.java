@@ -19,43 +19,11 @@ public class WaitThread extends Thread {
 
     private volatile boolean fire = false;
 
-
-    @Override
-    public void run() {
-        System.out.println("before wait: " + this.getState());
-        try {
-            synchronized (this) {
-                // 条件不满足进行等待
-                while (!fire) {
-                    // wait方法将线程放入条件等待队列，线程让出锁并阻塞，WAITING
-                    // 被唤醒后尝试获取锁，获取不到进入锁等待队列继续阻塞，blocked,wait还在继续
-                    wait();
-                    // wait跳出后说明已经获得了锁，但需要再次检查条件是否满足
-                    System.out.println("after wait: " + this.getState());
-                }
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("thread run method, fire: " + fire);
-    }
-
-
-    public synchronized void fire() {
-        this.fire = true;
-        System.out.println("befor notify: " + this.getState());
-        // 修改条件并唤醒条件等待队列中的一个线程
-        notify();
-        // 方法执行完后wait方法跳出，但是该方法还没有结束，
-        // 继续执行，仍然得到锁，条件等待队列中的线程被唤醒后进入锁等待队列，状态为blocked，等待锁
-        System.out.println("after notify: " + this.getState());
-        //方法执行完后，锁等待队列中的线程竞争锁继续执行
-    }
-
-
     /**
      * WaitThread state see
+     *
      * @param args
+     *
      * @throws InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
@@ -82,6 +50,37 @@ public class WaitThread extends Thread {
          * after wait: RUNNABLE
          * thread run method, fire: true
          */
+    }
+
+    @Override
+    public void run() {
+        System.out.println("before wait: " + this.getState());
+        try {
+            synchronized (this) {
+                // 条件不满足进行等待
+                while (!this.fire) {
+                    // wait方法将线程放入条件等待队列，线程让出锁并阻塞，WAITING
+                    // 被唤醒后尝试获取锁，获取不到进入锁等待队列继续阻塞，blocked,wait还在继续
+                    wait();
+                    // wait跳出后说明已经获得了锁，但需要再次检查条件是否满足
+                    System.out.println("after wait: " + this.getState());
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("thread run method, fire: " + this.fire);
+    }
+
+    public synchronized void fire() {
+        this.fire = true;
+        System.out.println("befor notify: " + this.getState());
+        // 修改条件并唤醒条件等待队列中的一个线程
+        notify();
+        // 方法执行完后wait方法跳出，但是该方法还没有结束，
+        // 继续执行，仍然得到锁，条件等待队列中的线程被唤醒后进入锁等待队列，状态为blocked，等待锁
+        System.out.println("after notify: " + this.getState());
+        //方法执行完后，锁等待队列中的线程竞争锁继续执行
     }
 
 }

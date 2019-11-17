@@ -22,14 +22,14 @@ public class KafkaConsumers {
 
 
     @KafkaListener(topics = {"mytopic"})
-    public void consumerHandle(ConsumerRecord<?,?> record){
-        log.info("kafka consumer recever msg.");
+    public void consumerHandle(ConsumerRecord<?, ?> record) {
+        KafkaConsumers.log.info("kafka consumer recever msg.");
         Optional<?> kafkaMessage = Optional.ofNullable(record.value());
         if (kafkaMessage.isPresent()) {
             String message = (String) kafkaMessage.get();
-            log.info("----------------- record =" + record);
+            KafkaConsumers.log.info("----------------- record =" + record);
             KafkaMsg kafkaMsg = JsonUtils.json2Obj(message, KafkaMsg.class);
-            log.info("Receive kafkaMsg  is {}", kafkaMsg);
+            KafkaConsumers.log.info("Receive kafkaMsg  is {}", kafkaMsg);
         }
     }
 }

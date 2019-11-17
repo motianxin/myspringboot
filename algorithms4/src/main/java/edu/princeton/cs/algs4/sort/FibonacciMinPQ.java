@@ -43,7 +43,7 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
      * @param C a Comparator over the Keys
      */
     public FibonacciMinPQ(Comparator<Key> C) {
-        comp = C;
+        this.comp = C;
     }
 
     /**
@@ -51,7 +51,7 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(1)
      */
     public FibonacciMinPQ() {
-        comp = new MyComparator();
+        this.comp = new MyComparator();
     }
 
     /**
@@ -61,8 +61,10 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
      * @param a an array of keys
      */
     public FibonacciMinPQ(Key[] a) {
-        comp = new MyComparator();
-        for (Key k : a) insert(k);
+        this.comp = new MyComparator();
+        for (Key k : a) {
+            insert(k);
+        }
     }
 
     /**
@@ -73,8 +75,10 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
      * @param a an array of keys
      */
     public FibonacciMinPQ(Comparator<Key> C, Key[] a) {
-        comp = C;
-        for (Key k : a) insert(k);
+        this.comp = C;
+        for (Key k : a) {
+            insert(k);
+        }
     }
 
     /**
@@ -84,7 +88,7 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
      * @return true if the priority queue is empty, false if not
      */
     public boolean isEmpty() {
-        return size == 0;
+        return this.size == 0;
     }
 
     /**
@@ -94,7 +98,7 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
      * @return the number of elements on the priority queue
      */
     public int size() {
-        return size;
+        return this.size;
     }
 
     /**
@@ -106,10 +110,13 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
     public void insert(Key key) {
         Node x = new Node();
         x.key = key;
-        size++;
-        head = insert(x, head);
-        if (min == null) min = head;
-        else min = (greater(min.key, key)) ? head : min;
+        this.size++;
+        this.head = insert(x, this.head);
+        if (this.min == null) {
+            this.min = this.head;
+        } else {
+            this.min = (greater(this.min.key, key)) ? this.head : this.min;
+        }
     }
 
     /**
@@ -117,11 +124,14 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(1)
      *
      * @return the minimum key currently in the priority queue
+     *
      * @throws java.util.NoSuchElementException if the priority queue is empty
      */
     public Key minKey() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue is empty");
-        return min.key;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue is empty");
+        }
+        return this.min.key;
     }
 
     /**
@@ -129,21 +139,27 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(log(n)) (amortized)
      *
      * @return the minimum key
+     *
      * @throws java.util.NoSuchElementException if the priority queue is empty
      */
     public Key delMin() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue is empty");
-        head = cut(min, head);
-        Node x = min.child;
-        Key key = min.key;
-        min.key = null;
-        if (x != null) {
-            head = meld(head, x);
-            min.child = null;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue is empty");
         }
-        size--;
-        if (!isEmpty()) consolidate();
-        else min = null;
+        this.head = cut(this.min, this.head);
+        Node x = this.min.child;
+        Key key = this.min.key;
+        this.min.key = null;
+        if (x != null) {
+            this.head = meld(this.head, x);
+            this.min.child = null;
+        }
+        this.size--;
+        if (!isEmpty()) {
+            consolidate();
+        } else {
+            this.min = null;
+        }
         return key;
     }
 
@@ -153,10 +169,11 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(1)
      *
      * @param that a Fibonacci heap
+     *
      * @return the union of the two heaps
      */
     public FibonacciMinPQ<Key> union(FibonacciMinPQ<Key> that) {
-        this.head = meld(head, that.head);
+        this.head = meld(this.head, that.head);
         this.min = (greater(this.min.key, that.min.key)) ? that.min : this.min;
         this.size = this.size + that.size;
         return this;
@@ -168,9 +185,13 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
 
     //Compares two keys
     private boolean greater(Key n, Key m) {
-        if (n == null) return false;
-        if (m == null) return true;
-        return comp.compare(n, m) > 0;
+        if (n == null) {
+            return false;
+        }
+        if (m == null) {
+            return true;
+        }
+        return this.comp.compare(n, m) > 0;
     }
 
     //Assuming root1 holds a greater key than root2, root2 becomes the new root
@@ -185,34 +206,36 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
 
     //Coalesce the roots, thus reshapes the tree
     private void consolidate() {
-        table.clear();
-        Node x = head;
+        this.table.clear();
+        Node x = this.head;
         int maxOrder = 0;
-        min = head;
+        this.min = this.head;
         Node y = null;
         Node z = null;
         do {
             y = x;
             x = x.next;
-            z = table.get(y.order);
+            z = this.table.get(y.order);
             while (z != null) {
-                table.remove(y.order);
+                this.table.remove(y.order);
                 if (greater(y.key, z.key)) {
                     link(y, z);
                     y = z;
                 } else {
                     link(z, y);
                 }
-                z = table.get(y.order);
+                z = this.table.get(y.order);
             }
-            table.put(y.order, y);
-            if (y.order > maxOrder) maxOrder = y.order;
-        } while (x != head);
-        head = null;
-        for (Node n : table.values()) {
+            this.table.put(y.order, y);
+            if (y.order > maxOrder) {
+                maxOrder = y.order;
+            }
+        } while (x != this.head);
+        this.head = null;
+        for (Node n : this.table.values()) {
             if (n != null) {
-                min = greater(min.key, n.key) ? n : min;
-                head = insert(n, head);
+                this.min = greater(this.min.key, n.key) ? n : this.min;
+                this.head = insert(n, this.head);
             }
         }
     }
@@ -247,15 +270,22 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
             Node res = x.next;
             x.next = null;
             x.prev = null;
-            if (head == x) return res;
-            else return head;
+            if (head == x) {
+                return res;
+            } else {
+                return head;
+            }
         }
     }
 
     //Merges two root lists together
     private Node meld(Node x, Node y) {
-        if (x == null) return y;
-        if (y == null) return x;
+        if (x == null) {
+            return y;
+        }
+        if (y == null) {
+            return x;
+        }
         x.prev.next = y.next;
         y.next.prev = x.prev;
         x.prev = y;
@@ -295,15 +325,17 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
 
         //Constructor takes linear time
         public MyIterator() {
-            copy = new FibonacciMinPQ<Key>(comp);
-            insertAll(head);
+            this.copy = new FibonacciMinPQ<Key>(FibonacciMinPQ.this.comp);
+            insertAll(FibonacciMinPQ.this.head);
         }
 
         private void insertAll(Node head) {
-            if (head == null) return;
+            if (head == null) {
+                return;
+            }
             Node x = head;
             do {
-                copy.insert(x.key);
+                this.copy.insert(x.key);
                 insertAll(x.child);
                 x = x.next;
             } while (x != head);
@@ -314,13 +346,15 @@ public class FibonacciMinPQ<Key> implements Iterable<Key> {
         }
 
         public boolean hasNext() {
-            return !copy.isEmpty();
+            return !this.copy.isEmpty();
         }
 
         //Takes amortized logarithmic time
         public Key next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            return copy.delMin();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return this.copy.delMin();
         }
     }
 

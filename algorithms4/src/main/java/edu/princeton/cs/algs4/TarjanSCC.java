@@ -82,7 +82,9 @@ public class TarjanSCC {
         id = new int[G.V()];
         low = new int[G.V()];
         for (int v = 0; v < G.V(); v++) {
-            if (!marked[v]) dfs(G, v);
+            if (!marked[v]) {
+                dfs(G, v);
+            }
         }
 
         // check that id[] gives strong components
@@ -128,8 +130,12 @@ public class TarjanSCC {
         int min = low[v];
         stack.push(v);
         for (int w : G.adj(v)) {
-            if (!marked[w]) dfs(G, w);
-            if (low[w] < min) min = low[w];
+            if (!marked[w]) {
+                dfs(G, w);
+            }
+            if (low[w] < min) {
+                min = low[w];
+            }
         }
         if (min < low[v]) {
             low[v] = min;
@@ -158,8 +164,10 @@ public class TarjanSCC {
      *
      * @param v one vertex
      * @param w the other vertex
+     *
      * @return {@code true} if vertices {@code v} and {@code w} are in the same
      * strong component, and {@code false} otherwise
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      * @throws IllegalArgumentException unless {@code 0 <= w < V}
      */
@@ -173,7 +181,9 @@ public class TarjanSCC {
      * Returns the component id of the strong component containing vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the component id of the strong component containing vertex {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int id(int v) {
@@ -186,8 +196,9 @@ public class TarjanSCC {
         TransitiveClosure tc = new TransitiveClosure(G);
         for (int v = 0; v < G.V(); v++) {
             for (int w = 0; w < G.V(); w++) {
-                if (stronglyConnected(v, w) != (tc.reachable(v, w) && tc.reachable(w, v)))
+                if (stronglyConnected(v, w) != (tc.reachable(v, w) && tc.reachable(w, v))) {
                     return false;
+                }
             }
         }
         return true;
@@ -196,8 +207,9 @@ public class TarjanSCC {
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = marked.length;
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 
 }

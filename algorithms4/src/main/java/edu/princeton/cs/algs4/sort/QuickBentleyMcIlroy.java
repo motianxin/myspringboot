@@ -50,33 +50,33 @@ public class QuickBentleyMcIlroy {
      * @param a the array to be sorted
      */
     public static void sort(Comparable[] a) {
-        sort(a, 0, a.length - 1);
+        QuickBentleyMcIlroy.sort(a, 0, a.length - 1);
     }
 
     private static void sort(Comparable[] a, int lo, int hi) {
         int n = hi - lo + 1;
 
         // cutoff to insertion sort
-        if (n <= INSERTION_SORT_CUTOFF) {
-            insertionSort(a, lo, hi);
+        if (n <= QuickBentleyMcIlroy.INSERTION_SORT_CUTOFF) {
+            QuickBentleyMcIlroy.insertionSort(a, lo, hi);
             return;
         }
 
         // use median-of-3 as partitioning element
-        else if (n <= MEDIAN_OF_3_CUTOFF) {
-            int m = median3(a, lo, lo + n / 2, hi);
-            exch(a, m, lo);
+        else if (n <= QuickBentleyMcIlroy.MEDIAN_OF_3_CUTOFF) {
+            int m = QuickBentleyMcIlroy.median3(a, lo, lo + n / 2, hi);
+            QuickBentleyMcIlroy.exch(a, m, lo);
         }
 
         // use Tukey ninther as partitioning element
         else {
             int eps = n / 8;
             int mid = lo + n / 2;
-            int m1 = median3(a, lo, lo + eps, lo + eps + eps);
-            int m2 = median3(a, mid - eps, mid, mid + eps);
-            int m3 = median3(a, hi - eps - eps, hi - eps, hi);
-            int ninther = median3(a, m1, m2, m3);
-            exch(a, ninther, lo);
+            int m1 = QuickBentleyMcIlroy.median3(a, lo, lo + eps, lo + eps + eps);
+            int m2 = QuickBentleyMcIlroy.median3(a, mid - eps, mid, mid + eps);
+            int m3 = QuickBentleyMcIlroy.median3(a, hi - eps - eps, hi - eps, hi);
+            int ninther = QuickBentleyMcIlroy.median3(a, m1, m2, m3);
+            QuickBentleyMcIlroy.exch(a, ninther, lo);
         }
 
         // Bentley-McIlroy 3-way partitioning
@@ -84,46 +84,61 @@ public class QuickBentleyMcIlroy {
         int p = lo, q = hi + 1;
         Comparable v = a[lo];
         while (true) {
-            while (less(a[++i], v))
-                if (i == hi) break;
-            while (less(v, a[--j]))
-                if (j == lo) break;
+            while (QuickBentleyMcIlroy.less(a[++i], v)) {
+                if (i == hi) {
+                    break;
+                }
+            }
+            while (QuickBentleyMcIlroy.less(v, a[--j])) {
+                if (j == lo) {
+                    break;
+                }
+            }
 
             // pointers cross
-            if (i == j && eq(a[i], v))
-                exch(a, ++p, i);
-            if (i >= j) break;
+            if (i == j && QuickBentleyMcIlroy.eq(a[i], v)) {
+                QuickBentleyMcIlroy.exch(a, ++p, i);
+            }
+            if (i >= j) {
+                break;
+            }
 
-            exch(a, i, j);
-            if (eq(a[i], v)) exch(a, ++p, i);
-            if (eq(a[j], v)) exch(a, --q, j);
+            QuickBentleyMcIlroy.exch(a, i, j);
+            if (QuickBentleyMcIlroy.eq(a[i], v)) {
+                QuickBentleyMcIlroy.exch(a, ++p, i);
+            }
+            if (QuickBentleyMcIlroy.eq(a[j], v)) {
+                QuickBentleyMcIlroy.exch(a, --q, j);
+            }
         }
 
 
         i = j + 1;
-        for (int k = lo; k <= p; k++)
-            exch(a, k, j--);
-        for (int k = hi; k >= q; k--)
-            exch(a, k, i++);
+        for (int k = lo; k <= p; k++) {
+            QuickBentleyMcIlroy.exch(a, k, j--);
+        }
+        for (int k = hi; k >= q; k--) {
+            QuickBentleyMcIlroy.exch(a, k, i++);
+        }
 
-        sort(a, lo, j);
-        sort(a, i, hi);
+        QuickBentleyMcIlroy.sort(a, lo, j);
+        QuickBentleyMcIlroy.sort(a, i, hi);
     }
 
 
     // sort from a[lo] to a[hi] using insertion sort
     private static void insertionSort(Comparable[] a, int lo, int hi) {
-        for (int i = lo; i <= hi; i++)
-            for (int j = i; j > lo && less(a[j], a[j - 1]); j--)
-                exch(a, j, j - 1);
+        for (int i = lo; i <= hi; i++) {
+            for (int j = i; j > lo && QuickBentleyMcIlroy.less(a[j], a[j - 1]); j--) {
+                QuickBentleyMcIlroy.exch(a, j, j - 1);
+            }
+        }
     }
 
 
     // return the index of the median element among a[i], a[j], and a[k]
     private static int median3(Comparable[] a, int i, int j, int k) {
-        return (less(a[i], a[j]) ?
-                (less(a[j], a[k]) ? j : less(a[i], a[k]) ? k : i) :
-                (less(a[k], a[j]) ? j : less(a[k], a[i]) ? k : i));
+        return (QuickBentleyMcIlroy.less(a[i], a[j]) ? (QuickBentleyMcIlroy.less(a[j], a[k]) ? j : QuickBentleyMcIlroy.less(a[i], a[k]) ? k : i) : (QuickBentleyMcIlroy.less(a[k], a[j]) ? j : QuickBentleyMcIlroy.less(a[k], a[i]) ? k : i));
     }
 
     /***************************************************************************
@@ -132,13 +147,17 @@ public class QuickBentleyMcIlroy {
 
     // is v < w ?
     private static boolean less(Comparable v, Comparable w) {
-        if (v == w) return false;    // optimization when reference equal
+        if (v == w) {
+            return false;    // optimization when reference equal
+        }
         return v.compareTo(w) < 0;
     }
 
     // does v == w ?
     private static boolean eq(Comparable v, Comparable w) {
-        if (v == w) return true;    // optimization when reference equal
+        if (v == w) {
+            return true;    // optimization when reference equal
+        }
         return v.compareTo(w) == 0;
     }
 
@@ -154,8 +173,11 @@ public class QuickBentleyMcIlroy {
      *  Check if array is sorted - useful for debugging.
      ***************************************************************************/
     private static boolean isSorted(Comparable[] a) {
-        for (int i = 1; i < a.length; i++)
-            if (less(a[i], a[i - 1])) return false;
+        for (int i = 1; i < a.length; i++) {
+            if (QuickBentleyMcIlroy.less(a[i], a[i - 1])) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -176,8 +198,8 @@ public class QuickBentleyMcIlroy {
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
         QuickBentleyMcIlroy.sort(a);
-        assert isSorted(a);
-        show(a);
+        assert QuickBentleyMcIlroy.isSorted(a);
+        QuickBentleyMcIlroy.show(a);
     }
 
 }

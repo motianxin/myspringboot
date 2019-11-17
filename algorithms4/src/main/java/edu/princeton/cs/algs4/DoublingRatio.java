@@ -45,6 +45,7 @@ public class DoublingRatio {
      * random 6-digit integers.
      *
      * @param n the number of integers
+     *
      * @return amount of time (in seconds) to call {@code ThreeSum.count()}
      * with <em>n</em> random 6-digit integers
      */

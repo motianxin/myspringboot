@@ -21,6 +21,16 @@ import com.zhigang.myspringboot.algorithms.stdlib.StdRandom;
 public class HeapSort extends SortClass {
 
 
+    public static void main(String[] args) {
+        SortClass sortClass = new HeapSort();
+        double[] dArray = new double[40];
+        for (int i = 0; i < dArray.length; i++) {
+            dArray[i] = StdRandom.uniform();
+        }
+        sortClass.setDraw(new Draw("heapSort", 300, 300));
+        sortClass.sort(dArray);
+    }
+
     @Override
     public void sort(double[] arr) {
         super.sort(arr);
@@ -47,7 +57,7 @@ public class HeapSort extends SortClass {
     private void sink(double[] arr, int i, int n) {
         int k = i;
         // n 为数组最后一个x下标， 取<=n
-       while (((k << 1) + 1) <= n) {
+        while (((k << 1) + 1) <= n) {
             // 叶子节点的左节点下标
             int left = (k << 1) + 1;
             // 叶子节点的右节点下标
@@ -65,15 +75,5 @@ public class HeapSort extends SortClass {
             swap(arr, k, left);
             k = left;
         }
-    }
-
-    public static void main(String[] args) {
-        SortClass sortClass = new HeapSort();
-        double[] dArray = new double[40];
-        for (int i = 0; i < dArray.length; i++) {
-            dArray[i] = StdRandom.uniform();
-        }
-        sortClass.setDraw(new Draw("heapSort", 300, 300));
-        sortClass.sort(dArray);
     }
 }

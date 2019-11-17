@@ -18,10 +18,10 @@
 
 package edu.princeton.cs.algs4.map;
 
-import edu.princeton.cs.algs4.find.ST;
 import edu.princeton.cs.algs4.base.In;
 import edu.princeton.cs.algs4.base.StdIn;
 import edu.princeton.cs.algs4.base.StdOut;
+import edu.princeton.cs.algs4.find.ST;
 
 /**
  * The {@code SymbolDigraph} class represents a digraph, where the
@@ -56,7 +56,7 @@ public class SymbolDigraph {
      * the name of a vertex, followed by a list of the names
      * of the vertices adjacent to that vertex, separated by the delimiter.
      *
-     * @param filename  the name of the file
+     * @param filename the name of the file
      * @param delimiter the delimiter between fields
      */
     public SymbolDigraph(String filename, String delimiter) {
@@ -68,8 +68,9 @@ public class SymbolDigraph {
         while (in.hasNextLine()) {
             String[] a = in.readLine().split(delimiter);
             for (int i = 0; i < a.length; i++) {
-                if (!st.contains(a[i]))
+                if (!st.contains(a[i])) {
                     st.put(a[i], st.size());
+                }
             }
         }
 
@@ -115,6 +116,7 @@ public class SymbolDigraph {
      * Does the digraph contain the vertex named {@code s}?
      *
      * @param s the name of a vertex
+     *
      * @return {@code true} if {@code s} is the name of a vertex, and {@code false} otherwise
      */
     public boolean contains(String s) {
@@ -125,7 +127,9 @@ public class SymbolDigraph {
      * Returns the integer associated with the vertex named {@code s}.
      *
      * @param s the name of a vertex
+     *
      * @return the integer (between 0 and <em>V</em> - 1) associated with the vertex named {@code s}
+     *
      * @deprecated Replaced by {@link #indexOf(String)}.
      */
     @Deprecated
@@ -137,6 +141,7 @@ public class SymbolDigraph {
      * Returns the integer associated with the vertex named {@code s}.
      *
      * @param s the name of a vertex
+     *
      * @return the integer (between 0 and <em>V</em> - 1) associated with the vertex named {@code s}
      */
     public int indexOf(String s) {
@@ -147,7 +152,9 @@ public class SymbolDigraph {
      * Returns the name of the vertex associated with the integer {@code v}.
      *
      * @param v the integer corresponding to a vertex (between 0 and <em>V</em> - 1)
+     *
      * @return the name of the vertex associated with the integer {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      * @deprecated Replaced by {@link #nameOf(int)}.
      */
@@ -161,7 +168,9 @@ public class SymbolDigraph {
      * Returns the name of the vertex associated with the integer {@code v}.
      *
      * @param v the integer corresponding to a vertex (between 0 and <em>V</em> - 1)
+     *
      * @return the name of the vertex associated with the integer {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public String nameOf(int v) {
@@ -174,6 +183,7 @@ public class SymbolDigraph {
      * not to mutate the digraph.
      *
      * @return the digraph associated with the symbol digraph
+     *
      * @deprecated Replaced by {@link #digraph()}.
      */
     @Deprecated
@@ -194,8 +204,9 @@ public class SymbolDigraph {
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = graph.V();
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 }
 

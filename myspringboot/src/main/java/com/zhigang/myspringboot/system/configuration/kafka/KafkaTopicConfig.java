@@ -32,16 +32,17 @@ public class KafkaTopicConfig {
 
     @Value("${spring.kafka.topic.replicationFactor}")
     private int replicationFactor;
+
     @Bean
     public KafkaAdmin kafkaAdmin() {
         Map<String, Object> configs = new HashMap<>();
-        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, this.bootstrapServer);
         return new KafkaAdmin(configs);
     }
 
     @Bean
     public NewTopic myTopic() {
         //第三个参数是副本数量，确保集群中配置的数目大于等于副本数量
-        return new NewTopic(topicName, numPartitions, (short) replicationFactor);
+        return new NewTopic(this.topicName, this.numPartitions, (short) this.replicationFactor);
     }
 }

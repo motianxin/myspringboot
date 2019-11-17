@@ -66,15 +66,20 @@ public class DirectedEulerianPath {
 
         // digraph can't have an Eulerian path
         // (this condition is needed)
-        if (deficit > 1) return;
+        if (deficit > 1) {
+            return;
+        }
 
         // special case for digraph with zero edges (has a degenerate Eulerian path)
-        if (s == -1) s = 0;
+        if (s == -1) {
+            s = 0;
+        }
 
         // create local view of adjacency lists, to iterate one vertex at a time
         Iterator<Integer>[] adj = (Iterator<Integer>[]) new Iterator[G.V()];
-        for (int v = 0; v < G.V(); v++)
+        for (int v = 0; v < G.V(); v++) {
             adj[v] = G.adj(v).iterator();
+        }
 
         // greedily add to cycle, depth-first search style
         Stack<Integer> stack = new Stack<Integer>();
@@ -91,17 +96,20 @@ public class DirectedEulerianPath {
         }
 
         // check if all edges have been used
-        if (path.size() != G.E() + 1)
+        if (path.size() != G.E() + 1) {
             path = null;
+        }
 
         assert check(G);
     }
 
     // returns any non-isolated vertex; -1 if no such vertex
     private static int nonIsolatedVertex(Digraph G) {
-        for (int v = 0; v < G.V(); v++)
-            if (G.outdegree(v) > 0)
+        for (int v = 0; v < G.V(); v++) {
+            if (G.outdegree(v) > 0) {
                 return v;
+            }
+        }
         return -1;
     }
 
@@ -119,28 +127,38 @@ public class DirectedEulerianPath {
     //    - the graph is connected, when viewed as an undirected graph
     //      (ignoring isolated vertices)
     private static boolean satisfiesNecessaryAndSufficientConditions(Digraph G) {
-        if (G.E() == 0) return true;
+        if (G.E() == 0) {
+            return true;
+        }
 
         // Condition 1: indegree(v) == outdegree(v) for every vertex,
         // except one vertex may have outdegree(v) = indegree(v) + 1
         int deficit = 0;
-        for (int v = 0; v < G.V(); v++)
-            if (G.outdegree(v) > G.indegree(v))
+        for (int v = 0; v < G.V(); v++) {
+            if (G.outdegree(v) > G.indegree(v)) {
                 deficit += (G.outdegree(v) - G.indegree(v));
-        if (deficit > 1) return false;
+            }
+        }
+        if (deficit > 1) {
+            return false;
+        }
 
         // Condition 2: graph is connected, ignoring isolated vertices
         Graph H = new Graph(G.V());
-        for (int v = 0; v < G.V(); v++)
-            for (int w : G.adj(v))
+        for (int v = 0; v < G.V(); v++) {
+            for (int w : G.adj(v)) {
                 H.addEdge(v, w);
+            }
+        }
 
         // check that all non-isolated vertices are connected
         int s = nonIsolatedVertex(G);
         BreadthFirstPaths bfs = new BreadthFirstPaths(H, s);
-        for (int v = 0; v < G.V(); v++)
-            if (H.degree(v) > 0 && !bfs.hasPathTo(v))
+        for (int v = 0; v < G.V(); v++) {
+            if (H.degree(v) > 0 && !bfs.hasPathTo(v)) {
                 return false;
+            }
+        }
 
         return true;
     }
@@ -234,16 +252,24 @@ public class DirectedEulerianPath {
     private boolean check(Digraph G) {
 
         // internal consistency check
-        if (hasEulerianPath() == (path() == null)) return false;
+        if (hasEulerianPath() == (path() == null)) {
+            return false;
+        }
 
         // hashEulerianPath() returns correct value
-        if (hasEulerianPath() != satisfiesNecessaryAndSufficientConditions(G)) return false;
+        if (hasEulerianPath() != satisfiesNecessaryAndSufficientConditions(G)) {
+            return false;
+        }
 
         // nothing else to check if no Eulerian path
-        if (path == null) return true;
+        if (path == null) {
+            return true;
+        }
 
         // check that path() uses correct number of edges
-        if (path.size() != G.E() + 1) return false;
+        if (path.size() != G.E() + 1) {
+            return false;
+        }
 
         // check that path() is a directed path in G
         // TODO

@@ -27,79 +27,29 @@ public class AStarSearch {
 
     private static List<Node> closeList = new ArrayList<>();
 
-    private class Node {
-        /**
-         * 行
-         */
-        private int row;
-        /**
-         * 列
-         */
-        private int column;
-
-        /**
-         * 父节点
-         */
-        private Node parentNode;
-
-        int h;
-        int g;
-        int f;
-
-        /**
-         * node值标志是否可行
-         */
-        private int value;
-
-        public Node(int row, int column, int value) {
-            this.row = row;
-            this.column = column;
-            this.value = value;
+    public static void main(String[] args) {
+        AStarSearch aStarSearch = new AStarSearch();
+        aStarSearch.initNodes(5, 7);
+        aStarSearch.setNodeValue(2, 1, 1);
+        aStarSearch.setNodeValue(2, 5, 2);
+        aStarSearch.setNodeValue(1, 3, -1);
+        aStarSearch.setNodeValue(2, 3, -1);
+        aStarSearch.setNodeValue(3, 3, -1);
+        printTbale();
+        Node node = aStarSearch.aSearch(table[2][1], table[2][5]);
+        System.out.println("star search over.");
+        while (node != null) {
+            System.out.println(node.toString());
+            node = node.getParentNode();
         }
+    }
 
-        public int getRow() {
-            return row;
-        }
-
-        public void setRow(int row) {
-            this.row = row;
-        }
-
-        public int getColumn() {
-            return column;
-        }
-
-        public void setColumn(int column) {
-            this.column = column;
-        }
-
-        public Node getParentNode() {
-            return parentNode;
-        }
-
-        public void setParentNode(Node parentNode) {
-            this.parentNode = parentNode;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public void setValue(int value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuffer sb = new StringBuffer("Node{");
-            sb.append("row=").append(row);
-            sb.append(", column=").append(column);
-            sb.append(", h=").append(h);
-            sb.append(", g=").append(g);
-            sb.append(", f=").append(f);
-            sb.append(", value=").append(value);
-            sb.append('}');
-            return sb.toString();
+    private static void printTbale() {
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[0].length; j++) {
+                System.out.print(table[i][j].getValue() + ", ");
+            }
+            System.out.println();
         }
     }
 
@@ -118,7 +68,6 @@ public class AStarSearch {
             }
         }
     }
-
 
     /**
      * @Author Administrator
@@ -214,29 +163,76 @@ public class AStarSearch {
         return temp;
     }
 
-    public static void main(String[] args) {
-        AStarSearch aStarSearch = new AStarSearch();
-        aStarSearch.initNodes(5, 7);
-        aStarSearch.setNodeValue(2, 1, 1);
-        aStarSearch.setNodeValue(2, 5, 2);
-        aStarSearch.setNodeValue(1, 3, -1);
-        aStarSearch.setNodeValue(2, 3, -1);
-        aStarSearch.setNodeValue(3, 3, -1);
-        printTbale();
-        Node node = aStarSearch.aSearch(table[2][1], table[2][5]);
-        System.out.println("star search over.");
-        while (node != null) {
-            System.out.println(node.toString());
-            node = node.getParentNode();
-        }
-    }
+    private class Node {
+        int h;
+        int g;
+        int f;
+        /**
+         * 行
+         */
+        private int row;
+        /**
+         * 列
+         */
+        private int column;
+        /**
+         * 父节点
+         */
+        private Node parentNode;
+        /**
+         * node值标志是否可行
+         */
+        private int value;
 
-    private static void printTbale() {
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[0].length; j++) {
-                System.out.print(table[i][j].getValue() + ", ");
-            }
-            System.out.println();
+        public Node(int row, int column, int value) {
+            this.row = row;
+            this.column = column;
+            this.value = value;
+        }
+
+        public int getRow() {
+            return row;
+        }
+
+        public void setRow(int row) {
+            this.row = row;
+        }
+
+        public int getColumn() {
+            return column;
+        }
+
+        public void setColumn(int column) {
+            this.column = column;
+        }
+
+        public Node getParentNode() {
+            return parentNode;
+        }
+
+        public void setParentNode(Node parentNode) {
+            this.parentNode = parentNode;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer("Node{");
+            sb.append("row=").append(row);
+            sb.append(", column=").append(column);
+            sb.append(", h=").append(h);
+            sb.append(", g=").append(g);
+            sb.append(", f=").append(f);
+            sb.append(", value=").append(value);
+            sb.append('}');
+            return sb.toString();
         }
     }
 

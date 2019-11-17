@@ -62,8 +62,9 @@ public class Whitelist {
         // Read key, print if not in whitelist.
         while (!StdIn.isEmpty()) {
             int key = StdIn.readInt();
-            if (!set.contains(key))
+            if (!set.contains(key)) {
                 StdOut.println(key);
+            }
         }
     }
 }

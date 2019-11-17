@@ -57,26 +57,28 @@ public class InsertionX {
         // put smallest element in position to serve as sentinel
         int exchanges = 0;
         for (int i = n - 1; i > 0; i--) {
-            if (less(a[i], a[i - 1])) {
-                exch(a, i, i - 1);
+            if (InsertionX.less(a[i], a[i - 1])) {
+                InsertionX.exch(a, i, i - 1);
                 exchanges++;
             }
         }
-        if (exchanges == 0) return;
+        if (exchanges == 0) {
+            return;
+        }
 
 
         // insertion sort with half-exchanges
         for (int i = 2; i < n; i++) {
             Comparable v = a[i];
             int j = i;
-            while (less(v, a[j - 1])) {
+            while (InsertionX.less(v, a[j - 1])) {
                 a[j] = a[j - 1];
                 j--;
             }
             a[j] = v;
         }
 
-        assert isSorted(a);
+        assert InsertionX.isSorted(a);
     }
 
 
@@ -101,8 +103,11 @@ public class InsertionX {
      *  Check if array is sorted - useful for debugging.
      ***************************************************************************/
     private static boolean isSorted(Comparable[] a) {
-        for (int i = 1; i < a.length; i++)
-            if (less(a[i], a[i - 1])) return false;
+        for (int i = 1; i < a.length; i++) {
+            if (InsertionX.less(a[i], a[i - 1])) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -122,7 +127,7 @@ public class InsertionX {
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
         InsertionX.sort(a);
-        show(a);
+        InsertionX.show(a);
     }
 
 }

@@ -73,10 +73,10 @@ public class Accumulator {
      * @param x the data value
      */
     public void addDataValue(double x) {
-        n++;
-        double delta = x - mu;
-        mu += delta / n;
-        sum += (double) (n - 1) / n * delta * delta;
+        this.n++;
+        double delta = x - this.mu;
+        this.mu += delta / this.n;
+        this.sum += (double) (this.n - 1) / this.n * delta * delta;
     }
 
     /**
@@ -85,7 +85,7 @@ public class Accumulator {
      * @return the mean of the data values
      */
     public double mean() {
-        return mu;
+        return this.mu;
     }
 
     /**
@@ -94,8 +94,10 @@ public class Accumulator {
      * @return the sample variance of the data values
      */
     public double var() {
-        if (n <= 1) return Double.NaN;
-        return sum / (n - 1);
+        if (this.n <= 1) {
+            return Double.NaN;
+        }
+        return this.sum / (this.n - 1);
     }
 
     /**
@@ -113,7 +115,7 @@ public class Accumulator {
      * @return the number of data values
      */
     public int count() {
-        return n;
+        return this.n;
     }
 
     /**
@@ -121,8 +123,9 @@ public class Accumulator {
      *
      * @return a string representation of this accumulator
      */
+    @Override
     public String toString() {
-        return "n = " + n + ", mean = " + mean() + ", stddev = " + stddev();
+        return "n = " + this.n + ", mean = " + mean() + ", stddev = " + stddev();
     }
 }
 

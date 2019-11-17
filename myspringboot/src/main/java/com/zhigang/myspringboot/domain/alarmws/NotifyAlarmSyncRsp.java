@@ -1,4 +1,3 @@
-
 package com.zhigang.myspringboot.domain.alarmws;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,9 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>anonymous complex type的 Java 类。
- * 
+ *
  * <p>以下模式片段指定包含在此类中的预期内容。
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -26,15 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "resultCode",
-    "resultMsg",
-    "timeStamp"
-})
+@XmlType(name = "", propOrder = {"resultCode", "resultMsg", "timeStamp"})
 @XmlRootElement(name = "notifyAlarmSyncRsp", namespace = "http://www.ctsi.com.cn/webservices/service")
 public class NotifyAlarmSyncRsp {
 
@@ -44,26 +37,24 @@ public class NotifyAlarmSyncRsp {
     @XmlElement(required = true)
     protected String timeStamp;
 
-	public NotifyAlarmSyncRsp(int resultCode, String resultMsg, String timeStamp) {
-		this.resultCode = resultCode;
-		this.resultMsg = resultMsg;
-		this.timeStamp = timeStamp;
-	}
+    public NotifyAlarmSyncRsp(int resultCode, String resultMsg, String timeStamp) {
+        this.resultCode = resultCode;
+        this.resultMsg = resultMsg;
+        this.timeStamp = timeStamp;
+    }
 
-	public NotifyAlarmSyncRsp() {
-	}
+    public NotifyAlarmSyncRsp() {
+    }
 
-	/**
+    /**
      * 获取resultCode属性的值。
-     * 
      */
     public int getResultCode() {
-        return resultCode;
+        return this.resultCode;
     }
 
     /**
      * 设置resultCode属性的值。
-     * 
      */
     public void setResultCode(int value) {
         this.resultCode = value;
@@ -71,23 +62,19 @@ public class NotifyAlarmSyncRsp {
 
     /**
      * 获取resultMsg属性的值。
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getResultMsg() {
-        return resultMsg;
+        return this.resultMsg;
     }
 
     /**
      * 设置resultMsg属性的值。
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     * {@link String }
      */
     public void setResultMsg(String value) {
         this.resultMsg = value;
@@ -95,23 +82,19 @@ public class NotifyAlarmSyncRsp {
 
     /**
      * 获取timeStamp属性的值。
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getTimeStamp() {
-        return timeStamp;
+        return this.timeStamp;
     }
 
     /**
      * 设置timeStamp属性的值。
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     * {@link String }
      */
     public void setTimeStamp(String value) {
         this.timeStamp = value;
@@ -120,9 +103,9 @@ public class NotifyAlarmSyncRsp {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("NotifyAlarmSyncRsp{");
-        sb.append("resultCode=").append(resultCode);
-        sb.append(", resultMsg='").append(resultMsg).append('\'');
-        sb.append(", timeStamp='").append(timeStamp).append('\'');
+        sb.append("resultCode=").append(this.resultCode);
+        sb.append(", resultMsg='").append(this.resultMsg).append('\'');
+        sb.append(", timeStamp='").append(this.timeStamp).append('\'');
         sb.append('}');
         return sb.toString();
     }

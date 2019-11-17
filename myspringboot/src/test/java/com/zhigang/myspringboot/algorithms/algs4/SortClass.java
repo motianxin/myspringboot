@@ -37,6 +37,7 @@ public class SortClass {
      *
      * @param a
      * @param b
+     *
      * @return
      */
     protected boolean less(double a, double b) {
@@ -61,6 +62,7 @@ public class SortClass {
 
     /**
      * 重画直方图
+     *
      * @param n
      * @param v
      * @param i

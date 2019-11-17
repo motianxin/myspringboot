@@ -75,8 +75,9 @@ public class CollisionSystem {
         if (args.length == 1) {
             int n = Integer.parseInt(args[0]);
             particles = new Particle[n];
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++) {
                 particles[i] = new Particle();
+            }
         }
 
         // or read from standard input
@@ -105,32 +106,39 @@ public class CollisionSystem {
 
     // updates priority queue with all new events for particle a
     private void predict(Particle a, double limit) {
-        if (a == null) return;
+        if (a == null) {
+            return;
+        }
 
         // particle-particle collisions
-        for (int i = 0; i < particles.length; i++) {
-            double dt = a.timeToHit(particles[i]);
-            if (t + dt <= limit)
-                pq.insert(new Event(t + dt, a, particles[i]));
+        for (int i = 0; i < this.particles.length; i++) {
+            double dt = a.timeToHit(this.particles[i]);
+            if (this.t + dt <= limit) {
+                this.pq.insert(new Event(this.t + dt, a, this.particles[i]));
+            }
         }
 
         // particle-wall collisions
         double dtX = a.timeToHitVerticalWall();
         double dtY = a.timeToHitHorizontalWall();
-        if (t + dtX <= limit) pq.insert(new Event(t + dtX, a, null));
-        if (t + dtY <= limit) pq.insert(new Event(t + dtY, null, a));
+        if (this.t + dtX <= limit) {
+            this.pq.insert(new Event(this.t + dtX, a, null));
+        }
+        if (this.t + dtY <= limit) {
+            this.pq.insert(new Event(this.t + dtY, null, a));
+        }
     }
 
     // redraw all particles
     private void redraw(double limit) {
         StdDraw.clear();
-        for (int i = 0; i < particles.length; i++) {
-            particles[i].draw();
+        for (int i = 0; i < this.particles.length; i++) {
+            this.particles[i].draw();
         }
         StdDraw.show();
         StdDraw.pause(20);
-        if (t < limit) {
-            pq.insert(new Event(t + 1.0 / HZ, null, null));
+        if (this.t < limit) {
+            this.pq.insert(new Event(this.t + 1.0 / CollisionSystem.HZ, null, null));
         }
     }
 
@@ -142,32 +150,40 @@ public class CollisionSystem {
     public void simulate(double limit) {
 
         // initialize PQ with collision events and redraw event
-        pq = new MinPQ<Event>();
-        for (int i = 0; i < particles.length; i++) {
-            predict(particles[i], limit);
+        this.pq = new MinPQ<Event>();
+        for (int i = 0; i < this.particles.length; i++) {
+            predict(this.particles[i], limit);
         }
-        pq.insert(new Event(0, null, null));        // redraw event
+        this.pq.insert(new Event(0, null, null));        // redraw event
 
 
         // the main event-driven simulation loop
-        while (!pq.isEmpty()) {
+        while (!this.pq.isEmpty()) {
 
             // get impending event, discard if invalidated
-            Event e = pq.delMin();
-            if (!e.isValid()) continue;
+            Event e = this.pq.delMin();
+            if (!e.isValid()) {
+                continue;
+            }
             Particle a = e.a;
             Particle b = e.b;
 
             // physical collision, so update positions, and then simulation clock
-            for (int i = 0; i < particles.length; i++)
-                particles[i].move(e.time - t);
-            t = e.time;
+            for (int i = 0; i < this.particles.length; i++) {
+                this.particles[i].move(e.time - this.t);
+            }
+            this.t = e.time;
 
             // process event
-            if (a != null && b != null) a.bounceOff(b);              // particle-particle collision
-            else if (a != null && b == null) a.bounceOffVerticalWall();   // particle-wall collision
-            else if (a == null && b != null) b.bounceOffHorizontalWall(); // particle-wall collision
-            else if (a == null && b == null) redraw(limit);               // redraw event
+            if (a != null && b != null) {
+                a.bounceOff(b);              // particle-particle collision
+            } else if (a != null && b == null) {
+                a.bounceOffVerticalWall();   // particle-wall collision
+            } else if (a == null && b != null) {
+                b.bounceOffHorizontalWall(); // particle-wall collision
+            } else if (a == null && b == null) {
+                redraw(limit);               // redraw event
+            }
 
             // update the priority queue with new collisions involving a or b
             predict(a, limit);
@@ -197,10 +213,16 @@ public class CollisionSystem {
             this.time = t;
             this.a = a;
             this.b = b;
-            if (a != null) countA = a.count();
-            else countA = -1;
-            if (b != null) countB = b.count();
-            else countB = -1;
+            if (a != null) {
+                this.countA = a.count();
+            } else {
+                this.countA = -1;
+            }
+            if (b != null) {
+                this.countB = b.count();
+            } else {
+                this.countB = -1;
+            }
         }
 
         // compare times when two events will occur
@@ -210,8 +232,12 @@ public class CollisionSystem {
 
         // has any collision occurred between when event was created and now?
         public boolean isValid() {
-            if (a != null && a.count() != countA) return false;
-            if (b != null && b.count() != countB) return false;
+            if (this.a != null && this.a.count() != this.countA) {
+                return false;
+            }
+            if (this.b != null && this.b.count() != this.countB) {
+                return false;
+            }
             return true;
         }
 

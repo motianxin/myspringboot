@@ -24,13 +24,13 @@ public class ZKController {
 
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
-                    zklock.lock();
+                this.zklock.lock();
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                zklock.unlock();
+                this.zklock.unlock();
             }, "thread-" + i).start();
         }
         return true;

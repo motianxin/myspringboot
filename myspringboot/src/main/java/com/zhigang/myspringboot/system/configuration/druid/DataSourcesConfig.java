@@ -22,24 +22,24 @@ public class DataSourcesConfig {
     @Bean(name = "masterDataSource")
     @Qualifier("masterDataSource")
     @Primary
-    @ConfigurationProperties(prefix="spring.datasource.master")
-    public DataSource masterDataSource(){
+    @ConfigurationProperties(prefix = "spring.datasource.master")
+    public DataSource masterDataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Bean(name = "slave1DataSource")
     @Qualifier("slave1DataSource")
     @Primary
-    @ConfigurationProperties(prefix="spring.datasource.slave1")
-    public DataSource slave1DataSource(){
+    @ConfigurationProperties(prefix = "spring.datasource.slave1")
+    public DataSource slave1DataSource() {
         return DataSourceBuilder.create().build();
     }
 
     @Bean(name = "slave2DataSource")
     @Qualifier("slave2DataSource")
     @Primary
-    @ConfigurationProperties(prefix="spring.datasource.slave2")
-    public DataSource slave2DataSource(){
+    @ConfigurationProperties(prefix = "spring.datasource.slave2")
+    public DataSource slave2DataSource() {
         return DataSourceBuilder.create().build();
     }
 

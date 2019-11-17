@@ -27,6 +27,7 @@ package edu.princeton.cs.algs4.base;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -158,8 +159,8 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
     public static final Color PRINCETON_ORANGE = new Color(245, 128, 37);
 
     // default colors
-    private static final Color DEFAULT_PEN_COLOR = BLACK;
-    private static final Color DEFAULT_CLEAR_COLOR = WHITE;
+    private static final Color DEFAULT_PEN_COLOR = Draw.BLACK;
+    private static final Color DEFAULT_CLEAR_COLOR = Draw.WHITE;
 
     // boundary of drawing canvas, 0% border
     private static final double BORDER = 0.0;
@@ -187,8 +188,8 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
     // current pen color
     private Color penColor;
     // canvas size
-    private int width = DEFAULT_SIZE;
-    private int height = DEFAULT_SIZE;
+    private int width = Draw.DEFAULT_SIZE;
+    private int height = Draw.DEFAULT_SIZE;
     // current pen radius
     private double penRadius;
     // show we draw immediately or wait until next show?
@@ -234,18 +235,26 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
 
     // throw an IllegalArgumentException if x is NaN or infinite
     private static void validate(double x, String name) {
-        if (Double.isNaN(x)) throw new IllegalArgumentException(name + " is NaN");
-        if (Double.isInfinite(x)) throw new IllegalArgumentException(name + " is infinite");
+        if (Double.isNaN(x)) {
+            throw new IllegalArgumentException(name + " is NaN");
+        }
+        if (Double.isInfinite(x)) {
+            throw new IllegalArgumentException(name + " is infinite");
+        }
     }
 
     // throw an IllegalArgumentException if s is null
     private static void validateNonnegative(double x, String name) {
-        if (x < 0) throw new IllegalArgumentException(name + " negative");
+        if (x < 0) {
+            throw new IllegalArgumentException(name + " negative");
+        }
     }
 
     // throw an IllegalArgumentException if s is null
     private static void validateNotNull(Object x, String name) {
-        if (x == null) throw new IllegalArgumentException(name + " is null");
+        if (x == null) {
+            throw new IllegalArgumentException(name + " is null");
+        }
     }
 
     /***************************************************************************
@@ -254,7 +263,9 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
 
     // get an image from the given filename
     private static Image getImage(String filename) {
-        if (filename == null) throw new IllegalArgumentException();
+        if (filename == null) {
+            throw new IllegalArgumentException();
+        }
 
         // to read from file
         ImageIcon icon = new ImageIcon(filename);
@@ -272,14 +283,17 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
         // in case file is inside a .jar (classpath relative to StdDraw)
         if ((icon == null) || (icon.getImageLoadStatus() != MediaTracker.COMPLETE)) {
             URL url = StdDraw.class.getResource(filename);
-            if (url != null)
+            if (url != null) {
                 icon = new ImageIcon(url);
+            }
         }
 
         // in case file is inside a .jar (classpath relative to root of jar)
         if ((icon == null) || (icon.getImageLoadStatus() != MediaTracker.COMPLETE)) {
             URL url = Draw.class.getResource("/" + filename);
-            if (url == null) throw new IllegalArgumentException("image " + filename + " not found");
+            if (url == null) {
+                throw new IllegalArgumentException("image " + filename + " not found");
+            }
             icon = new ImageIcon(url);
         }
 
@@ -321,47 +335,48 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
     }
 
     private void init() {
-        if (frame != null) frame.setVisible(false);
-        frame = new JFrame();
-        offscreenImage = new BufferedImage(2 * width, 2 * height, BufferedImage.TYPE_INT_ARGB);
-        onscreenImage = new BufferedImage(2 * width, 2 * height, BufferedImage.TYPE_INT_ARGB);
-        offscreen = offscreenImage.createGraphics();
-        onscreen = onscreenImage.createGraphics();
-        offscreen.scale(2.0, 2.0);  // since we made it 2x as big
+        if (this.frame != null) {
+            this.frame.setVisible(false);
+        }
+        this.frame = new JFrame();
+        this.offscreenImage = new BufferedImage(2 * this.width, 2 * this.height, BufferedImage.TYPE_INT_ARGB);
+        this.onscreenImage = new BufferedImage(2 * this.width, 2 * this.height, BufferedImage.TYPE_INT_ARGB);
+        this.offscreen = this.offscreenImage.createGraphics();
+        this.onscreen = this.onscreenImage.createGraphics();
+        this.offscreen.scale(2.0, 2.0);  // since we made it 2x as big
 
         setXscale();
         setYscale();
-        offscreen.setColor(DEFAULT_CLEAR_COLOR);
-        offscreen.fillRect(0, 0, width, height);
+        this.offscreen.setColor(Draw.DEFAULT_CLEAR_COLOR);
+        this.offscreen.fillRect(0, 0, this.width, this.height);
         setPenColor();
         setPenRadius();
         setFont();
         clear();
 
         // add antialiasing
-        RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+        RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        offscreen.addRenderingHints(hints);
+        this.offscreen.addRenderingHints(hints);
 
         // frame stuff
-        RetinaImageIcon icon = new RetinaImageIcon(onscreenImage);
-        draw = new JLabel(icon);
+        RetinaImageIcon icon = new RetinaImageIcon(this.onscreenImage);
+        this.draw = new JLabel(icon);
 
-        draw.addMouseListener(this);
-        draw.addMouseMotionListener(this);
+        this.draw.addMouseListener(this);
+        this.draw.addMouseMotionListener(this);
 
-        frame.setContentPane(draw);
-        frame.addKeyListener(this);    // JLabel cannot get keyboard focus
-        frame.setResizable(false);
+        this.frame.setContentPane(this.draw);
+        this.frame.addKeyListener(this);    // JLabel cannot get keyboard focus
+        this.frame.setResizable(false);
         // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);            // closes all windows
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);      // closes only current window
-        frame.setFocusTraversalKeysEnabled(false);  // to recognize VK_TAB with isKeyPressed()
-        frame.setTitle(name);
-        frame.setJMenuBar(createMenuBar());
-        frame.pack();
-        frame.requestFocusInWindow();
-        frame.setVisible(true);
+        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);      // closes only current window
+        this.frame.setFocusTraversalKeysEnabled(false);  // to recognize VK_TAB with isKeyPressed()
+        this.frame.setTitle(this.name);
+        this.frame.setJMenuBar(createMenuBar());
+        this.frame.pack();
+        this.frame.requestFocusInWindow();
+        this.frame.setVisible(true);
     }
 
     /**
@@ -369,22 +384,25 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      *
      * @param x the number of pixels from the left
      * @param y the number of pixels from the top
+     *
      * @throws IllegalArgumentException if the width or height is 0 or negative
      */
     public void setLocationOnScreen(int x, int y) {
-        if (x <= 0 || y <= 0) throw new IllegalArgumentException();
-        frame.setLocation(x, y);
+        if (x <= 0 || y <= 0) {
+            throw new IllegalArgumentException();
+        }
+        this.frame.setLocation(x, y);
     }
 
     /**
      * Sets the default close operation.
      *
      * @param value the value, typically {@code JFrame.EXIT_ON_CLOSE}
-     *              (close all windows) or {@code JFrame.DISPOSE_ON_CLOSE}
-     *              (close current window)
+     * (close all windows) or {@code JFrame.DISPOSE_ON_CLOSE}
+     * (close current window)
      */
     public void setDefaultCloseOperation(int value) {
-        frame.setDefaultCloseOperation(value);
+        this.frame.setDefaultCloseOperation(value);
     }
 
     /**
@@ -393,17 +411,18 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * pen color, and font back to their default values.
      * Ordinarly, this method is called once, at the very beginning of a program.
      *
-     * @param canvasWidth  the width as a number of pixels
+     * @param canvasWidth the width as a number of pixels
      * @param canvasHeight the height as a number of pixels
+     *
      * @throws IllegalArgumentException unless both {@code canvasWidth}
-     *                                  and {@code canvasHeight} are positive
+     * and {@code canvasHeight} are positive
      */
     public void setCanvasSize(int canvasWidth, int canvasHeight) {
         if (canvasWidth < 1 || canvasHeight < 1) {
             throw new IllegalArgumentException("width and height must be positive");
         }
-        width = canvasWidth;
-        height = canvasHeight;
+        this.width = canvasWidth;
+        this.height = canvasHeight;
         init();
     }
 
@@ -425,14 +444,14 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * Sets the x-scale to be the default (between 0.0 and 1.0).
      */
     public void setXscale() {
-        setXscale(DEFAULT_XMIN, DEFAULT_XMAX);
+        setXscale(Draw.DEFAULT_XMIN, Draw.DEFAULT_XMAX);
     }
 
     /**
      * Sets the y-scale to be the default (between 0.0 and 1.0).
      */
     public void setYscale() {
-        setYscale(DEFAULT_YMIN, DEFAULT_YMAX);
+        setYscale(Draw.DEFAULT_YMIN, Draw.DEFAULT_YMAX);
     }
 
     /**
@@ -440,16 +459,19 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      *
      * @param min the minimum value of the x-scale
      * @param max the maximum value of the x-scale
+     *
      * @throws IllegalArgumentException if {@code (max == min)}
      * @throws IllegalArgumentException if either {@code min} or {@code max} is either NaN or infinite
      */
     public void setXscale(double min, double max) {
-        validate(min, "min");
-        validate(max, "max");
+        Draw.validate(min, "min");
+        Draw.validate(max, "max");
         double size = max - min;
-        if (size == 0.0) throw new IllegalArgumentException("the min and max are the same");
-        xmin = min - BORDER * size;
-        xmax = max + BORDER * size;
+        if (size == 0.0) {
+            throw new IllegalArgumentException("the min and max are the same");
+        }
+        this.xmin = min - Draw.BORDER * size;
+        this.xmax = max + Draw.BORDER * size;
     }
 
     /**
@@ -457,61 +479,65 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      *
      * @param min the minimum value of the y-scale
      * @param max the maximum value of the y-scale
+     *
      * @throws IllegalArgumentException if {@code (max == min)}
      * @throws IllegalArgumentException if either {@code min} or {@code max} is either NaN or infinite
      */
     public void setYscale(double min, double max) {
-        validate(min, "min");
-        validate(max, "max");
+        Draw.validate(min, "min");
+        Draw.validate(max, "max");
         double size = max - min;
-        if (size == 0.0) throw new IllegalArgumentException("the min and max are the same");
-        ymin = min - BORDER * size;
-        ymax = max + BORDER * size;
+        if (size == 0.0) {
+            throw new IllegalArgumentException("the min and max are the same");
+        }
+        this.ymin = min - Draw.BORDER * size;
+        this.ymax = max + Draw.BORDER * size;
     }
 
     // helper functions that scale from user coordinates to screen coordinates and back
     private double scaleX(double x) {
-        return width * (x - xmin) / (xmax - xmin);
+        return this.width * (x - this.xmin) / (this.xmax - this.xmin);
     }
 
     private double scaleY(double y) {
-        return height * (ymax - y) / (ymax - ymin);
+        return this.height * (this.ymax - y) / (this.ymax - this.ymin);
     }
 
     private double factorX(double w) {
-        return w * width / Math.abs(xmax - xmin);
+        return w * this.width / Math.abs(this.xmax - this.xmin);
     }
 
     private double factorY(double h) {
-        return h * height / Math.abs(ymax - ymin);
+        return h * this.height / Math.abs(this.ymax - this.ymin);
     }
 
     private double userX(double x) {
-        return xmin + x * (xmax - xmin) / width;
+        return this.xmin + x * (this.xmax - this.xmin) / this.width;
     }
 
     private double userY(double y) {
-        return ymax - y * (ymax - ymin) / height;
+        return this.ymax - y * (this.ymax - this.ymin) / this.height;
     }
 
     /**
      * Clears the screen to the default color (white).
      */
     public void clear() {
-        clear(DEFAULT_CLEAR_COLOR);
+        clear(Draw.DEFAULT_CLEAR_COLOR);
     }
 
     /**
      * Clears the screen to the given color.
      *
      * @param color the color to make the background
+     *
      * @throws IllegalArgumentException if {@code color} is {@code null}
      */
     public void clear(Color color) {
-        validateNotNull(color, "color");
-        offscreen.setColor(color);
-        offscreen.fillRect(0, 0, width, height);
-        offscreen.setColor(penColor);
+        Draw.validateNotNull(color, "color");
+        this.offscreen.setColor(color);
+        this.offscreen.fillRect(0, 0, this.width, this.height);
+        this.offscreen.setColor(this.penColor);
         draw();
     }
 
@@ -521,30 +547,31 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * @return the current pen radius
      */
     public double getPenRadius() {
-        return penRadius;
+        return this.penRadius;
     }
 
     /**
      * Sets the radius of the pen to the given size.
      *
      * @param radius the radius of the pen
+     *
      * @throws IllegalArgumentException if {@code radius} is negative, NaN, or infinite
      */
     public void setPenRadius(double radius) {
-        validate(radius, "pen radius");
-        validateNonnegative(radius, "pen radius");
+        Draw.validate(radius, "pen radius");
+        Draw.validateNonnegative(radius, "pen radius");
 
-        penRadius = radius * DEFAULT_SIZE;
-        BasicStroke stroke = new BasicStroke((float) penRadius, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        this.penRadius = radius * Draw.DEFAULT_SIZE;
+        BasicStroke stroke = new BasicStroke((float) this.penRadius, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         // BasicStroke stroke = new BasicStroke((float) penRadius);
-        offscreen.setStroke(stroke);
+        this.offscreen.setStroke(stroke);
     }
 
     /**
      * Sets the pen size to the default (.002).
      */
     public void setPenRadius() {
-        setPenRadius(DEFAULT_PEN_RADIUS);
+        setPenRadius(Draw.DEFAULT_PEN_RADIUS);
     }
 
     /**
@@ -553,41 +580,49 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * @return the current pen color
      */
     public Color getPenColor() {
-        return penColor;
+        return this.penColor;
     }
 
     /**
      * Sets the pen color to the given color.
      *
      * @param color the color to make the pen
+     *
      * @throws IllegalArgumentException if {@code color} is {@code null}
      */
     public void setPenColor(Color color) {
-        validateNotNull(color, "color");
-        penColor = color;
-        offscreen.setColor(penColor);
+        Draw.validateNotNull(color, "color");
+        this.penColor = color;
+        this.offscreen.setColor(this.penColor);
     }
 
     /**
      * Sets the pen color to the default color (black).
      */
     public void setPenColor() {
-        setPenColor(DEFAULT_PEN_COLOR);
+        setPenColor(Draw.DEFAULT_PEN_COLOR);
     }
 
     /**
      * Sets the pen color to the given RGB color.
      *
-     * @param red   the amount of red (between 0 and 255)
+     * @param red the amount of red (between 0 and 255)
      * @param green the amount of green (between 0 and 255)
-     * @param blue  the amount of blue (between 0 and 255)
+     * @param blue the amount of blue (between 0 and 255)
+     *
      * @throws IllegalArgumentException if {@code red}, {@code green},
-     *                                  or {@code blue} is outside its prescribed range
+     * or {@code blue} is outside its prescribed range
      */
     public void setPenColor(int red, int green, int blue) {
-        if (red < 0 || red >= 256) throw new IllegalArgumentException("red must be between 0 and 255");
-        if (green < 0 || green >= 256) throw new IllegalArgumentException("green must be between 0 and 255");
-        if (blue < 0 || blue >= 256) throw new IllegalArgumentException("blue must be between 0 and 255");
+        if (red < 0 || red >= 256) {
+            throw new IllegalArgumentException("red must be between 0 and 255");
+        }
+        if (green < 0 || green >= 256) {
+            throw new IllegalArgumentException("green must be between 0 and 255");
+        }
+        if (blue < 0 || blue >= 256) {
+            throw new IllegalArgumentException("blue must be between 0 and 255");
+        }
         setPenColor(new Color(red, green, blue));
     }
 
@@ -595,14 +630,14 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * Turns on xor mode.
      */
     public void xorOn() {
-        offscreen.setXORMode(DEFAULT_CLEAR_COLOR);
+        this.offscreen.setXORMode(Draw.DEFAULT_CLEAR_COLOR);
     }
 
     /**
      * Turns off xor mode.
      */
     public void xorOff() {
-        offscreen.setPaintMode();
+        this.offscreen.setPaintMode();
     }
 
     /**
@@ -611,7 +646,7 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * @return the current {@code JLabel}
      */
     public JLabel getJLabel() {
-        return draw;
+        return this.draw;
     }
 
     /**
@@ -620,7 +655,7 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * @return the current font
      */
     public Font getFont() {
-        return font;
+        return this.font;
     }
 
 
@@ -632,10 +667,11 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * Sets the font to the given value.
      *
      * @param font the font
+     *
      * @throws IllegalArgumentException if {@code font} is {@code null}
      */
     public void setFont(Font font) {
-        validateNotNull(font, "font");
+        Draw.validateNotNull(font, "font");
         this.font = font;
     }
 
@@ -643,7 +679,7 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * Sets the font to the default font (sans serif, 16 point).
      */
     public void setFont() {
-        setFont(DEFAULT_FONT);
+        setFont(Draw.DEFAULT_FONT);
     }
 
     /**
@@ -653,14 +689,15 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * @param y0 the y-coordinate of the starting point
      * @param x1 the x-coordinate of the destination point
      * @param y1 the y-coordinate of the destination point
+     *
      * @throws IllegalArgumentException if any coordinate is either NaN or infinite
      */
     public void line(double x0, double y0, double x1, double y1) {
-        validate(x0, "x0");
-        validate(y0, "y0");
-        validate(x1, "x1");
-        validate(y1, "y1");
-        offscreen.draw(new Line2D.Double(scaleX(x0), scaleY(y0), scaleX(x1), scaleY(y1)));
+        Draw.validate(x0, "x0");
+        Draw.validate(y0, "y0");
+        Draw.validate(x1, "x1");
+        Draw.validate(y1, "y1");
+        this.offscreen.draw(new Line2D.Double(scaleX(x0), scaleY(y0), scaleX(x1), scaleY(y1)));
         draw();
     }
 
@@ -669,12 +706,13 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      *
      * @param x the x-coordinate of the pixel
      * @param y the y-coordinate of the pixel
+     *
      * @throws IllegalArgumentException if {@code x} or {@code y} is either NaN or infinite
      */
     private void pixel(double x, double y) {
-        validate(x, "x");
-        validate(y, "y");
-        offscreen.fillRect((int) Math.round(scaleX(x)), (int) Math.round(scaleY(y)), 1, 1);
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        this.offscreen.fillRect((int) Math.round(scaleX(x)), (int) Math.round(scaleY(y)), 1, 1);
     }
 
     /**
@@ -682,44 +720,52 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      *
      * @param x the x-coordinate of the point
      * @param y the y-coordinate of the point
+     *
      * @throws IllegalArgumentException if either {@code x} or {@code y} is either NaN or infinite
      */
     public void point(double x, double y) {
-        validate(x, "x");
-        validate(y, "y");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
 
         double xs = scaleX(x);
         double ys = scaleY(y);
-        double r = penRadius;
+        double r = this.penRadius;
         // double ws = factorX(2*r);
         // double hs = factorY(2*r);
         // if (ws <= 1 && hs <= 1) pixel(x, y);
-        if (r <= 1) pixel(x, y);
-        else offscreen.fill(new Ellipse2D.Double(xs - r / 2, ys - r / 2, r, r));
+        if (r <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.fill(new Ellipse2D.Double(xs - r / 2, ys - r / 2, r, r));
+        }
         draw();
     }
 
     /**
      * Draws a circle of the specified radius, centered at (<em>x</em>, <em>y</em>).
      *
-     * @param x      the x-coordinate of the center of the circle
-     * @param y      the y-coordinate of the center of the circle
+     * @param x the x-coordinate of the center of the circle
+     * @param y the y-coordinate of the center of the circle
      * @param radius the radius of the circle
+     *
      * @throws IllegalArgumentException if {@code radius} is negative
      * @throws IllegalArgumentException if any argument is either NaN or infinite
      */
     public void circle(double x, double y, double radius) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(radius, "radius");
-        validateNonnegative(radius, "radius");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(radius, "radius");
+        Draw.validateNonnegative(radius, "radius");
 
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2 * radius);
         double hs = factorY(2 * radius);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.draw(new Ellipse2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.draw(new Ellipse2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        }
         draw();
     }
 
@@ -728,21 +774,25 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      *
      * @param x the x-coordinate of the center of the circle
      * @param y the y-coordinate of the center of the circle
+     *
      * @throws IllegalArgumentException if {@code radius} is negative
      * @throws IllegalArgumentException if any argument is either NaN or infinite
      */
     public void filledCircle(double x, double y, double radius) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(radius, "radius");
-        validateNonnegative(radius, "radius");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(radius, "radius");
+        Draw.validateNonnegative(radius, "radius");
 
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2 * radius);
         double hs = factorY(2 * radius);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.fill(new Ellipse2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.fill(new Ellipse2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        }
         draw();
     }
 
@@ -750,28 +800,32 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * Draws an ellipse with the specified semimajor and semiminor axes,
      * centered at (<em>x</em>, <em>y</em>).
      *
-     * @param x             the <em>x</em>-coordinate of the center of the ellipse
-     * @param y             the <em>y</em>-coordinate of the center of the ellipse
+     * @param x the <em>x</em>-coordinate of the center of the ellipse
+     * @param y the <em>y</em>-coordinate of the center of the ellipse
      * @param semiMajorAxis is the semimajor axis of the ellipse
      * @param semiMinorAxis is the semiminor axis of the ellipse
+     *
      * @throws IllegalArgumentException if either {@code semiMajorAxis}
-     *                                  or {@code semiMinorAxis} is negative
+     * or {@code semiMinorAxis} is negative
      * @throws IllegalArgumentException if any argument is either NaN or infinite
      */
     public void ellipse(double x, double y, double semiMajorAxis, double semiMinorAxis) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(semiMajorAxis, "semimajor axis");
-        validate(semiMinorAxis, "semiminor axis");
-        validateNonnegative(semiMajorAxis, "semimajor axis");
-        validateNonnegative(semiMinorAxis, "semiminor axis");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(semiMajorAxis, "semimajor axis");
+        Draw.validate(semiMinorAxis, "semiminor axis");
+        Draw.validateNonnegative(semiMajorAxis, "semimajor axis");
+        Draw.validateNonnegative(semiMinorAxis, "semiminor axis");
 
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2 * semiMajorAxis);
         double hs = factorY(2 * semiMinorAxis);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.draw(new Ellipse2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.draw(new Ellipse2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        }
         draw();
     }
 
@@ -779,28 +833,32 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * Draws a filled ellipse with the specified semimajor and semiminor axes,
      * centered at (<em>x</em>, <em>y</em>).
      *
-     * @param x             the <em>x</em>-coordinate of the center of the ellipse
-     * @param y             the <em>y</em>-coordinate of the center of the ellipse
+     * @param x the <em>x</em>-coordinate of the center of the ellipse
+     * @param y the <em>y</em>-coordinate of the center of the ellipse
      * @param semiMajorAxis is the semimajor axis of the ellipse
      * @param semiMinorAxis is the semiminor axis of the ellipse
+     *
      * @throws IllegalArgumentException if either {@code semiMajorAxis}
-     *                                  or {@code semiMinorAxis} is negative
+     * or {@code semiMinorAxis} is negative
      * @throws IllegalArgumentException if any argument is either NaN or infinite
      */
     public void filledEllipse(double x, double y, double semiMajorAxis, double semiMinorAxis) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(semiMajorAxis, "semimajor axis");
-        validate(semiMinorAxis, "semiminor axis");
-        validateNonnegative(semiMajorAxis, "semimajor axis");
-        validateNonnegative(semiMinorAxis, "semiminor axis");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(semiMajorAxis, "semimajor axis");
+        Draw.validate(semiMinorAxis, "semiminor axis");
+        Draw.validateNonnegative(semiMajorAxis, "semimajor axis");
+        Draw.validateNonnegative(semiMinorAxis, "semiminor axis");
 
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2 * semiMajorAxis);
         double hs = factorY(2 * semiMinorAxis);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.fill(new Ellipse2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.fill(new Ellipse2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        }
         draw();
     }
 
@@ -808,132 +866,154 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * Draws a circular arc of the specified radius,
      * centered at (<em>x</em>, <em>y</em>), from angle1 to angle2 (in degrees).
      *
-     * @param x      the <em>x</em>-coordinate of the center of the circle
-     * @param y      the <em>y</em>-coordinate of the center of the circle
+     * @param x the <em>x</em>-coordinate of the center of the circle
+     * @param y the <em>y</em>-coordinate of the center of the circle
      * @param radius the radius of the circle
      * @param angle1 the starting angle. 0 would mean an arc beginning at 3 o'clock.
      * @param angle2 the angle at the end of the arc. For example, if
-     *               you want a 90 degree arc, then angle2 should be angle1 + 90.
+     * you want a 90 degree arc, then angle2 should be angle1 + 90.
+     *
      * @throws IllegalArgumentException if {@code radius} is negative
      * @throws IllegalArgumentException if any argument is either NaN or infinite
      */
     public void arc(double x, double y, double radius, double angle1, double angle2) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(radius, "arc radius");
-        validate(angle1, "angle1");
-        validate(angle2, "angle2");
-        validateNonnegative(radius, "arc radius");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(radius, "arc radius");
+        Draw.validate(angle1, "angle1");
+        Draw.validate(angle2, "angle2");
+        Draw.validateNonnegative(radius, "arc radius");
 
-        while (angle2 < angle1) angle2 += 360;
+        while (angle2 < angle1) {
+            angle2 += 360;
+        }
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2 * radius);
         double hs = factorY(2 * radius);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.draw(new Arc2D.Double(xs - ws / 2, ys - hs / 2, ws, hs, angle1, angle2 - angle1, Arc2D.OPEN));
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.draw(new Arc2D.Double(xs - ws / 2, ys - hs / 2, ws, hs, angle1, angle2 - angle1, Arc2D.OPEN));
+        }
         draw();
     }
 
     /**
      * Draws a square of the specified size, centered at (<em>x</em>, <em>y</em>).
      *
-     * @param x          the <em>x</em>-coordinate of the center of the square
-     * @param y          the <em>y</em>-coordinate of the center of the square
+     * @param x the <em>x</em>-coordinate of the center of the square
+     * @param y the <em>y</em>-coordinate of the center of the square
      * @param halfLength one half the length of any side of the square
+     *
      * @throws IllegalArgumentException if {@code halfLength} is negative
      * @throws IllegalArgumentException if any argument is either NaN or infinite
      */
     public void square(double x, double y, double halfLength) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(halfLength, "halfLength");
-        validateNonnegative(halfLength, "half length");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(halfLength, "halfLength");
+        Draw.validateNonnegative(halfLength, "half length");
 
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2 * halfLength);
         double hs = factorY(2 * halfLength);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.draw(new Rectangle2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.draw(new Rectangle2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        }
         draw();
     }
 
     /**
      * Draws a square of the specified size, centered at (<em>x</em>, <em>y</em>).
      *
-     * @param x          the <em>x</em>-coordinate of the center of the square
-     * @param y          the <em>y</em>-coordinate of the center of the square
+     * @param x the <em>x</em>-coordinate of the center of the square
+     * @param y the <em>y</em>-coordinate of the center of the square
      * @param halfLength one half the length of any side of the square
+     *
      * @throws IllegalArgumentException if {@code halfLength} is negative
      * @throws IllegalArgumentException if any argument is either NaN or infinite
      */
     public void filledSquare(double x, double y, double halfLength) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(halfLength, "halfLength");
-        validateNonnegative(halfLength, "half length");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(halfLength, "halfLength");
+        Draw.validateNonnegative(halfLength, "half length");
 
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2 * halfLength);
         double hs = factorY(2 * halfLength);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.fill(new Rectangle2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.fill(new Rectangle2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        }
         draw();
     }
 
     /**
      * Draws a rectangle of the specified size, centered at (<em>x</em>, <em>y</em>).
      *
-     * @param x          the <em>x</em>-coordinate of the center of the rectangle
-     * @param y          the <em>y</em>-coordinate of the center of the rectangle
-     * @param halfWidth  one half the width of the rectangle
+     * @param x the <em>x</em>-coordinate of the center of the rectangle
+     * @param y the <em>y</em>-coordinate of the center of the rectangle
+     * @param halfWidth one half the width of the rectangle
      * @param halfHeight one half the height of the rectangle
+     *
      * @throws IllegalArgumentException if either {@code halfWidth} or {@code halfHeight} is negative
      * @throws IllegalArgumentException if any argument is either NaN or infinite
      */
     public void rectangle(double x, double y, double halfWidth, double halfHeight) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(halfWidth, "halfWidth");
-        validate(halfHeight, "halfHeight");
-        validateNonnegative(halfWidth, "half width");
-        validateNonnegative(halfHeight, "half height");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(halfWidth, "halfWidth");
+        Draw.validate(halfHeight, "halfHeight");
+        Draw.validateNonnegative(halfWidth, "half width");
+        Draw.validateNonnegative(halfHeight, "half height");
 
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2 * halfWidth);
         double hs = factorY(2 * halfHeight);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.draw(new Rectangle2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.draw(new Rectangle2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        }
         draw();
     }
 
     /**
      * Draws a filled rectangle of the specified size, centered at (<em>x</em>, <em>y</em>).
      *
-     * @param x          the <em>x</em>-coordinate of the center of the rectangle
-     * @param y          the <em>y</em>-coordinate of the center of the rectangle
-     * @param halfWidth  one half the width of the rectangle
+     * @param x the <em>x</em>-coordinate of the center of the rectangle
+     * @param y the <em>y</em>-coordinate of the center of the rectangle
+     * @param halfWidth one half the width of the rectangle
      * @param halfHeight one half the height of the rectangle
+     *
      * @throws IllegalArgumentException if either {@code halfWidth} or {@code halfHeight} is negative
      * @throws IllegalArgumentException if any argument is either NaN or infinite
      */
     public void filledRectangle(double x, double y, double halfWidth, double halfHeight) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(halfWidth, "halfWidth");
-        validate(halfHeight, "halfHeight");
-        validateNonnegative(halfWidth, "half width");
-        validateNonnegative(halfHeight, "half height");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(halfWidth, "halfWidth");
+        Draw.validate(halfHeight, "halfHeight");
+        Draw.validateNonnegative(halfWidth, "half width");
+        Draw.validateNonnegative(halfHeight, "half height");
 
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2 * halfWidth);
         double hs = factorY(2 * halfHeight);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.fill(new Rectangle2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.fill(new Rectangle2D.Double(xs - ws / 2, ys - hs / 2, ws, hs));
+        }
         draw();
     }
 
@@ -945,29 +1025,39 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      *
      * @param x an array of all the <em>x</em>-coordinates of the polygon
      * @param y an array of all the <em>y</em>-coordinates of the polygon
+     *
      * @throws IllegalArgumentException unless {@code x[]} and {@code y[]}
-     *                                  are of the same length
+     * are of the same length
      * @throws IllegalArgumentException if any coordinate is either NaN or infinite
      * @throws IllegalArgumentException if either {@code x[]} or {@code y[]} is {@code null}
      */
     public void polygon(double[] x, double[] y) {
-        validateNotNull(x, "x-coordinate array");
-        validateNotNull(y, "y-coordinate array");
-        for (int i = 0; i < x.length; i++) validate(x[i], "x[" + i + "]");
-        for (int i = 0; i < y.length; i++) validate(y[i], "y[" + i + "]");
+        Draw.validateNotNull(x, "x-coordinate array");
+        Draw.validateNotNull(y, "y-coordinate array");
+        for (int i = 0; i < x.length; i++) {
+            Draw.validate(x[i], "x[" + i + "]");
+        }
+        for (int i = 0; i < y.length; i++) {
+            Draw.validate(y[i], "y[" + i + "]");
+        }
 
         int n1 = x.length;
         int n2 = y.length;
-        if (n1 != n2) throw new IllegalArgumentException("arrays must be of the same length");
+        if (n1 != n2) {
+            throw new IllegalArgumentException("arrays must be of the same length");
+        }
         int n = n1;
-        if (n == 0) return;
+        if (n == 0) {
+            return;
+        }
 
         GeneralPath path = new GeneralPath();
         path.moveTo((float) scaleX(x[0]), (float) scaleY(y[0]));
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             path.lineTo((float) scaleX(x[i]), (float) scaleY(y[i]));
+        }
         path.closePath();
-        offscreen.draw(path);
+        this.offscreen.draw(path);
         draw();
     }
 
@@ -979,29 +1069,39 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      *
      * @param x an array of all the <em>x</em>-coordinates of the polygon
      * @param y an array of all the <em>y</em>-coordinates of the polygon
+     *
      * @throws IllegalArgumentException unless {@code x[]} and {@code y[]}
-     *                                  are of the same length
+     * are of the same length
      * @throws IllegalArgumentException if any coordinate is either NaN or infinite
      * @throws IllegalArgumentException if either {@code x[]} or {@code y[]} is {@code null}
      */
     public void filledPolygon(double[] x, double[] y) {
-        validateNotNull(x, "x-coordinate array");
-        validateNotNull(y, "y-coordinate array");
-        for (int i = 0; i < x.length; i++) validate(x[i], "x[" + i + "]");
-        for (int i = 0; i < y.length; i++) validate(y[i], "y[" + i + "]");
+        Draw.validateNotNull(x, "x-coordinate array");
+        Draw.validateNotNull(y, "y-coordinate array");
+        for (int i = 0; i < x.length; i++) {
+            Draw.validate(x[i], "x[" + i + "]");
+        }
+        for (int i = 0; i < y.length; i++) {
+            Draw.validate(y[i], "y[" + i + "]");
+        }
 
         int n1 = x.length;
         int n2 = y.length;
-        if (n1 != n2) throw new IllegalArgumentException("arrays must be of the same length");
+        if (n1 != n2) {
+            throw new IllegalArgumentException("arrays must be of the same length");
+        }
         int n = n1;
-        if (n == 0) return;
+        if (n == 0) {
+            return;
+        }
 
         GeneralPath path = new GeneralPath();
         path.moveTo((float) scaleX(x[0]), (float) scaleY(y[0]));
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             path.lineTo((float) scaleX(x[i]), (float) scaleY(y[i]));
+        }
         path.closePath();
-        offscreen.fill(path);
+        this.offscreen.fill(path);
         draw();
     }
 
@@ -1013,25 +1113,28 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * However, if you change the picture file after drawing it, subsequent
      * calls will draw the original picture.
      *
-     * @param x        the center <em>x</em>-coordinate of the image
-     * @param y        the center <em>y</em>-coordinate of the image
+     * @param x the center <em>x</em>-coordinate of the image
+     * @param y the center <em>y</em>-coordinate of the image
      * @param filename the name of the image/picture, e.g., "ball.gif"
+     *
      * @throws IllegalArgumentException if the image filename is invalid
      * @throws IllegalArgumentException if either {@code x} or {@code y} is either NaN or infinite
      */
     public void picture(double x, double y, String filename) {
-        validate(x, "x");
-        validate(y, "y");
-        validateNotNull(filename, "filename");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validateNotNull(filename, "filename");
 
-        Image image = getImage(filename);
+        Image image = Draw.getImage(filename);
         double xs = scaleX(x);
         double ys = scaleY(y);
         int ws = image.getWidth(null);
         int hs = image.getHeight(null);
-        if (ws < 0 || hs < 0) throw new IllegalArgumentException("image " + filename + " is corrupt");
+        if (ws < 0 || hs < 0) {
+            throw new IllegalArgumentException("image " + filename + " is corrupt");
+        }
 
-        offscreen.drawImage(image, (int) Math.round(xs - ws / 2.0), (int) Math.round(ys - hs / 2.0), null);
+        this.offscreen.drawImage(image, (int) Math.round(xs - ws / 2.0), (int) Math.round(ys - hs / 2.0), null);
         draw();
     }
 
@@ -1040,30 +1143,33 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * rotated given number of degrees.
      * The supported image formats are JPEG, PNG, and GIF.
      *
-     * @param x        the center <em>x</em>-coordinate of the image
-     * @param y        the center <em>y</em>-coordinate of the image
+     * @param x the center <em>x</em>-coordinate of the image
+     * @param y the center <em>y</em>-coordinate of the image
      * @param filename the name of the image/picture, e.g., "ball.gif"
-     * @param degrees  is the number of degrees to rotate counterclockwise
+     * @param degrees is the number of degrees to rotate counterclockwise
+     *
      * @throws IllegalArgumentException if the image filename is invalid
      * @throws IllegalArgumentException if {@code x}, {@code y}, {@code degrees} is NaN or infinite
      * @throws IllegalArgumentException if {@code filename} is {@code null}
      */
     public void picture(double x, double y, String filename, double degrees) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(degrees, "degrees");
-        validateNotNull(filename, "filename");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(degrees, "degrees");
+        Draw.validateNotNull(filename, "filename");
 
-        Image image = getImage(filename);
+        Image image = Draw.getImage(filename);
         double xs = scaleX(x);
         double ys = scaleY(y);
         int ws = image.getWidth(null);
         int hs = image.getHeight(null);
-        if (ws < 0 || hs < 0) throw new IllegalArgumentException("image " + filename + " is corrupt");
+        if (ws < 0 || hs < 0) {
+            throw new IllegalArgumentException("image " + filename + " is corrupt");
+        }
 
-        offscreen.rotate(Math.toRadians(-degrees), xs, ys);
-        offscreen.drawImage(image, (int) Math.round(xs - ws / 2.0), (int) Math.round(ys - hs / 2.0), null);
-        offscreen.rotate(Math.toRadians(+degrees), xs, ys);
+        this.offscreen.rotate(Math.toRadians(-degrees), xs, ys);
+        this.offscreen.drawImage(image, (int) Math.round(xs - ws / 2.0), (int) Math.round(ys - hs / 2.0), null);
+        this.offscreen.rotate(Math.toRadians(+degrees), xs, ys);
 
         draw();
     }
@@ -1073,38 +1179,40 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * rescaled to the specified bounding box.
      * The supported image formats are JPEG, PNG, and GIF.
      *
-     * @param x            the center <em>x</em>-coordinate of the image
-     * @param y            the center <em>y</em>-coordinate of the image
-     * @param filename     the name of the image/picture, e.g., "ball.gif"
-     * @param scaledWidth  the width of the scaled image (in screen coordinates)
+     * @param x the center <em>x</em>-coordinate of the image
+     * @param y the center <em>y</em>-coordinate of the image
+     * @param filename the name of the image/picture, e.g., "ball.gif"
+     * @param scaledWidth the width of the scaled image (in screen coordinates)
      * @param scaledHeight the height of the scaled image (in screen coordinates)
+     *
      * @throws IllegalArgumentException if either {@code scaledWidth}
-     *                                  or {@code scaledHeight} is negative
+     * or {@code scaledHeight} is negative
      * @throws IllegalArgumentException if the image filename is invalid
      * @throws IllegalArgumentException if {@code x} or {@code y} is either NaN or infinite
      * @throws IllegalArgumentException if {@code filename} is {@code null}
      */
     public void picture(double x, double y, String filename, double scaledWidth, double scaledHeight) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(scaledWidth, "scaled width");
-        validate(scaledHeight, "scaled height");
-        validateNotNull(filename, "filename");
-        validateNonnegative(scaledWidth, "scaled width");
-        validateNonnegative(scaledHeight, "scaled height");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(scaledWidth, "scaled width");
+        Draw.validate(scaledHeight, "scaled height");
+        Draw.validateNotNull(filename, "filename");
+        Draw.validateNonnegative(scaledWidth, "scaled width");
+        Draw.validateNonnegative(scaledHeight, "scaled height");
 
-        Image image = getImage(filename);
+        Image image = Draw.getImage(filename);
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(scaledWidth);
         double hs = factorY(scaledHeight);
-        if (ws < 0 || hs < 0) throw new IllegalArgumentException("image " + filename + " is corrupt");
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else {
-            offscreen.drawImage(image, (int) Math.round(xs - ws / 2.0),
-                    (int) Math.round(ys - hs / 2.0),
-                    (int) Math.round(ws),
-                    (int) Math.round(hs), null);
+        if (ws < 0 || hs < 0) {
+            throw new IllegalArgumentException("image " + filename + " is corrupt");
+        }
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        } else {
+            this.offscreen.drawImage(image, (int) Math.round(xs - ws / 2.0), (int) Math.round(ys - hs / 2.0),
+                    (int) Math.round(ws), (int) Math.round(hs), null);
         }
         draw();
     }
@@ -1119,40 +1227,43 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * given number of degrees, and rescaled to the specified bounding box.
      * The supported image formats are JPEG, PNG, and GIF.
      *
-     * @param x            the center <em>x</em>-coordinate of the image
-     * @param y            the center <em>y</em>-coordinate of the image
-     * @param filename     the name of the image/picture, e.g., "ball.gif"
-     * @param scaledWidth  the width of the scaled image (in screen coordinates)
+     * @param x the center <em>x</em>-coordinate of the image
+     * @param y the center <em>y</em>-coordinate of the image
+     * @param filename the name of the image/picture, e.g., "ball.gif"
+     * @param scaledWidth the width of the scaled image (in screen coordinates)
      * @param scaledHeight the height of the scaled image (in screen coordinates)
-     * @param degrees      is the number of degrees to rotate counterclockwise
+     * @param degrees is the number of degrees to rotate counterclockwise
+     *
      * @throws IllegalArgumentException if either {@code scaledWidth}
-     *                                  or {@code scaledHeight} is negative
+     * or {@code scaledHeight} is negative
      * @throws IllegalArgumentException if the image filename is invalid
      */
     public void picture(double x, double y, String filename, double scaledWidth, double scaledHeight, double degrees) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(scaledWidth, "scaled width");
-        validate(scaledHeight, "scaled height");
-        validate(degrees, "degrees");
-        validateNotNull(filename, "filename");
-        validateNonnegative(scaledWidth, "scaled width");
-        validateNonnegative(scaledHeight, "scaled height");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(scaledWidth, "scaled width");
+        Draw.validate(scaledHeight, "scaled height");
+        Draw.validate(degrees, "degrees");
+        Draw.validateNotNull(filename, "filename");
+        Draw.validateNonnegative(scaledWidth, "scaled width");
+        Draw.validateNonnegative(scaledHeight, "scaled height");
 
-        Image image = getImage(filename);
+        Image image = Draw.getImage(filename);
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(scaledWidth);
         double hs = factorY(scaledHeight);
-        if (ws < 0 || hs < 0) throw new IllegalArgumentException("image " + filename + " is corrupt");
-        if (ws <= 1 && hs <= 1) pixel(x, y);
+        if (ws < 0 || hs < 0) {
+            throw new IllegalArgumentException("image " + filename + " is corrupt");
+        }
+        if (ws <= 1 && hs <= 1) {
+            pixel(x, y);
+        }
 
-        offscreen.rotate(Math.toRadians(-degrees), xs, ys);
-        offscreen.drawImage(image, (int) Math.round(xs - ws / 2.0),
-                (int) Math.round(ys - hs / 2.0),
-                (int) Math.round(ws),
-                (int) Math.round(hs), null);
-        offscreen.rotate(Math.toRadians(+degrees), xs, ys);
+        this.offscreen.rotate(Math.toRadians(-degrees), xs, ys);
+        this.offscreen.drawImage(image, (int) Math.round(xs - ws / 2.0), (int) Math.round(ys - hs / 2.0),
+                (int) Math.round(ws), (int) Math.round(hs), null);
+        this.offscreen.rotate(Math.toRadians(+degrees), xs, ys);
 
         draw();
     }
@@ -1160,24 +1271,25 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
     /**
      * Writes the given text string in the current font, centered at (<em>x</em>, <em>y</em>).
      *
-     * @param x    the center <em>x</em>-coordinate of the text
-     * @param y    the center <em>y</em>-coordinate of the text
+     * @param x the center <em>x</em>-coordinate of the text
+     * @param y the center <em>y</em>-coordinate of the text
      * @param text the text to write
+     *
      * @throws IllegalArgumentException if {@code text} is {@code null}
      * @throws IllegalArgumentException if {@code x} or {@code y} is either NaN or infinite
      */
     public void text(double x, double y, String text) {
-        validate(x, "x");
-        validate(y, "y");
-        validateNotNull(text, "text");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validateNotNull(text, "text");
 
-        offscreen.setFont(font);
-        FontMetrics metrics = offscreen.getFontMetrics();
+        this.offscreen.setFont(this.font);
+        FontMetrics metrics = this.offscreen.getFontMetrics();
         double xs = scaleX(x);
         double ys = scaleY(y);
         int ws = metrics.stringWidth(text);
         int hs = metrics.getDescent();
-        offscreen.drawString(text, (float) (xs - ws / 2.0), (float) (ys + hs));
+        this.offscreen.drawString(text, (float) (xs - ws / 2.0), (float) (ys + hs));
         draw();
     }
 
@@ -1185,71 +1297,74 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * Writes the given text string in the current font, centered at (<em>x</em>, <em>y</em>) and
      * rotated by the specified number of degrees.
      *
-     * @param x       the center <em>x</em>-coordinate of the text
-     * @param y       the center <em>y</em>-coordinate of the text
-     * @param text    the text to write
+     * @param x the center <em>x</em>-coordinate of the text
+     * @param y the center <em>y</em>-coordinate of the text
+     * @param text the text to write
      * @param degrees is the number of degrees to rotate counterclockwise
+     *
      * @throws IllegalArgumentException if {@code text} is {@code null}
      * @throws IllegalArgumentException if {@code x}, {@code y}, or {@code degrees} is either NaN or infinite
      */
     public void text(double x, double y, String text, double degrees) {
-        validate(x, "x");
-        validate(y, "y");
-        validate(degrees, "degrees");
-        validateNotNull(text, "text");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validate(degrees, "degrees");
+        Draw.validateNotNull(text, "text");
 
         double xs = scaleX(x);
         double ys = scaleY(y);
-        offscreen.rotate(Math.toRadians(-degrees), xs, ys);
+        this.offscreen.rotate(Math.toRadians(-degrees), xs, ys);
         text(x, y, text);
-        offscreen.rotate(Math.toRadians(+degrees), xs, ys);
+        this.offscreen.rotate(Math.toRadians(+degrees), xs, ys);
     }
 
     /**
      * Writes the given text string in the current font, left-aligned at (<em>x</em>, <em>y</em>).
      *
-     * @param x    the <em>x</em>-coordinate of the text
-     * @param y    the <em>y</em>-coordinate of the text
+     * @param x the <em>x</em>-coordinate of the text
+     * @param y the <em>y</em>-coordinate of the text
      * @param text the text
+     *
      * @throws IllegalArgumentException if {@code text} is {@code null}
      * @throws IllegalArgumentException if {@code x} or {@code y} is either NaN or infinite
      */
     public void textLeft(double x, double y, String text) {
-        validate(x, "x");
-        validate(y, "y");
-        validateNotNull(text, "text");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validateNotNull(text, "text");
 
-        offscreen.setFont(font);
-        FontMetrics metrics = offscreen.getFontMetrics();
+        this.offscreen.setFont(this.font);
+        FontMetrics metrics = this.offscreen.getFontMetrics();
         double xs = scaleX(x);
         double ys = scaleY(y);
         // int ws = metrics.stringWidth(text);
         int hs = metrics.getDescent();
-        offscreen.drawString(text, (float) xs, (float) (ys + hs));
+        this.offscreen.drawString(text, (float) xs, (float) (ys + hs));
         draw();
     }
 
     /**
      * Writes the given text string in the current font, right-aligned at (<em>x</em>, <em>y</em>).
      *
-     * @param x    the <em>x</em>-coordinate of the text
-     * @param y    the <em>y</em>-coordinate of the text
+     * @param x the <em>x</em>-coordinate of the text
+     * @param y the <em>y</em>-coordinate of the text
      * @param text the text to write
+     *
      * @throws IllegalArgumentException if {@code text} is {@code null}
      * @throws IllegalArgumentException if {@code x} or {@code y} is either NaN or infinite
      */
     public void textRight(double x, double y, String text) {
-        validate(x, "x");
-        validate(y, "y");
-        validateNotNull(text, "text");
+        Draw.validate(x, "x");
+        Draw.validate(y, "y");
+        Draw.validateNotNull(text, "text");
 
-        offscreen.setFont(font);
-        FontMetrics metrics = offscreen.getFontMetrics();
+        this.offscreen.setFont(this.font);
+        FontMetrics metrics = this.offscreen.getFontMetrics();
         double xs = scaleX(x);
         double ys = scaleY(y);
         int ws = metrics.stringWidth(text);
         int hs = metrics.getDescent();
-        offscreen.drawString(text, (float) (xs - ws), (float) (ys + hs));
+        this.offscreen.drawString(text, (float) (xs - ws), (float) (ys + hs));
         draw();
     }
 
@@ -1258,6 +1373,7 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * and enables double buffering.
      *
      * @param t number of milliseconds
+     *
      * @deprecated replaced by {@link #enableDoubleBuffering()}, {@link #show()}, and {@link #pause(int t)}
      */
     @Deprecated
@@ -1285,13 +1401,15 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * this method unless double buffering is enabled.
      */
     public void show() {
-        onscreen.drawImage(offscreenImage, 0, 0, null);
-        frame.repaint();
+        this.onscreen.drawImage(this.offscreenImage, 0, 0, null);
+        this.frame.repaint();
     }
 
     // draw onscreen if defer is false
     private void draw() {
-        if (!defer) show();
+        if (!this.defer) {
+            show();
+        }
     }
 
     /**
@@ -1301,7 +1419,7 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * to show(). Useful for animations.
      */
     public void enableDoubleBuffering() {
-        defer = true;
+        this.defer = true;
     }
 
     /**
@@ -1311,7 +1429,7 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * This is the default.
      */
     public void disableDoubleBuffering() {
-        defer = false;
+        this.defer = false;
     }
 
     /**
@@ -1320,17 +1438,18 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * the filename suffix must be {@code .jpg} or {@code .png}.
      *
      * @param filename the name of the file with one of the required suffixes
+     *
      * @throws IllegalArgumentException if {@code filename} is {@code null}
      */
     public void save(String filename) {
-        validateNotNull(filename, "filename");
+        Draw.validateNotNull(filename, "filename");
         File file = new File(filename);
         String suffix = filename.substring(filename.lastIndexOf('.') + 1);
 
         // png files
         if ("png".equalsIgnoreCase(suffix)) {
             try {
-                ImageIO.write(offscreenImage, suffix, file);
+                ImageIO.write(this.offscreenImage, suffix, file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -1339,13 +1458,11 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
         // need to change from ARGB to RGB for jpeg
         // reference: http://archives.java.sun.com/cgi-bin/wa?A2=ind0404&L=java2d-interest&D=0&P=2727
         else if ("jpg".equalsIgnoreCase(suffix)) {
-            WritableRaster raster = offscreenImage.getRaster();
+            WritableRaster raster = this.offscreenImage.getRaster();
             WritableRaster newRaster;
-            newRaster = raster.createWritableChild(0, 0, width, height, 0, 0, new int[]{0, 1, 2});
-            DirectColorModel cm = (DirectColorModel) offscreenImage.getColorModel();
-            DirectColorModel newCM = new DirectColorModel(cm.getPixelSize(),
-                    cm.getRedMask(),
-                    cm.getGreenMask(),
+            newRaster = raster.createWritableChild(0, 0, this.width, this.height, 0, 0, new int[]{0, 1, 2});
+            DirectColorModel cm = (DirectColorModel) this.offscreenImage.getColorModel();
+            DirectColorModel newCM = new DirectColorModel(cm.getPixelSize(), cm.getRedMask(), cm.getGreenMask(),
                     cm.getBlueMask());
             BufferedImage rgbBuffer = new BufferedImage(newCM, newRaster, false, null);
             try {
@@ -1367,7 +1484,7 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * This method cannot be called directly.
      */
     public void actionPerformed(ActionEvent e) {
-        FileDialog chooser = new FileDialog(frame, "Use a .png or .jpg extension", FileDialog.SAVE);
+        FileDialog chooser = new FileDialog(this.frame, "Use a .png or .jpg extension", FileDialog.SAVE);
         chooser.setVisible(true);
         String filename = chooser.getFile();
         if (filename != null) {
@@ -1388,11 +1505,11 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
     public void addListener(DrawListener listener) {
         // ensure there is a window for listenting to events
         show();
-        listeners.add(listener);
-        frame.addKeyListener(this);
-        frame.addMouseListener(this);
-        frame.addMouseMotionListener(this);
-        frame.setFocusable(true);
+        this.listeners.add(listener);
+        this.frame.addKeyListener(this);
+        this.frame.addMouseListener(this);
+        this.frame.addMouseMotionListener(this);
+        this.frame.setFocusable(true);
     }
 
     /**
@@ -1402,8 +1519,8 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * {@code false} otherwise
      */
     public boolean isMousePressed() {
-        synchronized (mouseLock) {
-            return isMousePressed;
+        synchronized (this.mouseLock) {
+            return this.isMousePressed;
         }
     }
 
@@ -1412,12 +1529,13 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      *
      * @return {@code true} if the mouse is being pressed;
      * {@code false} otherwise
+     *
      * @deprecated replaced by {@link #isMousePressed()}
      */
     @Deprecated
     public boolean mousePressed() {
-        synchronized (mouseLock) {
-            return isMousePressed;
+        synchronized (this.mouseLock) {
+            return this.isMousePressed;
         }
     }
 
@@ -1427,8 +1545,8 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * @return the x-coordinate of the mouse
      */
     public double mouseX() {
-        synchronized (mouseLock) {
-            return mouseX;
+        synchronized (this.mouseLock) {
+            return this.mouseX;
         }
     }
 
@@ -1438,8 +1556,8 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * @return the y-coordinate of the mouse
      */
     public double mouseY() {
-        synchronized (mouseLock) {
-            return mouseY;
+        synchronized (this.mouseLock) {
+            return this.mouseY;
         }
     }
 
@@ -1461,14 +1579,15 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * This method cannot be called directly.
      */
     public void mousePressed(MouseEvent e) {
-        synchronized (mouseLock) {
-            mouseX = userX(e.getX());
-            mouseY = userY(e.getY());
-            isMousePressed = true;
+        synchronized (this.mouseLock) {
+            this.mouseX = userX(e.getX());
+            this.mouseY = userY(e.getY());
+            this.isMousePressed = true;
         }
         if (e.getButton() == MouseEvent.BUTTON1) {
-            for (DrawListener listener : listeners)
+            for (DrawListener listener : this.listeners) {
                 listener.mousePressed(userX(e.getX()), userY(e.getY()));
+            }
         }
 
     }
@@ -1477,12 +1596,13 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * This method cannot be called directly.
      */
     public void mouseReleased(MouseEvent e) {
-        synchronized (mouseLock) {
-            isMousePressed = false;
+        synchronized (this.mouseLock) {
+            this.isMousePressed = false;
         }
         if (e.getButton() == MouseEvent.BUTTON1) {
-            for (DrawListener listener : listeners)
+            for (DrawListener listener : this.listeners) {
                 listener.mouseReleased(userX(e.getX()), userY(e.getY()));
+            }
         }
     }
 
@@ -1491,8 +1611,9 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      */
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            for (DrawListener listener : listeners)
+            for (DrawListener listener : this.listeners) {
                 listener.mouseClicked(userX(e.getX()), userY(e.getY()));
+            }
         }
     }
 
@@ -1500,13 +1621,14 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * This method cannot be called directly.
      */
     public void mouseDragged(MouseEvent e) {
-        synchronized (mouseLock) {
-            mouseX = userX(e.getX());
-            mouseY = userY(e.getY());
+        synchronized (this.mouseLock) {
+            this.mouseX = userX(e.getX());
+            this.mouseY = userY(e.getY());
         }
         // doesn't seem to work if a button is specified
-        for (DrawListener listener : listeners)
+        for (DrawListener listener : this.listeners) {
             listener.mouseDragged(userX(e.getX()), userY(e.getY()));
+        }
     }
 
 
@@ -1518,9 +1640,9 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * This method cannot be called directly.
      */
     public void mouseMoved(MouseEvent e) {
-        synchronized (mouseLock) {
-            mouseX = userX(e.getX());
-            mouseY = userY(e.getY());
+        synchronized (this.mouseLock) {
+            this.mouseX = userX(e.getX());
+            this.mouseY = userY(e.getY());
         }
     }
 
@@ -1530,8 +1652,8 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * @return {@code true} if the user has typed a key; {@code false} otherwise
      */
     public boolean hasNextKeyTyped() {
-        synchronized (keyLock) {
-            return !keysTyped.isEmpty();
+        synchronized (this.keyLock) {
+            return !this.keysTyped.isEmpty();
         }
     }
 
@@ -1541,8 +1663,8 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * @return the next key typed by the user
      */
     public char nextKeyTyped() {
-        synchronized (keyLock) {
-            return keysTyped.removeLast();
+        synchronized (this.keyLock) {
+            return this.keysTyped.removeLast();
         }
     }
 
@@ -1555,12 +1677,13 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * See {@link KeyEvent} for a description of key codes.
      *
      * @param keycode the keycode to check
+     *
      * @return {@code true} if {@code keycode} is currently being pressed;
      * {@code false} otherwise
      */
     public boolean isKeyPressed(int keycode) {
-        synchronized (keyLock) {
-            return keysDown.contains(keycode);
+        synchronized (this.keyLock) {
+            return this.keysDown.contains(keycode);
         }
     }
 
@@ -1568,39 +1691,42 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
      * This method cannot be called directly.
      */
     public void keyTyped(KeyEvent e) {
-        synchronized (keyLock) {
-            keysTyped.addFirst(e.getKeyChar());
+        synchronized (this.keyLock) {
+            this.keysTyped.addFirst(e.getKeyChar());
         }
 
         // notify all listeners
-        for (DrawListener listener : listeners)
+        for (DrawListener listener : this.listeners) {
             listener.keyTyped(e.getKeyChar());
+        }
     }
 
     /**
      * This method cannot be called directly.
      */
     public void keyPressed(KeyEvent e) {
-        synchronized (keyLock) {
-            keysDown.add(e.getKeyCode());
+        synchronized (this.keyLock) {
+            this.keysDown.add(e.getKeyCode());
         }
 
         // notify all listeners
-        for (DrawListener listener : listeners)
+        for (DrawListener listener : this.listeners) {
             listener.keyPressed(e.getKeyCode());
+        }
     }
 
     /**
      * This method cannot be called directly.
      */
     public void keyReleased(KeyEvent e) {
-        synchronized (keyLock) {
-            keysDown.remove(e.getKeyCode());
+        synchronized (this.keyLock) {
+            this.keysDown.remove(e.getKeyCode());
         }
 
         // notify all listeners
-        for (DrawListener listener : listeners)
+        for (DrawListener listener : this.listeners) {
             listener.keyPressed(e.getKeyCode());
+        }
     }
 
     /***************************************************************************
@@ -1609,10 +1735,13 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
 
     private static class RetinaImageIcon extends ImageIcon {
 
+        private static final long serialVersionUID = -8197939038901939363L;
+
         public RetinaImageIcon(Image image) {
             super(image);
         }
 
+        @Override
         public int getIconWidth() {
             return super.getIconWidth() / 2;
         }
@@ -1622,10 +1751,12 @@ public final class Draw implements ActionListener, MouseListener, MouseMotionLis
          *
          * @return the height in pixels of this icon
          */
+        @Override
         public int getIconHeight() {
             return super.getIconHeight() / 2;
         }
 
+        @Override
         public synchronized void paintIcon(Component c, Graphics g, int x, int y) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);

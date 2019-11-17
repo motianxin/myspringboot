@@ -69,10 +69,13 @@ public class Digraph {
      * Initializes an empty digraph with <em>V</em> vertices.
      *
      * @param V the number of vertices
+     *
      * @throws IllegalArgumentException if {@code V < 0}
      */
     public Digraph(int V) {
-        if (V < 0) throw new IllegalArgumentException("Number of vertices in a Digraph must be nonnegative");
+        if (V < 0) {
+            throw new IllegalArgumentException("Number of vertices in a Digraph must be nonnegative");
+        }
         this.V = V;
         this.E = 0;
         indegree = new int[V];
@@ -89,6 +92,7 @@ public class Digraph {
      * followed by <em>E</em> pairs of vertices, with each entry separated by whitespace.
      *
      * @param in the input stream
+     *
      * @throws IllegalArgumentException if the endpoints of any edge are not in prescribed range
      * @throws IllegalArgumentException if the number of vertices or edges is negative
      * @throws IllegalArgumentException if the input stream is in the wrong format
@@ -96,14 +100,18 @@ public class Digraph {
     public Digraph(In in) {
         try {
             this.V = in.readInt();
-            if (V < 0) throw new IllegalArgumentException("number of vertices in a Digraph must be nonnegative");
+            if (V < 0) {
+                throw new IllegalArgumentException("number of vertices in a Digraph must be nonnegative");
+            }
             indegree = new int[V];
             adj = (Bag<Integer>[]) new Bag[V];
             for (int v = 0; v < V; v++) {
                 adj[v] = new Bag<Integer>();
             }
             int E = in.readInt();
-            if (E < 0) throw new IllegalArgumentException("number of edges in a Digraph must be nonnegative");
+            if (E < 0) {
+                throw new IllegalArgumentException("number of edges in a Digraph must be nonnegative");
+            }
             for (int i = 0; i < E; i++) {
                 int v = in.readInt();
                 int w = in.readInt();
@@ -122,8 +130,9 @@ public class Digraph {
     public Digraph(Digraph G) {
         this(G.V());
         this.E = G.E();
-        for (int v = 0; v < V; v++)
+        for (int v = 0; v < V; v++) {
             this.indegree[v] = G.indegree(v);
+        }
         for (int v = 0; v < G.V(); v++) {
             // reverse so that adjacency list is in same order as original
             Stack<Integer> reverse = new Stack<Integer>();
@@ -144,7 +153,7 @@ public class Digraph {
     public static void main(String[] args) {
         Digraph G = new Digraph(8);
         for (int i = 1; i < 8; i++) {
-            G.addEdge(i-1, i);
+            G.addEdge(i - 1, i);
         }
         StdOut.println(G);
     }
@@ -169,8 +178,9 @@ public class Digraph {
 
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 
     /**
@@ -178,6 +188,7 @@ public class Digraph {
      *
      * @param v the tail vertex
      * @param w the head vertex
+     *
      * @throws IllegalArgumentException unless both {@code 0 <= v < V} and {@code 0 <= w < V}
      */
     public void addEdge(int v, int w) {
@@ -192,7 +203,9 @@ public class Digraph {
      * Returns the vertices adjacent from vertex {@code v} in this digraph.
      *
      * @param v the vertex
+     *
      * @return the vertices adjacent from vertex {@code v} in this digraph, as an iterable
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public Iterable<Integer> adj(int v) {
@@ -205,7 +218,9 @@ public class Digraph {
      * This is known as the <em>outdegree</em> of vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the outdegree of vertex {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int outdegree(int v) {
@@ -218,7 +233,9 @@ public class Digraph {
      * This is known as the <em>indegree</em> of vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the indegree of vertex {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int indegree(int v) {

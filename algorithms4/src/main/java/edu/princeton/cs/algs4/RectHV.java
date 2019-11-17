@@ -37,9 +37,10 @@ public final class RectHV {
      * @param xmax the <em>x</em>-coordinate of the upper-right endpoint
      * @param ymin the <em>y</em>-coordinate of the lower-left endpoint
      * @param ymax the <em>y</em>-coordinate of the upper-right endpoint
+     *
      * @throws IllegalArgumentException if any of {@code xmin},
-     *                                  {@code xmax}, {@code ymin}, or {@code ymax}
-     *                                  is {@code Double.NaN}.
+     * {@code xmax}, {@code ymin}, or {@code ymax}
+     * is {@code Double.NaN}.
      * @throws IllegalArgumentException if {@code xmax < xmin} or {@code ymax < ymin}.
      */
     public RectHV(double xmin, double ymin, double xmax, double ymax) {
@@ -122,30 +123,31 @@ public final class RectHV {
      * (when one rectangle is contained inside the other)
      *
      * @param that the other rectangle
+     *
      * @return {@code true} if this rectangle intersect the argument
      * rectangle at one or more points
      */
     public boolean intersects(RectHV that) {
-        return this.xmax >= that.xmin && this.ymax >= that.ymin
-                && that.xmax >= this.xmin && that.ymax >= this.ymin;
+        return this.xmax >= that.xmin && this.ymax >= that.ymin && that.xmax >= this.xmin && that.ymax >= this.ymin;
     }
 
     /**
      * Returns true if this rectangle contain the point.
      *
      * @param p the point
+     *
      * @return {@code true} if this rectangle contain the point {@code p},
      * possibly at the boundary; {@code false} otherwise
      */
     public boolean contains(Point2D p) {
-        return (p.x() >= xmin) && (p.x() <= xmax)
-                && (p.y() >= ymin) && (p.y() <= ymax);
+        return (p.x() >= xmin) && (p.x() <= xmax) && (p.y() >= ymin) && (p.y() <= ymax);
     }
 
     /**
      * Returns the Euclidean distance between this rectangle and the point {@code p}.
      *
      * @param p the point
+     *
      * @return the Euclidean distance between the point {@code p} and the closest point
      * on this rectangle; 0 if the point is contained in this rectangle
      */
@@ -157,16 +159,23 @@ public final class RectHV {
      * Returns the square of the Euclidean distance between this rectangle and the point {@code p}.
      *
      * @param p the point
+     *
      * @return the square of the Euclidean distance between the point {@code p} and
      * the closest point on this rectangle; 0 if the point is contained
      * in this rectangle
      */
     public double distanceSquaredTo(Point2D p) {
         double dx = 0.0, dy = 0.0;
-        if (p.x() < xmin) dx = p.x() - xmin;
-        else if (p.x() > xmax) dx = p.x() - xmax;
-        if (p.y() < ymin) dy = p.y() - ymin;
-        else if (p.y() > ymax) dy = p.y() - ymax;
+        if (p.x() < xmin) {
+            dx = p.x() - xmin;
+        } else if (p.x() > xmax) {
+            dx = p.x() - xmax;
+        }
+        if (p.y() < ymin) {
+            dy = p.y() - ymin;
+        } else if (p.y() > ymax) {
+            dy = p.y() - ymax;
+        }
         return dx * dx + dy * dy;
     }
 
@@ -174,19 +183,34 @@ public final class RectHV {
      * Compares this rectangle to the specified rectangle.
      *
      * @param other the other rectangle
+     *
      * @return {@code true} if this rectangle equals {@code other};
      * {@code false} otherwise
      */
     @Override
     public boolean equals(Object other) {
-        if (other == this) return true;
-        if (other == null) return false;
-        if (other.getClass() != this.getClass()) return false;
+        if (other == this) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+        if (other.getClass() != this.getClass()) {
+            return false;
+        }
         RectHV that = (RectHV) other;
-        if (this.xmin != that.xmin) return false;
-        if (this.ymin != that.ymin) return false;
-        if (this.xmax != that.xmax) return false;
-        if (this.ymax != that.ymax) return false;
+        if (this.xmin != that.xmin) {
+            return false;
+        }
+        if (this.ymin != that.ymin) {
+            return false;
+        }
+        if (this.xmax != that.xmax) {
+            return false;
+        }
+        if (this.ymax != that.ymax) {
+            return false;
+        }
         return true;
     }
 

@@ -49,30 +49,35 @@ public class MergeX {
     private static void merge(Comparable[] src, Comparable[] dst, int lo, int mid, int hi) {
 
         // precondition: src[lo .. mid] and src[mid+1 .. hi] are sorted subarrays
-        assert isSorted(src, lo, mid);
-        assert isSorted(src, mid + 1, hi);
+        assert MergeX.isSorted(src, lo, mid);
+        assert MergeX.isSorted(src, mid + 1, hi);
 
         int i = lo, j = mid + 1;
         for (int k = lo; k <= hi; k++) {
-            if (i > mid) dst[k] = src[j++];
-            else if (j > hi) dst[k] = src[i++];
-            else if (less(src[j], src[i])) dst[k] = src[j++];   // to ensure stability
-            else dst[k] = src[i++];
+            if (i > mid) {
+                dst[k] = src[j++];
+            } else if (j > hi) {
+                dst[k] = src[i++];
+            } else if (MergeX.less(src[j], src[i])) {
+                dst[k] = src[j++];   // to ensure stability
+            } else {
+                dst[k] = src[i++];
+            }
         }
 
         // postcondition: dst[lo .. hi] is sorted subarray
-        assert isSorted(dst, lo, hi);
+        assert MergeX.isSorted(dst, lo, hi);
     }
 
     private static void sort(Comparable[] src, Comparable[] dst, int lo, int hi) {
         // if (hi <= lo) return;
-        if (hi <= lo + CUTOFF) {
-            insertionSort(dst, lo, hi);
+        if (hi <= lo + MergeX.CUTOFF) {
+            MergeX.insertionSort(dst, lo, hi);
             return;
         }
         int mid = lo + (hi - lo) / 2;
-        sort(dst, src, lo, mid);
-        sort(dst, src, mid + 1, hi);
+        MergeX.sort(dst, src, lo, mid);
+        MergeX.sort(dst, src, mid + 1, hi);
 
         // if (!less(src[mid+1], src[mid])) {
         //    for (int i = lo; i <= hi; i++) dst[i] = src[i];
@@ -80,12 +85,12 @@ public class MergeX {
         // }
 
         // using System.arraycopy() is a bit faster than the above loop
-        if (!less(src[mid + 1], src[mid])) {
+        if (!MergeX.less(src[mid + 1], src[mid])) {
             System.arraycopy(src, lo, dst, lo, hi - lo + 1);
             return;
         }
 
-        merge(src, dst, lo, mid, hi);
+        MergeX.merge(src, dst, lo, mid, hi);
     }
 
     /**
@@ -95,15 +100,17 @@ public class MergeX {
      */
     public static void sort(Comparable[] a) {
         Comparable[] aux = a.clone();
-        sort(aux, a, 0, a.length - 1);
-        assert isSorted(a);
+        MergeX.sort(aux, a, 0, a.length - 1);
+        assert MergeX.isSorted(a);
     }
 
     // sort from a[lo] to a[hi] using insertion sort
     private static void insertionSort(Comparable[] a, int lo, int hi) {
-        for (int i = lo; i <= hi; i++)
-            for (int j = i; j > lo && less(a[j], a[j - 1]); j--)
-                exch(a, j, j - 1);
+        for (int i = lo; i <= hi; i++) {
+            for (int j = i; j > lo && MergeX.less(a[j], a[j - 1]); j--) {
+                MergeX.exch(a, j, j - 1);
+            }
+        }
     }
 
 
@@ -136,58 +143,65 @@ public class MergeX {
     /**
      * Rearranges the array in ascending order, using the provided order.
      *
-     * @param a          the array to be sorted
+     * @param a the array to be sorted
      * @param comparator the comparator that defines the total order
      */
     public static void sort(Object[] a, Comparator comparator) {
         Object[] aux = a.clone();
-        sort(aux, a, 0, a.length - 1, comparator);
-        assert isSorted(a, comparator);
+        MergeX.sort(aux, a, 0, a.length - 1, comparator);
+        assert MergeX.isSorted(a, comparator);
     }
 
     private static void merge(Object[] src, Object[] dst, int lo, int mid, int hi, Comparator comparator) {
 
         // precondition: src[lo .. mid] and src[mid+1 .. hi] are sorted subarrays
-        assert isSorted(src, lo, mid, comparator);
-        assert isSorted(src, mid + 1, hi, comparator);
+        assert MergeX.isSorted(src, lo, mid, comparator);
+        assert MergeX.isSorted(src, mid + 1, hi, comparator);
 
         int i = lo, j = mid + 1;
         for (int k = lo; k <= hi; k++) {
-            if (i > mid) dst[k] = src[j++];
-            else if (j > hi) dst[k] = src[i++];
-            else if (less(src[j], src[i], comparator)) dst[k] = src[j++];
-            else dst[k] = src[i++];
+            if (i > mid) {
+                dst[k] = src[j++];
+            } else if (j > hi) {
+                dst[k] = src[i++];
+            } else if (MergeX.less(src[j], src[i], comparator)) {
+                dst[k] = src[j++];
+            } else {
+                dst[k] = src[i++];
+            }
         }
 
         // postcondition: dst[lo .. hi] is sorted subarray
-        assert isSorted(dst, lo, hi, comparator);
+        assert MergeX.isSorted(dst, lo, hi, comparator);
     }
 
 
     private static void sort(Object[] src, Object[] dst, int lo, int hi, Comparator comparator) {
         // if (hi <= lo) return;
-        if (hi <= lo + CUTOFF) {
-            insertionSort(dst, lo, hi, comparator);
+        if (hi <= lo + MergeX.CUTOFF) {
+            MergeX.insertionSort(dst, lo, hi, comparator);
             return;
         }
         int mid = lo + (hi - lo) / 2;
-        sort(dst, src, lo, mid, comparator);
-        sort(dst, src, mid + 1, hi, comparator);
+        MergeX.sort(dst, src, lo, mid, comparator);
+        MergeX.sort(dst, src, mid + 1, hi, comparator);
 
         // using System.arraycopy() is a bit faster than the above loop
-        if (!less(src[mid + 1], src[mid], comparator)) {
+        if (!MergeX.less(src[mid + 1], src[mid], comparator)) {
             System.arraycopy(src, lo, dst, lo, hi - lo + 1);
             return;
         }
 
-        merge(src, dst, lo, mid, hi, comparator);
+        MergeX.merge(src, dst, lo, mid, hi, comparator);
     }
 
     // sort from a[lo] to a[hi] using insertion sort
     private static void insertionSort(Object[] a, int lo, int hi, Comparator comparator) {
-        for (int i = lo; i <= hi; i++)
-            for (int j = i; j > lo && less(a[j], a[j - 1], comparator); j--)
-                exch(a, j, j - 1);
+        for (int i = lo; i <= hi; i++) {
+            for (int j = i; j > lo && MergeX.less(a[j], a[j - 1], comparator); j--) {
+                MergeX.exch(a, j, j - 1);
+            }
+        }
     }
 
 
@@ -195,22 +209,28 @@ public class MergeX {
      *  Check if array is sorted - useful for debugging.
      ***************************************************************************/
     private static boolean isSorted(Comparable[] a) {
-        return isSorted(a, 0, a.length - 1);
+        return MergeX.isSorted(a, 0, a.length - 1);
     }
 
     private static boolean isSorted(Comparable[] a, int lo, int hi) {
-        for (int i = lo + 1; i <= hi; i++)
-            if (less(a[i], a[i - 1])) return false;
+        for (int i = lo + 1; i <= hi; i++) {
+            if (MergeX.less(a[i], a[i - 1])) {
+                return false;
+            }
+        }
         return true;
     }
 
     private static boolean isSorted(Object[] a, Comparator comparator) {
-        return isSorted(a, 0, a.length - 1, comparator);
+        return MergeX.isSorted(a, 0, a.length - 1, comparator);
     }
 
     private static boolean isSorted(Object[] a, int lo, int hi, Comparator comparator) {
-        for (int i = lo + 1; i <= hi; i++)
-            if (less(a[i], a[i - 1], comparator)) return false;
+        for (int i = lo + 1; i <= hi; i++) {
+            if (MergeX.less(a[i], a[i - 1], comparator)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -231,7 +251,7 @@ public class MergeX {
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
         MergeX.sort(a);
-        show(a);
+        MergeX.show(a);
     }
 }
 

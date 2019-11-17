@@ -92,7 +92,11 @@ public class LazyPrimMST {
         pq = new MinPQ<Edge>();
         marked = new boolean[G.V()];
         for (int v = 0; v < G.V(); v++)     // run Prim from all vertices to
-            if (!marked[v]) prim(G, v);     // get a minimum spanning forest
+        {
+            if (!marked[v]) {
+                prim(G, v);     // get a minimum spanning forest
+            }
+        }
 
         // check optimality conditions
         assert check(G);
@@ -120,11 +124,17 @@ public class LazyPrimMST {
             Edge e = pq.delMin();                      // smallest edge on pq
             int v = e.either(), w = e.other(v);        // two endpoints
             assert marked[v] || marked[w];
-            if (marked[v] && marked[w]) continue;      // lazy, both v and w already scanned
+            if (marked[v] && marked[w]) {
+                continue;      // lazy, both v and w already scanned
+            }
             mst.enqueue(e);                            // add e to MST
             weight += e.weight();
-            if (!marked[v]) scan(G, v);               // v becomes part of tree
-            if (!marked[w]) scan(G, w);               // w becomes part of tree
+            if (!marked[v]) {
+                scan(G, v);               // v becomes part of tree
+            }
+            if (!marked[w]) {
+                scan(G, w);               // w becomes part of tree
+            }
         }
     }
 
@@ -132,8 +142,11 @@ public class LazyPrimMST {
     private void scan(EdgeWeightedGraph G, int v) {
         assert !marked[v];
         marked[v] = true;
-        for (Edge e : G.adj(v))
-            if (!marked[e.other(v)]) pq.insert(e);
+        for (Edge e : G.adj(v)) {
+            if (!marked[e.other(v)]) {
+                pq.insert(e);
+            }
+        }
     }
 
     /**
@@ -195,7 +208,9 @@ public class LazyPrimMST {
             uf = new UF(G.V());
             for (Edge f : mst) {
                 int x = f.either(), y = f.other(x);
-                if (f != e) uf.union(x, y);
+                if (f != e) {
+                    uf.union(x, y);
+                }
             }
 
             // check that e is min weight edge in crossing cut

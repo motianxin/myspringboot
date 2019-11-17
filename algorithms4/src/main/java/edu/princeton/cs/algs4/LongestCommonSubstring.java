@@ -46,8 +46,9 @@ public class LongestCommonSubstring {
     private static String lcp(String s, int p, String t, int q) {
         int n = Math.min(s.length() - p, t.length() - q);
         for (int i = 0; i < n; i++) {
-            if (s.charAt(p + i) != t.charAt(q + i))
+            if (s.charAt(p + i) != t.charAt(q + i)) {
                 return s.substring(p, p + i);
+            }
         }
         return s.substring(p, p + n);
     }
@@ -56,12 +57,17 @@ public class LongestCommonSubstring {
     private static int compare(String s, int p, String t, int q) {
         int n = Math.min(s.length() - p, t.length() - q);
         for (int i = 0; i < n; i++) {
-            if (s.charAt(p + i) != t.charAt(q + i))
+            if (s.charAt(p + i) != t.charAt(q + i)) {
                 return s.charAt(p + i) - t.charAt(q + i);
+            }
         }
-        if (s.length() - p < t.length() - q) return -1;
-        else if (s.length() - p > t.length() - q) return +1;
-        else return 0;
+        if (s.length() - p < t.length() - q) {
+            return -1;
+        } else if (s.length() - p > t.length() - q) {
+            return +1;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -69,6 +75,7 @@ public class LongestCommonSubstring {
      *
      * @param s one string
      * @param t the other string
+     *
      * @return the longest common string that appears as a substring
      * in both {@code s} and {@code t}; the empty string
      * if no such string
@@ -84,9 +91,14 @@ public class LongestCommonSubstring {
             int p = suffix1.index(i);
             int q = suffix2.index(j);
             String x = lcp(s, p, t, q);
-            if (x.length() > lcs.length()) lcs = x;
-            if (compare(s, p, t, q) < 0) i++;
-            else j++;
+            if (x.length() > lcs.length()) {
+                lcs = x;
+            }
+            if (compare(s, p, t, q) < 0) {
+                i++;
+            } else {
+                j++;
+            }
         }
         return lcs;
     }

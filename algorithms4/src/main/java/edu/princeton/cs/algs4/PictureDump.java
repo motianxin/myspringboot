@@ -58,8 +58,11 @@ public class PictureDump {
             for (int col = 0; col < width; col++) {
                 if (!BinaryStdIn.isEmpty()) {
                     boolean bit = BinaryStdIn.readBoolean();
-                    if (bit) picture.set(col, row, Color.BLACK);
-                    else picture.set(col, row, Color.WHITE);
+                    if (bit) {
+                        picture.set(col, row, Color.BLACK);
+                    } else {
+                        picture.set(col, row, Color.WHITE);
+                    }
                 } else {
                     picture.set(col, row, Color.RED);
                 }

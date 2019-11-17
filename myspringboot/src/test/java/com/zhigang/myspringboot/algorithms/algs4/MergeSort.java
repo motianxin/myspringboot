@@ -15,13 +15,24 @@ import com.zhigang.myspringboot.algorithms.stdlib.StdRandom;
  * 〈归并排序〉
  *
  * @author Administrator
- * @create 2019/7/2 19:46
  * @version 3.2.2
+ * @create 2019/7/2 19:46
  */
-public class MergeSort extends SortClass{
+public class MergeSort extends SortClass {
 
 
     private double[] copyArray;
+
+    public static void main(String[] args) {
+        SortClass sortClass = new MergeSort();
+        double[] dArray = new double[400];
+        for (int i = 0; i < dArray.length; i++) {
+            dArray[i] = StdRandom.uniform();
+        }
+        sortClass.setDraw(new Draw("MergeSort", 300, 300));
+        sortClass.sort(dArray);
+    }
+
     @Override
     public void sort(double[] arr) {
         super.sort(arr);
@@ -30,10 +41,10 @@ public class MergeSort extends SortClass{
         mergeBUsort(arr);
     }
 
-    /** 
+    /**
      * @Description: 左右归并排序，mid下标分成两边有序数组归并
-     * @Param: [arr, lo, mid, hi] 
-     * @return: void 
+     * @Param: [arr, lo, mid, hi]
+     * @return: void
      * @Author: admin
      * @Date: 2019/7/3 22:32
      */
@@ -101,16 +112,6 @@ public class MergeSort extends SortClass{
                 merge(arr, j, j + i - 1, Math.min(hi - 1, j + 2 * i - 1));
             }
         }
-    }
-
-    public static void main(String[] args) {
-        SortClass sortClass = new MergeSort();
-        double[] dArray = new double[400];
-        for (int i = 0; i < dArray.length; i++) {
-            dArray[i] = StdRandom.uniform();
-        }
-        sortClass.setDraw(new Draw("MergeSort", 300, 300));
-        sortClass.sort(dArray);
     }
 
 }

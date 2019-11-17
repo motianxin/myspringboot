@@ -290,7 +290,7 @@ public class Out {
      * string and arguments, and then flushes this output stream.
      *
      * @param format the format string
-     * @param args   the arguments accompanying the format string
+     * @param args the arguments accompanying the format string
      */
     public void printf(String format, Object... args) {
         out.printf(LOCALE, format, args);
@@ -303,7 +303,7 @@ public class Out {
      *
      * @param locale the locale
      * @param format the format string
-     * @param args   the arguments accompanying the format string
+     * @param args the arguments accompanying the format string
      */
     public void printf(Locale locale, String format, Object... args) {
         out.printf(locale, format, args);

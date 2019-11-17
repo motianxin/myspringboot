@@ -53,16 +53,20 @@ public class EdgeWeightedDigraph {
      * Initializes an empty edge-weighted digraph with {@code V} vertices and 0 edges.
      *
      * @param V the number of vertices
+     *
      * @throws IllegalArgumentException if {@code V < 0}
      */
     public EdgeWeightedDigraph(int V) {
-        if (V < 0) throw new IllegalArgumentException("Number of vertices in a Digraph must be nonnegative");
+        if (V < 0) {
+            throw new IllegalArgumentException("Number of vertices in a Digraph must be nonnegative");
+        }
         this.V = V;
         this.E = 0;
         this.indegree = new int[V];
         adj = (Bag<DirectedEdge>[]) new Bag[V];
-        for (int v = 0; v < V; v++)
+        for (int v = 0; v < V; v++) {
             adj[v] = new Bag<DirectedEdge>();
+        }
     }
 
     /**
@@ -70,12 +74,15 @@ public class EdgeWeightedDigraph {
      *
      * @param V the number of vertices
      * @param E the number of edges
+     *
      * @throws IllegalArgumentException if {@code V < 0}
      * @throws IllegalArgumentException if {@code E < 0}
      */
     public EdgeWeightedDigraph(int V, int E) {
         this(V);
-        if (E < 0) throw new IllegalArgumentException("Number of edges in a Digraph must be nonnegative");
+        if (E < 0) {
+            throw new IllegalArgumentException("Number of edges in a Digraph must be nonnegative");
+        }
         for (int i = 0; i < E; i++) {
             int v = StdRandom.uniform(V);
             int w = StdRandom.uniform(V);
@@ -93,13 +100,16 @@ public class EdgeWeightedDigraph {
      * with each entry separated by whitespace.
      *
      * @param in the input stream
+     *
      * @throws IllegalArgumentException if the endpoints of any edge are not in prescribed range
      * @throws IllegalArgumentException if the number of vertices or edges is negative
      */
     public EdgeWeightedDigraph(In in) {
         this(in.readInt());
         int E = in.readInt();
-        if (E < 0) throw new IllegalArgumentException("Number of edges must be nonnegative");
+        if (E < 0) {
+            throw new IllegalArgumentException("Number of edges must be nonnegative");
+        }
         for (int i = 0; i < E; i++) {
             int v = in.readInt();
             int w = in.readInt();
@@ -118,8 +128,9 @@ public class EdgeWeightedDigraph {
     public EdgeWeightedDigraph(EdgeWeightedDigraph G) {
         this(G.V());
         this.E = G.E();
-        for (int v = 0; v < G.V(); v++)
+        for (int v = 0; v < G.V(); v++) {
             this.indegree[v] = G.indegree(v);
+        }
         for (int v = 0; v < G.V(); v++) {
             // reverse so that adjacency list is in same order as original
             Stack<DirectedEdge> reverse = new Stack<DirectedEdge>();
@@ -163,16 +174,18 @@ public class EdgeWeightedDigraph {
 
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
     }
 
     /**
      * Adds the directed edge {@code e} to this edge-weighted digraph.
      *
      * @param e the edge
+     *
      * @throws IllegalArgumentException unless endpoints of edge are between {@code 0}
-     *                                  and {@code V-1}
+     * and {@code V-1}
      */
     public void addEdge(DirectedEdge e) {
         int v = e.from();
@@ -188,7 +201,9 @@ public class EdgeWeightedDigraph {
      * Returns the directed edges incident from vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the directed edges incident from vertex {@code v} as an Iterable
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public Iterable<DirectedEdge> adj(int v) {
@@ -201,7 +216,9 @@ public class EdgeWeightedDigraph {
      * This is known as the <em>outdegree</em> of vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the outdegree of vertex {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int outdegree(int v) {
@@ -214,7 +231,9 @@ public class EdgeWeightedDigraph {
      * This is known as the <em>indegree</em> of vertex {@code v}.
      *
      * @param v the vertex
+     *
      * @return the indegree of vertex {@code v}
+     *
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int indegree(int v) {

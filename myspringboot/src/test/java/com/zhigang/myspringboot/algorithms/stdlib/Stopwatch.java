@@ -1,4 +1,5 @@
-package com.zhigang.myspringboot.algorithms.stdlib; /******************************************************************************
+package com.zhigang.myspringboot.algorithms.stdlib; /**
+ ****************************************************************************
  *  Compilation:  javac Stopwatch.java
  *  Execution:    java Stopwatch n
  *  Dependencies: none

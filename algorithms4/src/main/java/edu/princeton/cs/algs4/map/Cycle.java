@@ -58,13 +58,19 @@ public class Cycle {
      * @param G the undirected graph
      */
     public Cycle(Graph G) {
-        if (hasSelfLoop(G)) return;
-        if (hasParallelEdges(G)) return;
+        if (hasSelfLoop(G)) {
+            return;
+        }
+        if (hasParallelEdges(G)) {
+            return;
+        }
         marked = new boolean[G.V()];
         edgeTo = new int[G.V()];
-        for (int v = 0; v < G.V(); v++)
-            if (!marked[v])
+        for (int v = 0; v < G.V(); v++) {
+            if (!marked[v]) {
                 dfs(G, -1, v);
+            }
+        }
     }
 
     /**
@@ -153,7 +159,9 @@ public class Cycle {
         for (int w : G.adj(v)) {
 
             // short circuit if cycle already found
-            if (cycle != null) return;
+            if (cycle != null) {
+                return;
+            }
 
             if (!marked[w]) {
                 edgeTo[w] = v;

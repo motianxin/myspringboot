@@ -65,7 +65,9 @@ public class FrequencyCounter {
         // compute frequency counts
         while (!StdIn.isEmpty()) {
             String key = StdIn.readString();
-            if (key.length() < minlen) continue;
+            if (key.length() < minlen) {
+                continue;
+            }
             words++;
             if (st.contains(key)) {
                 st.put(key, st.get(key) + 1);
@@ -79,8 +81,9 @@ public class FrequencyCounter {
         String max = "";
         st.put(max, 0);
         for (String word : st.keys()) {
-            if (st.get(word) > st.get(max))
+            if (st.get(word) > st.get(max)) {
                 max = word;
+            }
         }
 
         StdOut.println(max + " " + st.get(max));

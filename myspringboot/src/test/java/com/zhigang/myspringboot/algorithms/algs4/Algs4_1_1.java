@@ -321,16 +321,16 @@ public class Algs4_1_1 {
 
     }
 
-    /** 
+    /**
      * @Description: 堆排序
-     * @Param: [arr] 
-     * @return: void 
+     * @Param: [arr]
+     * @return: void
      * @Author: admin
      * @Date: 2019/7/1 22:02
      */
     public static void heapSort(double[] arr) {
 
-        int n = arr.length -1;
+        int n = arr.length - 1;
         for (int i = n / 2; i >= 1; i--) {
             sink(arr, i, n);
         }
@@ -339,20 +339,20 @@ public class Algs4_1_1 {
             sink(arr, 1, n);
         }
 
-        for (int i = 0; i < arr.length -1; i++) {
+        for (int i = 0; i < arr.length - 1; i++) {
             if (less(arr[i], arr[i + 1])) {
                 break;
             } else {
-                swap(arr, i, i +1);
+                swap(arr, i, i + 1);
             }
         }
     }
 
     private static void sink(double[] arr, int i, int n) {
         int k = i;
-        while (k<<1 <= n) {
-            int j = k <<1;
-            if (j < n && less(arr[j], arr[j +1])) {
+        while (k << 1 <= n) {
+            int j = k << 1;
+            if (j < n && less(arr[j], arr[j + 1])) {
                 j++;
             }
             if (!less(arr[k], arr[j])) {
@@ -462,13 +462,12 @@ public class Algs4_1_1 {
         // bubbleSort(dArray);
         // insertSort(dArray);
         // quickSort(dArray, 0, dArray.length - 1);
-        mergeSort(dArray, 0, n-1);
+        mergeSort(dArray, 0, n - 1);
         // mergeBUsort(dArray);
         // shellSort(dArray);
         // heapSort(dArray);
 
     }
-
 
 
     private static void drawFG() {

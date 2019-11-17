@@ -12,8 +12,8 @@ package com.zhigang.myspringboot.algorithms.algs4;
  * 〈sortMAIN〉
  *
  * @author Administrator
- * @create 2019/7/2 20:47
  * @version 3.2.2
+ * @create 2019/7/2 20:47
  */
 public class SortMain {
 

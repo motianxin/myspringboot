@@ -25,9 +25,10 @@ import java.util.Map;
  */
 public class AllSortCompare {
 
-    public static final String[] SORT_NAMES = new String[]{"quickSort", "shellSort", "insertSort", "mergeSort", "bubbleSort", "heapSort"};
+    public static final String[] SORT_NAMES = new String[]{"quickSort", "shellSort", "insertSort", "mergeSort",
+            "bubbleSort", "heapSort"};
 
-    public static final Map<String, SortClass> CLASS_MAP = new HashMap<String, SortClass>(){{
+    public static final Map<String, SortClass> CLASS_MAP = new HashMap<String, SortClass>() {{
         put(SORT_NAMES[0], new QuickSort());
         put(SORT_NAMES[1], new ShellSort());
         put(SORT_NAMES[2], new InsertSort());
@@ -66,7 +67,7 @@ public class AllSortCompare {
         doubles.add(dArray4);
         doubles.add(dArray5);
         for (int i = 0; i < SORT_NAMES.length; i++) {
-            draw = new Draw(SORT_NAMES[i], 960 *( i/3), 350 * (i % 3));
+            draw = new Draw(SORT_NAMES[i], 960 * (i / 3), 350 * (i % 3));
             sortClass = CLASS_MAP.get(SORT_NAMES[i]);
             sortClass.setDraw(draw);
             SortThread sortThread = new SortThread(sortClass, doubles.get(i));

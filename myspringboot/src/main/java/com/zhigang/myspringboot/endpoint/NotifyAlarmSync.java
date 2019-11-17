@@ -23,33 +23,32 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import java.util.Date;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈告警同步模拟〉
  *
  * @author admin
- * @create 2018/12/19 16:39
  * @version 3.2.2
+ * @create 2018/12/19 16:39
  */
 @Endpoint
 @Slf4j
 public class NotifyAlarmSync {
 
-	@Autowired
-	private SyncService syncService;
+    @Autowired
+    private SyncService syncService;
 
-	@PayloadRoot(namespace = "http://www.ctsi.com.cn/webservices/service", localPart = "notifyAlarmSyncReq")
-	@ResponsePayload
-	public NotifyAlarmSyncRsp alarmSync(@RequestPayload NotifyAlarmSyncReq req){
+    @PayloadRoot(namespace = "http://www.ctsi.com.cn/webservices/service", localPart = "notifyAlarmSyncReq")
+    @ResponsePayload
+    public NotifyAlarmSyncRsp alarmSync(@RequestPayload NotifyAlarmSyncReq req) {
 
-		try {
-			syncService.saveAlarmSync(req);
-		} catch (Exception e) {
-			log.error("alarmSync error", e.getMessage(), e);
-		}
+        try {
+            this.syncService.saveAlarmSync(req);
+        } catch (Exception e) {
+            NotifyAlarmSync.log.error("alarmSync error", e.getMessage(), e);
+        }
 
-		return new NotifyAlarmSyncRsp(4343,"retert",StringTools.dateFormat(Constans.DATE_PATTERN, new Date()));
-	}
-
+        return new NotifyAlarmSyncRsp(4343, "retert", StringTools.dateFormat(Constans.DATE_PATTERN, new Date()));
+    }
 
 
 }

@@ -43,30 +43,36 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(d)
      *
      * @param d dimension of the heap
+     *
      * @throws java.lang.IllegalArgumentException if {@code d < 2}
      */
     public MultiwayMinPQ(int d) {
-        if (d < 2) throw new IllegalArgumentException("Dimension should be 2 or over");
+        if (d < 2) {
+            throw new IllegalArgumentException("Dimension should be 2 or over");
+        }
         this.d = d;
-        order = 1;
-        keys = (Key[]) new Comparable[d << 1];
-        comp = new MyComparator();
+        this.order = 1;
+        this.keys = (Key[]) new Comparable[d << 1];
+        this.comp = new MyComparator();
     }
 
     /**
      * Initializes an empty priority queue
      * Worst case is O(d)
      *
-     * @param d          dimension of the heap
+     * @param d dimension of the heap
      * @param comparator a Comparator over the keys
+     *
      * @throws java.lang.IllegalArgumentException if {@code d < 2}
      */
     public MultiwayMinPQ(Comparator<Key> comparator, int d) {
-        if (d < 2) throw new IllegalArgumentException("Dimension should be 2 or over");
+        if (d < 2) {
+            throw new IllegalArgumentException("Dimension should be 2 or over");
+        }
         this.d = d;
-        order = 1;
-        keys = (Key[]) new Comparable[d << 1];
-        comp = comparator;
+        this.order = 1;
+        this.keys = (Key[]) new Comparable[d << 1];
+        this.comp = comparator;
     }
 
     /**
@@ -75,33 +81,43 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
      *
      * @param d dimension of the heap
      * @param a an array of keys
+     *
      * @throws java.lang.IllegalArgumentException if {@code d < 2}
      */
     public MultiwayMinPQ(Key[] a, int d) {
-        if (d < 2) throw new IllegalArgumentException("Dimension should be 2 or over");
+        if (d < 2) {
+            throw new IllegalArgumentException("Dimension should be 2 or over");
+        }
         this.d = d;
-        order = 1;
-        keys = (Key[]) new Comparable[d << 1];
-        comp = new MyComparator();
-        for (Key key : a) insert(key);
+        this.order = 1;
+        this.keys = (Key[]) new Comparable[d << 1];
+        this.comp = new MyComparator();
+        for (Key key : a) {
+            insert(key);
+        }
     }
 
     /**
      * Initializes a priority queue with given indexes
      * Worst case is O(a*log-d(n))
      *
-     * @param d          dimension of the heap
+     * @param d dimension of the heap
      * @param comparator a Comparator over the keys
-     * @param a          an array of keys
+     * @param a an array of keys
+     *
      * @throws java.lang.IllegalArgumentException if {@code d < 2}
      */
     public MultiwayMinPQ(Comparator<Key> comparator, Key[] a, int d) {
-        if (d < 2) throw new IllegalArgumentException("Dimension should be 2 or over");
+        if (d < 2) {
+            throw new IllegalArgumentException("Dimension should be 2 or over");
+        }
         this.d = d;
-        order = 1;
-        keys = (Key[]) new Comparable[d << 1];
-        comp = comparator;
-        for (Key key : a) insert(key);
+        this.order = 1;
+        this.keys = (Key[]) new Comparable[d << 1];
+        this.comp = comparator;
+        for (Key key : a) {
+            insert(key);
+        }
     }
 
     /**
@@ -111,7 +127,7 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
      * @return true if the priority queue is empty, false if not
      */
     public boolean isEmpty() {
-        return n == 0;
+        return this.n == 0;
     }
 
     /**
@@ -121,7 +137,7 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
      * @return the number of elements on the priority queue
      */
     public int size() {
-        return n;
+        return this.n;
     }
 
     /**
@@ -131,11 +147,11 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
      * @param key a Key
      */
     public void insert(Key key) {
-        keys[n + d] = key;
-        swim(n++);
-        if (n == keys.length - d) {
-            resize(getN(order + 1) + d);
-            order++;
+        this.keys[this.n + this.d] = key;
+        swim(this.n++);
+        if (this.n == this.keys.length - this.d) {
+            resize(getN(this.order + 1) + this.d);
+            this.order++;
         }
     }
 
@@ -144,11 +160,14 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(1)
      *
      * @return the minimum key currently in the priority queue
+     *
      * @throws java.util.NoSuchElementException if the priority queue is empty
      */
     public Key minKey() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue is empty");
-        return keys[d];
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue is empty");
+        }
+        return this.keys[this.d];
     }
 
     /**
@@ -156,18 +175,21 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
      * Worst case is O(d*log-d(n))
      *
      * @return the minimum key
+     *
      * @throws java.util.NoSuchElementException if the priority queue is empty
      */
     public Key delMin() {
-        if (isEmpty()) throw new NoSuchElementException("Priority queue is empty");
-        exch(0, --n);
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue is empty");
+        }
+        exch(0, --this.n);
         sink(0);
-        Key min = keys[n + d];
-        keys[n + d] = null;
-        int number = getN(order - 2);
-        if (order > 1 && n == number) {
-            resize(number + (int) Math.pow(d, order - 1) + d);
-            order--;
+        Key min = this.keys[this.n + this.d];
+        this.keys[this.n + this.d] = null;
+        int number = getN(this.order - 2);
+        if (this.order > 1 && this.n == number) {
+            resize(number + (int) Math.pow(this.d, this.order - 1) + this.d);
+            this.order--;
         }
         return min;
     }
@@ -178,23 +200,27 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
 
     //Compares two keys
     private boolean greater(int x, int y) {
-        int i = x + d, j = y + d;
-        if (keys[i] == null) return false;
-        if (keys[j] == null) return true;
-        return comp.compare(keys[i], keys[j]) > 0;
+        int i = x + this.d, j = y + this.d;
+        if (this.keys[i] == null) {
+            return false;
+        }
+        if (this.keys[j] == null) {
+            return true;
+        }
+        return this.comp.compare(this.keys[i], this.keys[j]) > 0;
     }
 
     //Exchanges the position of two keys
     private void exch(int x, int y) {
-        int i = x + d, j = y + d;
-        Key swap = keys[i];
-        keys[i] = keys[j];
-        keys[j] = swap;
+        int i = x + this.d, j = y + this.d;
+        Key swap = this.keys[i];
+        this.keys[i] = this.keys[j];
+        this.keys[j] = swap;
     }
 
     //Gets the maximum number of keys in the heap, given the number of levels of the tree
     private int getN(int order) {
-        return (1 - ((int) Math.pow(d, order + 1))) / (1 - d);
+        return (1 - ((int) Math.pow(this.d, order + 1))) / (1 - this.d);
     }
 
     /***************************
@@ -203,18 +229,20 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
 
     //Moves upward
     private void swim(int i) {
-        if (i > 0 && greater((i - 1) / d, i)) {
-            exch(i, (i - 1) / d);
-            swim((i - 1) / d);
+        if (i > 0 && greater((i - 1) / this.d, i)) {
+            exch(i, (i - 1) / this.d);
+            swim((i - 1) / this.d);
         }
     }
 
     //Moves downward
     private void sink(int i) {
-        int child = d * i + 1;
-        if (child >= n) return;
+        int child = this.d * i + 1;
+        if (child >= this.n) {
+            return;
+        }
         int min = minChild(i);
-        while (min < n && greater(i, min)) {
+        while (min < this.n && greater(i, min)) {
             exch(i, min);
             i = min;
             min = minChild(i);
@@ -227,10 +255,12 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
 
     //Return the minimum child of i
     private int minChild(int i) {
-        int loBound = d * i + 1, hiBound = d * i + d;
+        int loBound = this.d * i + 1, hiBound = this.d * i + this.d;
         int min = loBound;
         for (int cur = loBound; cur <= hiBound; cur++) {
-            if (cur < n && greater(min, cur)) min = cur;
+            if (cur < this.n && greater(min, cur)) {
+                min = cur;
+            }
         }
         return min;
     }
@@ -244,11 +274,11 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
     //If the heap has two floors empty, it removes one
     private void resize(int N) {
         Key[] array = (Key[]) new Comparable[N];
-        for (int i = 0; i < Math.min(keys.length, array.length); i++) {
-            array[i] = keys[i];
-            keys[i] = null;
+        for (int i = 0; i < Math.min(this.keys.length, array.length); i++) {
+            array[i] = this.keys[i];
+            this.keys[i] = null;
         }
-        keys = array;
+        this.keys = array;
     }
 
     /***************************
@@ -274,21 +304,23 @@ public class MultiwayMinPQ<Key> implements Iterable<Key> {
         MultiwayMinPQ<Key> data;
 
         public MyIterator() {
-            data = new MultiwayMinPQ<Key>(comp, d);
-            data.keys = (Key[]) new Comparable[keys.length];
-            data.n = n;
-            for (int i = 0; i < keys.length; i++) {
-                data.keys[i] = keys[i];
+            this.data = new MultiwayMinPQ<Key>(MultiwayMinPQ.this.comp, MultiwayMinPQ.this.d);
+            this.data.keys = (Key[]) new Comparable[MultiwayMinPQ.this.keys.length];
+            this.data.n = MultiwayMinPQ.this.n;
+            for (int i = 0; i < MultiwayMinPQ.this.keys.length; i++) {
+                this.data.keys[i] = MultiwayMinPQ.this.keys[i];
             }
         }
 
         public boolean hasNext() {
-            return !data.isEmpty();
+            return !this.data.isEmpty();
         }
 
         public Key next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            return data.delMin();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return this.data.delMin();
         }
 
         public void remove() {

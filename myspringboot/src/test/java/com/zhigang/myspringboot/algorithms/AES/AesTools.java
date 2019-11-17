@@ -15,6 +15,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
 import java.security.SecureRandom;
 
 /**
@@ -25,16 +26,15 @@ import java.security.SecureRandom;
  * @create 2019/6/19 11:18
  */
 public class AesTools {
-    private static final String KEYGEN = "FUMSHELLO123";
-    private static final String AES_GCM_PKCS5_PADDING = "AES/GCM/PKCS5Padding";
-    private static final String AES = "AES";
-
-    private static final int AES_KEY_SIZE = 128;
-    private static final int GCM_NONCE_LENGTH = 12;
     /**
      * 签名算法
      */
     public static final String SIGN_ALGORITHMS = "SHA1PRNG";
+    private static final String KEYGEN = "FUMSHELLO123";
+    private static final String AES_GCM_PKCS5_PADDING = "AES/GCM/PKCS5Padding";
+    private static final String AES = "AES";
+    private static final int AES_KEY_SIZE = 128;
+    private static final int GCM_NONCE_LENGTH = 12;
 
     public static String aesEncode(String content) {
 

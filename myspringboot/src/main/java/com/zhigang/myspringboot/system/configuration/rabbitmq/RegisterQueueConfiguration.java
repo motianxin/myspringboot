@@ -29,10 +29,12 @@ public class RegisterQueueConfiguration {
     public DirectExchange registerDirectExchange() {
         return new DirectExchange(ExchangeEnum.DIRCEXCHANGE.getExchangeName());
     }
+
     @Bean
     public FanoutExchange registerFanoutExchange() {
         return new FanoutExchange(ExchangeEnum.FANOUTEXCHANGE.getExchangeName());
     }
+
     @Bean
     public TopicExchange registerTopicExchange() {
         return new TopicExchange(ExchangeEnum.TOPICEXCHANGE.getExchangeName());

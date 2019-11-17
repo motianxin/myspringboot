@@ -17,28 +17,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈全局异常捕获〉
  *
  * @author admin
- * @create 2018/12/27 21:40
  * @version 3.2.2
+ * @create 2018/12/27 21:40
  */
 @ControllerAdvice(annotations = RestController.class)
 public class GlobalDefaultExceptionHandler {
-	/**
-	 *
-	 * @param e
-	 * @return
-	 */
-	@ExceptionHandler(Exception.class)
-	@ResponseBody
-	public Map<String,Object> defaultExceptionHandler(Exception e) {
+    /**
+     * @param e
+     *
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public Map<String, Object> defaultExceptionHandler(Exception e) {
 
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("code", 500);
-		map.put("msg", e.getMessage());
-		return map;
-	}
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("code", 500);
+        map.put("msg", e.getMessage());
+        return map;
+    }
 
 }

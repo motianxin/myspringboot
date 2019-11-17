@@ -11,78 +11,15 @@ import java.util.function.IntConsumer;
  **/
 public class ZeroEvenOdd {
 
-    private boolean zero = true;
-
-    private boolean even = false;
-
-    private boolean odd = false;
-
-    Object lock = new Object();
-
     private static volatile int i = 0;
+    Object lock = new Object();
+    private boolean zero = true;
+    private boolean even = false;
+    private boolean odd = false;
     private int n;
 
     public ZeroEvenOdd(int n) {
         this.n = n;
-    }
-
-    // printNumber.accept(x) outputs "x", where x is an integer.
-    public void zero(IntConsumer printNumber) throws InterruptedException {
-        while (i/2 < n-1) {
-            synchronized (lock) {
-                while (!zero) {
-                    lock.wait();
-                }
-                zero = false;
-                printNumber.accept(0);
-                i++;
-                if ((((i - 1)/ 2) & 1) == 1) {
-                    odd = true;
-                } else {
-                    even = true;
-                }
-                if (i/2 == n -1) {
-                    even = true;
-                    odd = true;
-                }
-                lock.notifyAll();
-            }
-        }
-    }
-
-    public void even(IntConsumer printNumber) throws InterruptedException {
-        while (i/2 + 1 <= n) {
-            synchronized (lock) {
-                while (!even) {
-                    lock.wait();
-                }
-                zero = true;
-                even = false;
-                if (i/2 + 1 <= n) {
-                    printNumber.accept(i / 2 + 1);
-                    i++;
-                }
-                lock.notifyAll();
-            }
-        }
-
-    }
-
-    public void odd(IntConsumer printNumber) throws InterruptedException {
-        while (i/2 + 1 <= n) {
-            synchronized (lock) {
-                while (!odd) {
-                    lock.wait();
-                }
-                zero = true;
-                odd = false;
-                if (i/2 + 1 <= n) {
-                    printNumber.accept(i / 2 + 1);
-                    i++;
-                }
-                lock.notifyAll();
-            }
-        }
     }
 
     public static void main(String[] args) {
@@ -90,5 +27,64 @@ public class ZeroEvenOdd {
         new Thread(new ZeroEvenOddRun(zeroEvenOdd, 0)).start();
         new Thread(new ZeroEvenOddRun(zeroEvenOdd, 1)).start();
         new Thread(new ZeroEvenOddRun(zeroEvenOdd, 2)).start();
+    }
+
+    // printNumber.accept(x) outputs "x", where x is an integer.
+    public void zero(IntConsumer printNumber) throws InterruptedException {
+        while (ZeroEvenOdd.i / 2 < this.n - 1) {
+            synchronized (this.lock) {
+                while (!this.zero) {
+                    this.lock.wait();
+                }
+                this.zero = false;
+                printNumber.accept(0);
+                ZeroEvenOdd.i++;
+                if ((((ZeroEvenOdd.i - 1) / 2) & 1) == 1) {
+                    this.odd = true;
+                } else {
+                    this.even = true;
+                }
+                if (ZeroEvenOdd.i / 2 == this.n - 1) {
+                    this.even = true;
+                    this.odd = true;
+                }
+                this.lock.notifyAll();
+            }
+        }
+    }
+
+    public void even(IntConsumer printNumber) throws InterruptedException {
+        while (ZeroEvenOdd.i / 2 + 1 <= this.n) {
+            synchronized (this.lock) {
+                while (!this.even) {
+                    this.lock.wait();
+                }
+                this.zero = true;
+                this.even = false;
+                if (ZeroEvenOdd.i / 2 + 1 <= this.n) {
+                    printNumber.accept(ZeroEvenOdd.i / 2 + 1);
+                    ZeroEvenOdd.i++;
+                }
+                this.lock.notifyAll();
+            }
+        }
+
+    }
+
+    public void odd(IntConsumer printNumber) throws InterruptedException {
+        while (ZeroEvenOdd.i / 2 + 1 <= this.n) {
+            synchronized (this.lock) {
+                while (!this.odd) {
+                    this.lock.wait();
+                }
+                this.zero = true;
+                this.odd = false;
+                if (ZeroEvenOdd.i / 2 + 1 <= this.n) {
+                    printNumber.accept(ZeroEvenOdd.i / 2 + 1);
+                    ZeroEvenOdd.i++;
+                }
+                this.lock.notifyAll();
+            }
+        }
     }
 }

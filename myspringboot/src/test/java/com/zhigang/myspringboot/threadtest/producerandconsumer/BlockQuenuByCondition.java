@@ -22,15 +22,11 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class BlockQuenuByCondition<E> {
 
+    ReentrantLock lock = new ReentrantLock();
+    Condition notFull = this.lock.newCondition();
+    Condition notEmpty = this.lock.newCondition();
     private Queue<E> queue = null;
     private int limit;
-
-
-    ReentrantLock lock = new ReentrantLock();
-
-    Condition notFull = lock.newCondition();
-
-    Condition notEmpty = lock.newCondition();
 
     public BlockQuenuByCondition(int limit) {
         this.queue = new ArrayDeque<>(limit);
@@ -38,32 +34,32 @@ public class BlockQuenuByCondition<E> {
     }
 
     public void put(E e) throws InterruptedException {
-        lock.lockInterruptibly();
+        this.lock.lockInterruptibly();
 
         try {
-            while (queue.size() == limit) {
-                notFull.await();
+            while (this.queue.size() == this.limit) {
+                this.notFull.await();
             }
-            queue.add(e);
+            this.queue.add(e);
             // 避免了不必要的唤醒和检查，提高了效率
-            notEmpty.signal();
+            this.notEmpty.signal();
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
 
     public E take() throws InterruptedException {
-        lock.lockInterruptibly();
+        this.lock.lockInterruptibly();
         try {
-            while (queue.isEmpty()) {
-                notEmpty.await();
+            while (this.queue.isEmpty()) {
+                this.notEmpty.await();
             }
             // 避免了不必要的唤醒和检查，提高了效率
-            notFull.signal();
-            return queue.poll();
+            this.notFull.signal();
+            return this.queue.poll();
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 

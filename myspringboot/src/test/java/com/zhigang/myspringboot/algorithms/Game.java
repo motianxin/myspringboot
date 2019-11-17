@@ -18,6 +18,7 @@ package com.zhigang.myspringboot.algorithms;
 
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,6 +50,13 @@ public class Game extends JFrame {
         InitNum();
     }
 
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.setSize(300, 300);
+        game.setVisible(true);
+    }
+
     void InitNum() {
         num.clear();
         for (int i = 0; i < 16; i++) {
@@ -76,8 +84,9 @@ public class Game extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if (e.getActionCommand().length() == 0)
+            if (e.getActionCommand().length() == 0) {
                 return;
+            }
             int n = Integer.parseInt(e.getActionCommand());
             int locationx = 0, locationy = 0;
             int location = 0;
@@ -107,59 +116,62 @@ public class Game extends JFrame {
 
             if (isOver()) {
                 int choice = JOptionPane.showConfirmDialog(null, JOptionPane.YES_NO_OPTION);
-                if (choice == JOptionPane.YES_OPTION)
+                if (choice == JOptionPane.YES_OPTION) {
                     InitNum();
-                else
+                } else {
                     System.exit(0);
+                }
             }
         }
 
         boolean check(int index) {
-            if (index >= 0 && index < 16 && data[(index) / 4][(index) % 4] == 0)
+            if (index >= 0 && index < 16 && data[(index) / 4][(index) % 4] == 0) {
                 return true;
+            }
             return false;
         }
 
         boolean isOver() {
             int i, j;
             for (i = 0; i < 16; i++) {
-                if (data[i / 4][i % 4] != i)
+                if (data[i / 4][i % 4] != i) {
                     break;
+                }
             }
-            if (i == 16)
+            if (i == 16) {
                 return true;
+            }
 
             for (i = 0; i < 15; i++) {
-                if (data[i / 4][i % 4] != i + 1)
+                if (data[i / 4][i % 4] != i + 1) {
                     break;
+                }
             }
-            if (i == 15)
+            if (i == 15) {
                 return true;
+            }
 
             for (i = 0, j = 15; i < 16; i++, j--) {
-                if (data[j / 4][j % 4] != i)
+                if (data[j / 4][j % 4] != i) {
                     break;
+                }
             }
-            if (i == 16)
+            if (i == 16) {
                 return true;
+            }
 
             for (i = 0, j = 15; i < 15; i++, j--) {
-                if (data[j / 4][j % 4] != i + 1)
+                if (data[j / 4][j % 4] != i + 1) {
                     break;
+                }
             }
-            if (i == 15)
+            if (i == 15) {
                 return true;
+            }
 
             return false;
         }
 
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.setSize(300, 300);
-        game.setVisible(true);
     }
 
 }

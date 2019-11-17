@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
-    <property name="TEST_FILE" value="C:/opt/test/log" />
-    <property name="PRO_FILE" value="/var/myboot/log" />
+    <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n"/>
+    <property name="TEST_FILE" value="C:/opt/test/log"/>
+    <property name="PRO_FILE" value="/var/myboot/log"/>
 
     <springProfile name="dev">
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -11,9 +11,9 @@
                 <pattern>${PATTERN}</pattern>
             </encoder>
         </appender>
-        <logger name="com.zhigang.myspringboot" level="info" />
+        <logger name="com.zhigang.myspringboot" level="info"/>
         <root level="info">
-            <appender-ref ref="CONSOLE" />
+            <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
 
@@ -29,7 +29,7 @@
             </layout>
         </appender>
         <root level="info">
-            <appender-ref ref="TEST-FILE" />
+            <appender-ref ref="TEST-FILE"/>
         </root>
     </springProfile>
 
@@ -45,7 +45,7 @@
             </layout>
         </appender>
         <root level="info">
-            <appender-ref ref="PROD_FILE" />
+            <appender-ref ref="PROD_FILE"/>
         </root>
     </springProfile>
 

@@ -23,11 +23,8 @@ public class AEStools {
 
     private static final int[] RC = {0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x36};
 
-    private static final int[][] MIX_COLUMNS_ARRAY = {
-            {0x02, 0x03, 0x01, 0x01},
-            {0x01, 0x02, 0x03, 0x01},
-            {0x01, 0x01, 0x02, 0x03},
-            {0x03, 0x01, 0x01, 0x02}};
+    private static final int[][] MIX_COLUMNS_ARRAY = {{0x02, 0x03, 0x01, 0x01}, {0x01, 0x02, 0x03, 0x01}, {0x01, 0x01
+            , 0x02, 0x03}, {0x03, 0x01, 0x01, 0x02}};
 
     /**
      * @Author Administrator
@@ -140,10 +137,9 @@ public class AEStools {
         int[][] tmp = new int[BLOCK_ARRAY_LENGTH][BLOCK_ARRAY_LENGTH];
         for (int i = 0; i < BLOCK_ARRAY_LENGTH; i++) {
             for (int j = 0; j < BLOCK_ARRAY_LENGTH; j++) {
-                tmp[i][j] = Gf28.aMultiplyB(matrix[i][0], content[0][j]) ^
-                        Gf28.aMultiplyB(matrix[i][1], content[1][j]) ^
-                        Gf28.aMultiplyB(matrix[i][2], content[2][j]) ^
-                        Gf28.aMultiplyB(matrix[i][3], content[3][j]);
+                tmp[i][j] = Gf28.aMultiplyB(matrix[i][0], content[0][j]) ^ Gf28.aMultiplyB(matrix[i][1],
+                        content[1][j]) ^ Gf28.aMultiplyB(matrix[i][2], content[2][j]) ^ Gf28.aMultiplyB(matrix[i][3],
+                        content[3][j]);
             }
         }
         for (int i = 0; i < BLOCK_ARRAY_LENGTH; i++) {
@@ -182,7 +178,7 @@ public class AEStools {
      * @Return void
      * @date 2019/6/14 17:30
      **/
-    private static void subBytes(int[][] content){
+    private static void subBytes(int[][] content) {
         for (int i = 1; i < BLOCK_ARRAY_LENGTH; i++) {
             for (int j = 0; j < BLOCK_ARRAY_LENGTH; j++) {
                 content[i][j] = Gf28.sBox[content[i][j] >> 4][content[i][j] & 0x0f];
@@ -198,7 +194,7 @@ public class AEStools {
      * @Return void
      * @date 2019/6/14 17:30
      **/
-    private static void dddRoundKey(int[][] content, int[][] key){
+    private static void dddRoundKey(int[][] content, int[][] key) {
         for (int i = 0; i < BLOCK_ARRAY_LENGTH; i++) {
             for (int j = 0; j < BLOCK_ARRAY_LENGTH; j++) {
                 content[i][j] = content[i][j] ^ key[i][j];

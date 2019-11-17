@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  * 〈自定义拦截器〉
  *
  * @author admin
- * @create 2019/3/19 11:41
  * @version 3.2.2
+ * @create 2019/3/19 11:41
  */
 @Component
 public class MyInterceptor implements HandlerInterceptor {
@@ -31,12 +31,14 @@ public class MyInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) throws Exception {
 
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+                                Exception ex) throws Exception {
 
     }
 }

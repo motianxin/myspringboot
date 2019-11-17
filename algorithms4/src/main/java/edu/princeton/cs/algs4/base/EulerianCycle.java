@@ -57,19 +57,24 @@ public class EulerianCycle {
     public EulerianCycle(Graph G) {
 
         // must have at least one edge
-        if (G.E() == 0) return;
+        if (G.E() == 0) {
+            return;
+        }
 
         // necessary condition: all vertices have even degree
         // (this test is needed or it might find an Eulerian path instead of cycle)
-        for (int v = 0; v < G.V(); v++)
-            if (G.degree(v) % 2 != 0)
+        for (int v = 0; v < G.V(); v++) {
+            if (G.degree(v) % 2 != 0) {
                 return;
+            }
+        }
 
         // create local view of adjacency lists, to iterate one vertex at a time
         // the helper Edge data type is used to avoid exploring both copies of an edge v-w
         Queue<Edge>[] adj = (Queue<Edge>[]) new Queue[G.V()];
-        for (int v = 0; v < G.V(); v++)
+        for (int v = 0; v < G.V(); v++) {
             adj[v] = new Queue<Edge>();
+        }
 
         for (int v = 0; v < G.V(); v++) {
             int selfLoops = 0;
@@ -91,37 +96,42 @@ public class EulerianCycle {
         }
 
         // initialize stack with any non-isolated vertex
-        int s = nonIsolatedVertex(G);
+        int s = EulerianCycle.nonIsolatedVertex(G);
         Stack<Integer> stack = new Stack<Integer>();
         stack.push(s);
 
         // greedily search through edges in iterative DFS style
-        cycle = new Stack<Integer>();
+        this.cycle = new Stack<Integer>();
         while (!stack.isEmpty()) {
             int v = stack.pop();
             while (!adj[v].isEmpty()) {
                 Edge edge = adj[v].dequeue();
-                if (edge.isUsed) continue;
+                if (edge.isUsed) {
+                    continue;
+                }
                 edge.isUsed = true;
                 stack.push(v);
                 v = edge.other(v);
             }
             // push vertex with no more leaving edges to cycle
-            cycle.push(v);
+            this.cycle.push(v);
         }
 
         // check if all edges are used
-        if (cycle.size() != G.E() + 1)
-            cycle = null;
+        if (this.cycle.size() != G.E() + 1) {
+            this.cycle = null;
+        }
 
         assert certifySolution(G);
     }
 
     // returns any non-isolated vertex; -1 if no such vertex
     private static int nonIsolatedVertex(Graph G) {
-        for (int v = 0; v < G.V(); v++)
-            if (G.degree(v) > 0)
+        for (int v = 0; v < G.V(); v++) {
+            if (G.degree(v) > 0) {
                 return v;
+            }
+        }
         return -1;
     }
 
@@ -139,19 +149,25 @@ public class EulerianCycle {
     private static boolean satisfiesNecessaryAndSufficientConditions(Graph G) {
 
         // Condition 0: at least 1 edge
-        if (G.E() == 0) return false;
+        if (G.E() == 0) {
+            return false;
+        }
 
         // Condition 1: degree(v) is even for every vertex
-        for (int v = 0; v < G.V(); v++)
-            if (G.degree(v) % 2 != 0)
+        for (int v = 0; v < G.V(); v++) {
+            if (G.degree(v) % 2 != 0) {
                 return false;
+            }
+        }
 
         // Condition 2: graph is connected, ignoring isolated vertices
-        int s = nonIsolatedVertex(G);
+        int s = EulerianCycle.nonIsolatedVertex(G);
         BreadthFirstPaths bfs = new BreadthFirstPaths(G, s);
-        for (int v = 0; v < G.V(); v++)
-            if (G.degree(v) > 0 && !bfs.hasPathTo(v))
+        for (int v = 0; v < G.V(); v++) {
+            if (G.degree(v) > 0 && !bfs.hasPathTo(v)) {
                 return false;
+            }
+        }
 
         return true;
     }
@@ -186,41 +202,46 @@ public class EulerianCycle {
 
         // Eulerian cycle
         Graph G1 = GraphGenerator.eulerianCycle(V, E);
-        unitTest(G1, "Eulerian cycle");
+        EulerianCycle.unitTest(G1, "Eulerian cycle");
 
         // Eulerian path
         Graph G2 = GraphGenerator.eulerianPath(V, E);
-        unitTest(G2, "Eulerian path");
+        EulerianCycle.unitTest(G2, "Eulerian path");
 
         // empty graph
         Graph G3 = new Graph(V);
-        unitTest(G3, "empty graph");
+        EulerianCycle.unitTest(G3, "empty graph");
 
         // self loop
         Graph G4 = new Graph(V);
         int v4 = StdRandom.uniform(V);
         G4.addEdge(v4, v4);
-        unitTest(G4, "single self loop");
+        EulerianCycle.unitTest(G4, "single self loop");
 
         // union of two disjoint cycles
         Graph H1 = GraphGenerator.eulerianCycle(V / 2, E / 2);
         Graph H2 = GraphGenerator.eulerianCycle(V - V / 2, E - E / 2);
         int[] perm = new int[V];
-        for (int i = 0; i < V; i++)
+        for (int i = 0; i < V; i++) {
             perm[i] = i;
+        }
         StdRandom.shuffle(perm);
         Graph G5 = new Graph(V);
-        for (int v = 0; v < H1.V(); v++)
-            for (int w : H1.adj(v))
+        for (int v = 0; v < H1.V(); v++) {
+            for (int w : H1.adj(v)) {
                 G5.addEdge(perm[v], perm[w]);
-        for (int v = 0; v < H2.V(); v++)
-            for (int w : H2.adj(v))
+            }
+        }
+        for (int v = 0; v < H2.V(); v++) {
+            for (int w : H2.adj(v)) {
                 G5.addEdge(perm[V / 2 + v], perm[V / 2 + w]);
-        unitTest(G5, "Union of two disjoint cycles");
+            }
+        }
+        EulerianCycle.unitTest(G5, "Union of two disjoint cycles");
 
         // random digraph
         Graph G6 = GraphGenerator.simple(V, E);
-        unitTest(G6, "simple graph");
+        EulerianCycle.unitTest(G6, "simple graph");
     }
 
     /**
@@ -230,7 +251,7 @@ public class EulerianCycle {
      * {@code null} if no such cycle
      */
     public Iterable<Integer> cycle() {
-        return cycle;
+        return this.cycle;
     }
 
     /**
@@ -240,23 +261,31 @@ public class EulerianCycle {
      * {@code false} otherwise
      */
     public boolean hasEulerianCycle() {
-        return cycle != null;
+        return this.cycle != null;
     }
 
     // check that solution is correct
     private boolean certifySolution(Graph G) {
 
         // internal consistency check
-        if (hasEulerianCycle() == (cycle() == null)) return false;
+        if (hasEulerianCycle() == (cycle() == null)) {
+            return false;
+        }
 
         // hashEulerianCycle() returns correct value
-        if (hasEulerianCycle() != satisfiesNecessaryAndSufficientConditions(G)) return false;
+        if (hasEulerianCycle() != EulerianCycle.satisfiesNecessaryAndSufficientConditions(G)) {
+            return false;
+        }
 
         // nothing else to check if no Eulerian cycle
-        if (cycle == null) return true;
+        if (this.cycle == null) {
+            return true;
+        }
 
         // check that cycle() uses correct number of edges
-        if (cycle.size() != G.E() + 1) return false;
+        if (this.cycle.size() != G.E() + 1) {
+            return false;
+        }
 
         // check that cycle() is a cycle of G
         // TODO
@@ -264,10 +293,14 @@ public class EulerianCycle {
         // check that first and last vertices in cycle() are the same
         int first = -1, last = -1;
         for (int v : cycle()) {
-            if (first == -1) first = v;
+            if (first == -1) {
+                first = v;
+            }
             last = v;
         }
-        if (first != last) return false;
+        if (first != last) {
+            return false;
+        }
 
         return true;
     }
@@ -281,14 +314,18 @@ public class EulerianCycle {
         public Edge(int v, int w) {
             this.v = v;
             this.w = w;
-            isUsed = false;
+            this.isUsed = false;
         }
 
         // returns the other vertex of the edge
         public int other(int vertex) {
-            if (vertex == v) return w;
-            else if (vertex == w) return v;
-            else throw new IllegalArgumentException("Illegal endpoint");
+            if (vertex == this.v) {
+                return this.w;
+            } else if (vertex == this.w) {
+                return this.v;
+            } else {
+                throw new IllegalArgumentException("Illegal endpoint");
+            }
         }
     }
 }

@@ -64,6 +64,7 @@ public class LongestRepeatedSubstring {
      * Returns the longest repeated substring of the specified string.
      *
      * @param text the string
+     *
      * @return the longest repeated substring that appears in {@code text};
      * the empty string if no such string
      */

@@ -55,20 +55,26 @@ public class GrahamScan {
      * Computes the convex hull of the specified array of points.
      *
      * @param points the array of points
+     *
      * @throws IllegalArgumentException if {@code points} is {@code null}
      * @throws IllegalArgumentException if any entry in {@code points[]} is {@code null}
      * @throws IllegalArgumentException if {@code points.length} is {@code 0}
      */
     public GrahamScan(Point2D[] points) {
-        if (points == null) throw new IllegalArgumentException("argument is null");
-        if (points.length == 0) throw new IllegalArgumentException("array is of length 0");
+        if (points == null) {
+            throw new IllegalArgumentException("argument is null");
+        }
+        if (points.length == 0) {
+            throw new IllegalArgumentException("array is of length 0");
+        }
 
         // defensive copy
         int n = points.length;
         Point2D[] a = new Point2D[n];
         for (int i = 0; i < n; i++) {
-            if (points[i] == null)
+            if (points[i] == null) {
                 throw new IllegalArgumentException("points[" + i + "] is null");
+            }
             a[i] = points[i];
         }
 
@@ -85,14 +91,22 @@ public class GrahamScan {
 
         // find index k1 of first point not equal to a[0]
         int k1;
-        for (k1 = 1; k1 < n; k1++)
-            if (!a[0].equals(a[k1])) break;
-        if (k1 == n) return;        // all points equal
+        for (k1 = 1; k1 < n; k1++) {
+            if (!a[0].equals(a[k1])) {
+                break;
+            }
+        }
+        if (k1 == n) {
+            return;        // all points equal
+        }
 
         // find index k2 of first point not collinear with a[0] and a[k1]
         int k2;
-        for (k2 = k1 + 1; k2 < n; k2++)
-            if (Point2D.ccw(a[0], a[k1], a[k2]) != 0) break;
+        for (k2 = k1 + 1; k2 < n; k2++) {
+            if (Point2D.ccw(a[0], a[k1], a[k2]) != 0) {
+                break;
+            }
+        }
         hull.push(a[k2 - 1]);    // a[k2-1] is second extreme point
 
         // Graham scan; note that a[n-1] is extreme point different from a[0]
@@ -126,8 +140,9 @@ public class GrahamScan {
             points[i] = new Point2D(x, y);
         }
         GrahamScan graham = new GrahamScan(points);
-        for (Point2D p : graham.hull())
+        for (Point2D p : graham.hull()) {
             StdOut.println(p);
+        }
     }
 
     /**
@@ -137,14 +152,18 @@ public class GrahamScan {
      */
     public Iterable<Point2D> hull() {
         Stack<Point2D> s = new Stack<Point2D>();
-        for (Point2D p : hull) s.push(p);
+        for (Point2D p : hull) {
+            s.push(p);
+        }
         return s;
     }
 
     // check that boundary of hull is strictly convex
     private boolean isConvex() {
         int n = hull.size();
-        if (n <= 2) return true;
+        if (n <= 2) {
+            return true;
+        }
 
         Point2D[] points = new Point2D[n];
         int k = 0;

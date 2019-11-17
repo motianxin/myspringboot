@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -29,34 +30,34 @@ public class ZKlock implements Lock {
     public boolean tryLock() {
         try {
             //根节点的初始化放在构造函数里面不生效
-            if (zkClient.checkExists().forPath(lockPath) == null) {
-                System.out.println("初始化根节点==========>" + lockPath);
-                zkClient.create().creatingParentsIfNeeded().forPath(lockPath);
+            if (this.zkClient.checkExists().forPath(this.lockPath) == null) {
+                System.out.println("初始化根节点==========>" + this.lockPath);
+                this.zkClient.create().creatingParentsIfNeeded().forPath(this.lockPath);
             }
-            System.out.println("当前线程" + Thread.currentThread().getName() + "初始化根节点" + lockPath);
+            System.out.println("当前线程" + Thread.currentThread().getName() + "初始化根节点" + this.lockPath);
         } catch (Exception e) {
         }
 
-        if (currentPath == null) {
+        if (this.currentPath == null) {
             try {
-                currentPath = this.zkClient.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
-                        .forPath(lockPath + "/");
+                this.currentPath =
+                        this.zkClient.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(this.lockPath + "/");
             } catch (Exception e) {
                 return false;
             }
         }
         try {
             //此处该如何获取所有的临时节点呢？如locks00004.而不是获取/locks/order中的order作为子节点？？
-            List<String> childrens = this.zkClient.getChildren().forPath(lockPath);
+            List<String> childrens = this.zkClient.getChildren().forPath(this.lockPath);
             Collections.sort(childrens);
-            if (currentPath.equals(lockPath + "/" + childrens.get(0))) {
-                System.out.println("当前线程获得锁" + currentPath);
+            if (this.currentPath.equals(this.lockPath + "/" + childrens.get(0))) {
+                System.out.println("当前线程获得锁" + this.currentPath);
                 return true;
             } else {
                 //取前一个节点
-                int curIndex = childrens.indexOf(currentPath.substring(lockPath.length() + 1));
+                int curIndex = childrens.indexOf(this.currentPath.substring(this.lockPath.length() + 1));
                 //如果是-1表示children里面没有该节点
-                beforePath = lockPath + "/" + childrens.get(curIndex - 1);
+                this.beforePath = this.lockPath + "/" + childrens.get(curIndex - 1);
             }
         } catch (Exception e) {
             return false;
@@ -75,7 +76,7 @@ public class ZKlock implements Lock {
     @Override
     public void unlock() {
         try {
-            zkClient.delete().guaranteed().deletingChildrenIfNeeded().forPath(currentPath);
+            this.zkClient.delete().guaranteed().deletingChildrenIfNeeded().forPath(this.currentPath);
         } catch (Exception e) {
             //guaranteed()保障机制，若未删除成功，只要会话有效会在后台一直尝试删除
         }
@@ -84,19 +85,19 @@ public class ZKlock implements Lock {
     private void waiForLock() {
         CountDownLatch cdl = new CountDownLatch(1);
         //创建监听器watch
-        NodeCache nodeCache = new NodeCache(zkClient, beforePath);
+        NodeCache nodeCache = new NodeCache(this.zkClient, this.beforePath);
         try {
             nodeCache.start(true);
             nodeCache.getListenable().addListener(() -> {
-                    cdl.countDown();
-                    System.out.println(beforePath + "节点监听事件触发，重新获得节点内容为：" + new String(nodeCache.getCurrentData().getData()));
+                cdl.countDown();
+                System.out.println(this.beforePath + "节点监听事件触发，重新获得节点内容为：" + new String(nodeCache.getCurrentData().getData()));
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
         //如果前一个节点还存在，则阻塞自己
         try {
-            if (zkClient.checkExists().forPath(beforePath) == null) {
+            if (this.zkClient.checkExists().forPath(this.beforePath) == null) {
                 cdl.await();
             }
         } catch (Exception e) {

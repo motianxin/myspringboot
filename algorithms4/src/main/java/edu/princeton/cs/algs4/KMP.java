@@ -68,8 +68,9 @@ public class KMP {
         dfa = new int[R][m];
         dfa[pat.charAt(0)][0] = 1;
         for (int x = 0, j = 1; j < m; j++) {
-            for (int c = 0; c < R; c++)
-                dfa[c][j] = dfa[c][x];     // Copy mismatch cases. 
+            for (int c = 0; c < R; c++) {
+                dfa[c][j] = dfa[c][x];     // Copy mismatch cases.
+            }
             dfa[pat.charAt(j)][j] = j + 1;   // Set match case.
             x = dfa[pat.charAt(j)][x];     // Update restart state. 
         }
@@ -79,21 +80,23 @@ public class KMP {
      * Preprocesses the pattern string.
      *
      * @param pattern the pattern string
-     * @param R       the alphabet size
+     * @param R the alphabet size
      */
     public KMP(char[] pattern, int R) {
         this.R = R;
         this.pattern = new char[pattern.length];
-        for (int j = 0; j < pattern.length; j++)
+        for (int j = 0; j < pattern.length; j++) {
             this.pattern[j] = pattern[j];
+        }
 
         // build DFA from pattern
         int m = pattern.length;
         dfa = new int[R][m];
         dfa[pattern[0]][0] = 1;
         for (int x = 0, j = 1; j < m; j++) {
-            for (int c = 0; c < R; c++)
-                dfa[c][j] = dfa[c][x];     // Copy mismatch cases. 
+            for (int c = 0; c < R; c++) {
+                dfa[c][j] = dfa[c][x];     // Copy mismatch cases.
+            }
             dfa[pattern[j]][j] = j + 1;      // Set match case.
             x = dfa[pattern[j]][x];        // Update restart state. 
         }
@@ -122,13 +125,15 @@ public class KMP {
         StdOut.println("text:    " + txt);
 
         StdOut.print("pattern: ");
-        for (int i = 0; i < offset1; i++)
+        for (int i = 0; i < offset1; i++) {
             StdOut.print(" ");
+        }
         StdOut.println(pat);
 
         StdOut.print("pattern: ");
-        for (int i = 0; i < offset2; i++)
+        for (int i = 0; i < offset2; i++) {
             StdOut.print(" ");
+        }
         StdOut.println(pat);
     }
 
@@ -137,6 +142,7 @@ public class KMP {
      * in the text string.
      *
      * @param txt the text string
+     *
      * @return the index of the first occurrence of the pattern string
      * in the text string; N if no such match
      */
@@ -149,7 +155,9 @@ public class KMP {
         for (i = 0, j = 0; i < n && j < m; i++) {
             j = dfa[txt.charAt(i)][j];
         }
-        if (j == m) return i - m;    // found
+        if (j == m) {
+            return i - m;    // found
+        }
         return n;                    // not found
     }
 
@@ -158,6 +166,7 @@ public class KMP {
      * in the text string.
      *
      * @param text the text string
+     *
      * @return the index of the first occurrence of the pattern string
      * in the text string; N if no such match
      */
@@ -170,7 +179,9 @@ public class KMP {
         for (i = 0, j = 0; i < n && j < m; i++) {
             j = dfa[text[i]][j];
         }
-        if (j == m) return i - m;    // found
+        if (j == m) {
+            return i - m;    // found
+        }
         return n;                    // not found
     }
 }

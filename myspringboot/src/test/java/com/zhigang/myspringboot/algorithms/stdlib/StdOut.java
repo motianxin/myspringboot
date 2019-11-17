@@ -1,4 +1,5 @@
-package com.zhigang.myspringboot.algorithms.stdlib; /******************************************************************************
+package com.zhigang.myspringboot.algorithms.stdlib; /**
+ ****************************************************************************
  *  Compilation:  javac StdOut.java
  *  Execution:    java StdOut
  *  Dependencies: none
@@ -274,8 +275,9 @@ public final class StdOut {
      * Prints a formatted string to standard output, using the specified format
      * string and arguments, and then flushes standard output.
      *
-     * @param format the <a href = "http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax">format string</a>
-     * @param args   the arguments accompanying the format string
+     * @param format the
+     * <a href = "http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax">format string</a>
+     * @param args the arguments accompanying the format string
      */
     public static void printf(String format, Object... args) {
         out.printf(LOCALE, format, args);
@@ -287,8 +289,9 @@ public final class StdOut {
      * the specified format string and arguments; then flushes standard output.
      *
      * @param locale the locale
-     * @param format the <a href = "http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax">format string</a>
-     * @param args   the arguments accompanying the format string
+     * @param format the
+     * <a href = "http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax">format string</a>
+     * @param args the arguments accompanying the format string
      */
     public static void printf(Locale locale, String format, Object... args) {
         out.printf(locale, format, args);

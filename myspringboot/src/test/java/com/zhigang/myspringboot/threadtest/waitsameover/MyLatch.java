@@ -18,15 +18,15 @@ public class MyLatch {
     }
 
     public synchronized void await() throws InterruptedException {
-        while (count > 0) {
+        while (this.count > 0) {
             System.out.println("latch state is " + Thread.currentThread().getState());
             wait();
         }
     }
 
-    public synchronized void countDown() throws InterruptedException{
-        count--;
-        if (count == 0) {
+    public synchronized void countDown() throws InterruptedException {
+        this.count--;
+        if (this.count == 0) {
             notifyAll();
             Thread.sleep(new Random().nextInt(1000));
         }
