@@ -16,7 +16,9 @@ import lombok.ToString;
 @ToString
 public class Student {
     private String name;
+
     private String grade;
+
     private int score;
 
     public Student() {

@@ -8,6 +8,10 @@
  */
 package com.zhigang.myspringboot.lambda;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +35,7 @@ public class LambdaTest {
     public static void main(String[] args) {
         int n = 30;
         System.out.println("begin init list");
-        List<Student> students = initStuList(n);
+        List<Student> students = LambdaTest.initStuList(n);
         students.stream().forEach(System.out::println);
         System.out.println("after init list");
 
@@ -121,6 +125,12 @@ public class LambdaTest {
     private static List<Student> initStuList(int n) {
         Random random = new Random();
         return Stream.generate(() -> new Student(Stream.generate(() -> ((char) ('a' + random.nextInt(26))) + "").limit(10).collect(Collectors.joining()), random.nextInt(5) + "", random.nextInt(100))).limit(n).collect(Collectors.toList());
+    }
+
+    private static void countSameNames(String path) throws Exception {
+        List<String> lines = FileUtils.readLines(new File(path), Charset.forName("GBK"));
+        lines.stream().map(s -> s.split(",")).collect(Collectors.toMap(s -> s[1], s -> s[0],
+                (vo, ve) -> vo + "," + ve)).entrySet().stream().forEach(e -> System.out.println(String.format("%s : " + "%d 人，工号为：%s.", e.getKey(), e.getValue().split(",").length, e.getValue())));
     }
 
 }

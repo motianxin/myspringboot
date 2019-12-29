@@ -16,6 +16,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 
 /**
@@ -39,8 +40,8 @@ public class EncodeTest {
 
     private static String aesEncode(String content) throws Exception {
 
-        SecretKey key = createKey(KEYGEN);
-        Cipher cipher = Cipher.getInstance(AES_GCM_PKCS5_PADDING);
+        SecretKey key = EncodeTest.createKey(EncodeTest.KEYGEN);
+        Cipher cipher = Cipher.getInstance(EncodeTest.AES_GCM_PKCS5_PADDING);
         cipher.init(Cipher.ENCRYPT_MODE, key);
         byte[] iv = cipher.getIV();
         assert iv.length == 12;
@@ -56,8 +57,8 @@ public class EncodeTest {
 
     private static String aesDecode(String enMsg) throws Exception {
         byte[] message = Base64.decodeBase64(enMsg);
-        SecretKey key = createKey(KEYGEN);
-        Cipher cipher = Cipher.getInstance(AES_GCM_PKCS5_PADDING);
+        SecretKey key = EncodeTest.createKey(EncodeTest.KEYGEN);
+        Cipher cipher = Cipher.getInstance(EncodeTest.AES_GCM_PKCS5_PADDING);
         cipher.init(Cipher.ENCRYPT_MODE, key);
         GCMParameterSpec params = new GCMParameterSpec(128, message, 0, 12);
         cipher.init(Cipher.DECRYPT_MODE, key, params);
@@ -67,12 +68,12 @@ public class EncodeTest {
 
 
     private static SecretKey createKey(String keygen) throws Exception {
-        KeyGenerator kg = KeyGenerator.getInstance(AES);
-        SecureRandom random = SecureRandom.getInstance(SIGN_ALGORITHMS);
-        random.setSeed(keygen.getBytes("UTF-8"));
+        KeyGenerator kg = KeyGenerator.getInstance(EncodeTest.AES);
+        SecureRandom random = SecureRandom.getInstance(EncodeTest.SIGN_ALGORITHMS);
+        random.setSeed(keygen.getBytes(StandardCharsets.UTF_8));
         kg.init(128, random);
         SecretKey secretKey = kg.generateKey();
-        SecretKey key = new SecretKeySpec(secretKey.getEncoded(), AES);
+        SecretKey key = new SecretKeySpec(secretKey.getEncoded(), EncodeTest.AES);
 
         return key;
     }
@@ -81,9 +82,9 @@ public class EncodeTest {
         String data = "123456789012";
 
         try {
-            String encode = aesEncode(data);
+            String encode = EncodeTest.aesEncode(data);
             System.out.println("加密后：" + encode);
-            String decode = aesDecode(encode);
+            String decode = EncodeTest.aesDecode(encode);
             System.out.println("解密后：" + decode);
         } catch (Exception e) {
             e.printStackTrace();
