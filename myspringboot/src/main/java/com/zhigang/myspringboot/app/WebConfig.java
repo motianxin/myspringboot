@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @program: WebConfig
@@ -25,7 +25,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MyInterceptor()).addPathPatterns(Arrays.asList("/**"));
+        registry.addInterceptor(new MyInterceptor()).addPathPatterns(Collections.singletonList("/**"));
         super.addInterceptors(registry);
     }
 }
