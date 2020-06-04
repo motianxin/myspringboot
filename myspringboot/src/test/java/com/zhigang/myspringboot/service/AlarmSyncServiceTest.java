@@ -6,6 +6,7 @@ import com.zhigang.myspringboot.domain.alarmws.NotifyAlarmSyncReq;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 
