@@ -12,10 +12,11 @@ import com.zhigang.myspringboot.domain.ResponseModel;
 import com.zhigang.myspringboot.service.SnmpReceiverService;
 import com.zhigang.myspringboot.utils.common.Constans;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -30,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SnmpReceiverStart {
 
 
-    @Autowired
+    @Resource
     private SnmpReceiverService snmpReceiverService;
 
     @GetMapping("/startReceiverSnmpTrap")
@@ -43,7 +44,6 @@ public class SnmpReceiverStart {
         try {
             result = this.snmpReceiverService.snmpReceiverstatus(ip, port);
             responseModel.setCode(Constans.SUCCESS);
-
         } catch (Exception e) {
             SnmpReceiverStart.log.error("startReceiverSnmpTrap exception.", e);
             result = "startReceiverSnmpTrap exception :" + e.getMessage();
@@ -51,7 +51,6 @@ public class SnmpReceiverStart {
         }
         responseModel.setMsg(result);
         return responseModel;
-
     }
 
 
@@ -69,7 +68,5 @@ public class SnmpReceiverStart {
         }
         responseModel.setMsg(result);
         return responseModel;
-
     }
-
 }

@@ -5,9 +5,9 @@ import com.zhigang.myspringboot.utils.common.QueueEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.UUID;
 
 /**
@@ -21,7 +21,7 @@ import java.util.UUID;
 @Slf4j
 public class QueueMessageServiceSupport implements QueueMessageService {
 
-    @Autowired
+    @Resource
     private RabbitTemplate rabbitTemplate;
 
     @Override

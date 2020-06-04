@@ -18,9 +18,9 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -34,6 +34,7 @@ import java.util.Date;
 public class QuartzManager {
 
     public static final String JOB_NAME = "job1";
+
     public static final String GROUP_NAME = "group1";
 
 
@@ -45,7 +46,7 @@ public class QuartzManager {
     /**
      * 任务调度
      */
-    @Autowired
+    @Resource
     private Scheduler scheduler;
 
     /**
@@ -69,7 +70,6 @@ public class QuartzManager {
                 QuartzManager.GROUP_NAME).forJob(jobDetail).withSchedule(cronScheduleBuilder).build();
         scheduler.addJob(jobDetail, true);
         scheduler.scheduleJob(cronTrigger);
-
     }
 
     /**
@@ -91,9 +91,7 @@ public class QuartzManager {
      * @param name
      * @param group
      * @param cron cron表达式
-     *
      * @return
-     *
      * @throws SchedulerException
      */
     public boolean modifyJob(String name, String group, String cron) throws SchedulerException {
@@ -124,7 +122,6 @@ public class QuartzManager {
      *
      * @param name
      * @param group
-     *
      * @throws SchedulerException
      */
     public void pauseJob(String name, String group) throws SchedulerException {
@@ -162,7 +159,6 @@ public class QuartzManager {
      *
      * @param name
      * @param group
-     *
      * @throws SchedulerException
      */
     public void deleteJob(String name, String group) throws SchedulerException {

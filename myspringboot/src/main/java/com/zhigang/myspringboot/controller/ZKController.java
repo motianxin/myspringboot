@@ -1,9 +1,10 @@
 package com.zhigang.myspringboot.controller;
 
 import com.zhigang.myspringboot.system.configuration.zookeeper.ZKlock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * @program: Code
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class ZKController {
 
-    @Autowired
+    @Resource
     private ZKlock zklock;
 
     @GetMapping("/lock")

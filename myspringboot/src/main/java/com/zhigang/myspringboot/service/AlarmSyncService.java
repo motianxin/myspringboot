@@ -13,10 +13,10 @@ import com.zhigang.myspringboot.domain.alarmws.NotifyAlarmSyncReq;
 import com.zhigang.myspringboot.repository.AlarmSyncRepos;
 import com.zhigang.myspringboot.repository.SyncInfoDao;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -31,10 +31,10 @@ import java.util.List;
 @Transactional
 @Slf4j
 public class AlarmSyncService implements SyncService {
-    @Autowired
+    @Resource
     private AlarmSyncRepos alarmSyncRepos;
 
-    @Autowired
+    @Resource
     private SyncInfoDao infoDao;
 
     @Override
@@ -48,7 +48,6 @@ public class AlarmSyncService implements SyncService {
         sync.setProvinceSX(req.getProvinceSX());
         this.alarmSyncRepos.saveAlarmSync(sync);
         AlarmSyncService.log.info("save end.");
-
     }
 
     @Override
@@ -65,6 +64,4 @@ public class AlarmSyncService implements SyncService {
     public List<AlarmSync> getAllAlarmSync() {
         return this.infoDao.findAll();
     }
-
-
 }

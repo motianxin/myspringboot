@@ -33,7 +33,6 @@ import org.snmp4j.util.MultiThreadedMessageDispatcher;
 import org.snmp4j.util.ThreadPool;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.Vector;
 
 /**
@@ -46,36 +45,31 @@ import java.util.Vector;
  */
 @Slf4j
 public class SnmpTrapMultiThreadReceiver implements CommandResponder {
+    private final String ip;
 
+    private final String port;
 
-    private String ip;
-
-    private String port;
-
-    private MultiThreadedMessageDispatcher dispatcher;
     private Snmp snmp = null;
-    private Address listenAddress;
-    private ThreadPool threadPool;
 
     public SnmpTrapMultiThreadReceiver(String ip, String port) {
         this.ip = ip;
         this.port = port;
     }
 
-    private void init() throws UnknownHostException, IOException {
+    private void init() throws IOException {
         SnmpTrapMultiThreadReceiver.log.info("begin init snmp listener.");
         String address = "udp:" + this.ip + "/" + this.port;
         SnmpTrapMultiThreadReceiver.log.info("address is [{}]", address);
-        this.threadPool = ThreadPool.create("TrapPool", 2);
-        this.dispatcher = new MultiThreadedMessageDispatcher(this.threadPool, new MessageDispatcherImpl());
-        this.listenAddress = GenericAddress.parse(address);
+        ThreadPool threadPool = ThreadPool.create("TrapPool", 2);
+        MultiThreadedMessageDispatcher dispatcher = new MultiThreadedMessageDispatcher(threadPool, new MessageDispatcherImpl());
+        Address listenAddress = GenericAddress.parse(address);
         TransportMapping transport;
-        if (this.listenAddress instanceof UdpAddress) {
-            transport = new DefaultUdpTransportMapping((UdpAddress) this.listenAddress);
+        if (listenAddress instanceof UdpAddress) {
+            transport = new DefaultUdpTransportMapping((UdpAddress) listenAddress);
         } else {
-            transport = new DefaultTcpTransportMapping((TcpAddress) this.listenAddress);
+            transport = new DefaultTcpTransportMapping((TcpAddress) listenAddress);
         }
-        this.snmp = new Snmp(this.dispatcher, transport);
+        this.snmp = new Snmp(dispatcher, transport);
         this.snmp.getMessageDispatcher().addMessageProcessingModel(new MPv1());
         this.snmp.getMessageDispatcher().addMessageProcessingModel(new MPv2c());
         this.snmp.getMessageDispatcher().addMessageProcessingModel(new MPv3());
@@ -115,6 +109,4 @@ public class SnmpTrapMultiThreadReceiver implements CommandResponder {
             this.snmp.close();
         }
     }
-
-
 }

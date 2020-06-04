@@ -5,7 +5,6 @@ import com.zhigang.myspringboot.domain.AlarmSync;
 import com.zhigang.myspringboot.domain.alarmws.NotifyAlarmSyncReq;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @Slf4j
 public class AlarmSyncServiceTest extends MyspringbootApplicationTests {
 
-    @Autowired
+    @Resource
     private SyncService syncService;
 
     @Test

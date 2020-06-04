@@ -17,8 +17,8 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,12 +35,15 @@ import java.util.concurrent.Executors;
 public class ZkClient {
 
     public TreeCache cache;
+
     /**
      * 在注册监听器的时候，如果传入此参数，当事件触发时，逻辑由线程池处理
      */
     ExecutorService pool = Executors.newFixedThreadPool(2);
+
     private CuratorFramework client;
-    @Autowired
+
+    @Resource
     private ZookeeperProperties zookeeperProperties;
 
     /**
@@ -96,7 +99,6 @@ public class ZkClient {
      * 初始化本地缓存
      *
      * @param watchRootPath
-     *
      * @throws Exception
      */
     private void initLocalCache(String watchRootPath) throws Exception {
@@ -215,7 +217,6 @@ public class ZkClient {
      * 获取指定节点的数据
      *
      * @param path
-     *
      * @return
      */
     public byte[] getNodeData(String path) {
@@ -239,7 +240,6 @@ public class ZkClient {
      * 获取数据时先同步
      *
      * @param path
-     *
      * @return
      */
     public byte[] synNodeData(String path) {
@@ -251,7 +251,6 @@ public class ZkClient {
      * 判断路径是否存在
      *
      * @param path
-     *
      * @return
      */
     public boolean isExistNode(final String path) {
@@ -267,7 +266,6 @@ public class ZkClient {
      * 获取节点的子节点
      *
      * @param path
-     *
      * @return
      */
     public List<String> getChildren(String path) {
@@ -314,9 +312,7 @@ public class ZkClient {
      * 先从cache中读取，如果没有，再从zookeeper中查询
      *
      * @param path
-     *
      * @return
-     *
      * @throws Exception
      */
     public String getRandomData(String path) {
@@ -351,14 +347,12 @@ public class ZkClient {
             ZkClient.log.error("{}", e);
         }
         return null;
-
     }
 
     /**
      * 获取读写锁
      *
      * @param path
-     *
      * @return
      */
     public InterProcessReadWriteLock getReadWriteLock(String path) {
@@ -382,5 +376,4 @@ public class ZkClient {
             e.printStackTrace();
         }
     }
-
 }

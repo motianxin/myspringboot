@@ -13,11 +13,12 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
+
+import javax.annotation.Resource;
 
 /**
  * 〈定时任务启动监听类〉
@@ -30,7 +31,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 @Slf4j
 public class QuartzJobListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Autowired
+    @Resource
     private QuartzManager quartzManager;
 
     @Override

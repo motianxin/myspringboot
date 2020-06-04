@@ -14,12 +14,12 @@ import com.zhigang.myspringboot.service.SyncService;
 import com.zhigang.myspringboot.utils.common.Constans;
 import com.zhigang.myspringboot.utils.strutils.StringTools;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -34,7 +34,7 @@ import java.util.Date;
 @Slf4j
 public class NotifyAlarmSync {
 
-    @Autowired
+    @Resource
     private SyncService syncService;
 
     @PayloadRoot(namespace = "http://www.ctsi.com.cn/webservices/service", localPart = "notifyAlarmSyncReq")
@@ -49,6 +49,4 @@ public class NotifyAlarmSync {
 
         return new NotifyAlarmSyncRsp(4343, "retert", StringTools.dateFormat(Constans.DATE_PATTERN, new Date()));
     }
-
-
 }

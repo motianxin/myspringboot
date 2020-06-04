@@ -9,8 +9,9 @@
 package com.zhigang.myspringboot.service;
 
 import com.zhigang.myspringboot.domain.SnmpModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -28,7 +29,7 @@ public class SnmpReceiverServiceImpl implements SnmpReceiverService {
 
     private SnmpTrapMultiThreadReceiver receiver;
 
-    @Autowired
+    @Resource
     private SnmpModel snmpModel;
 
     @Override

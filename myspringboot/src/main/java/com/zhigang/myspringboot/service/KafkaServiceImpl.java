@@ -2,10 +2,11 @@ package com.zhigang.myspringboot.service;
 
 import com.zhigang.myspringboot.utils.common.KafkaTopicEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @program: Code
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class KafkaServiceImpl implements KafkaService {
 
-    @Autowired
+    @Resource
     private KafkaTemplate kafkaTemplate;
 
     @Override

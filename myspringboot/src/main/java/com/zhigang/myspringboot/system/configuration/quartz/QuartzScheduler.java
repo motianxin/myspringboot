@@ -9,13 +9,13 @@
 package com.zhigang.myspringboot.system.configuration.quartz;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -31,7 +31,7 @@ import java.util.Properties;
 @Slf4j
 public class QuartzScheduler {
 
-    @Autowired
+    @Resource
     private QuartzJobFactory quartzJobFactory;
 
 
@@ -51,5 +51,4 @@ public class QuartzScheduler {
         log.info("myJobFactory: [{}]", quartzJobFactory);
         return schedulerFactoryBean;
     }
-
 }
