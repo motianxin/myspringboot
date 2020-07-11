@@ -7,33 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-/*var crypto = require('crypto');
-// console.log(crypto.getCiphers());
-
-var data = "123456789012";
-console.log('Original cleartext: ' + data);
-var algorithm = 'aes-128-gcm';
-var key = '1234567890123456';
-var clearEncoding = 'utf8';
-var iv = "1234567890123456";
-//var cipherEncoding = 'hex';
-//If the next line is uncommented, the final cleartext is wrong.
-var cipherEncoding = 'base64';
-var cipher = crypto.createCipheriv(algorithm, key, iv);
-var cipherChunks = [];
-cipherChunks.push(cipher.update(data, clearEncoding, cipherEncoding));
-cipherChunks.push(cipher.final(cipherEncoding));
-console.log(cipherEncoding + ' ciphertext: ' + cipherChunks.join(''));
-
-var decipher = crypto.createDecipheriv(algorithm, key, iv);
-var plainChunks = [];
-plainChunks.push(decipher.update(cipherChunks.join(''), cipherEncoding, clearEncoding));
-
-plainChunks.push(decipher.final(clearEncoding));
-console.log("UTF8 plaintext deciphered: " + plainChunks.join(''));*/
-
-
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
