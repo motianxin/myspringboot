@@ -24,8 +24,6 @@ import javax.persistence.PersistenceContext;
  */
 @Repository
 public class ReposImpl implements AlarmSyncRepos {
-
-
     @PersistenceContext
     protected EntityManager em;
 
@@ -35,6 +33,4 @@ public class ReposImpl implements AlarmSyncRepos {
             em.persist(sync);
         }
     }
-
-
 }

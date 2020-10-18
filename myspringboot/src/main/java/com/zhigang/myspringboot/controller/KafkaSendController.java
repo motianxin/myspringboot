@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+
 import java.util.Date;
 
 /**
@@ -29,12 +30,8 @@ public class KafkaSendController {
     public String sendMsgToKafka(@RequestParam("msg") String msg) {
         log.info("begin send msg {} to kafka.", msg);
         String result = "success";
-        KafkaMsg kafkaMsg = new KafkaMsg();
         Date createTime = new Date();
-        kafkaMsg.setCreateTime(createTime);
-        kafkaMsg.setId(createTime.getTime());
-        kafkaMsg.setMsg(msg);
-        kafkaMsg.setHostIp("127.0.0.1");
+        KafkaMsg kafkaMsg = new KafkaMsg(createTime.getTime(), "", msg, createTime);
         try {
             kafkaService.sendMessage(JsonUtils.obj2Json(kafkaMsg));
         } catch (Exception e) {

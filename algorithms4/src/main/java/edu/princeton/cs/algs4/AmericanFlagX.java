@@ -7,7 +7,7 @@
  *
  *  Sort an array of strings or integers in-place using American Flag sort.
  *
- *  % java AmericanFlagX < shells.txt 
+ *  % java AmericanFlagX < shells.txt
  *  are
  *  by
  *  sea
@@ -49,6 +49,7 @@ import edu.princeton.cs.algs4.base.StdOut;
 
 public class AmericanFlagX {
     private static final int R = 256;   // extend ASCII alphabet size
+
     private static final int CUTOFF = 15;   // cutoff to insertion sort
 
     // do not instantiate
@@ -101,7 +102,7 @@ public class AmericanFlagX {
                 count[c]++;
             }
 
-            // accumulate counts relative to a[0], so that 
+            // accumulate counts relative to a[0], so that
             // count[c] is the number of keys <= c
             count[0] += lo;
             for (int c = 0; c < R; c++) {
