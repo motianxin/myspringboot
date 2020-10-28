@@ -5,12 +5,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @program: Code
- * @Description 一句话描述
- * @Author admin
- * @Date 2019/6/9 17:35
- * @Version 3.2.2
- **/
+ * <Student>
+ *
+ * @author admin
+ * @since 2020/10/29 1:40
+ */
 @Getter
 @Setter
 @ToString
@@ -22,6 +21,7 @@ public class Student {
     private int score;
 
     public Student() {
+        this("", "", 0);
     }
 
     public Student(String name, String grade, int score) {
