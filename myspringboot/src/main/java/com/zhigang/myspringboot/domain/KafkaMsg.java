@@ -1,5 +1,8 @@
 package com.zhigang.myspringboot.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -8,5 +11,14 @@ import java.util.Date;
  * @Author admin
  * @Date 2019/8/4 11:20
  **/
-public record KafkaMsg(long id, String hostIp, String msg, Date createTime) {
+@Data
+@AllArgsConstructor
+public class KafkaMsg {
+    private long id;
+
+    private String hostIp;
+
+    private String msg;
+
+    private Date createTime;
 }

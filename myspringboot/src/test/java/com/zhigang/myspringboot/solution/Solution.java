@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
+import java.util.stream.IntStream;
 
 /**
  * @program: Code
@@ -17,6 +19,99 @@ import java.util.Stack;
  * @Version 3.2.2
  **/
 public class Solution {
+
+    public static void main(String[] args) {
+        Random random = new Random();
+        int[] height = new int[10];
+        for (int i = 0; i < 10; i++) {
+            height[i] = random.nextInt(1000);
+        }
+        System.out.println("numOfMaintenSeen = " + numOfMaintenSeen(height));
+    }
+
+    private static int numOfMaintenSeen(int[] array) {
+        int len = array.length;
+        if (len < 3) {
+            return 0;
+        }
+        int[] result = new int[len];
+        int left = getLeft(array, len, result);
+        int right = getRight(array, len, result);
+        return left + right;
+    }
+
+    private static int getRight(int[] array, int len, int[] rightResult) {
+        reverseArray(array, len / 2);
+        calNum(array, len, rightResult);
+        int right = 0;
+        for (int i = len - 1; i >= 0; i -= 2) {
+            right += rightResult[i];
+        }
+        return right;
+    }
+
+    private static int getLeft(int[] array, int len, int[] result) {
+        calNum(array, len, result);
+        return IntStream.of(result).filter(i -> (i & 1) == 1).sum();
+    }
+
+    private static void reverseArray(int[] array, int i) {
+        for (int j = 0; j <= i; j++) {
+            int temp = array[j];
+            array[j] = array[array.length - 1 - j];
+            array[array.length - 1 - j] = temp;
+        }
+    }
+
+    private static void calNum(int[] array, int len, int[] result) {
+        result[1] = 1;
+        int[] firstMax = new int[len];
+        if (array[0] < array[1]) {
+            firstMax[1] = 1;
+        }
+        for (int i = 2; i < len; i++) {
+            if (array[i - 1] > array[i]) {
+                firstMax[i] = i - 1;
+            } else {
+                setFirstMax(array, firstMax, i);
+            }
+            setResult(result, firstMax, i);
+        }
+        System.out.println("arrays = " + Arrays.toString(array));
+        System.out.println("firstMax = " + Arrays.toString(firstMax));
+        System.out.println("result = " + Arrays.toString(result));
+    }
+
+    private static void setResult(int[] result, int[] firstMax, int i) {
+        if (firstMax[i] == i) {
+            result[i] = i;
+            return;
+        }
+        int index = firstMax[i];
+        int sum = i - index;
+        while (firstMax[index] != index) {
+            sum++;
+            index = firstMax[index];
+        }
+        result[i] = sum;
+    }
+
+    private static void setFirstMax(int[] array, int[] firstMax, int i) {
+        // arrays[i -1] < arrays[i]
+        int index = i - 1;
+        int height = array[i];
+        while (index >= 0) {
+            if (array[index] > height) {
+                firstMax[i] = index;
+                return;
+            }
+            if (index == firstMax[index]) {
+                firstMax[i] = i;
+                return;
+            }
+            index = firstMax[index];
+        }
+    }
 
     public static int findMaxSubstr(String s) {
 
@@ -91,7 +186,6 @@ public class Solution {
                         do {
                             c--;
                         } while (b < c && nums[c] == nums[c + 1]);
-
                     } else if (sum < 0) { // 小于0，b 数小了，需要增大b
                         b++;
                     } else { // 大于0，c 数大了，需要减小c
@@ -412,8 +506,6 @@ public class Solution {
         String str = String.valueOf(a);
         System.out.println(str);
         return Integer.parseInt(str.substring(0, str.indexOf(".")));
-
-
     }
 
     public static int uniquePaths(int m, int n) {
@@ -429,22 +521,6 @@ public class Solution {
             }
         }
         return dp[m - 1][n - 1];
-    }
-
-    public static void main(String[] args) {
-        /*ListNode head = new ListNode(4);
-        head.next = new ListNode(5);
-        head.next.next = new ListNode(9);
-        head.next.next.next = new ListNode(7);
-
-        printNode(head);
-        printNode(getAntiNode(head));
-        reorderList(head);
-        System.out.println();
-        printNode(head);*/
-
-        System.out.println(uniquePaths(7, 3));
-
     }
 
     private static void printNode(ListNode head) {
@@ -544,7 +620,6 @@ public class Solution {
         }
         //总数为偶数，找第 total / 2 个数和第total / 2 + 1个数的平均值
         return (find_kth(nums1, 0, nums2, 0, total / 2) + find_kth(nums1, 0, nums2, 0, total / 2 + 1)) / 2.0;
-
     }
 
     //寻找a 和 b 数组中，第k个数字
@@ -698,7 +773,6 @@ public class Solution {
             }
         }
         return "0";
-
     }
 
     public List<String> findRepeatedDnaSequences(String s) {
@@ -812,6 +886,7 @@ public class Solution {
 
     public static class ListNode {
         int val;
+
         ListNode next;
 
         ListNode(int x) {
