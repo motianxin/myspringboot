@@ -280,11 +280,11 @@ public class Solution {
                 i = (x.val + y.val + i) / 10;
                 x = x.next;
                 y = y.next;
-            } else if (y != null && x == null) {
+            } else if (y != null) {
                 tempNode.next = new ListNode((y.val + i) % 10);
                 i = (y.val + i) / 10;
                 y = y.next;
-            } else if (y == null && x != null) {
+            } else {
                 tempNode.next = new ListNode((x.val + i) % 10);
                 i = (x.val + i) / 10;
                 x = x.next;
