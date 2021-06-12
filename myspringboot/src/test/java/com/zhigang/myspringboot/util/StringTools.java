@@ -8,9 +8,8 @@
  */
 package com.zhigang.myspringboot.util;
 
-import org.assertj.core.util.Arrays;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -19,10 +18,8 @@ import java.util.StringJoiner;
  *
  * @author admin
  * @version 3.2.2
- * @create 2019/4/29 10:25
  */
 public class StringTools {
-
     public static final String STRING_SPLIT = ",";
 
     /**
@@ -54,7 +51,7 @@ public class StringTools {
         List<String> ips = new ArrayList<>();
         String[] ipArray = filterIps.split(STRING_SPLIT);
         System.out.println("直接打印数组");
-        System.out.println(ipArray);
+        System.out.println(Arrays.toString(ipArray));
         System.out.println(listToStr(ipArray));
         for (String ip : ipArray) {
             System.out.println(ip);
@@ -82,12 +79,11 @@ public class StringTools {
     }
 
     /**
-     * @Author admin
-     * @Description 通过IP地址段添加IP集合，IP段格式：abc.xxx.kkk.jjj~abc.xxx.mmm.nnn
-     * @Param [ips, ipBlock]
-     * @Return void
-     * @date 2019/4/28 14:31
-     **/
+     * ips
+     *
+     * @param ips List
+     * @param ipBlock ipBlock
+     */
     private static void addIpsByBlock(List<String> ips, String[] ipBlock) {
         String[] ipBegin = ipBlock[0].split(IPADDRESS_SPLIT_REX);
         String[] ipEnd = ipBlock[1].split(IPADDRESS_SPLIT_REX);
@@ -96,19 +92,23 @@ public class StringTools {
         if (ipBegin[0].equals(ipEnd[0]) && ipBegin[1].equals(ipEnd[1])) {
             if (ipBegin[2].equals(ipEnd[2])) {
                 for (int i = Integer.parseInt(ipBegin[3]); i <= Integer.parseInt(ipEnd[3]); i++) {
-                    ips.add(new StringJoiner(IPADDRESS_SPLIT).add(ipBegin[0]).add(ipBegin[1]).add(ipBegin[2]).add(String.valueOf(i)).toString());
+                    ips.add(new StringJoiner(IPADDRESS_SPLIT).add(ipBegin[0]).add(ipBegin[1]).add(ipBegin[2])
+                        .add(String.valueOf(i)).toString());
                 }
             } else {
                 for (int i = Integer.parseInt(ipBegin[3]); i <= 254; i++) {
-                    ips.add(new StringJoiner(IPADDRESS_SPLIT).add(ipBegin[0]).add(ipBegin[1]).add(ipBegin[2]).add(String.valueOf(i)).toString());
+                    ips.add(new StringJoiner(IPADDRESS_SPLIT).add(ipBegin[0]).add(ipBegin[1]).add(ipBegin[2])
+                        .add(String.valueOf(i)).toString());
                 }
                 for (int j = 1; j <= Integer.parseInt(ipEnd[3]); j++) {
-                    ips.add(new StringJoiner(IPADDRESS_SPLIT).add(ipEnd[0]).add(ipEnd[1]).add(ipEnd[2]).add(String.valueOf(j)).toString());
+                    ips.add(new StringJoiner(IPADDRESS_SPLIT).add(ipEnd[0]).add(ipEnd[1]).add(ipEnd[2])
+                        .add(String.valueOf(j)).toString());
                 }
 
                 for (int k = Integer.parseInt(ipBegin[2]) + 1; k < Integer.parseInt(ipEnd[2]); k++) {
                     for (int m = 1; m <= 254; m++) {
-                        ips.add(new StringJoiner(IPADDRESS_SPLIT).add(ipEnd[0]).add(ipEnd[1]).add(String.valueOf(k)).add(String.valueOf(m)).toString());
+                        ips.add(new StringJoiner(IPADDRESS_SPLIT).add(ipEnd[0]).add(ipEnd[1]).add(String.valueOf(k))
+                            .add(String.valueOf(m)).toString());
                     }
                 }
             }
@@ -117,9 +117,7 @@ public class StringTools {
 
     private static String listToStr(String[] strArray) {
         StringJoiner sj = new StringJoiner(",", "[", "]");
-        Arrays.asList(strArray).stream().forEach(s -> sj.add(s.toString()));
+        Arrays.asList(strArray).forEach(sj::add);
         return sj.toString();
-
     }
-
 }

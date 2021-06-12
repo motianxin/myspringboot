@@ -149,9 +149,9 @@ public class Solution {
         int charnum;
         for (int j = 0, i = 0; j < n; j++) {
             charnum = s.charAt(j);
-            i = index[charnum] > i ? index[charnum] : i;
-            ans = ans > j - i + 1 ? ans : j - i + 1;
-            System.out.println(String.format("i = %d, j = %d, ans = %d, ", i, j, ans));
+            i = Math.max(index[charnum], i);
+            ans = Math.max(ans, j - i + 1);
+            System.out.printf("i = %d, j = %d, ans = %d, %n", i, j, ans);
             index[charnum] = j + 1;
         }
         System.out.println(Arrays.toString(index));

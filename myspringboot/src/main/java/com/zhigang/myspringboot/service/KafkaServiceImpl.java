@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 public class KafkaServiceImpl implements KafkaService {
 
     @Resource
-    private KafkaTemplate kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     @Async("logThread")
