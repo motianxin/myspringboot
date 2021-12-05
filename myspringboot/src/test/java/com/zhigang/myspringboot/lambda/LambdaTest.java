@@ -29,7 +29,6 @@ import java.util.stream.Stream;
  *
  * @author admin
  * @version 3.2.2
- * @create 2019/1/22 19:23
  */
 public class LambdaTest {
 
@@ -55,7 +54,6 @@ public class LambdaTest {
             .collect(Collectors.toList());
         above60names.forEach(System.out::println);
 
-
         System.out.println("学生列表按年级分组，得到名字列表：");
         Map<String, List<String>> map = students.stream().collect(
             Collectors.groupingBy(Student::getGrade, Collectors.mapping(Student::getName, Collectors.toList())));
@@ -67,18 +65,16 @@ public class LambdaTest {
         System.out.println(grade_personNumMap);
 
         System.out.println("找到一个年级对应分数最高分的学生：");
-        Map<String, Student> gradeMaxScoreStuMap = students.stream().collect(Collectors
-            .toMap(Student::getGrade, Function.identity(),
+        Map<String, Student> gradeMaxScoreStuMap = students.stream().collect(
+            Collectors.toMap(Student::getGrade, Function.identity(),
                 BinaryOperator.maxBy(Comparator.comparing(Student::getScore))));
         System.out.println(gradeMaxScoreStuMap);
-
 
         System.out.println("取每个年级学生前三名：");
         /*Map<String, List<Student>> grade_sortStuMap = students.stream().collect(Collectors.groupingBy
         (Student::getGrade, collectingAndSort(Collectors.toList(), Comparator.comparing(Student::getScore).reversed()
         )));
         System.out.println(grade_sortStuMap);*/
-
 
         Map<String, List<Student>> grade_sortStuMap = students.stream()
             .collect(Collectors.groupingBy(Student::getGrade, Collectors.collectingAndThen(Collectors.toList(), (r) -> {
@@ -106,13 +102,13 @@ public class LambdaTest {
     }
 
     public static <T> Collector<T, ?, List<T>> collectingAndFilter(Collector<T, ?, List<T>> downstream,
-                                                                   Predicate<T> predicate) {
-        return Collectors
-            .collectingAndThen(downstream, (r) -> r.stream().filter(predicate).collect(Collectors.toList()));
+        Predicate<T> predicate) {
+        return Collectors.collectingAndThen(downstream,
+            (r) -> r.stream().filter(predicate).collect(Collectors.toList()));
     }
 
     private static <T> Collector<T, ?, List<T>> collectingAndSort(Collector<T, ?, List<T>> downstream,
-                                                                  Comparator<? super T> comparator) {
+        Comparator<? super T> comparator) {
         return Collectors.collectingAndThen(downstream, (r) -> {
             r.sort(comparator);
             return r;
@@ -129,7 +125,7 @@ public class LambdaTest {
     private static void countSameNames(String path) throws Exception {
         List<String> lines = FileUtils.readLines(new File(path), Charset.forName("GBK"));
         lines.stream().map(s -> s.split(",")).collect(Collectors.toMap(s -> s[1], s -> s[0], (vo, ve) -> vo + "," + ve))
-            .entrySet().forEach(e -> System.out.println(
-            String.format("%s : " + "%d 人，工号为：%s.", e.getKey(), e.getValue().split(",").length, e.getValue())));
+            .forEach(
+                (key, value) -> System.out.printf("%s : " + "%d 人，工号为：%s.%n", key, value.split(",").length, value));
     }
 }

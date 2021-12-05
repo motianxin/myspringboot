@@ -776,7 +776,7 @@ public class Solution {
     }
 
     public List<String> findRepeatedDnaSequences(String s) {
-        Set visited = new HashSet(), res = new HashSet();
+        Set<String> visited = new HashSet<>(), res = new HashSet<>();
         for (int i = 0; i + 10 <= s.length(); i++) {
             String tmp = s.substring(i, i + 10);
             if (visited.contains(tmp)) {

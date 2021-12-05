@@ -6,7 +6,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 /**
- * <判断语句链式表达>
+ * <判断语句链式表达，knowledgeSummary>
  *
  * @Author admin
  * @Since 2020/12/5 0:39
