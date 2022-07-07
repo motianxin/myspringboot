@@ -1,7 +1,5 @@
 package com.zhigang.myspringboot;
 
-import javax.annotation.Nonnull;
-
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
@@ -18,27 +16,27 @@ public final class Judge {
         this.test = test;
     }
 
-    public static Judge ifTrue(@Nonnull BooleanSupplier booleanSupplier) {
+    public static Judge ifTrue(BooleanSupplier booleanSupplier) {
         return new Judge(booleanSupplier);
     }
 
-    public Judge or(@Nonnull BooleanSupplier booleanSupplier) {
+    public Judge or(BooleanSupplier booleanSupplier) {
         test = () -> test.getAsBoolean() || booleanSupplier.getAsBoolean();
         return this;
     }
 
-    public Judge and(@Nonnull BooleanSupplier booleanSupplier) {
+    public Judge and(BooleanSupplier booleanSupplier) {
         test = () -> test.getAsBoolean() && booleanSupplier.getAsBoolean();
         return this;
     }
 
-    public void then(@Nonnull Runnable runnable) {
+    public void then(Runnable runnable) {
         if (test.getAsBoolean()) {
             runnable.run();
         }
     }
 
-    public void thenOrElse(@Nonnull Runnable trueRun, @Nonnull Runnable falseRun) {
+    public void thenOrElse(Runnable trueRun, Runnable falseRun) {
         if (test.getAsBoolean()) {
             trueRun.run();
         } else {
@@ -46,18 +44,18 @@ public final class Judge {
         }
     }
 
-    public void orElse(@Nonnull Runnable falseRun) {
+    public void orElse(Runnable falseRun) {
         if (test.getAsBoolean()) {
             return;
         }
         falseRun.run();
     }
 
-    public <T> T thenGet(@Nonnull Supplier<T> supplier, T elseValue) {
+    public <T> T thenGet(Supplier<T> supplier, T elseValue) {
         return test.getAsBoolean() ? supplier.get() : elseValue;
     }
 
-    public <T> T thenGet(@Nonnull Supplier<T> supplier, @Nonnull Supplier<T> elseSupplier) {
+    public <T> T thenGet(Supplier<T> supplier, Supplier<T> elseSupplier) {
         return test.getAsBoolean() ? supplier.get() : elseSupplier.get();
     }
 
